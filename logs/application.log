@@ -1,8 +1,6 @@
-2016-02-29 15:50:50,454 [INFO] from play.api.libs.concurrent.ActorSystemProvider in pool-4-thread-3 - Starting application default Akka system: application
-2016-02-29 15:50:50,597 [INFO] from play.core.server.NettyServer in pool-4-thread-3 - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
-2016-02-29 15:50:57,367 [WARN] from application in ForkJoinPool-1-worker-1 - Logger configuration in conf files is deprecated and has no effect. Use a logback configuration file instead.
-2016-02-29 15:50:57,877 [INFO] from play.api.libs.concurrent.ActorSystemProvider in ForkJoinPool-1-worker-1 - Starting application default Akka system: application
-2016-02-29 15:50:57,924 [INFO] from play.api.Play in ForkJoinPool-1-worker-1 - Application started (Dev)
-2016-02-29 15:51:20,469 [WARN] from application in specs2.fixed.env1899081550-1 - Logger configuration in conf files is deprecated and has no effect. Use a logback configuration file instead.
-2016-02-29 15:51:21,703 [INFO] from play.api.libs.concurrent.ActorSystemProvider in specs2.fixed.env1899081550-1 - Starting application default Akka system: application
-2016-02-29 15:51:21,972 [INFO] from play.api.libs.concurrent.ActorSystemProvider in specs2.fixed.env1899081550-1 - Shutdown application default Akka system: application
+2016-03-01 10:07:01,664 [INFO] from play.api.libs.concurrent.ActorSystemProvider in pool-4-thread-3 - Starting application default Akka system: application
+2016-03-01 10:07:01,798 [INFO] from play.core.server.NettyServer in pool-4-thread-3 - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+2016-03-01 10:07:23,516 [WARN] from application in ForkJoinPool-1-worker-1 - Logger configuration in conf files is deprecated and has no effect. Use a logback configuration file instead.
+2016-03-01 10:07:24,175 [INFO] from play.api.libs.concurrent.ActorSystemProvider in ForkJoinPool-1-worker-1 - Starting application default Akka system: application
+2016-03-01 10:07:24,220 [INFO] from play.api.Play in ForkJoinPool-1-worker-1 - Application started (Dev)
+2016-03-01 10:07:50,836 [INFO] from play.api.libs.concurrent.ActorSystemProvider in pool-4-thread-3 - Shutdown application default Akka system: application

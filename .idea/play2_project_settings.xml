@@ -24,7 +24,8 @@
         <entry key="sourceDirectory">
           <value>
             <ProjectSettingsEntry>
-              <option name="confDir" value="C:\Users\dohee\Source\IntelliJ\BA\traffic-model-case-study-editor\app" />
+              <option name="sourceDir" value="C:\Users\fke\Source\Repos\Bachelorarbeit\traffic-model-case-study-editor\app" />
+              <option name="confDir" value="C:\Users\fke\Source\Repos\Bachelorarbeit\traffic-model-case-study-editor\app" />
             </ProjectSettingsEntry>
           </value>
         </entry>
@@ -48,7 +49,7 @@
         <entry key="uri">
           <value>
             <ProjectSettingsEntry>
-              <option name="uri" value="/C:/Users/dohee/Source/IntelliJ/BA/traffic-model-case-study-editor" />
+              <option name="uri" value="/C:/Users/fke/Source/Repos/Bachelorarbeit/traffic-model-case-study-editor" />
             </ProjectSettingsEntry>
           </value>
         </entry>
