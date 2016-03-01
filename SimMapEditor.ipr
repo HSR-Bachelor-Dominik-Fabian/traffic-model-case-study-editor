@@ -26,13 +26,6 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_STRING" value="-encoding utf8 -g" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="Bundled (Maven 3)" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
   <component name="Play2CompilerConfiguration">
     <option name="PLAY_ENABLED" value="true" />
     <option name="PROJECT_PLAY_MODULE" value="simmapeditor" />
