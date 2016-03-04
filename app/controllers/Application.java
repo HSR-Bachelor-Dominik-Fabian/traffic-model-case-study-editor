@@ -15,4 +15,7 @@ public class Application extends Controller {
         return ok(mapdh.render());
     }
 
+    public static Result map() {
+        return ok(map.render());
+    }
 }
