@@ -11,6 +11,10 @@ public class Application extends Controller {
         return ok(index.render("Your new application is ready."));
     }
 
+    public static Result mapdh(){
+        return ok(mapdh.render());
+    }
+
     public static Result map() {
         return ok(map.render());
     }
