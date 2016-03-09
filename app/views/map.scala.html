@@ -1,60 +1,101 @@
 @main("Welcome to Play") {
     <script type="text/javascript">
-            $(document).ready( function() {
-                var map = new L.Map("map", {center: [37.8, -96.9], zoom: 4})
-                        .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
-                var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-                        g = svg.append("g").attr("class", "leaflet-zoom-hide");
-                d3.json("@routes.Assets.at("json/santiago.json")", function(error, collection) {
-                    if (error) throw console.log(error);
+            require(["jquery", "d3", "leaflet", "angular", "bootstrap"], function(){
+                $(document).ready( function() {
+                    var map = new L.Map("map", {center: [37.8, -96.9], zoom: 4})
+                            .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+                    map.on("click", function(){
+                        var scope = angular.element($("#streetDetails")).scope();
+                        scope.streetModel=null;
+                        scope.$apply();
+                    });
+                    var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+                            g = svg.append("g").attr("class", "leaflet-zoom-hide");
+                    d3.json("@routes.Assets.at("json/santiago.json")", function(error, collection) {
+                        if (error) throw console.log(error);
 
-                    var geoJson = L.geoJson(collection, {onEachFeature: onEachFeature});
+                        var geoJson = L.geoJson(collection, {onEachFeature: onEachFeature});
 
-                    var overlays = { "geoJson": geoJson};
+                        var overlays = { "geoJson": geoJson};
 
-                    L.control.layers(overlays).addTo(map);
+                        L.control.layers(overlays).addTo(map);
 
-                    function onEachFeature(feature, layer){
-                        if (feature.properties) {
-                            layer.bindPopup("<b>" + feature.properties.id + "</b> is "
-                                    + feature.properties.length + " m long.");
+                        function onEachFeature(feature, layer){
+                            if (feature.properties) {
+                                layer.on("click", function(){
+                                    var scope = angular.element($("#streetDetails")).scope();
+                                    scope.streetModel=feature;
+                                    scope.$apply();
+                                });
+                                layer.bindPopup("<b>" + feature.properties.id + "</b> is "
+                                        + feature.properties.length + " m long.");
+                            }
                         }
-                    }
-
-                    /*
-                    var transform = d3.geo.transform({point: projectPoint}),
-                            path = d3.geo.path().projection(transform);
-
-                    var feature = g.selectAll("path")
-                            .data(collection.features)
-                            .enter().append("path");
-
-                    map.on("viewreset", reset);
-                    reset();
-
-                    function reset() {
-                        feature.attr("d", path);
-                        var bounds = path.bounds(collection),
-                                topLeft = bounds[0],
-                                bottomRight = bounds[1];
-
-                        svg.attr("width", bottomRight[0] - topLeft[0])
-                                .attr("height", bottomRight[1] - topLeft[1])
-                                .style("left", topLeft[0] + "px")
-                                .style("top", topLeft[1] + "px");
-
-                        g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
-                        feature.attr("d", path);
-                    }
-                    function projectPoint(x, y) {
-                        var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-                        this.stream.point(point.x, point.y);
-                    }
-                    */
+                    });
                 });
             });
     </script>
 }
-<div id="map">
+<div id="mapContainer" class="container-fluid">
+    <div class="row">
+        <div id="map" class="col-xs-12 col-sm-6 col-md-8">
 
+        </div>
+        <div id="streetDetails" class="col-xs-6 col-md-4" ng-hide="streetModel == null" ng-controller="StreetDetailController">
+            <div class="panel panel-default">
+                <div class="panel-heading">Properties</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <td>{{streetModel.properties.id}}</td>
+                            </tr>
+                            <tr>
+                                <th>Oneway</th>
+                                <td>{{streetModel.properties.oneway}}</td>
+                            </tr>
+                            <tr>
+                                <th>Modes</th>
+                                <td>{{streetModel.properties.modes}}</td>
+                            </tr>
+                            <tr>
+                                <th>Length</th>
+                                <td>{{streetModel.properties.length}}</td>
+                            </tr>
+                            <tr>
+                                <th>Freespeed</th>
+                                <td>{{streetModel.properties.freespeed}}</td>
+                            </tr>
+                            <tr>
+                                <th>Permlanes</th>
+                                <td>{{streetModel.properties.permlanes}}</td>
+                            </tr>
+                            <tr>
+                                <th>Capacity</th>
+                                <td>{{streetModel.properties.capacity}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Geometry</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Coordinates</th>
+                                <td>{{streetModel.geometry.coordinates}}</td>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td>{{streetModel.geometry.type}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
