@@ -14,8 +14,8 @@
                     });
                     var MapBox = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                         subdomains: 'abcd',
-                        id: '<your id>',
-                        accessToken: '<your accessToken>'
+                        id: 'f3keller',
+                        accessToken: 'pk.eyJ1IjoiZjNrZWxsZXIiLCJhIjoiY2lsa3VyNjB3MDA3am5ja3FxNHFld3E2NiJ9.A99UzeLIycU2I8jRCPixgg'
                     });
                     var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap]});
                     map.on("click", function(){
@@ -62,7 +62,8 @@
                             }
                         }
                     });
-                    var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de, "Black and White": OpenStreetMap_BlackAndWhite};
+                    var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de,
+                        "Black and White": OpenStreetMap_BlackAndWhite, "MapBox": MapBox};
 
                     var basicControl = L.control.layers(baseLayers, {}).addTo(map);
                     L.control.attribution(null);
