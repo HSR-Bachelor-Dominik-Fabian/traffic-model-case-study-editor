@@ -16,7 +16,8 @@
                         id: 'mapbox.streets',
                         accessToken: 'pk.eyJ1IjoiZjNrZWxsZXIiLCJhIjoiY2lsa3VyNjB3MDA3am5ja3FxNHFld3E2NiJ9.A99UzeLIycU2I8jRCPixgg'
                     });
-                    var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap], attributionControl: false});
+                    var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap],
+                        attributionControl: false, zoomControl: false});
                     map.on("click", function(){
                         $("#streetDetails").offcanvas("hide");
                         var scope = angular.element($("#streetDetails")).scope();
@@ -45,6 +46,7 @@
                                 var scope = angular.element($("#streetDetails")).scope();
                                 scope.streetModel=feature;
                                 scope.$apply();
+                                $("#streetDetails").offcanvas("show");
                             });
                             layer.bindPopup("<b>" + feature.properties.id + "</b> is "
                                     + feature.properties.length + " m long.");
@@ -56,6 +58,7 @@
 
                     var basicControl = L.control.layers(baseLayers, {}).addTo(map);
                     L.control.attribution(null);
+                    L.control.zoom( {position: 'bottomright'}).addTo(map);
 
                     function addOverLay(layer, name) {
                         map.addLayer(layer);
