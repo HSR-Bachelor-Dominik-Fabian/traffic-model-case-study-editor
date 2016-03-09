@@ -1,64 +1,140 @@
 @main("Welcome to Play") {
     <script type="text/javascript">
-            $(document).ready( function() {
-                var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                });
-                var baseMap_de = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
-                    maxZoom: 18
-                })
-                var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-                    maxZoom: 18
-                });
-                var MapBox = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                    subdomains: 'abcd',
-                    id: '<your id>',
-                    accessToken: '<your accessToken>'
-                });
-                var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap]});
-                var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-                        g = svg.append("g").attr("class", "leaflet-zoom-hide");
-
-                d3.json("@routes.Assets.at("json/santiago.json")", function(error, collection) {
-                    if (error) throw console.log(error);
+            require(["jquery", "d3", "leaflet", "angular", "bootstrap"], function(){
+                $(document).ready( function() {
+                    var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 19,
+                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    });
+                    var baseMap_de = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+                        maxZoom: 18
+                    })
+                    var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+                        maxZoom: 18
+                    });
+                    var MapBox = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                        subdomains: 'abcd',
+                        id: '<your id>',
+                        accessToken: '<your accessToken>'
+                    });
+                    var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap]});
+                    map.on("click", function(){
+                        var scope = angular.element($("#streetDetails")).scope();
+                        scope.streetModel=null;
+                        scope.$apply();
+                    });
+                    var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+                            g = svg.append("g").attr("class", "leaflet-zoom-hide");
+                    d3.json("@routes.Assets.at("json/santiago.json")", function(error, collection) {
+                        if (error) throw console.log(error);
 
                     var santiago = L.geoJson(collection, {onEachFeature: onEachFeature});
                     addOverLay(santiago, "Santiago");
 
-                    function onEachFeature(feature, layer){
-                        if (feature.properties) {
-                            layer.bindPopup("<b>" + feature.properties.id + "</b> is "
-                                    + feature.properties.length + " m long.");
+                        function onEachFeature(feature, layer){
+                            if (feature.properties) {
+                                layer.on("click", function(){
+                                    var scope = angular.element($("#streetDetails")).scope();
+                                    scope.streetModel=feature;
+                                    scope.$apply();
+                                });
+                                layer.bindPopup("<b>" + feature.properties.id + "</b> is "
+                                        + feature.properties.length + " m long.");
+                            }
                         }
+                    });
+
+                    d3.json("@routes.Assets.at("json/siouxfalls.json")", function(error, collection) {
+                        if (error) throw console.log(error);
+
+                        var siouxfalls = L.geoJson(collection, {onEachFeature: onEachFeature});
+                        addOverLay(siouxfalls, "Siouxfalls");
+
+                        function onEachFeature(feature, layer){
+                            if (feature.properties) {
+                                layer.on("click", function(){
+                                    var scope = angular.element($("#streetDetails")).scope();
+                                    scope.streetModel=feature;
+                                    scope.$apply();
+                                });
+                                layer.bindPopup("<b>" + feature.properties.id + "</b> is "
+                                        + feature.properties.length + " m long.");
+                            }
+                        }
+                    });
+                    var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de, "Black and White": OpenStreetMap_BlackAndWhite};
+
+                    var basicControl = L.control.layers(baseLayers, {}).addTo(map);
+                    L.control.attribution(null);
+
+                    function addOverLay(layer, name) {
+                        map.addLayer(layer);
+                        basicControl.addOverlay(layer, name);
                     }
                 });
-
-                d3.json("@routes.Assets.at("json/siouxfalls.json")", function(error, collection) {
-                    if (error) throw console.log(error);
-
-                    var siouxfalls = L.geoJson(collection, {onEachFeature: onEachFeature});
-                    addOverLay(siouxfalls, "Siouxfalls");
-
-                    function onEachFeature(feature, layer){
-                        if (feature.properties) {
-                            layer.bindPopup("<b>" + feature.properties.id + "</b> is "
-                                    + feature.properties.length + " m long.");
-                        }
-                    }
-                });
-                var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de, "Black and White": OpenStreetMap_BlackAndWhite};
-
-                var basicControl = L.control.layers(baseLayers, {}).addTo(map);
-                L.control.attribution(null);
-
-                function addOverLay(layer, name) {
-                    map.addLayer(layer);
-                    basicControl.addOverlay(layer, name);
-                }
             });
     </script>
 }
-<div id="map">
+<div id="mapContainer" class="container-fluid">
+    <div class="row">
+        <div id="map" class="col-xs-12 col-sm-6 col-md-8">
 
+        </div>
+        <div id="streetDetails" class="col-xs-6 col-md-4" ng-hide="streetModel == null" ng-controller="StreetDetailController">
+            <div class="panel panel-default">
+                <div class="panel-heading">Properties</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>ID</th>
+                                <td>{{streetModel.properties.id}}</td>
+                            </tr>
+                            <tr>
+                                <th>Oneway</th>
+                                <td>{{streetModel.properties.oneway}}</td>
+                            </tr>
+                            <tr>
+                                <th>Modes</th>
+                                <td>{{streetModel.properties.modes}}</td>
+                            </tr>
+                            <tr>
+                                <th>Length</th>
+                                <td>{{streetModel.properties.length}}</td>
+                            </tr>
+                            <tr>
+                                <th>Freespeed</th>
+                                <td>{{streetModel.properties.freespeed}}</td>
+                            </tr>
+                            <tr>
+                                <th>Permlanes</th>
+                                <td>{{streetModel.properties.permlanes}}</td>
+                            </tr>
+                            <tr>
+                                <th>Capacity</th>
+                                <td>{{streetModel.properties.capacity}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Geometry</div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Coordinates</th>
+                                <td>{{streetModel.geometry.coordinates}}</td>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td>{{streetModel.geometry.type}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
