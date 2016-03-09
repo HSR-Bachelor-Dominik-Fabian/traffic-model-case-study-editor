@@ -1,18 +1,30 @@
 @main("Welcome to Play") {
     <script type="text/javascript">
             $(document).ready( function() {
-                var map = new L.Map("map", {center: [37.8, -96.9], zoom: 4})
-                        .addLayer(new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+                var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                });
+                var baseMap_de = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+                    maxZoom: 18
+                })
+                var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+                    maxZoom: 18
+                });
+                var MapBox = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    subdomains: 'abcd',
+                    id: '<your id>',
+                    accessToken: '<your accessToken>'
+                });
+                var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap]});
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
                 d3.json("@routes.Assets.at("json/santiago.json")", function(error, collection) {
                     if (error) throw console.log(error);
 
-                    var geoJson = L.geoJson(collection, {onEachFeature: onEachFeature});
-
-                    var overlays = { "geoJson": geoJson};
-
-                    L.control.layers(overlays).addTo(map);
+                    var santiago = L.geoJson(collection, {onEachFeature: onEachFeature});
+                    addOverLay(santiago, "Santiago");
 
                     function onEachFeature(feature, layer){
                         if (feature.properties) {
@@ -20,38 +32,30 @@
                                     + feature.properties.length + " m long.");
                         }
                     }
-
-                    /*
-                    var transform = d3.geo.transform({point: projectPoint}),
-                            path = d3.geo.path().projection(transform);
-
-                    var feature = g.selectAll("path")
-                            .data(collection.features)
-                            .enter().append("path");
-
-                    map.on("viewreset", reset);
-                    reset();
-
-                    function reset() {
-                        feature.attr("d", path);
-                        var bounds = path.bounds(collection),
-                                topLeft = bounds[0],
-                                bottomRight = bounds[1];
-
-                        svg.attr("width", bottomRight[0] - topLeft[0])
-                                .attr("height", bottomRight[1] - topLeft[1])
-                                .style("left", topLeft[0] + "px")
-                                .style("top", topLeft[1] + "px");
-
-                        g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
-                        feature.attr("d", path);
-                    }
-                    function projectPoint(x, y) {
-                        var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-                        this.stream.point(point.x, point.y);
-                    }
-                    */
                 });
+
+                d3.json("@routes.Assets.at("json/siouxfalls.json")", function(error, collection) {
+                    if (error) throw console.log(error);
+
+                    var siouxfalls = L.geoJson(collection, {onEachFeature: onEachFeature});
+                    addOverLay(siouxfalls, "Siouxfalls");
+
+                    function onEachFeature(feature, layer){
+                        if (feature.properties) {
+                            layer.bindPopup("<b>" + feature.properties.id + "</b> is "
+                                    + feature.properties.length + " m long.");
+                        }
+                    }
+                });
+                var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de, "Black and White": OpenStreetMap_BlackAndWhite};
+
+                var basicControl = L.control.layers(baseLayers, {}).addTo(map);
+                L.control.attribution(null);
+
+                function addOverLay(layer, name) {
+                    map.addLayer(layer);
+                    basicControl.addOverlay(layer, name);
+                }
             });
     </script>
 }
