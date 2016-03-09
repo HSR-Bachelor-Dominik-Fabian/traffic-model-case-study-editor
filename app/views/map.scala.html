@@ -18,11 +18,13 @@
                     });
                     var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap],
                         attributionControl: false, zoomControl: false});
+                    var marker;
                     map.on("click", function(){
                         $("#streetDetails").offcanvas("hide");
                         var scope = angular.element($("#streetDetails")).scope();
                         scope.streetModel=null;
                         scope.$apply();
+                        map.removeLayer(marker);
                     });
                     var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                             g = svg.append("g").attr("class", "leaflet-zoom-hide");
@@ -42,14 +44,13 @@
 
                     function onEachFeature(feature, layer){
                         if (feature.properties) {
-                            layer.on("click", function(){
+                            layer.on("click", function(e){
                                 var scope = angular.element($("#streetDetails")).scope();
                                 scope.streetModel=feature;
                                 scope.$apply();
                                 $("#streetDetails").offcanvas("show");
+                                marker = L.marker(e.latlng).addTo(map);
                             });
-                            layer.bindPopup("<b>" + feature.properties.id + "</b> is "
-                                    + feature.properties.length + " m long.");
                         }
                     }
 
