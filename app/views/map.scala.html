@@ -1,7 +1,8 @@
 @main("Welcome to Play") {
     <script type="text/javascript">
-            require(["jquery", "d3", "leaflet", "angular", "bootstrap"], function(){
+            require(["jquery", "d3", "leaflet", "angular", "bootstrap", "jasny"], function(){
                 $(document).ready( function() {
+                    $("#streetDetails").offcanvas();
                     var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -19,6 +20,7 @@
                     });
                     var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap]});
                     map.on("click", function(){
+                        $("#streetDetails").offcanvas("hide");
                         var scope = angular.element($("#streetDetails")).scope();
                         scope.streetModel=null;
                         scope.$apply();
@@ -37,6 +39,7 @@
                                     var scope = angular.element($("#streetDetails")).scope();
                                     scope.streetModel=feature;
                                     scope.$apply();
+                                    $("#streetDetails").offcanvas("show");
                                 });
                                 layer.bindPopup("<b>" + feature.properties.id + "</b> is "
                                         + feature.properties.length + " m long.");
@@ -56,6 +59,7 @@
                                     var scope = angular.element($("#streetDetails")).scope();
                                     scope.streetModel=feature;
                                     scope.$apply();
+                                    $("#streetDetails").offcanvas("show");
                                 });
                                 layer.bindPopup("<b>" + feature.properties.id + "</b> is "
                                         + feature.properties.length + " m long.");
@@ -77,10 +81,10 @@
 }
 <div id="mapContainer" class="container-fluid">
     <div class="row">
-        <div id="map" class="col-xs-12 col-sm-6 col-md-8">
+        <div id="map" class="col-xs-12">
 
         </div>
-        <div id="streetDetails" class="col-xs-6 col-md-4" ng-hide="streetModel == null" ng-controller="StreetDetailController">
+        <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas"  ng-controller="StreetDetailController">
             <div class="panel panel-default">
                 <div class="panel-heading">Properties</div>
                 <div class="panel-body">
