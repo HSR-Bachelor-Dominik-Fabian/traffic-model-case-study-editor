@@ -1,6 +1,6 @@
 @main("Welcome to Play") {
     <script type="text/javascript">
-            require(["jquery", "d3", "leaflet", "angular", "bootstrap", "jasny", "zoomslider"], function(){
+            require(["jquery", "d3", "leaflet", "angular", "bootstrap", "jasny", "zoomslider","TileLayer.GeoJSON"], function(){
                 $(document).ready( function() {
                     var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 15
@@ -29,19 +29,26 @@
                     });
                     var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                             g = svg.append("g").attr("class", "leaflet-zoom-hide");
-                    d3.json("@routes.Assets.at("json/santiago.json")", function(error, collection) {
-                        if (error) throw console.log(error);
+                    @*d3.json("@routes.Assets.at("json/santiago.json")", function(error, collection) {*@
+                        @*if (error) throw console.log(error);*@
 
-                        var santiago = L.geoJson(collection, {onEachFeature: onEachFeature});
-                        addOverLay(santiago, "Santiago");
-                    });
+                        @*var santiago = L.geoJson(collection, {onEachFeature: onEachFeature});*@
+                        @*addOverLay(santiago, "Santiago");*@
+                    @*});*@
 
-                    d3.json("@routes.Assets.at("json/siouxfalls.json")", function(error, collection) {
-                        if (error) throw console.log(error);
+                    @*d3.json("@routes.Assets.at("json/siouxfalls.json")", function(error, collection) {*@
+                        @*if (error) throw console.log(error);*@
 
-                        var siouxfalls = L.geoJson(collection, {onEachFeature: onEachFeature});
-                        addOverLay(siouxfalls, "Siouxfalls");
-                    });
+                        @*var siouxfalls = L.geoJson(collection, {onEachFeature: onEachFeature});*@
+                        @*addOverLay(siouxfalls, "Siouxfalls");*@
+                    @*});*@
+                    var geojsonURL = 'http://localhost:9000/networks/{z}/{x}/{y}/{s}';
+                    var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
+                        clipTiles: true,
+                        unique: function (feature) {
+                            return feature.properties.id;
+                        }
+                    },{});
 
                     function onEachFeature(feature, layer){
                         if (feature.properties) {
@@ -66,6 +73,7 @@
                     L.control.attribution(null);
                     map.addControl(new L.Control.Zoomslider( {position: "bottomright"} ));
                     L.control.scale( {position: "bottomleft", imperial: false} ).addTo(map);
+                    addOverLay(geojsonTileLayer, "Test Layer");
 
                     function addOverLay(layer, name) {
                         map.addLayer(layer);

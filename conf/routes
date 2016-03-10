@@ -9,4 +9,7 @@ GET     /map                        controllers.Application.map
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
+# Services
+GET     /networks/:z/:x/:y/:s       controllers.NetworkService.getNetworks(x:Int,y:Int,z:Int,s:String)
+
     
