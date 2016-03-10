@@ -52,7 +52,7 @@
                                 var scope = angular.element(streetDetails).scope();
                                 scope.streetModel=feature;
                                 scope.$apply();
-                                $("#streetDetails").offcanvas("show");
+                                streetDetails.offcanvas("show");
                                 map.removeLayer(marker);
                                 marker = L.marker(e.latlng).addTo(map);
                             });
