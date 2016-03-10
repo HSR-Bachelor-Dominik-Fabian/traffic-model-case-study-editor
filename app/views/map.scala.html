@@ -44,7 +44,7 @@
                     @*});*@
                     var geojsonURL = 'http://localhost:9000/networks/{z}/{x}/{y}/{s}';
                     var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
-                        clipTiles: true,
+                        clipTiles: false,
                         unique: function (feature) {
                             return feature.properties.id;
                         }
