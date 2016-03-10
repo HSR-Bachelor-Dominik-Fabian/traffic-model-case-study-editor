@@ -19,8 +19,9 @@
                     var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap],
                         attributionControl: false, zoomControl: false});
                     map.on("click", function(){
-                        $("#streetDetails").offcanvas("hide");
-                        var scope = angular.element($("#streetDetails")).scope();
+                        var streetDetails=$("#streetDetails")
+                        streetDetails.offcanvas("hide");
+                        var scope = angular.element(streetDetails).scope();
                         scope.streetModel=null;
                         scope.$apply();
                     });
@@ -42,11 +43,14 @@
 
                     function onEachFeature(feature, layer){
                         if (feature.properties) {
+                            layer.setStyle({color: "red"});
                             layer.on("click", function(){
-                                var scope = angular.element($("#streetDetails")).scope();
+                                layer.setStyle({color: "yellow"});
+                                var streetDetails = $("#streetDetails");
+                                var scope = angular.element(streetDetails).scope();
                                 scope.streetModel=feature;
                                 scope.$apply();
-                                $("#streetDetails").offcanvas("show");
+                                streetDetails.offcanvas("show");
                             });
                             layer.bindPopup("<b>" + feature.properties.id + "</b> is "
                                     + feature.properties.length + " m long.");
