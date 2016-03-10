@@ -11,5 +11,4 @@ dist
 /.project
 /RUNNING_PID
 /.settings
-
-    
+*.iws
