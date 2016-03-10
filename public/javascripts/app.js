@@ -1,7 +1,7 @@
 require(["angular", "bootstrap", "leaflet", "angular-route"], function(){
     var simmapeditorApp = angular.module("simmapeditorApp",['ngRoute']);
 
-    simmapeditorApp.controller("StreetDetailController", function($scope){
+    simmapeditorApp.controller("StreetDetailController", ["$scope", function($scope){
         $scope.streetModel = null
         $scope.layer = null;
         $scope.marker = null;
@@ -37,5 +37,5 @@ require(["angular", "bootstrap", "leaflet", "angular-route"], function(){
                 $scope.newFeature(feature, layer, latlng, map);
             }
         }
-    });
+    }]);
 });
