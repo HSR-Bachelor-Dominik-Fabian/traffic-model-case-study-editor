@@ -20,8 +20,9 @@
                         attributionControl: false, zoomControl: false});
                     var marker;
                     map.on("click", function(){
-                        $("#streetDetails").offcanvas("hide");
-                        var scope = angular.element($("#streetDetails")).scope();
+                        var streetDetails=$("#streetDetails")
+                        streetDetails.offcanvas("hide");
+                        var scope = angular.element(streetDetails).scope();
                         scope.streetModel=null;
                         scope.$apply();
                         map.removeLayer(marker);
@@ -44,11 +45,14 @@
 
                     function onEachFeature(feature, layer){
                         if (feature.properties) {
-                            layer.on("click", function(e){
-                                var scope = angular.element($("#streetDetails")).scope();
+                            layer.setStyle({color: "red"});
+                            layer.on("click", function(){
+                                layer.setStyle({color: "yellow"});
+                                var streetDetails = $("#streetDetails");
+                                var scope = angular.element(streetDetails).scope();
                                 scope.streetModel=feature;
                                 scope.$apply();
-                                $("#streetDetails").offcanvas("show");
+                                streetDetails.offcanvas("show");
                                 map.removeLayer(marker);
                                 marker = L.marker(e.latlng).addTo(map);
                             });
