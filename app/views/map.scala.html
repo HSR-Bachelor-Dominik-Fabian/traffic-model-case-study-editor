@@ -1,6 +1,6 @@
 @main("Welcome to Play") {
     <script type="text/javascript">
-            require(["jquery", "d3", "leaflet", "angular", "bootstrap", "jasny"], function(){
+            require(["jquery", "d3", "leaflet", "angular", "bootstrap", "jasny", "zoomslider"], function(){
                 $(document).ready( function() {
                     var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 15
@@ -49,6 +49,7 @@
                                 scope.streetModel=feature;
                                 scope.$apply();
                                 $("#streetDetails").offcanvas("show");
+                                map.removeLayer(marker);
                                 marker = L.marker(e.latlng).addTo(map);
                             });
                         }
@@ -59,7 +60,8 @@
 
                     var basicControl = L.control.layers(baseLayers, {}).addTo(map);
                     L.control.attribution(null);
-                    L.control.zoom( {position: 'bottomright'}).addTo(map);
+                    map.addControl(new L.Control.Zoomslider( {position: "bottomright"} ));
+                    L.control.scale( {position: "bottomleft", imperial: false} ).addTo(map);
 
                     function addOverLay(layer, name) {
                         map.addLayer(layer);
