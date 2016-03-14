@@ -180,7 +180,7 @@
         <entry key="sourceDirectory">
           <value>
             <ProjectSettingsEntry>
-              <option name="sourceDir" value="C:\Users\dohee\Source\IntelliJ\BA\traffic-model-case-study-editor\app" />
+              <option name="sourceDir" value="C:\Users\dohee\Source\IntelliJ\BA\traffic-model-case-study-editor\Simmapeditor\app" />
               <option name="confDir" value="C:\Users\dohee\Source\IntelliJ\BA\traffic-model-case-study-editor\app" />
             </ProjectSettingsEntry>
           </value>
@@ -212,7 +212,7 @@
         <entry key="uri">
           <value>
             <ProjectSettingsEntry>
-              <option name="uri" value="/C:/Users/dohee/Source/IntelliJ/BA/traffic-model-case-study-editor" />
+              <option name="uri" value="/C:/Users/dohee/Source/IntelliJ/BA/traffic-model-case-study-editor/Simmapeditor" />
             </ProjectSettingsEntry>
           </value>
         </entry>
