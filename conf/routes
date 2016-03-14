@@ -10,6 +10,6 @@ GET     /map                        controllers.Application.map
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 # Services
-GET     /networks/:z/:x/:y/:s       controllers.NetworkService.getNetworks(x:Int,y:Int,z:Int,s:String)
+GET     /networks/:z/:x/:y       controllers.NetworkService.getNetworks(x:Int,y:Int,z:Int)
 
     
