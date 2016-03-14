@@ -26,4 +26,4 @@ resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
 resolvers += "osgeo" at "http://download.osgeo.org/webdav/geotools/"
 
-resolvers += "Jboss" at "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/javax/media/jai-core/1.1.3/"
+resolvers += "Jboss" at "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/"
