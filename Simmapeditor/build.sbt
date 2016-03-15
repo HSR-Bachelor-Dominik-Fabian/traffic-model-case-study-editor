@@ -8,6 +8,10 @@ scalaVersion := "2.11.7"
 
 libraryDependencies ++= Seq( javaJdbc ,  cache , javaWs , specs2 % Test)
 
+resolvers += "osgeo" at "http://download.osgeo.org/webdav/geotools/"
+
+resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
+
 libraryDependencies += "org.easytesting" % "fest-assert" % "1.4" % Test
 
 libraryDependencies += "org.json" % "json" % "20160212"
@@ -20,8 +24,4 @@ libraryDependencies += "org.geotools" % "gt-shapefile" % "14.2"
 
 libraryDependencies += "org.geotools" % "gt-epsg-hsql" % "14.2"
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
-
-resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
-
-resolvers += "osgeo" at "http://download.osgeo.org/webdav/geotools/"
+unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
