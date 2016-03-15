@@ -10,9 +10,7 @@ libraryDependencies ++= Seq( javaJdbc ,  cache , javaWs , specs2 % Test)
 
 resolvers += "osgeo" at "http://download.osgeo.org/webdav/geotools/"
 
-resolvers += "jai" at "https://jai.dev.java.net/"
-
-resolvers += Resolver.file("jai Core", file("lib/jai_core-1.1.3.jar")) transactional()
+resolvers += "Jai" at "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/"
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
@@ -22,7 +20,7 @@ libraryDependencies += "org.json" % "json" % "20160212"
 
 libraryDependencies += "com.google.guava" % "guava" % "19.0"
 
-libraryDependencies += "javax.media" % "jai_core" % "1.1.3"
+libraryDependencies += "javax.media" % "jai_core" % "1.1.3" from "http://download.osgeo.org/webdav/geotools/javax/media/jai_core/1.1.3/jai_core-1.1.3.jar"
 
 libraryDependencies += "org.geotools" % "gt-shapefile" % "14.2"
 
