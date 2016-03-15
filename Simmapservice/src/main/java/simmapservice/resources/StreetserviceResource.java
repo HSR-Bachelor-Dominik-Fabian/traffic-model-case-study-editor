@@ -1,11 +1,18 @@
 package simmapservice.resources;
 
-import javax.ws.rs.*;
+import businesslogic.mercatorconvert.BoundingBox;
+import businesslogic.mercatorconvert.Converter;
 
-@Path("/tile/{z}/{x}/{y}")
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+
+@Path("/networks/{z}/{x}/{y}")
 public class StreetserviceResource {
     @GET
-    public String getTile(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y){
-        return "Anfrage fuer Tile: [" + x + "," + y + "] mit Zoomlevel: "+ z;
+    public Response getNetwork(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y){
+        System.out.println("x:" + x + ", y:"+ y + ", z:" + z);
+        BoundingBox coord = Converter.tile2boundingBox(x,y,z);
+        System.out.println("north:" + coord.north + ", west:"+ coord.west + ", south:" + coord.south + ", east:" + coord.east);
+        return Response.ok().build();
     }
 }
