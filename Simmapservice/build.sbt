@@ -15,3 +15,4 @@ crossPaths := false
 autoScalaLibrary := false
 
 libraryDependencies += "io.dropwizard" % "dropwizard-core" % "0.9.2"
+
