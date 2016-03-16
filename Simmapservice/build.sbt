@@ -2,6 +2,8 @@ name := "SimmapserviceConfig"
 
 version := "1.0"
 
+organization := "simmapservice"
+
 // Do not append Scala versions to the generated artifacts
 crossPaths := false
 
