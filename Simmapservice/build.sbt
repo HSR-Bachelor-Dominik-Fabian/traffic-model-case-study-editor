@@ -4,7 +4,9 @@ version := "1.0"
 
 organization := "simmapservice"
 
-mainClass in Compile := Some("simmapservice.Streetservice")
+mainClass in (Compile, packageBin) := Some("simmapservice.Streetservice")
+
+mainClass in (Compile, run) := Some("simmapservice.Streetservice")
 
 // Do not append Scala versions to the generated artifacts
 crossPaths := false
