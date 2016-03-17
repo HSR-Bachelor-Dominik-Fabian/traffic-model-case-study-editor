@@ -1,0 +1,10 @@
+version: '2'
+services:
+  webservice1:
+    build: .
+    ports:
+      - "40005:9000"
+  webservice2:
+    build: .
+    ports:
+      - "40006:9000"
