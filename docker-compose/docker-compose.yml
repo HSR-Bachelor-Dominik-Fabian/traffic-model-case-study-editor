@@ -1,10 +1,14 @@
 version: '2'
 services:
-  webservice1:
-    build: .
+  simmapservice1:
+    build: ./simmapservice/
     ports:
       - "40005:9000"
-  webservice2:
-    build: .
+  simmapservice2:
+    build: ./simmapservice/
     ports:
       - "40006:9000"
+  simmapwebsite:
+    build: ./simmapeditor/
+    ports:
+      - "40004:9000"
