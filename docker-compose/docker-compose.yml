@@ -8,7 +8,7 @@ services:
     build: ./simmapservice/
     ports:
       - "40006:9000"
-  simmapservice3
+  simmapservice3:
     build: ./simmapservice/
     ports:
       - "40007:9000"
