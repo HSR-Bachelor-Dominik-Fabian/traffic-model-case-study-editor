@@ -3,12 +3,14 @@ package simmapservice;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import simmapservice.resources.QuadtileResource;
 import simmapservice.resources.StreetserviceResource;
 import simmapservice.resources.XMLImportResource;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.util.Properties;
+import simmapservice.resources.XYToQuadtileResource;
 
 /**
  * Created by dohee on 15.03.2016.
@@ -32,5 +34,9 @@ public class Streetservice extends Application<StreetserviceConfiguration>{
         environment.jersey().register(streetserviceResource);
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(new XMLImportResource(properties));
+        QuadtileResource quadtileResource = new QuadtileResource();
+        environment.jersey().register(quadtileResource);
+        XYToQuadtileResource xyToQuadtileResource = new XYToQuadtileResource();
+        environment.jersey().register(xyToQuadtileResource);
     }
 }
