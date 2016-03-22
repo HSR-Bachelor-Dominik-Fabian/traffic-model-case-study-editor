@@ -346,6 +346,15 @@
         <root url="jar://$USER_HOME$/.ivy2/cache/com.google.guava/guava/srcs/guava-18.0-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="SBT: commons-io:commons-io:2.4:jar">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/commons-io/commons-io/jars/commons-io-2.4.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/commons-io/commons-io/srcs/commons-io-2.4-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="SBT: io.dropwizard.metrics:metrics-annotation:3.1.2:jar">
       <CLASSES>
         <root url="jar://$USER_HOME$/.ivy2/cache/io.dropwizard.metrics/metrics-annotation/bundles/metrics-annotation-3.1.2.jar!/" />
@@ -535,6 +544,15 @@
         <root url="jar://$USER_HOME$/.ivy2/cache/javax.annotation/javax.annotation-api/srcs/javax.annotation-api-1.2-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="SBT: javax.inject:javax.inject:1:jar">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/javax.inject/javax.inject/jars/javax.inject-1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/javax.inject/javax.inject/srcs/javax.inject-1-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="SBT: javax.servlet:javax.servlet-api:3.1.0:jar">
       <CLASSES>
         <root url="jar://$USER_HOME$/.ivy2/cache/javax.servlet/javax.servlet-api/jars/javax.servlet-api-3.1.0.jar!/" />
@@ -688,49 +706,49 @@
         <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jetty/jetty-xml/srcs/jetty-xml-9.2.13.v20150730-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="SBT: org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b31:jar">
+    <library name="SBT: org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b34:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2.external/aopalliance-repackaged/jars/aopalliance-repackaged-2.4.0-b31.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2.external/aopalliance-repackaged/jars/aopalliance-repackaged-2.4.0-b34.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2.external/aopalliance-repackaged/srcs/aopalliance-repackaged-2.4.0-b31-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2.external/aopalliance-repackaged/srcs/aopalliance-repackaged-2.4.0-b34-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="SBT: org.glassfish.hk2.external:javax.inject:2.4.0-b31:jar">
+    <library name="SBT: org.glassfish.hk2.external:javax.inject:2.4.0-b34:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2.external/javax.inject/jars/javax.inject-2.4.0-b31.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2.external/javax.inject/jars/javax.inject-2.4.0-b34.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2.external/javax.inject/srcs/javax.inject-2.4.0-b31-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2.external/javax.inject/srcs/javax.inject-2.4.0-b34-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="SBT: org.glassfish.hk2:hk2-api:2.4.0-b31:jar">
+    <library name="SBT: org.glassfish.hk2:hk2-api:2.4.0-b34:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-api/jars/hk2-api-2.4.0-b31.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-api/jars/hk2-api-2.4.0-b34.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-api/srcs/hk2-api-2.4.0-b31-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-api/srcs/hk2-api-2.4.0-b34-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="SBT: org.glassfish.hk2:hk2-locator:2.4.0-b31:jar">
+    <library name="SBT: org.glassfish.hk2:hk2-locator:2.4.0-b34:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-locator/jars/hk2-locator-2.4.0-b31.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-locator/jars/hk2-locator-2.4.0-b34.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-locator/srcs/hk2-locator-2.4.0-b31-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-locator/srcs/hk2-locator-2.4.0-b34-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="SBT: org.glassfish.hk2:hk2-utils:2.4.0-b31:jar">
+    <library name="SBT: org.glassfish.hk2:hk2-utils:2.4.0-b34:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-utils/jars/hk2-utils-2.4.0-b31.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-utils/jars/hk2-utils-2.4.0-b34.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-utils/srcs/hk2-utils-2.4.0-b31-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/hk2-utils/srcs/hk2-utils-2.4.0-b34-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="SBT: org.glassfish.hk2:osgi-resource-locator:1.0.1:jar">
@@ -742,13 +760,13 @@
         <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.hk2/osgi-resource-locator/srcs/osgi-resource-locator-1.0.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="SBT: org.glassfish.jersey.bundles.repackaged:jersey-guava:2.22.1:jar">
+    <library name="SBT: org.glassfish.jersey.bundles.repackaged:jersey-guava:2.22.2:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.bundles.repackaged/jersey-guava/bundles/jersey-guava-2.22.1.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.bundles.repackaged/jersey-guava/bundles/jersey-guava-2.22.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.bundles.repackaged/jersey-guava/srcs/jersey-guava-2.22.1-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.bundles.repackaged/jersey-guava/srcs/jersey-guava-2.22.2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="SBT: org.glassfish.jersey.containers:jersey-container-servlet-core:2.22.1:jar">
@@ -778,13 +796,13 @@
         <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.core/jersey-client/srcs/jersey-client-2.22.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="SBT: org.glassfish.jersey.core:jersey-common:2.22.1:jar">
+    <library name="SBT: org.glassfish.jersey.core:jersey-common:2.22.2:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.core/jersey-common/jars/jersey-common-2.22.1.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.core/jersey-common/jars/jersey-common-2.22.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.core/jersey-common/srcs/jersey-common-2.22.1-sources.jar!/" />
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.core/jersey-common/srcs/jersey-common-2.22.2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="SBT: org.glassfish.jersey.core:jersey-server:2.22.1:jar">
@@ -823,6 +841,15 @@
         <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.media/jersey-media-jaxb/srcs/jersey-media-jaxb-2.22.1-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="SBT: org.glassfish.jersey.media:jersey-media-multipart:2.22.2:jar">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.media/jersey-media-multipart/jars/jersey-media-multipart-2.22.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish.jersey.media/jersey-media-multipart/srcs/jersey-media-multipart-2.22.2-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="SBT: org.glassfish:javax.el:3.0.0:jar">
       <CLASSES>
         <root url="jar://$USER_HOME$/.ivy2/cache/org.glassfish/javax.el/jars/javax.el-3.0.0.jar!/" />
@@ -857,6 +884,24 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.logging/jboss-logging/srcs/jboss-logging-3.2.1.Final-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="SBT: org.json:json:20160212:jar">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.json/json/bundles/json-20160212.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.json/json/srcs/json-20160212-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="SBT: org.jvnet.mimepull:mimepull:1.9.6:jar">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.jvnet.mimepull/mimepull/jars/mimepull-1.9.6.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.ivy2/cache/org.jvnet.mimepull/mimepull/srcs/mimepull-1.9.6-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="SBT: org.slf4j:jcl-over-slf4j:1.7.12:jar">
