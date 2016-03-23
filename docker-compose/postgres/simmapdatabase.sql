@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.1
 -- Dumped by pg_dump version 9.5.1
 
--- Started on 2016-03-23 12:50:27
+-- Started on 2016-03-23 14:02:37
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,59 +14,19 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
-
-DROP DATABASE simmapdatabase;
---
--- TOC entry 2123 (class 1262 OID 16393)
--- Name: simmapdatabase; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE simmapdatabase WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'German_Switzerland.1252' LC_CTYPE = 'German_Switzerland.1252';
-
-
-ALTER DATABASE simmapdatabase OWNER TO postgres;
-
-\connect simmapdatabase
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- TOC entry 6 (class 2615 OID 2200)
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
---
-
-CREATE SCHEMA public;
-
-
-ALTER SCHEMA public OWNER TO postgres;
-
---
--- TOC entry 2124 (class 0 OID 0)
--- Dependencies: 6
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
-
 
 --
 -- TOC entry 1 (class 3079 OID 12355)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2126 (class 0 OID 0)
+-- TOC entry 2130 (class 0 OID 0)
 -- Dependencies: 1
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -99,7 +59,7 @@ CREATE TABLE "Link" (
 ALTER TABLE "Link" OWNER TO postgres;
 
 --
--- TOC entry 2127 (class 0 OID 0)
+-- TOC entry 2131 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: COLUMN "Link".oneway; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -152,7 +112,7 @@ CREATE TABLE "Node" (
 ALTER TABLE "Node" OWNER TO postgres;
 
 --
--- TOC entry 2128 (class 0 OID 0)
+-- TOC entry 2132 (class 0 OID 0)
 -- Dependencies: 182
 -- Name: COLUMN "Node"."Id"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -162,13 +122,59 @@ COMMENT ON COLUMN "Node"."Id" IS '
 
 
 --
--- TOC entry 2129 (class 0 OID 0)
+-- TOC entry 2133 (class 0 OID 0)
 -- Dependencies: 182
 -- Name: COLUMN "Node"."QuadKey"; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON COLUMN "Node"."QuadKey" IS '
 ';
+
+
+--
+-- TOC entry 2122 (class 0 OID 16422)
+-- Dependencies: 184
+-- Data for Name: Link; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "Link" ("Id", "NetworkId", "QuadKey", length, freespeed, capacity, permlanes, oneway, modes) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2119 (class 0 OID 16394)
+-- Dependencies: 181
+-- Data for Name: Network; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "Network" ("Name", "Id") FROM stdin;
+Test Network	123
+Test1	1
+Test2	2
+Test3	3
+Test4	4
+\.
+
+
+--
+-- TOC entry 2121 (class 0 OID 16412)
+-- Dependencies: 183
+-- Data for Name: Network_Options; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "Network_Options" ("OptionName", "NetworkId", "Value") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2120 (class 0 OID 16402)
+-- Dependencies: 182
+-- Data for Name: Node; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "Node" ("Id", "NetworkId", "QuadKey", x, y) FROM stdin;
+T1223_23	123	123asdfkjasölkdfj	123123123	1123213
+\.
 
 
 --
@@ -251,7 +257,7 @@ ALTER TABLE ONLY "Network_Options"
 
 
 --
--- TOC entry 2125 (class 0 OID 0)
+-- TOC entry 2129 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -262,7 +268,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-03-23 12:50:27
+-- Completed on 2016-03-23 14:02:37
 
 --
 -- PostgreSQL database dump complete
