@@ -68,7 +68,7 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"></transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ch.simmapeditor.simmapservice.Streetservice</mainClass>
+                                    <mainClass>simmapservice.Streetservice</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
