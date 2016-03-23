@@ -25,4 +25,4 @@ services:
   postgres:
     image: postgres
     ports:
-      -  "5432"
+      -  "40008:5432"
