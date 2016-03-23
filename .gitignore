@@ -13,3 +13,4 @@
 */.settings
 *.iws
 */config.properties
+*/library.xml
