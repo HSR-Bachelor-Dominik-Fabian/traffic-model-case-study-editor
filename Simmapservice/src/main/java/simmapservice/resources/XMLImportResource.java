@@ -32,7 +32,8 @@ public class XMLImportResource {
 
     @POST
     public Response postImport(@FormDataParam("file") InputStream inputStream, @FormDataParam("fileName") String fileName,
-                               @FormDataParam("format") String format, @Context HttpServletResponse response) throws IOException {
+                               @FormDataParam("format") String format, @Context HttpServletResponse response,
+                               @FormDataParam("name") String networkName) throws IOException {
 
         StringWriter writer = new StringWriter();
         IOUtils.copy(inputStream, writer);
@@ -40,7 +41,7 @@ public class XMLImportResource {
         JSONObject jsonObject = XML.toJSONObject(theString);
 
         XMLImportLogic importLogic = new XMLImportLogic(props);
-        importLogic.importNetwork2DB(jsonObject, format);
+        importLogic.importNetwork2DB(jsonObject, format, networkName);
 
         return Response.ok(theString).build();
     }

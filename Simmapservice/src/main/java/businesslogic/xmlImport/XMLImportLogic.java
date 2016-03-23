@@ -1,6 +1,10 @@
 package businesslogic.xmlImport;
 
 import businesslogic.xmlImport.Utils.EPSGTransformUtil;
+import businesslogic.xmlImport.Utils.QuadTileUtils;
+import dataaccess.SimmapDataAccessFacade;
+import dataaccess.database.tables.records.NetworkRecord;
+import dataaccess.database.tables.records.NodeRecord;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.opengis.referencing.FactoryException;
@@ -13,12 +17,14 @@ import java.util.Properties;
 public class XMLImportLogic {
 
     private final Properties properties;
+    private final SimmapDataAccessFacade dataAccess;
 
     public XMLImportLogic(Properties properties) {
         this.properties = properties;
+        this.dataAccess = new SimmapDataAccessFacade(properties);
     }
 
-    public void importNetwork2DB(JSONObject jsonObject, String format) {
+    public void importNetwork2DB(JSONObject jsonObject, String format, String networkName) {
         JSONObject network = jsonObject.getJSONObject("network");
         EPSGTransformUtil transformer = null;
         try {
@@ -31,9 +37,12 @@ public class XMLImportLogic {
             throw new IllegalArgumentException("GeoJSON format is not supported");
         }
 
+        // process network
+        int networkId = importNetwork2DB(networkName);
+
         // process nodes
         JSONArray nodesArray = network.getJSONObject("nodes").getJSONArray("node");
-        importNodes2DB(nodesArray, transformer);
+        importNodes2DB(nodesArray, transformer, networkId);
 
         // process links
         JSONObject linksElement = network.getJSONObject("links");
@@ -43,8 +52,31 @@ public class XMLImportLogic {
         importLinks2DB(linksArray, transformer);
     }
 
-    private void importNodes2DB(JSONArray nodes, EPSGTransformUtil transformer) {
+    private int importNetwork2DB(String networkName) {
+        // TODO: dynamically detect id, after autoincrement
+        NetworkRecord network = new NetworkRecord();
+        network.setId(1);
+        network.setName(networkName);
+        dataAccess.setNetwork(new NetworkRecord[] {network});
+        return 1;
+    }
 
+    private void importNodes2DB(JSONArray nodes, EPSGTransformUtil transformer, int networkId) {
+        for (int i = 0; i < nodes.length(); i+=1000) {
+            NodeRecord[] records = new NodeRecord[1000];
+            for (int j = i; j < i + 1000; j++) {
+                JSONObject node = nodes.getJSONObject(j);
+                NodeRecord nodeRecord = new NodeRecord();
+                nodeRecord.setId(node.getString("id"));
+                nodeRecord.setNetworkid(networkId);
+                String x = node.getString("x"), y = node.getString("y");
+                nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(Double.parseDouble(x), Double.parseDouble(y)));
+                nodeRecord.setX(x);
+                nodeRecord.setY(y);
+                records[i] = nodeRecord;
+            }
+            dataAccess.setNode(records);
+        }
     }
 
     private void importLinksProperties2DB(JSONObject linksElement, EPSGTransformUtil transformer) {
