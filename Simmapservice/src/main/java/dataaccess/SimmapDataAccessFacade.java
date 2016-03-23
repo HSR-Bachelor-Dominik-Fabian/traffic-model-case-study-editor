@@ -1,6 +1,6 @@
 package dataaccess;
 
-import dataaccess.database.tables.*;
+import dataaccess.database.Tables;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;
 import dataaccess.database.tables.records.NetworkRecord;
@@ -12,9 +12,7 @@ import org.jooq.impl.TableImpl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 /**
