@@ -21,3 +21,9 @@ libraryDependencies += "org.glassfish.jersey.media" % "jersey-media-multipart" %
 libraryDependencies += "commons-io" % "commons-io" % "2.4"
 
 libraryDependencies += "org.json" % "json" % "20160212"
+
+libraryDependencies += "org.geotools" % "gt-shapefile" % "14.2"
+
+libraryDependencies += "org.geotools" % "gt-epsg-hsql" % "14.2"
+
+libraryDependencies += "javax.media" % "jai_core" % "1.1.3" from "http://download.osgeo.org/webdav/geotools/javax/media/jai_core/1.1.3/jai_core-1.1.3.jar" force()

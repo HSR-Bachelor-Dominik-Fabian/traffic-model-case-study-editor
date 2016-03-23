@@ -1,4 +1,5 @@
 package simmapservice.resources;
+import businesslogic.xmlImport.XMLImportLogic;
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.JSONObject;
@@ -30,12 +31,16 @@ public class XMLImportResource {
     private final Properties props;
 
     @POST
-    public Response postImport(@FormDataParam("file") InputStream inputStream, @FormDataParam("fileName") String fileName, @Context HttpServletResponse response) throws IOException {
+    public Response postImport(@FormDataParam("file") InputStream inputStream, @FormDataParam("fileName") String fileName,
+                               @FormDataParam("format") String format, @Context HttpServletResponse response) throws IOException {
 
         StringWriter writer = new StringWriter();
         IOUtils.copy(inputStream, writer);
         String theString = writer.toString();
         JSONObject jsonObject = XML.toJSONObject(theString);
+
+        XMLImportLogic importLogic = new XMLImportLogic(props);
+        importLogic.importNetwork2DB(jsonObject, format);
 
         return Response.ok(theString).build();
     }
