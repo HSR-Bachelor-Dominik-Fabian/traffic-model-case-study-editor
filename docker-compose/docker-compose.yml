@@ -25,4 +25,4 @@ services:
   postgres:
     build: ./postgres/
     ports:
-      -  "5432"
+      -  "40008:5432"

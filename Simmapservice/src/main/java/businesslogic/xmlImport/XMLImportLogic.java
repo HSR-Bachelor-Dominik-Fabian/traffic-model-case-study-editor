@@ -2,13 +2,16 @@ package businesslogic.xmlImport;
 
 import businesslogic.xmlImport.Utils.EPSGTransformUtil;
 import businesslogic.xmlImport.Utils.QuadTileUtils;
+import com.vividsolutions.jts.geom.Coordinate;
 import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.tables.records.NetworkRecord;
 import dataaccess.database.tables.records.NodeRecord;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.operation.TransformException;
 
+import java.math.BigDecimal;
 import java.util.Properties;
 
 /**
@@ -62,21 +65,57 @@ public class XMLImportLogic {
     }
 
     private void importNodes2DB(JSONArray nodes, EPSGTransformUtil transformer, int networkId) {
+        long start = System.currentTimeMillis();
+        /*
         for (int i = 0; i < nodes.length(); i+=1000) {
             NodeRecord[] records = new NodeRecord[1000];
-            for (int j = i; j < i + 1000; j++) {
-                JSONObject node = nodes.getJSONObject(j);
-                NodeRecord nodeRecord = new NodeRecord();
-                nodeRecord.setId(node.getString("id"));
-                nodeRecord.setNetworkid(networkId);
-                String x = node.getString("x"), y = node.getString("y");
-                nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(Double.parseDouble(x), Double.parseDouble(y)));
-                nodeRecord.setX(x);
-                nodeRecord.setY(y);
-                records[i] = nodeRecord;
+            for (int j = i; (j < (i + 1000)) && j < nodes.length(); j++) {
+                try {
+                    JSONObject node = nodes.getJSONObject(j);
+                    NodeRecord nodeRecord = new NodeRecord();
+                    Object id = node.get("id");
+                    nodeRecord.setId(node.get("id").toString());
+                    nodeRecord.setNetworkid(networkId);
+                    double x = node.getDouble("x"), y = node.getDouble("y");
+                    Coordinate nodeCoord = new Coordinate(x, y);
+                    Coordinate newNodeCoord = transformer.transform(nodeCoord).getCoordinate();
+                    nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(newNodeCoord.x, newNodeCoord.y));
+                    nodeRecord.setX(new BigDecimal(x));
+                    nodeRecord.setY(new BigDecimal(y));
+                    records[j%1000] = nodeRecord;
+                } catch (TransformException e) {
+                    e.printStackTrace();
+                } catch (FactoryException e) {
+                    e.printStackTrace();
+                }
             }
             dataAccess.setNode(records);
         }
+        */
+
+        NodeRecord[] records = new NodeRecord[nodes.length()];
+        for (int i = 0; i < nodes.length(); i++) {
+            try {
+                JSONObject node = nodes.getJSONObject(i);
+                NodeRecord nodeRecord = new NodeRecord();
+                Object id = node.get("id");
+                nodeRecord.setId(node.get("id").toString());
+                nodeRecord.setNetworkid(networkId);
+                double x = node.getDouble("x"), y = node.getDouble("y");
+                Coordinate nodeCoord = new Coordinate(x, y);
+                Coordinate newNodeCoord = transformer.transform(nodeCoord).getCoordinate();
+                nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(newNodeCoord.x, newNodeCoord.y));
+                nodeRecord.setX(new BigDecimal(x));
+                nodeRecord.setY(new BigDecimal(y));
+                records[i] = nodeRecord;
+            } catch (TransformException e) {
+                e.printStackTrace();
+            } catch (FactoryException e) {
+                e.printStackTrace();
+            }
+        }
+        dataAccess.setNode(records);
+        System.out.println("Time: " + (System.currentTimeMillis() - start));
     }
 
     private void importLinksProperties2DB(JSONObject linksElement, EPSGTransformUtil transformer) {
