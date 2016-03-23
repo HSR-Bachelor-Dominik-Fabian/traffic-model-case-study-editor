@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.1
 -- Dumped by pg_dump version 9.5.1
 
--- Started on 2016-03-23 15:39:11
+-- Started on 2016-03-23 15:48:10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,46 +14,6 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
-
-DROP DATABASE simmapdatabase;
---
--- TOC entry 2123 (class 1262 OID 16393)
--- Name: simmapdatabase; Type: DATABASE; Schema: -; Owner: postgres
---
-
-CREATE DATABASE simmapdatabase WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'German_Switzerland.1252' LC_CTYPE = 'German_Switzerland.1252';
-
-
-ALTER DATABASE simmapdatabase OWNER TO postgres;
-
-\connect simmapdatabase
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- TOC entry 6 (class 2615 OID 2200)
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
---
-
-CREATE SCHEMA public;
-
-
-ALTER SCHEMA public OWNER TO postgres;
-
---
--- TOC entry 2124 (class 0 OID 0)
--- Dependencies: 6
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
-
 
 --
 -- TOC entry 1 (class 3079 OID 12355)
@@ -262,7 +222,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-03-23 15:39:11
+-- Completed on 2016-03-23 15:48:10
 
 --
 -- PostgreSQL database dump complete
