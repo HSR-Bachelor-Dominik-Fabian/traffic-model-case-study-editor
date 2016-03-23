@@ -6,23 +6,33 @@ services:
       -  postgres
     ports:
       - "40005:9000"
+    labels:
+        simmap:"<buildtype>"
   simmapservice2:
     build: ./simmapservice/
     links:
       -  postgres
     ports:
       - "40006:9000"
+     labels:
+        simmap:"<buildtype>"
   simmapservice3:
     build: ./simmapservice/
     links:
       -  postgres
     ports:
       - "40007:9000"
+    labels:
+        simmap:"<buildtype>"
   simmapwebsite:
     build: ./simmapeditor/
     ports:
       - "40004:9000"
+    labels:
+        simmap:"<buildtype>"
   postgres:
     build: ./postgres/
     ports:
       -  "40008:5432"
+    labels:
+        simmap:"<buildtype>"
