@@ -23,6 +23,6 @@ services:
     ports:
       - "40004:9000"
   postgres:
-    image: postgres
+    build: ./postgres/
     ports:
       -  "5432"
