@@ -11,6 +11,6 @@
 */.project
 */RUNNING_PID
 */.settings
-*.iws
+*/*.iws
 */config.properties
 */library.xml
