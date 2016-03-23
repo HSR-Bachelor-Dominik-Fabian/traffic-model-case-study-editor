@@ -2,17 +2,27 @@ version: '2'
 services:
   simmapservice1:
     build: ./simmapservice/
+    links:
+      -  postgres
     ports:
       - "40005:9000"
   simmapservice2:
     build: ./simmapservice/
+    links:
+      -  postgres
     ports:
       - "40006:9000"
   simmapservice3:
     build: ./simmapservice/
+    links:
+      -  postgres
     ports:
       - "40007:9000"
   simmapwebsite:
     build: ./simmapeditor/
     ports:
       - "40004:9000"
+  postgres:
+    image: postgres
+    ports:
+      -  "5432"
