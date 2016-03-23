@@ -8,6 +8,7 @@ import dataaccess.database.Keys;
 import dataaccess.database.Public;
 import dataaccess.database.tables.records.NodeRecord;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Node extends TableImpl<NodeRecord> {
 
-	private static final long serialVersionUID = -397786075;
+	private static final long serialVersionUID = -1017738488;
 
 	/**
 	 * The reference instance of <code>public.Node</code>
@@ -67,12 +68,12 @@ public class Node extends TableImpl<NodeRecord> {
 	/**
 	 * The column <code>public.Node.x</code>.
 	 */
-	public final TableField<NodeRecord, String> X = createField("x", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
+	public final TableField<NodeRecord, BigDecimal> X = createField("x", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
 	 * The column <code>public.Node.y</code>.
 	 */
-	public final TableField<NodeRecord, String> Y = createField("y", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
+	public final TableField<NodeRecord, BigDecimal> Y = createField("y", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
 	 * Create a <code>public.Node</code> table reference

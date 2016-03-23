@@ -96,7 +96,9 @@ public class SimmapDataAccessFacade {
             ArrayList<Query> queries = new ArrayList<>();
 
             for(Record rec: records){
-                queries.add(context.insertInto(table).set(rec).onDuplicateKeyUpdate().set(rec));
+                if (rec != null) {
+                    queries.add(context.insertInto(table).set(rec).onDuplicateKeyUpdate().set(rec));
+                }
             }
             output = context.batch(queries).execute();
 
