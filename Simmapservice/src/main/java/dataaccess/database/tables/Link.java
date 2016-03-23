@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Link extends TableImpl<LinkRecord> {
 
-	private static final long serialVersionUID = -2131407725;
+	private static final long serialVersionUID = -142708243;
 
 	/**
 	 * The reference instance of <code>public.Link</code>
@@ -96,6 +96,16 @@ public class Link extends TableImpl<LinkRecord> {
 	public final TableField<LinkRecord, String> MODES = createField("modes", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
 
 	/**
+	 * The column <code>public.Link.from</code>.
+	 */
+	public final TableField<LinkRecord, String> FROM = createField("from", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+
+	/**
+	 * The column <code>public.Link.to</code>.
+	 */
+	public final TableField<LinkRecord, String> TO = createField("to", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+
+	/**
 	 * Create a <code>public.Link</code> table reference
 	 */
 	public Link() {
@@ -138,7 +148,7 @@ public class Link extends TableImpl<LinkRecord> {
 	 */
 	@Override
 	public List<ForeignKey<LinkRecord, ?>> getReferences() {
-		return Arrays.<ForeignKey<LinkRecord, ?>>asList(Keys.LINK__LINK_NETWORK);
+		return Arrays.<ForeignKey<LinkRecord, ?>>asList(Keys.LINK__LINK_NETWORK, Keys.LINK__LINK_NODE_FROM, Keys.LINK__LINK_NODE_TO);
 	}
 
 	/**

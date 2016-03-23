@@ -53,6 +53,8 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	public static final ForeignKey<LinkRecord, NetworkRecord> LINK__LINK_NETWORK = ForeignKeys0.LINK__LINK_NETWORK;
+	public static final ForeignKey<LinkRecord, NodeRecord> LINK__LINK_NODE_FROM = ForeignKeys0.LINK__LINK_NODE_FROM;
+	public static final ForeignKey<LinkRecord, NodeRecord> LINK__LINK_NODE_TO = ForeignKeys0.LINK__LINK_NODE_TO;
 	public static final ForeignKey<NetworkOptionsRecord, NetworkRecord> NETWORK_OPTIONS__NETWORK_NETWORK_OPTIONS = ForeignKeys0.NETWORK_OPTIONS__NETWORK_NETWORK_OPTIONS;
 	public static final ForeignKey<NodeRecord, NetworkRecord> NODE__NETWORKID = ForeignKeys0.NODE__NETWORKID;
 
@@ -69,6 +71,8 @@ public class Keys {
 
 	private static class ForeignKeys0 extends AbstractKeys {
 		public static final ForeignKey<LinkRecord, NetworkRecord> LINK__LINK_NETWORK = createForeignKey(dataaccess.database.Keys.ID, Link.LINK, Link.LINK.NETWORKID);
+		public static final ForeignKey<LinkRecord, NodeRecord> LINK__LINK_NODE_FROM = createForeignKey(dataaccess.database.Keys.NODEID, Link.LINK, Link.LINK.FROM, Link.LINK.NETWORKID);
+		public static final ForeignKey<LinkRecord, NodeRecord> LINK__LINK_NODE_TO = createForeignKey(dataaccess.database.Keys.NODEID, Link.LINK, Link.LINK.TO, Link.LINK.NETWORKID);
 		public static final ForeignKey<NetworkOptionsRecord, NetworkRecord> NETWORK_OPTIONS__NETWORK_NETWORK_OPTIONS = createForeignKey(dataaccess.database.Keys.ID, NetworkOptions.NETWORK_OPTIONS, NetworkOptions.NETWORK_OPTIONS.NETWORKID);
 		public static final ForeignKey<NodeRecord, NetworkRecord> NODE__NETWORKID = createForeignKey(dataaccess.database.Keys.ID, Node.NODE, Node.NODE.NETWORKID);
 	}
