@@ -109,7 +109,7 @@ public class XMLImportLogic {
                 double x = node.getDouble("x"), y = node.getDouble("y");
                 Coordinate nodeCoord = new Coordinate(x, y);
                 Coordinate newNodeCoord = transformer.transform(nodeCoord).getCoordinate();
-                nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(newNodeCoord.x, newNodeCoord.y));
+                nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(newNodeCoord.y, newNodeCoord.x));
                 nodeRecord.setX(new BigDecimal(x));
                 nodeRecord.setY(new BigDecimal(y));
                 records[i] = nodeRecord;
@@ -147,6 +147,7 @@ public class XMLImportLogic {
     }
 
     private void importLinks2DB(JSONArray links, EPSGTransformUtil transformer, int networkId) {
+        long start = System.currentTimeMillis();
         LinkRecord[] linkRecords = new LinkRecord[links.length()];
         Result<NodeRecord> nodes = dataAccess.getAllNodes();
         Map<String, NodeRecord> nodesMap = new HashMap<>();
@@ -174,7 +175,7 @@ public class XMLImportLogic {
                 newLink.setTo(toNode.getId());
 
                 newLink.setQuadkey(QuadTileUtils
-                        .getMinCommonQuadTileKeyFromLatLong(fromCoord.x, fromCoord.y, toCoord.x, toCoord.y));
+                        .getMinCommonQuadTileKeyFromLatLong(fromCoord.y, fromCoord.x, toCoord.y, toCoord.x));
                 newLink.setOneway(Boolean.parseBoolean(link.get("oneway").toString()));
                 newLink.setNetworkid(networkId);
                 newLink.setFreespeed(new BigDecimal(link.get("freespeed").toString()));
@@ -191,5 +192,6 @@ public class XMLImportLogic {
             }
         }
         dataAccess.setLink(linkRecords);
+        System.out.println("Time: " + (System.currentTimeMillis() - start));
     }
 }
