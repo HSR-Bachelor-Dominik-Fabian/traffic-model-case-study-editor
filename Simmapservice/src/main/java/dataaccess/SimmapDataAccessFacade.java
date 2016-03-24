@@ -57,7 +57,7 @@ public class SimmapDataAccessFacade {
         return this.getRecords(Tables.NETWORK_OPTIONS);
     }
 
-    public Result getLinkFromQuadKey(String QuadKey, int NetworkId){
+    public Result getLinkFromQuadKey(String QuadKey, int NetworkId, int zoomLevel){
         String url = properties.getProperty("psqlpath");
         String user = properties.getProperty("psqluser");
         String password = properties.getProperty("psqlpassword");
@@ -67,9 +67,10 @@ public class SimmapDataAccessFacade {
             Link l = Tables.LINK.as("l");
             Node n1 = Tables.NODE.as("n1");
             Node n2 = Tables.NODE.as("n2");
-            context.select(l.ID, l.LENGTH, l.FREESPEED, l.CAPACITY, l.PERMLANES, l.ONEWAY, l.MODES, n1.X, n1.Y, n2.X, n2.Y).from(l);
-            return context.select().from(Tables.LINK).where(Tables.LINK.QUADKEY.like(QuadKey + "%")).and(Tables.LINK.NETWORKID.eq(NetworkId)).fetch();
-
+            return context.select(l.ID, l.LENGTH, l.FREESPEED, l.CAPACITY, l.PERMLANES, l.ONEWAY, l.MODES, n1.LONG.as("Long1"),
+                    n1.LAT.as("Lat1"), n2.LONG.as("Long2"), n2.LAT.as("Lat2")).from(l).join(n1).on(l.FROM.eq(n1.ID))
+                    .join(n2).on(l.TO.eq(n2.ID)).where(l.QUADKEY.like(QuadKey+"%")).and(l.NETWORKID.eq(NetworkId))
+                    .and(l.MINLEVEL.lessOrEqual(zoomLevel)).fetch();
 
         } catch (SQLException e) {
             e.printStackTrace();

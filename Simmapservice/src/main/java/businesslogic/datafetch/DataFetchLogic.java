@@ -18,7 +18,7 @@ public class DataFetchLogic {
 
         String QuadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props);
-        Result<LinkRecord> result = facade.getLinkFromQuadKey(QuadKey, networkid);
+        Result<LinkRecord> result = facade.getLinkFromQuadKey(QuadKey, networkid, zoom);
 
 
 
