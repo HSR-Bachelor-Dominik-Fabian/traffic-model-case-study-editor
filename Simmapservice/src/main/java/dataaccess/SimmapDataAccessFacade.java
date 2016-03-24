@@ -55,14 +55,13 @@ public class SimmapDataAccessFacade {
         return this.getRecords(Tables.NETWORK_OPTIONS);
     }
 
-    public Result<LinkRecord> getLinkFromQuadKey(String QuadKey, int NetworkId){
+    public Result getLinkFromQuadKey(String QuadKey, int NetworkId){
         String url = properties.getProperty("psqlpath");
         String user = properties.getProperty("psqluser");
         String password = properties.getProperty("psqlpassword");
         try(Connection conn = DriverManager.getConnection(url, user, password)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
-            //return context.select().from(Tables.LINK).where(Tables.LINK.QUADKEY.startsWith("123123")).fetch();
-
+            return context.select().from(Tables.LINK).where(Tables.LINK.QUADKEY.like(QuadKey + "%")).and(Tables.LINK.NETWORKID.eq(NetworkId)).fetch();
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,7 +1,7 @@
 package businesslogic.xmlImport;
 
-import businesslogic.xmlImport.Utils.EPSGTransformUtil;
-import businesslogic.xmlImport.Utils.QuadTileUtils;
+import businesslogic.Utils.EPSGTransformUtil;
+import businesslogic.Utils.QuadTileUtils;
 import com.vividsolutions.jts.geom.Coordinate;
 import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.tables.records.LinkRecord;

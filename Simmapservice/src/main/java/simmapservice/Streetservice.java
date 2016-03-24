@@ -22,20 +22,16 @@ public class Streetservice extends Application<StreetserviceConfiguration>{
 
     @Override
     public void run(StreetserviceConfiguration configuration, Environment environment) throws Exception {
-
         Properties properties = new Properties();
         BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config.properties"));
         properties.load(stream);
         stream.close();
 
-
-
         StreetserviceResource streetserviceResource = new StreetserviceResource();
         environment.jersey().register(streetserviceResource);
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(new XMLImportResource(properties));
-        QuadtileResource quadtileResource = new QuadtileResource();
-        environment.jersey().register(quadtileResource);
+        environment.jersey().register(new QuadtileResource(properties));
         XYToQuadtileResource xyToQuadtileResource = new XYToQuadtileResource();
         environment.jersey().register(xyToQuadtileResource);
     }

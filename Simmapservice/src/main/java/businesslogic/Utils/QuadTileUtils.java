@@ -1,4 +1,4 @@
-package businesslogic.xmlImport.Utils;
+package businesslogic.Utils;
 
 /**
  * Created by fke on 22.03.2016.
