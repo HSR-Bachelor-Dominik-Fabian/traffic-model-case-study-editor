@@ -1,6 +1,6 @@
 package simmapservice.resources;
 
-import businesslogic.dataexport.DataExportLogic;
+import businesslogic.datafetch.DataFetchLogic;
 import org.json.JSONObject;
 
 import javax.ws.rs.GET;
@@ -24,8 +24,8 @@ public class QuadtileResource {
     @GET
     public Response getQuadTile(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y, @PathParam("networkid") int networkID) {
 
-        DataExportLogic dataExportLogic = new DataExportLogic();
-        JSONObject json =  dataExportLogic.getDataForTile(x, y, z, networkID, this.properties);
+        DataFetchLogic dataFetchLogic = new DataFetchLogic();
+        JSONObject json =  dataFetchLogic.getDataForTile(x, y, z, networkID, this.properties);
 
         return Response.ok().build();
     }
