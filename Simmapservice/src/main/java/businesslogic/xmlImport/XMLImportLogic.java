@@ -199,8 +199,32 @@ public class XMLImportLogic {
         newLink.setPermlanes(new BigDecimal(link.get("permlanes").toString()));
         newLink.setModes(link.get("modes").toString());
         newLink.setLength(new BigDecimal(link.get("length").toString()));
-        newLink.setMinlevel(10);
+        newLink.setMinlevel(calculateMinLevel(newLink));
 
         return newLink;
+    }
+
+    private int calculateMinLevel(LinkRecord newLink) {
+        if ("pt".equals(newLink.getModes())) {
+            return 22;
+        }
+        BigDecimal capacity = newLink.getCapacity();
+        BigDecimal speed = newLink.getFreespeed();
+        BigDecimal permlanes = newLink.getLength();
+        if (speed.doubleValue() > 30.0 && permlanes.doubleValue() > 2) {
+            return 10;
+        } else if (speed.doubleValue() > 30.0) {
+            return 11;
+        } else if (speed.doubleValue() > 23.0) {
+            return 12;
+        } else if (speed.doubleValue() > 14.0) {
+            return 13;
+        } else if (speed.doubleValue() > 13.0 && capacity.doubleValue() >= 4000.0) {
+            return 14;
+        } else if (speed.doubleValue() > 13.0) {
+            return 15;
+        } else {
+            return 16;
+        }
     }
 }
