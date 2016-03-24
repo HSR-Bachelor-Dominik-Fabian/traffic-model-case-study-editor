@@ -67,9 +67,19 @@ public class SimmapDataAccessFacade {
             Link l = Tables.LINK.as("l");
             Node n1 = Tables.NODE.as("n1");
             Node n2 = Tables.NODE.as("n2");
+            String regexp = "^";
+            for(int i = 0; i < QuadKey.length()-1; i++){
+
+                regexp +="(" + QuadKey.charAt(i);
+            }
+            for(int i=0; i < QuadKey.length()-1; i++){
+                regexp +=")?";
+            }
+            regexp += "$";
+
             return context.select(l.ID, l.LENGTH, l.FREESPEED, l.CAPACITY, l.PERMLANES, l.ONEWAY, l.MODES, n1.LONG.as("Long1"),
                     n1.LAT.as("Lat1"), n2.LONG.as("Long2"), n2.LAT.as("Lat2")).from(l).join(n1).on(l.FROM.eq(n1.ID))
-                    .join(n2).on(l.TO.eq(n2.ID)).where(l.QUADKEY.like(QuadKey+"%")).and(l.NETWORKID.eq(NetworkId))
+                    .join(n2).on(l.TO.eq(n2.ID)).where(l.QUADKEY.like(QuadKey+"%")).or(l.QUADKEY.likeRegex(regexp)).and(l.NETWORKID.eq(NetworkId))
                     .and(l.MINLEVEL.lessOrEqual(zoomLevel)).fetch();
 
         } catch (SQLException e) {
