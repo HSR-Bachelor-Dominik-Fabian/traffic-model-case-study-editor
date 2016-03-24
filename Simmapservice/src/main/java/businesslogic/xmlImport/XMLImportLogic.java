@@ -108,10 +108,12 @@ public class XMLImportLogic {
                 nodeRecord.setNetworkid(networkId);
                 double x = node.getDouble("x"), y = node.getDouble("y");
                 Coordinate nodeCoord = new Coordinate(x, y);
-                Coordinate newNodeCoord = transformer.transform(nodeCoord).getCoordinate();
-                nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(newNodeCoord.y, newNodeCoord.x));
+                nodeCoord = transformer.transform(nodeCoord).getCoordinate();
+                nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(nodeCoord.y, nodeCoord.x));
                 nodeRecord.setX(new BigDecimal(x));
                 nodeRecord.setY(new BigDecimal(y));
+                nodeRecord.setLat(new BigDecimal(nodeCoord.y));
+                nodeRecord.setLong(new BigDecimal(nodeCoord.x));
                 records[i] = nodeRecord;
             } catch (TransformException e) {
                 e.printStackTrace();
@@ -158,32 +160,7 @@ public class XMLImportLogic {
         for (int i = 0; i < links.length(); i++) {
             try {
                 JSONObject link = links.getJSONObject(i);
-                LinkRecord newLink = new LinkRecord();
-
-                newLink.setId(link.get("id").toString());
-
-                String from = link.get("from").toString();
-                NodeRecord fromNode = nodesMap.get(from);
-                Coordinate fromCoord = new Coordinate(fromNode.getX().doubleValue(), fromNode.getY().doubleValue());
-                fromCoord = transformer.transform(fromCoord).getCoordinate();
-                newLink.setFrom(fromNode.getId());
-
-                String to = link.get("to").toString();
-                NodeRecord toNode = nodesMap.get(to);
-                Coordinate toCoord = new Coordinate(toNode.getX().doubleValue(), toNode.getY().doubleValue());
-                toCoord = transformer.transform(toCoord).getCoordinate();
-                newLink.setTo(toNode.getId());
-
-                newLink.setQuadkey(QuadTileUtils
-                        .getMinCommonQuadTileKeyFromLatLong(fromCoord.y, fromCoord.x, toCoord.y, toCoord.x));
-                newLink.setOneway(Boolean.parseBoolean(link.get("oneway").toString()));
-                newLink.setNetworkid(networkId);
-                newLink.setFreespeed(new BigDecimal(link.get("freespeed").toString()));
-                newLink.setCapacity(new BigDecimal(link.get("capacity").toString()));
-                newLink.setPermlanes(new BigDecimal(link.get("permlanes").toString()));
-                newLink.setModes(link.get("modes").toString());
-                newLink.setLength(new BigDecimal(link.get("length").toString()));
-
+                LinkRecord newLink = fillLinkRecord(link, transformer, networkId, nodesMap);
                 linkRecords[i] = newLink;
             } catch (TransformException e) {
                 e.printStackTrace();
@@ -193,5 +170,37 @@ public class XMLImportLogic {
         }
         dataAccess.setLink(linkRecords);
         System.out.println("Time: " + (System.currentTimeMillis() - start));
+    }
+
+    private LinkRecord fillLinkRecord(JSONObject link, EPSGTransformUtil transformer, int networkId, Map<String,
+            NodeRecord> nodesMap) throws TransformException, FactoryException {
+        LinkRecord newLink = new LinkRecord();
+
+        newLink.setId(link.get("id").toString());
+
+        String from = link.get("from").toString();
+        NodeRecord fromNode = nodesMap.get(from);
+        Coordinate fromCoord = new Coordinate(fromNode.getX().doubleValue(), fromNode.getY().doubleValue());
+        fromCoord = transformer.transform(fromCoord).getCoordinate();
+        newLink.setFrom(fromNode.getId());
+
+        String to = link.get("to").toString();
+        NodeRecord toNode = nodesMap.get(to);
+        Coordinate toCoord = new Coordinate(toNode.getX().doubleValue(), toNode.getY().doubleValue());
+        toCoord = transformer.transform(toCoord).getCoordinate();
+        newLink.setTo(toNode.getId());
+
+        newLink.setQuadkey(QuadTileUtils
+                .getMinCommonQuadTileKeyFromLatLong(fromCoord.y, fromCoord.x, toCoord.y, toCoord.x));
+        newLink.setOneway(Boolean.parseBoolean(link.get("oneway").toString()));
+        newLink.setNetworkid(networkId);
+        newLink.setFreespeed(new BigDecimal(link.get("freespeed").toString()));
+        newLink.setCapacity(new BigDecimal(link.get("capacity").toString()));
+        newLink.setPermlanes(new BigDecimal(link.get("permlanes").toString()));
+        newLink.setModes(link.get("modes").toString());
+        newLink.setLength(new BigDecimal(link.get("length").toString()));
+        newLink.setMinlevel(10);
+
+        return newLink;
     }
 }

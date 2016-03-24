@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Link extends TableImpl<LinkRecord> {
 
-	private static final long serialVersionUID = -142708243;
+	private static final long serialVersionUID = -1136837980;
 
 	/**
 	 * The reference instance of <code>public.Link</code>
@@ -53,7 +53,7 @@ public class Link extends TableImpl<LinkRecord> {
 	/**
 	 * The column <code>public.Link.Id</code>.
 	 */
-	public final TableField<LinkRecord, String> ID = createField("Id", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "");
+	public final TableField<LinkRecord, String> ID = createField("Id", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "");
 
 	/**
 	 * The column <code>public.Link.NetworkId</code>.
@@ -66,44 +66,49 @@ public class Link extends TableImpl<LinkRecord> {
 	public final TableField<LinkRecord, String> QUADKEY = createField("QuadKey", org.jooq.impl.SQLDataType.VARCHAR.length(18), this, "");
 
 	/**
-	 * The column <code>public.Link.length</code>.
+	 * The column <code>public.Link.Length</code>.
 	 */
-	public final TableField<LinkRecord, BigDecimal> LENGTH = createField("length", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+	public final TableField<LinkRecord, BigDecimal> LENGTH = createField("Length", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>public.Link.freespeed</code>.
+	 * The column <code>public.Link.Freespeed</code>.
 	 */
-	public final TableField<LinkRecord, BigDecimal> FREESPEED = createField("freespeed", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+	public final TableField<LinkRecord, BigDecimal> FREESPEED = createField("Freespeed", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>public.Link.capacity</code>.
+	 * The column <code>public.Link.Capacity</code>.
 	 */
-	public final TableField<LinkRecord, BigDecimal> CAPACITY = createField("capacity", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+	public final TableField<LinkRecord, BigDecimal> CAPACITY = createField("Capacity", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>public.Link.permlanes</code>.
+	 * The column <code>public.Link.Permlanes</code>.
 	 */
-	public final TableField<LinkRecord, BigDecimal> PERMLANES = createField("permlanes", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+	public final TableField<LinkRecord, BigDecimal> PERMLANES = createField("Permlanes", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>public.Link.oneway</code>.
+	 * The column <code>public.Link.Oneway</code>.
 	 */
-	public final TableField<LinkRecord, Boolean> ONEWAY = createField("oneway", org.jooq.impl.SQLDataType.BOOLEAN, this, "\n");
+	public final TableField<LinkRecord, Boolean> ONEWAY = createField("Oneway", org.jooq.impl.SQLDataType.BOOLEAN, this, "\n");
 
 	/**
-	 * The column <code>public.Link.modes</code>.
+	 * The column <code>public.Link.Modes</code>.
 	 */
-	public final TableField<LinkRecord, String> MODES = createField("modes", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+	public final TableField<LinkRecord, String> MODES = createField("Modes", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
 
 	/**
-	 * The column <code>public.Link.from</code>.
+	 * The column <code>public.Link.From</code>.
 	 */
-	public final TableField<LinkRecord, String> FROM = createField("from", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+	public final TableField<LinkRecord, String> FROM = createField("From", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
 
 	/**
-	 * The column <code>public.Link.to</code>.
+	 * The column <code>public.Link.To</code>.
 	 */
-	public final TableField<LinkRecord, String> TO = createField("to", org.jooq.impl.SQLDataType.VARCHAR.length(20), this, "");
+	public final TableField<LinkRecord, String> TO = createField("To", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
+
+	/**
+	 * The column <code>public.Link.MinLevel</code>.
+	 */
+	public final TableField<LinkRecord, Integer> MINLEVEL = createField("MinLevel", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>public.Link</code> table reference
