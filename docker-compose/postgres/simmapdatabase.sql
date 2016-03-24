@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.1
 -- Dumped by pg_dump version 9.5.1
 
--- Started on 2016-03-23 16:25:38
+-- Started on 2016-03-24 15:18:48
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -47,14 +47,15 @@ CREATE TABLE "Link" (
     "Id" character varying(100) NOT NULL,
     "NetworkId" integer NOT NULL,
     "QuadKey" character varying(18),
-    length numeric,
-    freespeed numeric,
-    capacity numeric,
-    permlanes numeric,
-    oneway boolean,
-    modes character varying(100),
-    "from" character varying(100),
-    "to" character varying(100)
+    "Length" numeric,
+    "Freespeed" numeric,
+    "Capacity" numeric,
+    "Permlanes" numeric,
+    "Oneway" boolean,
+    "Modes" character varying(100),
+    "From" character varying(100),
+    "To" character varying(100),
+    "MinLevel" integer
 );
 
 
@@ -63,10 +64,10 @@ ALTER TABLE "Link" OWNER TO postgres;
 --
 -- TOC entry 2132 (class 0 OID 0)
 -- Dependencies: 181
--- Name: COLUMN "Link".oneway; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: COLUMN "Link"."Oneway"; Type: COMMENT; Schema: public; Owner: postgres
 --
 
-COMMENT ON COLUMN "Link".oneway IS '
+COMMENT ON COLUMN "Link"."Oneway" IS '
 ';
 
 
@@ -106,8 +107,10 @@ CREATE TABLE "Node" (
     "Id" character varying(100) NOT NULL,
     "NetworkId" integer NOT NULL,
     "QuadKey" character varying(18),
-    x numeric,
-    y numeric
+    "X" numeric,
+    "Y" numeric,
+    "Lat" numeric,
+    "Long" numeric
 );
 
 
@@ -190,7 +193,7 @@ CREATE INDEX "QuadKeyIndex" ON "Link" USING btree ("QuadKey");
 -- Name: fki_Link_Node_From; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX "fki_Link_Node_From" ON "Link" USING btree ("from", "NetworkId");
+CREATE INDEX "fki_Link_Node_From" ON "Link" USING btree ("From", "NetworkId");
 
 
 --
@@ -198,7 +201,7 @@ CREATE INDEX "fki_Link_Node_From" ON "Link" USING btree ("from", "NetworkId");
 -- Name: fki_Link_Node_To; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX "fki_Link_Node_To" ON "Link" USING btree ("to", "NetworkId");
+CREATE INDEX "fki_Link_Node_To" ON "Link" USING btree ("To", "NetworkId");
 
 
 --
@@ -216,7 +219,7 @@ ALTER TABLE ONLY "Link"
 --
 
 ALTER TABLE ONLY "Link"
-    ADD CONSTRAINT "Link_Node_From" FOREIGN KEY ("from", "NetworkId") REFERENCES "Node"("Id", "NetworkId");
+    ADD CONSTRAINT "Link_Node_From" FOREIGN KEY ("From", "NetworkId") REFERENCES "Node"("Id", "NetworkId");
 
 
 --
@@ -225,7 +228,7 @@ ALTER TABLE ONLY "Link"
 --
 
 ALTER TABLE ONLY "Link"
-    ADD CONSTRAINT "Link_Node_To" FOREIGN KEY ("to", "NetworkId") REFERENCES "Node"("Id", "NetworkId");
+    ADD CONSTRAINT "Link_Node_To" FOREIGN KEY ("To", "NetworkId") REFERENCES "Node"("Id", "NetworkId");
 
 
 --
@@ -258,7 +261,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-03-23 16:25:38
+-- Completed on 2016-03-24 15:18:48
 
 --
 -- PostgreSQL database dump complete

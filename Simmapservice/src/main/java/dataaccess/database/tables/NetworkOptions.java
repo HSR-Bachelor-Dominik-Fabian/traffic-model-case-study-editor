@@ -34,7 +34,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class NetworkOptions extends TableImpl<NetworkOptionsRecord> {
 
-	private static final long serialVersionUID = 2005616018;
+	private static final long serialVersionUID = 1740584378;
 
 	/**
 	 * The reference instance of <code>public.Network_Options</code>
@@ -52,7 +52,7 @@ public class NetworkOptions extends TableImpl<NetworkOptionsRecord> {
 	/**
 	 * The column <code>public.Network_Options.OptionName</code>.
 	 */
-	public final TableField<NetworkOptionsRecord, String> OPTIONNAME = createField("OptionName", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this, "");
+	public final TableField<NetworkOptionsRecord, String> OPTIONNAME = createField("OptionName", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "");
 
 	/**
 	 * The column <code>public.Network_Options.NetworkId</code>.
@@ -62,7 +62,7 @@ public class NetworkOptions extends TableImpl<NetworkOptionsRecord> {
 	/**
 	 * The column <code>public.Network_Options.Value</code>.
 	 */
-	public final TableField<NetworkOptionsRecord, String> VALUE = createField("Value", org.jooq.impl.SQLDataType.VARCHAR.length(10), this, "");
+	public final TableField<NetworkOptionsRecord, String> VALUE = createField("Value", org.jooq.impl.SQLDataType.VARCHAR.length(100), this, "");
 
 	/**
 	 * Create a <code>public.Network_Options</code> table reference

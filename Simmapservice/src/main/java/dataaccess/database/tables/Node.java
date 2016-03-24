@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Node extends TableImpl<NodeRecord> {
 
-	private static final long serialVersionUID = -1017738488;
+	private static final long serialVersionUID = -620962214;
 
 	/**
 	 * The reference instance of <code>public.Node</code>
@@ -53,7 +53,7 @@ public class Node extends TableImpl<NodeRecord> {
 	/**
 	 * The column <code>public.Node.Id</code>.
 	 */
-	public final TableField<NodeRecord, String> ID = createField("Id", org.jooq.impl.SQLDataType.VARCHAR.length(20).nullable(false), this, "\n");
+	public final TableField<NodeRecord, String> ID = createField("Id", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "\n");
 
 	/**
 	 * The column <code>public.Node.NetworkId</code>.
@@ -66,14 +66,24 @@ public class Node extends TableImpl<NodeRecord> {
 	public final TableField<NodeRecord, String> QUADKEY = createField("QuadKey", org.jooq.impl.SQLDataType.VARCHAR.length(18), this, "\n");
 
 	/**
-	 * The column <code>public.Node.x</code>.
+	 * The column <code>public.Node.X</code>.
 	 */
-	public final TableField<NodeRecord, BigDecimal> X = createField("x", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+	public final TableField<NodeRecord, BigDecimal> X = createField("X", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
-	 * The column <code>public.Node.y</code>.
+	 * The column <code>public.Node.Y</code>.
 	 */
-	public final TableField<NodeRecord, BigDecimal> Y = createField("y", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+	public final TableField<NodeRecord, BigDecimal> Y = createField("Y", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+
+	/**
+	 * The column <code>public.Node.Lat</code>.
+	 */
+	public final TableField<NodeRecord, BigDecimal> LAT = createField("Lat", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+
+	/**
+	 * The column <code>public.Node.Long</code>.
+	 */
+	public final TableField<NodeRecord, BigDecimal> LONG = createField("Long", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
 	 * Create a <code>public.Node</code> table reference
