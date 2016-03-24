@@ -1,6 +1,8 @@
 package dataaccess;
 
 import dataaccess.database.Tables;
+import dataaccess.database.tables.Link;
+import dataaccess.database.tables.Node;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;
 import dataaccess.database.tables.records.NetworkRecord;
@@ -61,7 +63,13 @@ public class SimmapDataAccessFacade {
         String password = properties.getProperty("psqlpassword");
         try(Connection conn = DriverManager.getConnection(url, user, password)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+
+            Link l = Tables.LINK.as("l");
+            Node n1 = Tables.NODE.as("n1");
+            Node n2 = Tables.NODE.as("n2");
+            context.select(l.ID, l.LENGTH, l.FREESPEED, l.CAPACITY, l.PERMLANES, l.ONEWAY, l.MODES, n1.X, n1.Y, n2.X, n2.Y).from(l);
             return context.select().from(Tables.LINK).where(Tables.LINK.QUADKEY.like(QuadKey + "%")).and(Tables.LINK.NETWORKID.eq(NetworkId)).fetch();
+
 
         } catch (SQLException e) {
             e.printStackTrace();
