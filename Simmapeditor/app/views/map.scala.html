@@ -73,6 +73,10 @@
                 L.control.scale( {position: "bottomleft", imperial: false} ).addTo(map);
                 addOverLay(geojsonTileLayer, "Test Layer");
 
+                L.easyButton({ position:"topright",states:[{onClick: function(btn, map){
+                    $("#importMenu").offcanvas("show");
+                },icon:'glyphicon-import'}]}).addTo(map);
+
                 function addOverLay(layer, name) {
                     map.addLayer(layer);
                     basicControl.addOverlay(layer, name);
@@ -85,7 +89,33 @@
         <div id="map" class="col-xs-12">
 
         </div>
-        <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas" data-canvas=".leaflet-right" ng-controller="StreetDetailController">
+        <div id="importMenu" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas=".leaflet-right">
+            <div class="panel panel-default">
+                <div class="panel-heading">XML Import</div>
+                <div class="panel-body">
+                    <form action="http://152.96.56.47:40005" method="post" enctype="multipart/form-data">
+                        <p>
+                                    Network name : <input type="text" name="name">
+                                </p>
+                        <p>
+                                    Choose a file : <input type="file" name="file" />
+                                </p>
+                        <p>
+                                    Choose a format :
+                            <select name="format">
+                                <option value="WGS84">WGS84</option>
+                                <option value="EPSG:3857">EPSG:3857</option>
+                                <option value="EPSG:21781">EPSG:21781</option>
+                                <option value="EPSG:26914">EPSG:26914</option>
+                                <option value="EPSG:32719">EPSG:32719</option>
+                            </select>
+                        </p>
+                        <input type="submit" value="Upload" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas=".leaflet-right" ng-controller="StreetDetailController">
             <div class="panel panel-default">
                 <div class="panel-heading">Properties</div>
                 <div class="panel-body">
@@ -138,25 +168,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <form action="http://152.96.56.47:40005" method="post" enctype="multipart/form-data">
-                        <p>
-                            Network name : <input type="text" name="name">
-                        </p>
-                        <p>
-                            Choose a file : <input type="file" name="file" />
-                        </p>
-                        <p>
-                            Choose a format :
-                            <select name="format">
-                                <option value="WGS84">WGS84</option>
-                                <option value="EPSG:3857">EPSG:3857</option>
-                                <option value="EPSG:21781">EPSG:21781</option>
-                                <option value="EPSG:26914">EPSG:26914</option>
-                                <option value="EPSG:32719">EPSG:32719</option>
-                            </select>
-                        </p>
-                        <input type="submit" value="Upload" />
-                    </form>
                 </div>
             </div>
         </div>
