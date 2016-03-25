@@ -5,19 +5,19 @@ services:
     links:
       -  postgres
     ports:
-      - "40005:9000"
+      - "40005:9001"
   simmapservice2:
     build: ./simmapservice/
     links:
       -  postgres
     ports:
-      - "40006:9000"
+      - "40006:9001"
   simmapservice3:
     build: ./simmapservice/
     links:
       -  postgres
     ports:
-      - "40007:9000"
+      - "40007:9001"
   simmapwebsite:
     build: ./simmapeditor/
     ports:
