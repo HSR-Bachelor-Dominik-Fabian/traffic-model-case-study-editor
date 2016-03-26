@@ -12,6 +12,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -82,6 +83,30 @@ public class SimmapDataAccessFacade {
                     .join(n2).on(l.TO.eq(n2.ID)).where(l.QUADKEY.like(QuadKey+"%")).or(l.QUADKEY.likeRegex(regexp)).and(l.NETWORKID.eq(NetworkId))
                     .and(l.MINLEVEL.lessOrEqual(zoomLevel)).fetch();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Date getLastModifiedQuadKey(String QuadKey, int NetworkId, int zoomLevel){
+        String url = properties.getProperty("psqlpath");
+        String user = properties.getProperty("psqluser");
+        String password = properties.getProperty("psqlpassword");
+        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+            Link l = Tables.LINK.as("l");
+            String regexp = "^";
+            for(int i = 0; i < QuadKey.length()-1; i++){
+
+                regexp +="(" + QuadKey.charAt(i);
+            }
+            for(int i=0; i < QuadKey.length()-1; i++){
+                regexp +=")?";
+            }
+            regexp += "$";
+            return context.select(l.LASTMODIFIED.max()).from(l).where(l.QUADKEY.like(QuadKey+"%")).or(l.QUADKEY.likeRegex(regexp))
+                    .and(l.NETWORKID.eq(NetworkId)).and(l.MINLEVEL.lessOrEqual(zoomLevel)).fetch().get(0).value1();
         } catch (SQLException e) {
             e.printStackTrace();
         }

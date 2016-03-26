@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.1
 -- Dumped by pg_dump version 9.5.1
 
--- Started on 2016-03-24 15:18:48
+-- Started on 2016-03-26 11:53:11
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -24,7 +24,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2131 (class 0 OID 0)
+-- TOC entry 2133 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -39,7 +39,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 181 (class 1259 OID 16396)
+-- TOC entry 181 (class 1259 OID 16552)
 -- Name: Link; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -55,14 +55,15 @@ CREATE TABLE "Link" (
     "Modes" character varying(100),
     "From" character varying(100),
     "To" character varying(100),
-    "MinLevel" integer
+    "MinLevel" integer,
+    "LastModified" date
 );
 
 
 ALTER TABLE "Link" OWNER TO postgres;
 
 --
--- TOC entry 2132 (class 0 OID 0)
+-- TOC entry 2134 (class 0 OID 0)
 -- Dependencies: 181
 -- Name: COLUMN "Link"."Oneway"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -72,7 +73,7 @@ COMMENT ON COLUMN "Link"."Oneway" IS '
 
 
 --
--- TOC entry 182 (class 1259 OID 16402)
+-- TOC entry 182 (class 1259 OID 16558)
 -- Name: Network; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -85,7 +86,7 @@ CREATE TABLE "Network" (
 ALTER TABLE "Network" OWNER TO postgres;
 
 --
--- TOC entry 183 (class 1259 OID 16405)
+-- TOC entry 183 (class 1259 OID 16561)
 -- Name: Network_Options; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -99,7 +100,7 @@ CREATE TABLE "Network_Options" (
 ALTER TABLE "Network_Options" OWNER TO postgres;
 
 --
--- TOC entry 184 (class 1259 OID 16408)
+-- TOC entry 184 (class 1259 OID 16564)
 -- Name: Node; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -117,7 +118,7 @@ CREATE TABLE "Node" (
 ALTER TABLE "Node" OWNER TO postgres;
 
 --
--- TOC entry 2133 (class 0 OID 0)
+-- TOC entry 2135 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: COLUMN "Node"."Id"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -127,7 +128,7 @@ COMMENT ON COLUMN "Node"."Id" IS '
 
 
 --
--- TOC entry 2134 (class 0 OID 0)
+-- TOC entry 2136 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: COLUMN "Node"."QuadKey"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -137,7 +138,7 @@ COMMENT ON COLUMN "Node"."QuadKey" IS '
 
 
 --
--- TOC entry 1999 (class 2606 OID 16412)
+-- TOC entry 2001 (class 2606 OID 16571)
 -- Name: Id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -146,7 +147,7 @@ ALTER TABLE ONLY "Network"
 
 
 --
--- TOC entry 1994 (class 2606 OID 16523)
+-- TOC entry 1995 (class 2606 OID 16573)
 -- Name: LinkId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -155,7 +156,7 @@ ALTER TABLE ONLY "Link"
 
 
 --
--- TOC entry 2001 (class 2606 OID 16503)
+-- TOC entry 2003 (class 2606 OID 16575)
 -- Name: Network_OptionsId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -164,7 +165,7 @@ ALTER TABLE ONLY "Network_Options"
 
 
 --
--- TOC entry 2003 (class 2606 OID 16531)
+-- TOC entry 2005 (class 2606 OID 16577)
 -- Name: NodeId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -173,7 +174,23 @@ ALTER TABLE ONLY "Node"
 
 
 --
--- TOC entry 2004 (class 1259 OID 16419)
+-- TOC entry 1993 (class 1259 OID 16628)
+-- Name: LastModifiedIndex; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "LastModifiedIndex" ON "Link" USING btree ("LastModified");
+
+
+--
+-- TOC entry 1996 (class 1259 OID 16629)
+-- Name: NetworkIdIndex; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "NetworkIdIndex" ON "Link" USING btree ("NetworkId");
+
+
+--
+-- TOC entry 2006 (class 1259 OID 16578)
 -- Name: NodeQuadKeyIndex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -181,7 +198,7 @@ CREATE INDEX "NodeQuadKeyIndex" ON "Node" USING btree ("QuadKey");
 
 
 --
--- TOC entry 1995 (class 1259 OID 16420)
+-- TOC entry 1997 (class 1259 OID 16579)
 -- Name: QuadKeyIndex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -189,7 +206,7 @@ CREATE INDEX "QuadKeyIndex" ON "Link" USING btree ("QuadKey");
 
 
 --
--- TOC entry 1996 (class 1259 OID 16510)
+-- TOC entry 1998 (class 1259 OID 16580)
 -- Name: fki_Link_Node_From; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -197,7 +214,7 @@ CREATE INDEX "fki_Link_Node_From" ON "Link" USING btree ("From", "NetworkId");
 
 
 --
--- TOC entry 1997 (class 1259 OID 16516)
+-- TOC entry 1999 (class 1259 OID 16581)
 -- Name: fki_Link_Node_To; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -205,7 +222,7 @@ CREATE INDEX "fki_Link_Node_To" ON "Link" USING btree ("To", "NetworkId");
 
 
 --
--- TOC entry 2005 (class 2606 OID 16421)
+-- TOC entry 2007 (class 2606 OID 16582)
 -- Name: Link_Network; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -214,7 +231,7 @@ ALTER TABLE ONLY "Link"
 
 
 --
--- TOC entry 2006 (class 2606 OID 16532)
+-- TOC entry 2008 (class 2606 OID 16587)
 -- Name: Link_Node_From; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -223,7 +240,7 @@ ALTER TABLE ONLY "Link"
 
 
 --
--- TOC entry 2007 (class 2606 OID 16537)
+-- TOC entry 2009 (class 2606 OID 16592)
 -- Name: Link_Node_To; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -232,7 +249,7 @@ ALTER TABLE ONLY "Link"
 
 
 --
--- TOC entry 2009 (class 2606 OID 16426)
+-- TOC entry 2011 (class 2606 OID 16597)
 -- Name: NetworkId; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -241,7 +258,7 @@ ALTER TABLE ONLY "Node"
 
 
 --
--- TOC entry 2008 (class 2606 OID 16431)
+-- TOC entry 2010 (class 2606 OID 16602)
 -- Name: Network_Network_Options; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -250,7 +267,7 @@ ALTER TABLE ONLY "Network_Options"
 
 
 --
--- TOC entry 2130 (class 0 OID 0)
+-- TOC entry 2132 (class 0 OID 0)
 -- Dependencies: 7
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -261,7 +278,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-03-24 15:18:48
+-- Completed on 2016-03-26 11:53:11
 
 --
 -- PostgreSQL database dump complete
