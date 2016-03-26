@@ -49,6 +49,7 @@ L.TileLayer.Ajax = L.TileLayer.extend({
 L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
     // Store each GeometryCollection's layer by key, if options.unique function is present
     _keyLayers: {},
+    _keyStore:[],
 
     // Used to calculate svg path string for clip path elements
     _clipPathRectangles: {},
@@ -181,7 +182,12 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
         var options = this.geojsonLayer.options;
 
         if (options.filter && !options.filter(geojson)) { return; }
-
+        if(this.options.identified && typeof(this.options.identified) == 'function' && this.options.identified(geojson) in this._keyStore){
+            return this;
+        }
+        else if(this.options.identified && typeof(this.options.identified) == 'function' ){
+            this._keyStore.push(this.options.identified(geojson))
+        }
         var parentLayer = this.geojsonLayer;
         var incomingLayer = null;
         if (this.options.unique && typeof(this.options.unique) === 'function') {
