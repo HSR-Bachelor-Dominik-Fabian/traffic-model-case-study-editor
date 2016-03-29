@@ -71,10 +71,11 @@ public class XMLImportLogic {
 
     private void importNodes2DB(JSONArray nodes, EPSGTransformUtil transformer, int networkId) {
         long start = System.currentTimeMillis();
-        /*
-        for (int i = 0; i < nodes.length(); i+=1000) {
-            NodeRecord[] records = new NodeRecord[1000];
-            for (int j = i; (j < (i + 1000)) && j < nodes.length(); j++) {
+
+        NodeRecord[] records;
+        for (int i = 0; i < nodes.length(); i+=25000) {
+            records = new NodeRecord[25000];
+            for (int j = i; (j < (i + 25000)) && j < nodes.length(); j++) {
                 try {
                     JSONObject node = nodes.getJSONObject(j);
                     NodeRecord nodeRecord = new NodeRecord();
@@ -84,10 +85,12 @@ public class XMLImportLogic {
                     double x = node.getDouble("x"), y = node.getDouble("y");
                     Coordinate nodeCoord = new Coordinate(x, y);
                     Coordinate newNodeCoord = transformer.transform(nodeCoord).getCoordinate();
-                    nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(newNodeCoord.x, newNodeCoord.y));
+                    nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(newNodeCoord.y, newNodeCoord.x));
                     nodeRecord.setX(new BigDecimal(x));
                     nodeRecord.setY(new BigDecimal(y));
-                    records[j%1000] = nodeRecord;
+                    nodeRecord.setLat(new BigDecimal(nodeCoord.y));
+                    nodeRecord.setLong(new BigDecimal(nodeCoord.x));
+                    records[j%25000] = nodeRecord;
                 } catch (TransformException e) {
                     e.printStackTrace();
                 } catch (FactoryException e) {
@@ -96,8 +99,8 @@ public class XMLImportLogic {
             }
             dataAccess.setNode(records);
         }
-        */
 
+        /*
         NodeRecord[] records = new NodeRecord[nodes.length()];
         for (int i = 0; i < nodes.length(); i++) {
             try {
@@ -122,6 +125,7 @@ public class XMLImportLogic {
             }
         }
         dataAccess.setNode(records);
+        */
         System.out.println("Time: " + (System.currentTimeMillis() - start));
     }
 
@@ -150,25 +154,29 @@ public class XMLImportLogic {
 
     private void importLinks2DB(JSONArray links, EPSGTransformUtil transformer, int networkId) {
         long start = System.currentTimeMillis();
-        LinkRecord[] linkRecords = new LinkRecord[links.length()];
         Result<NodeRecord> nodes = dataAccess.getAllNodes();
         Map<String, NodeRecord> nodesMap = new HashMap<>();
         for (NodeRecord node : nodes) {
             nodesMap.put(node.getId(), node);
         }
 
+        LinkRecord[] linkRecords;
         for (int i = 0; i < links.length(); i++) {
-            try {
-                JSONObject link = links.getJSONObject(i);
-                LinkRecord newLink = fillLinkRecord(link, transformer, networkId, nodesMap);
-                linkRecords[i] = newLink;
-            } catch (TransformException e) {
-                e.printStackTrace();
-            } catch (FactoryException e) {
-                e.printStackTrace();
+            linkRecords = new LinkRecord[25000];
+            for (int j = i; (j < (i + 25000)) && j < links.length(); j++) {
+                try {
+                    JSONObject link = links.getJSONObject(j);
+                    LinkRecord newLink = fillLinkRecord(link, transformer, networkId, nodesMap);
+                    linkRecords[j%25000] = newLink;
+                } catch (TransformException e) {
+                    e.printStackTrace();
+                } catch (FactoryException e) {
+                    e.printStackTrace();
+                }
             }
+            dataAccess.setLink(linkRecords);
         }
-        dataAccess.setLink(linkRecords);
+
         System.out.println("Time: " + (System.currentTimeMillis() - start));
     }
 
