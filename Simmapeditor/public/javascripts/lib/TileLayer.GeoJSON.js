@@ -70,6 +70,7 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
     _reset: function () {
         this.geojsonLayer.clearLayers();
         this._keyLayers = {};
+        this._keyStore = [];
         this._removeOldClipPaths();
         L.TileLayer.Ajax.prototype._reset.apply(this, arguments);
     },
