@@ -9,6 +9,7 @@ import dataaccess.database.Public;
 import dataaccess.database.tables.records.LinkRecord;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Link extends TableImpl<LinkRecord> {
 
-	private static final long serialVersionUID = -1136837980;
+	private static final long serialVersionUID = 1864689584;
 
 	/**
 	 * The reference instance of <code>public.Link</code>
@@ -88,7 +89,7 @@ public class Link extends TableImpl<LinkRecord> {
 	/**
 	 * The column <code>public.Link.Oneway</code>.
 	 */
-	public final TableField<LinkRecord, Boolean> ONEWAY = createField("Oneway", org.jooq.impl.SQLDataType.BOOLEAN, this, "\n");
+	public final TableField<LinkRecord, Boolean> ONEWAY = createField("Oneway", org.jooq.impl.SQLDataType.BOOLEAN, this, "\r\n");
 
 	/**
 	 * The column <code>public.Link.Modes</code>.
@@ -109,6 +110,11 @@ public class Link extends TableImpl<LinkRecord> {
 	 * The column <code>public.Link.MinLevel</code>.
 	 */
 	public final TableField<LinkRecord, Integer> MINLEVEL = createField("MinLevel", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>public.Link.LastModified</code>.
+	 */
+	public final TableField<LinkRecord, Date> LASTMODIFIED = createField("LastModified", org.jooq.impl.SQLDataType.DATE, this, "");
 
 	/**
 	 * Create a <code>public.Link</code> table reference

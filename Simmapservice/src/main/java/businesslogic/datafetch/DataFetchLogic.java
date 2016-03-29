@@ -3,11 +3,11 @@ package businesslogic.datafetch;
 import businesslogic.Utils.GeoJSONUtil;
 import businesslogic.Utils.QuadTileUtils;
 import dataaccess.SimmapDataAccessFacade;
-import dataaccess.database.tables.records.LinkRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.json.JSONObject;
 
+import java.sql.Date;
 import java.util.Properties;
 
 /**
@@ -25,5 +25,12 @@ public class DataFetchLogic {
         output = GeoJSONUtil.getGeoFromLinkRequest(result);
 
         return output;
+    }
+
+    public Date getLastModified(int x, int y , int zoom, int networkid, Properties props){
+        String QuadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
+        SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props);
+
+        return facade.getLastModifiedQuadKey(QuadKey, networkid, zoom);
     }
 }

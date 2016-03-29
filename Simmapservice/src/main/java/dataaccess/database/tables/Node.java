@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Node extends TableImpl<NodeRecord> {
 
-	private static final long serialVersionUID = -620962214;
+	private static final long serialVersionUID = -1380764626;
 
 	/**
 	 * The reference instance of <code>public.Node</code>
@@ -53,7 +53,7 @@ public class Node extends TableImpl<NodeRecord> {
 	/**
 	 * The column <code>public.Node.Id</code>.
 	 */
-	public final TableField<NodeRecord, String> ID = createField("Id", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "\n");
+	public final TableField<NodeRecord, String> ID = createField("Id", org.jooq.impl.SQLDataType.VARCHAR.length(100).nullable(false), this, "\r\n");
 
 	/**
 	 * The column <code>public.Node.NetworkId</code>.
@@ -63,7 +63,7 @@ public class Node extends TableImpl<NodeRecord> {
 	/**
 	 * The column <code>public.Node.QuadKey</code>.
 	 */
-	public final TableField<NodeRecord, String> QUADKEY = createField("QuadKey", org.jooq.impl.SQLDataType.VARCHAR.length(18), this, "\n");
+	public final TableField<NodeRecord, String> QUADKEY = createField("QuadKey", org.jooq.impl.SQLDataType.VARCHAR.length(18), this, "\r\n");
 
 	/**
 	 * The column <code>public.Node.X</code>.

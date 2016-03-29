@@ -15,6 +15,8 @@ import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -208,6 +210,7 @@ public class XMLImportLogic {
         newLink.setModes(link.get("modes").toString());
         newLink.setLength(new BigDecimal(link.get("length").toString()));
         newLink.setMinlevel(calculateMinLevel(newLink));
+        newLink.setLastmodified(Date.valueOf(LocalDate.now()));
 
         return newLink;
     }

@@ -21,7 +21,7 @@ path:hover {
     fill: white;
     fill-opacity: .7;
 }
-#streetDetails{
+.offcanvas-container{
     background-color: white;
     height: 100%;
 }
