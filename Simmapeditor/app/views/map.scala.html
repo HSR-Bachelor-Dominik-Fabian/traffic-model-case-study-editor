@@ -41,8 +41,8 @@
                     addOverLay(siouxfalls, "Siouxfalls"); //TODO: QuadTile Intersection Algorithm!!!
                 });*/
 
-                //var geojsonURL = 'http://152.96.56.47:4000{s}/api/quadtile/1/{z}/{x}/{y}';
-                var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
+                var geojsonURL = 'http://152.96.56.47:4000{s}/api/quadtile/1/{z}/{x}/{y}';
+                //var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
                 var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
                     clipTiles: false,
                     identified: function(feature){
