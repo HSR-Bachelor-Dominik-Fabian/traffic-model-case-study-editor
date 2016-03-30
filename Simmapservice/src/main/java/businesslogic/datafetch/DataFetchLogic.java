@@ -22,7 +22,7 @@ public class DataFetchLogic {
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props);
         Result<Record> result = facade.getLinkFromQuadKey(QuadKey, networkid, zoom);
 
-        output = GeoJSONUtil.getGeoFromLinkRequest(result);
+        output = GeoJSONUtil.getGeoFromLinkRequest(result, zoom);
 
         return output;
     }

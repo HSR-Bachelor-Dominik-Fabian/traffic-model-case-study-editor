@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * Created by dohee on 24.03.2016.
  */
 public class GeoJSONUtil {
-    public static JSONObject getGeoFromLinkRequest(Result<Record> result){
+    public static JSONObject getGeoFromLinkRequest(Result<Record> result, int zoom){
         JSONObject baseJSON = new JSONObject();
 
         baseJSON.put("type", "FeatureCollection");
@@ -30,9 +30,12 @@ public class GeoJSONUtil {
             JSONObject props = new JSONObject();
             props.put("modes", record.getValue("Modes"));
             props.put("length", record.getValue("Length"));
-            props.put("modes", record.getValue("Modes"));
+            props.put("permlanes", record.getValue("Permlanes"));
+            props.put("oneway", record.getValue("Oneway"));
+            props.put("freespeed", record.getValue("Freespeed"));
             props.put("id", record.getValue("Id"));
-            //TODO: Add Properties
+            props.put("zoomlevel", zoom);
+            props.put("capacity", record.getValue("Capacity"));
             newFeature.put("properties", props);
 
             baseJSON.append("features", newFeature);
