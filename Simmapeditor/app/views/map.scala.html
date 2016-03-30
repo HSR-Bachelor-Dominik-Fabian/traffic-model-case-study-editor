@@ -45,8 +45,11 @@
                 var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
                 var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
                     clipTiles: false,
-                    unique: function (feature) {
+                    identified: function(feature){
                         return feature.properties.id;
+                    },
+                    unique: function (feature) {
+                        return feature.properties.zoomlevel;
                     },
                     subdomains: ["5", "6", "7"]
                 },{

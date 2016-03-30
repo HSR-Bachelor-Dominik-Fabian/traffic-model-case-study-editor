@@ -49,6 +49,8 @@ L.TileLayer.Ajax = L.TileLayer.extend({
 L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
     // Store each GeometryCollection's layer by key, if options.unique function is present
     _keyLayers: {},
+    _keyStore:{},
+    _layerToKeyStore : {},
 
     // Used to calculate svg path string for clip path elements
     _clipPathRectangles: {},
@@ -67,9 +69,23 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
         L.TileLayer.Ajax.prototype.onRemove.call(this, map);
     },
     _reset: function () {
-        this.geojsonLayer.clearLayers();
-        this._keyLayers = {};
         this._removeOldClipPaths();
+        var zoom = this._map.getZoom();
+        var maxZoom = this._map.getMaxZoom();
+
+        for(var i = zoom + 1; i <= maxZoom; i++){
+            if(i in this._keyLayers){
+                this.geojsonLayer.removeLayer(this._keyLayers[i]);
+                delete this._keyLayers[i];
+                if(i in this._layerToKeyStore){
+                    for(var key in this._layerToKeyStore[i]){
+                        delete this._keyStore[this._layerToKeyStore[i][key]];
+                    }
+                    delete this._layerToKeyStore[i];
+                }
+            }
+        }
+
         L.TileLayer.Ajax.prototype._reset.apply(this, arguments);
     },
 
@@ -177,13 +193,28 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
             }
             return this;
         }
-
+        var oneachfeaturedone = false;
         var options = this.geojsonLayer.options;
 
         if (options.filter && !options.filter(geojson)) { return; }
+        if(this.options.identified && typeof(this.options.identified) == 'function' && this.options.identified(geojson) in this._keyStore){
+            return this;
+        }
+        else if(this.options.identified && typeof(this.options.identified) == 'function' ){
+            this._keyStore[this.options.identified(geojson)] = null;
+            if(tilePoint.z in this._layerToKeyStore){
+                this._layerToKeyStore[tilePoint.z].push(this.options.identified(geojson));
+            }
+            else{
+                this._layerToKeyStore[tilePoint.z] = [this.options.identified(geojson)];
+            }
 
+        }
         var parentLayer = this.geojsonLayer;
         var incomingLayer = null;
+
+
+
         if (this.options.unique && typeof(this.options.unique) === 'function') {
             var key = this.options.unique(geojson);
 
@@ -210,10 +241,22 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
             if (key in this._keyLayers) {
                 parentLayer = this._keyLayers[key];
                 parentLayer.feature.geometry.geometries.push(geojson.geometry);
+
+                if (!oneachfeaturedone && options.onEachFeature) {
+                    options.onEachFeature(geojson, incomingLayer);
+                    oneachfeaturedone = true;
+                }
             }
             // Convert the incoming GeoJSON feature into a new GeometryCollection layer
             else {
                 this._keyLayers[key] = incomingLayer;
+                if (!oneachfeaturedone && options.onEachFeature) {
+                    incomingLayer.eachLayer(function(layer){
+                        options.onEachFeature(geojson, layer);
+                    });
+
+                    oneachfeaturedone = true;
+                }
             }
         }
         // Add the incoming geojson feature to the L.GeoJSON Layer
@@ -231,9 +274,9 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
         incomingLayer.defaultOptions = incomingLayer.options;
 
         this.geojsonLayer.resetStyle(incomingLayer);
-
-        if (options.onEachFeature) {
+        if (!oneachfeaturedone && options.onEachFeature) {
             options.onEachFeature(geojson, incomingLayer);
+            oneachfeaturedone = true;
         }
         parentLayer.addLayer(incomingLayer);
 
