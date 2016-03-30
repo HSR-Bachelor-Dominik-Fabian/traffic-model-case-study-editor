@@ -41,8 +41,8 @@
                     addOverLay(siouxfalls, "Siouxfalls"); //TODO: QuadTile Intersection Algorithm!!!
                 });*/
 
-                var geojsonURL = 'http://152.96.56.47:4000{s}/api/quadtile/1/{z}/{x}/{y}';
-                //var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
+                //var geojsonURL = 'http://152.96.56.47:4000{s}/api/quadtile/1/{z}/{x}/{y}';
+                var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
                 var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
                     clipTiles: false,
                     identified: function(feature){
@@ -96,7 +96,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">XML Import</div>
                 <div class="panel-body">
-                    <form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">
+                    <!-- <form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data"> -->
+                    <form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">
                         <p>
                                     Network name : <input type="text" name="name">
                                 </p>

@@ -2,6 +2,7 @@ package businesslogic.xmlImport;
 
 import businesslogic.Utils.EPSGTransformUtil;
 import businesslogic.Utils.QuadTileUtils;
+import com.google.common.base.Stopwatch;
 import com.vividsolutions.jts.geom.Coordinate;
 import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.tables.records.LinkRecord;
@@ -14,12 +15,18 @@ import org.json.JSONObject;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
 
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by fke on 22.03.2016.
@@ -34,32 +41,59 @@ public class XMLImportLogic {
         this.dataAccess = new SimmapDataAccessFacade(properties);
     }
 
-    public void importNetwork2DB(JSONObject jsonObject, String format, String networkName) {
-        JSONObject network = jsonObject.getJSONObject("network");
-        EPSGTransformUtil transformer = null;
+    public void importNetwork2DB(InputStream inputStream, String format, String networkName) {
         try {
-            transformer = new EPSGTransformUtil(format);
-        } catch (FactoryException e) {
+            XMLInputFactory factory = XMLInputFactory.newInstance();
+
+            XMLStreamReader streamReader = factory.createXMLStreamReader(inputStream);
+
+            int networkId = importNetwork2DB(networkName);
+
+            EPSGTransformUtil transformer = null;
+            try {
+                transformer = new EPSGTransformUtil(format);
+            } catch (FactoryException e) {
+                e.printStackTrace();
+            }
+
+            if (transformer == null) {
+                throw new IllegalArgumentException("GeoJSON format is not supported");
+            }
+
+            while(streamReader.hasNext()) {
+                if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
+                    if (streamReader.getName().getLocalPart().equals("nodes")) {
+                        streamReader.next();
+                        break;
+                    }
+                }
+                streamReader.next();
+            }
+
+            importNodes2DB(streamReader, transformer, networkId);
+
+            while(streamReader.hasNext()) {
+                streamReader.next();
+                if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
+                    if (streamReader.getName().getLocalPart().equals("links")) {
+                        break;
+                    }
+                }
+            }
+
+            importOptions2DB(streamReader, networkId);
+
+            importLinks2DB(streamReader, transformer, networkId);
+
+        } catch (XMLStreamException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        if (transformer == null) {
-            throw new IllegalArgumentException("GeoJSON format is not supported");
-        }
-
-        // process network
-        int networkId = importNetwork2DB(networkName);
-
-        // process nodes
-        JSONArray nodesArray = network.getJSONObject("nodes").getJSONArray("node");
-        importNodes2DB(nodesArray, transformer, networkId);
-
-        // process links
-        JSONObject linksElement = network.getJSONObject("links");
-        importOptions2DB(linksElement, networkId);
-
-        JSONArray linksArray = linksElement.getJSONArray("link");
-        importLinks2DB(linksArray, transformer, networkId);
     }
 
     private int importNetwork2DB(String networkName) {
@@ -71,122 +105,136 @@ public class XMLImportLogic {
         return 1;
     }
 
-    private void importNodes2DB(JSONArray nodes, EPSGTransformUtil transformer, int networkId) {
-        long start = System.currentTimeMillis();
-        /*
-        for (int i = 0; i < nodes.length(); i+=1000) {
-            NodeRecord[] records = new NodeRecord[1000];
-            for (int j = i; (j < (i + 1000)) && j < nodes.length(); j++) {
-                try {
-                    JSONObject node = nodes.getJSONObject(j);
-                    NodeRecord nodeRecord = new NodeRecord();
-                    Object id = node.get("id");
-                    nodeRecord.setId(node.get("id").toString());
-                    nodeRecord.setNetworkid(networkId);
-                    double x = node.getDouble("x"), y = node.getDouble("y");
-                    Coordinate nodeCoord = new Coordinate(x, y);
-                    Coordinate newNodeCoord = transformer.transform(nodeCoord).getCoordinate();
-                    nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(newNodeCoord.x, newNodeCoord.y));
-                    nodeRecord.setX(new BigDecimal(x));
-                    nodeRecord.setY(new BigDecimal(y));
-                    records[j%1000] = nodeRecord;
-                } catch (TransformException e) {
-                    e.printStackTrace();
-                } catch (FactoryException e) {
-                    e.printStackTrace();
+    private void importNodes2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
+        try {
+            NodeRecord[] nodeRecords = new NodeRecord[25000];
+            int index = 0;
+            while(streamReader.hasNext()) {
+                if (streamReader.getEventType() == XMLStreamReader.SPACE
+                        || streamReader.getEventType() == XMLStreamReader.END_ELEMENT) {
+                    streamReader.next();
+                    continue;
+                } else if (streamReader.getEventType() != XMLStreamReader.START_ELEMENT) {
+                    break;
                 }
-            }
-            dataAccess.setNode(records);
-        }
-        */
-
-        NodeRecord[] records = new NodeRecord[nodes.length()];
-        for (int i = 0; i < nodes.length(); i++) {
-            try {
-                JSONObject node = nodes.getJSONObject(i);
-                NodeRecord nodeRecord = new NodeRecord();
-                Object id = node.get("id");
-                nodeRecord.setId(node.get("id").toString());
-                nodeRecord.setNetworkid(networkId);
-                double x = node.getDouble("x"), y = node.getDouble("y");
-                Coordinate nodeCoord = new Coordinate(x, y);
+                NodeRecord newNodeRecord = new NodeRecord();
+                newNodeRecord.setNetworkid(networkId);
+                String id = streamReader.getAttributeValue(0);
+                newNodeRecord.setId(id);
+                String x = streamReader.getAttributeValue(1);
+                newNodeRecord.setX(new BigDecimal(x));
+                String y = streamReader.getAttributeValue(2);
+                newNodeRecord.setY(new BigDecimal(y));
+                Coordinate nodeCoord = new Coordinate(Double.parseDouble(x), Double.parseDouble(y));
                 nodeCoord = transformer.transform(nodeCoord).getCoordinate();
-                nodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(nodeCoord.y, nodeCoord.x));
-                nodeRecord.setX(new BigDecimal(x));
-                nodeRecord.setY(new BigDecimal(y));
-                nodeRecord.setLat(new BigDecimal(nodeCoord.y));
-                nodeRecord.setLong(new BigDecimal(nodeCoord.x));
-                records[i] = nodeRecord;
-            } catch (TransformException e) {
-                e.printStackTrace();
-            } catch (FactoryException e) {
-                e.printStackTrace();
+                newNodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(nodeCoord.y, nodeCoord.x));
+                newNodeRecord.setLat(new BigDecimal(nodeCoord.y));
+                newNodeRecord.setLong(new BigDecimal(nodeCoord.x));
+                nodeRecords[index%25000] = newNodeRecord;
+                index++;
+                if (index != 0 && index%25000 == 0) {
+                    dataAccess.setNode(nodeRecords);
+                    nodeRecords = new NodeRecord[25000];
+                    index = 0;
+                }
+                streamReader.next();
             }
+            dataAccess.setNode(nodeRecords);
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        } catch (TransformException e) {
+            e.printStackTrace();
+        } catch (FactoryException e) {
+            e.printStackTrace();
         }
-        dataAccess.setNode(records);
-        System.out.println("Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Time: " + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
     }
 
-    private void importOptions2DB(JSONObject linksElement, int networkId) {
+    private void importOptions2DB(XMLStreamReader streamReader, int networkId) {
         NetworkOptionsRecord[] options = new NetworkOptionsRecord[3];
-        NetworkOptionsRecord capperiod = new NetworkOptionsRecord();
-        capperiod.setNetworkid(networkId);
-        capperiod.setOptionname("capperiod");
-        capperiod.setValue(linksElement.get("capperiod").toString());
-        options[0] = capperiod;
 
-        NetworkOptionsRecord effectivecellsize = new NetworkOptionsRecord();
-        effectivecellsize.setNetworkid(networkId);
-        effectivecellsize.setOptionname("effectivecellsize");
-        effectivecellsize.setValue(linksElement.get("effectivecellsize").toString());
-        options[1] = effectivecellsize;
+        if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
+            NetworkOptionsRecord capperiod = new NetworkOptionsRecord();
+            capperiod.setNetworkid(networkId);
+            capperiod.setOptionname("capperiod");
+            capperiod.setValue(streamReader.getAttributeValue(0));
+            options[0] = capperiod;
 
-        NetworkOptionsRecord effectivelanewidth = new NetworkOptionsRecord();
-        effectivelanewidth.setNetworkid(networkId);
-        effectivelanewidth.setOptionname("effectivelanewidth");
-        effectivelanewidth.setValue(linksElement.get("effectivelanewidth").toString());
-        options[2] = effectivelanewidth;
+            NetworkOptionsRecord effectivecellsize = new NetworkOptionsRecord();
+            effectivecellsize.setNetworkid(networkId);
+            effectivecellsize.setOptionname("effectivecellsize");
+            effectivecellsize.setValue(streamReader.getAttributeValue(1));
+            options[1] = effectivecellsize;
 
+            NetworkOptionsRecord effectivelanewidth = new NetworkOptionsRecord();
+            effectivelanewidth.setNetworkid(networkId);
+            effectivelanewidth.setOptionname("effectivelanewidth");
+            effectivelanewidth.setValue(streamReader.getAttributeValue(2));
+            options[2] = effectivelanewidth;
+        }
         dataAccess.setNetworkOptions(options);
+        try {
+            streamReader.next();
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void importLinks2DB(JSONArray links, EPSGTransformUtil transformer, int networkId) {
-        long start = System.currentTimeMillis();
-        LinkRecord[] linkRecords = new LinkRecord[links.length()];
+    private void importLinks2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+
         Result<NodeRecord> nodes = dataAccess.getAllNodes();
         Map<String, NodeRecord> nodesMap = new HashMap<>();
         for (NodeRecord node : nodes) {
             nodesMap.put(node.getId(), node);
         }
 
-        for (int i = 0; i < links.length(); i++) {
-            try {
-                JSONObject link = links.getJSONObject(i);
-                LinkRecord newLink = fillLinkRecord(link, transformer, networkId, nodesMap);
-                linkRecords[i] = newLink;
-            } catch (TransformException e) {
-                e.printStackTrace();
-            } catch (FactoryException e) {
-                e.printStackTrace();
+        try {
+            LinkRecord[] linkRecords = new LinkRecord[25000];
+            int index = 0;
+            while(streamReader.hasNext()) {
+                if (streamReader.getEventType() == XMLStreamReader.SPACE
+                        || streamReader.getEventType() == XMLStreamReader.END_ELEMENT) {
+                    streamReader.next();
+                    continue;
+                } else if (streamReader.getEventType() != XMLStreamReader.START_ELEMENT) {
+                    break;
+                }
+                LinkRecord newLink = fillLinkRecord(streamReader, transformer, networkId, nodesMap);
+                linkRecords[index%25000] = newLink;
+                index++;
+                if (index != 0 && index%25000 == 0) {
+                    dataAccess.setLink(linkRecords);
+                    linkRecords = new LinkRecord[25000];
+                    index = 0;
+                }
+                streamReader.next();
             }
+            dataAccess.setLink(linkRecords);
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        } catch (TransformException e) {
+            e.printStackTrace();
+        } catch (FactoryException e) {
+            e.printStackTrace();
         }
-        dataAccess.setLink(linkRecords);
-        System.out.println("Time: " + (System.currentTimeMillis() - start));
+        System.out.println("Time: " + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
     }
 
-    private LinkRecord fillLinkRecord(JSONObject link, EPSGTransformUtil transformer, int networkId, Map<String,
+    private LinkRecord fillLinkRecord(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId, Map<String,
             NodeRecord> nodesMap) throws TransformException, FactoryException {
+
         LinkRecord newLink = new LinkRecord();
-
-        newLink.setId(link.get("id").toString());
-
-        String from = link.get("from").toString();
+        newLink.setId(streamReader.getAttributeValue(0));
+        String from = streamReader.getAttributeValue(1);
         NodeRecord fromNode = nodesMap.get(from);
         Coordinate fromCoord = new Coordinate(fromNode.getX().doubleValue(), fromNode.getY().doubleValue());
         fromCoord = transformer.transform(fromCoord).getCoordinate();
         newLink.setFrom(fromNode.getId());
 
-        String to = link.get("to").toString();
+        String to = streamReader.getAttributeValue(2);
         NodeRecord toNode = nodesMap.get(to);
         Coordinate toCoord = new Coordinate(toNode.getX().doubleValue(), toNode.getY().doubleValue());
         toCoord = transformer.transform(toCoord).getCoordinate();
@@ -194,13 +242,13 @@ public class XMLImportLogic {
 
         newLink.setQuadkey(QuadTileUtils
                 .getMinCommonQuadTileKeyFromLatLong(fromCoord.y, fromCoord.x, toCoord.y, toCoord.x));
-        newLink.setOneway(Boolean.parseBoolean(link.get("oneway").toString()));
+        newLink.setOneway(Boolean.parseBoolean(streamReader.getAttributeValue(7)));
         newLink.setNetworkid(networkId);
-        newLink.setFreespeed(new BigDecimal(link.get("freespeed").toString()));
-        newLink.setCapacity(new BigDecimal(link.get("capacity").toString()));
-        newLink.setPermlanes(new BigDecimal(link.get("permlanes").toString()));
-        newLink.setModes(link.get("modes").toString());
-        newLink.setLength(new BigDecimal(link.get("length").toString()));
+        newLink.setFreespeed(new BigDecimal(streamReader.getAttributeValue(4)));
+        newLink.setCapacity(new BigDecimal(streamReader.getAttributeValue(5)));
+        newLink.setPermlanes(new BigDecimal(streamReader.getAttributeValue(6)));
+        newLink.setModes(streamReader.getAttributeValue(8));
+        newLink.setLength(new BigDecimal(streamReader.getAttributeValue(3)));
         newLink.setMinlevel(calculateMinLevel(newLink));
         newLink.setLastmodified(Date.valueOf(LocalDate.now()));
 
