@@ -13,10 +13,8 @@ svg {
 
 path {
     fill: #000;
-    fill-opacity: .2;
     stroke-width: 1.5px;
 }
-
 path:hover {
     fill: white;
     fill-opacity: .7;
@@ -27,4 +25,8 @@ path:hover {
 }
 .leaflet-touch .leaflet-control-zoomslider {
     border: 2px solid rgba(0,0,0,0.2)!important;
+}
+
+.street {
+    stroke-width: 5px;
 }
