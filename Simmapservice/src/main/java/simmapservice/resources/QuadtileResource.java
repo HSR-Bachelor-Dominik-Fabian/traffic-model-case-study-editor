@@ -40,11 +40,11 @@ public class QuadtileResource {
         stopwatch1.stop();
         System.out.println("Get Cache: " + stopwatch1.elapsed(TimeUnit.MILLISECONDS) + " ms");
         if(date == null){
-            return Response.noContent().build();
+            return Response.noContent().cacheControl(cc).build();
         }
         EntityTag etag = new EntityTag(date.hashCode() + "id" + x + "." + y + "." + z + "." + networkID);
 
-        builder = request.evaluatePreconditions(etag);
+        builder = request.evaluatePreconditions(new EntityTag(etag.getValue() + "--gzip"));
 
         if(builder != null){
             System.out.println("Has Cache!");
@@ -57,7 +57,7 @@ public class QuadtileResource {
         System.out.println("Get Data: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + " ms");
 
         builder = Response.ok(json.toString());
-        builder.cacheControl(cc);
+        builder.cacheControl(cc).tag(etag);//TODO: tag
         return builder.build();
     }
 }
