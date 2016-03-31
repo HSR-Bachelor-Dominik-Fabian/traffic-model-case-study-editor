@@ -12,7 +12,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.util.EnumSet;
 import java.util.Properties;
-import simmapservice.resources.XYToQuadtileResource;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -37,8 +36,6 @@ public class Streetservice extends Application<StreetserviceConfiguration>{
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(new XMLImportResource(properties));
         environment.jersey().register(new QuadtileResource(properties));
-        XYToQuadtileResource xyToQuadtileResource = new XYToQuadtileResource();
-        environment.jersey().register(xyToQuadtileResource);
 
         final FilterRegistration.Dynamic cors =
                 environment.servlets().addFilter("CORS", CrossOriginFilter.class);
