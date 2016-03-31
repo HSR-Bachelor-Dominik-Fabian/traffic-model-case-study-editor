@@ -10,7 +10,7 @@
             $scope.streetModel = feature;
             $scope.layer = layer;
             streetDetails.offcanvas("show");
-            layer.setStyle({color: "yellow"});
+            layer.setStyle({color: "#FFC62F"});
             if ($scope.marker != null) {
                 L.removeLayer(marker);
             }
@@ -24,7 +24,7 @@
             $scope.streetModel = null;
             var layer = $scope.layer;
             if (layer != null) {
-                layer.setStyle({color: "red"});
+                layer.setStyle({color: "#2F60FF"});
             }
             ;
             $scope.layer = null;

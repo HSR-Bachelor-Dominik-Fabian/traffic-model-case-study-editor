@@ -15,7 +15,6 @@ path {
     fill: #000;
     stroke-width: 1.5px;
 }
-
 path:hover {
     fill: white;
     fill-opacity: .7;
@@ -30,8 +29,4 @@ path:hover {
 
 .street {
     stroke-width: 5px;
-}
-
-.street_10{
-
 }

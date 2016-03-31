@@ -15,10 +15,21 @@
                 });
                 var MapBox = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     subdomains: 'abcd',
-                    id: 'mapbox.streets',
+                    id: 'mapbox.streets-basic',
                     accessToken: 'pk.eyJ1IjoiZjNrZWxsZXIiLCJhIjoiY2lsa3VyNjB3MDA3am5ja3FxNHFld3E2NiJ9.A99UzeLIycU2I8jRCPixgg'
                 });
-                var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [baseMap],
+                var MapBoxLight = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    subdomains: 'abcd',
+                    id: 'mapbox.light',
+                    accessToken: 'pk.eyJ1IjoiZjNrZWxsZXIiLCJhIjoiY2lsa3VyNjB3MDA3am5ja3FxNHFld3E2NiJ9.A99UzeLIycU2I8jRCPixgg'
+                });
+                var SenozonLight = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    subdomains: 'abcd',
+                    id: 'firehollaender.727c5230',
+                    accessToken: 'pk.eyJ1IjoiZmlyZWhvbGxhZW5kZXIiLCJhIjoiY2lsdzlmamExMDA5dXY5bTQ2bWl2MTZoNCJ9.Q8uzzgMdko8ZbcA6Kbwzlw'
+                });
+
+                var map = new L.Map("map", {center: [-33.5, -70.6], zoom: 8, layers: [SenozonLight],
                     attributionControl: false, zoomControl: false});
                 map.on("click", function(){
                     var streetDetails=$("#streetDetails")
@@ -27,19 +38,6 @@
                 });
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
-                /*d3.json("@routes.Assets.at("json/santiago.json")", function(error, collection) {
-                    if (error) throw console.log(error);
-
-                    var santiago = L.geoJson(collection, {onEachFeature: onEachFeature});
-                    addOverLay(santiago, "Santiago");
-                });
-
-                d3.json("@routes.Assets.at("json/siouxfalls.json")", function(error, collection) {
-                    if (error) throw console.log(error);
-
-                    var siouxfalls = L.geoJson(collection, {onEachFeature: onEachFeature});
-                    addOverLay(siouxfalls, "Siouxfalls"); //TODO: QuadTile Intersection Algorithm!!!
-                });*/
 
                 //var geojsonURL = 'http://152.96.56.47:4000{s}/api/quadtile/1/{z}/{x}/{y}';
                 var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
@@ -58,7 +56,7 @@
 
                 function onEachFeature(feature, layer){
                     if (feature.properties) {
-                        layer.setStyle({color: "red"});
+                        layer.setStyle({color: "#2F60FF",opacity: 0.9 , className: "street street_"+feature.properties.zoomlevel});
                         layer.on("click", function(e){
                             var streetDetails = $("#streetDetails");
                             var scope = angular.element(streetDetails).scope();
@@ -68,7 +66,7 @@
                 }
 
                 var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de,
-                    "Black and White": OpenStreetMap_BlackAndWhite, "MapBox": MapBox};
+                    "Black and White": OpenStreetMap_BlackAndWhite, "MapBox": MapBox, "MapBoxLight": MapBoxLight, "SenozonLight": SenozonLight};
 
                 var basicControl = L.control.layers(baseLayers, {}).addTo(map);
                 L.control.attribution(null);
