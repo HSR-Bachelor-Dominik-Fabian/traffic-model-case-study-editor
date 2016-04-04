@@ -251,6 +251,10 @@ public class XMLImportLogic {
         newLink.setLength(new BigDecimal(streamReader.getAttributeValue(3)));
         newLink.setMinlevel(calculateMinLevel(newLink));
         newLink.setLastmodified(Date.valueOf(LocalDate.now()));
+        newLink.setLat1(fromNode.getLat());
+        newLink.setLong1(fromNode.getLong());
+        newLink.setLat2(toNode.getLat());
+        newLink.setLong2(toNode.getLong());
 
         return newLink;
     }

@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Link extends TableImpl<LinkRecord> {
 
-	private static final long serialVersionUID = 1864689584;
+	private static final long serialVersionUID = 845532178;
 
 	/**
 	 * The reference instance of <code>public.Link</code>
@@ -115,6 +115,26 @@ public class Link extends TableImpl<LinkRecord> {
 	 * The column <code>public.Link.LastModified</code>.
 	 */
 	public final TableField<LinkRecord, Date> LASTMODIFIED = createField("LastModified", org.jooq.impl.SQLDataType.DATE, this, "");
+
+	/**
+	 * The column <code>public.Link.Long1</code>.
+	 */
+	public final TableField<LinkRecord, BigDecimal> LONG1 = createField("Long1", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+
+	/**
+	 * The column <code>public.Link.Lat1</code>.
+	 */
+	public final TableField<LinkRecord, BigDecimal> LAT1 = createField("Lat1", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+
+	/**
+	 * The column <code>public.Link.Long2</code>.
+	 */
+	public final TableField<LinkRecord, BigDecimal> LONG2 = createField("Long2", org.jooq.impl.SQLDataType.NUMERIC, this, "");
+
+	/**
+	 * The column <code>public.Link.Lat2</code>.
+	 */
+	public final TableField<LinkRecord, BigDecimal> LAT2 = createField("Lat2", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
 	/**
 	 * Create a <code>public.Link</code> table reference
