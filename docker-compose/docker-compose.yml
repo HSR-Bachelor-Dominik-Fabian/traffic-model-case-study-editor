@@ -2,19 +2,19 @@ version: '2'
 services:
   simmapservice1:
     build: ./simmapservice/
-    links:
+    external_links:
       -  devmaster-simmapdatabase:postgres
     ports:
       - "40005:9001"
   simmapservice2:
     build: ./simmapservice/
-    links:
+    external_links:
       -  devmaster-simmapdatabase:postgres
     ports:
       - "40006:9001"
   simmapservice3:
     build: ./simmapservice/
-    links:
+    external_links:
       -  devmaster-simmapdatabase:postgres
     ports:
       - "40007:9001"
