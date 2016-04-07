@@ -28,6 +28,6 @@ services:
     build: ./simmapeditor/
     ports:
       - "40004:9000"
-  networks:
-    devmaster-simmapnetwork:
-       external: true
+networks:
+  devmaster-simmapnetwork:
+    external: true
