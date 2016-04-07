@@ -3,31 +3,31 @@ services:
   simmapservice1:
     build: ./simmapservice/
     external_links:
-      -  "devmaster-simmapdatabase:postgres"
+      -  "<prefix>-simmapdatabase:postgres"
     ports:
       - "40005:9001"
     networks:
-      - devmaster-simmapnetwork
+      - <prefix>-simmapnetwork
   simmapservice2:
     build: ./simmapservice/
     external_links:
-      -  "devmaster-simmapdatabase:postgres"
+      -  "<prefix>-simmapdatabase:postgres"
     ports:
       - "40006:9001"
     networks:
-      - devmaster-simmapnetwork
+      - <prefix>-simmapnetwork
   simmapservice3:
     build: ./simmapservice/
     external_links:
-      -  "devmaster-simmapdatabase:postgres"
+      -  "<prefix>-simmapdatabase:postgres"
     ports:
       - "40007:9001"
     networks:
-      - devmaster-simmapnetwork
+      - <prefix>-simmapnetwork
   simmapwebsite:
     build: ./simmapeditor/
     ports:
       - "40004:9000"
 networks:
-  devmaster-simmapnetwork:
+  <prefix>-simmapnetwork:
     external: true
