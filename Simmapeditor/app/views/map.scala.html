@@ -56,7 +56,7 @@
 
                 function onEachFeature(feature, layer){
                     if (feature.properties) {
-                        layer.setStyle({color: "#2F60FF",opacity: 0.9 , className: "street street_"+feature.properties.zoomlevel});
+                        layer.setStyle({color: "#6f98a4",opacity: 0.9 , className: "street street_"+feature.properties.zoomlevel});
                         layer.on("click", function(e){
                             var streetDetails = $("#streetDetails");
                             var scope = angular.element(streetDetails).scope();

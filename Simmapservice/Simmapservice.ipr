@@ -185,9 +185,6 @@
   <component name="ScalaCompilerConfiguration">
     <profile name="SBT 1" modules="simmapservice" />
   </component>
-  <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/../docker-compose/postgres/simmapdatabase.sql" dialect="PostgreSQL" />
-  </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
   </component>

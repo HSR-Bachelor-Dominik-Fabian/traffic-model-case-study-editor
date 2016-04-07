@@ -10,11 +10,11 @@
             $scope.streetModel = feature;
             $scope.layer = layer;
             streetDetails.offcanvas("show");
-            layer.setStyle({color: "#FFC62F"});
+            layer.setStyle({color: "#F0EA72"});
             if ($scope.marker != null) {
                 L.removeLayer(marker);
             }
-            ;
+
             $scope.marker = L.marker(latlng).addTo(map);
             $scope.$apply();
         };
@@ -24,7 +24,7 @@
             $scope.streetModel = null;
             var layer = $scope.layer;
             if (layer != null) {
-                layer.setStyle({color: "#2F60FF"});
+                layer.setStyle({color: "#6f98a4"});
             }
             ;
             $scope.layer = null;
