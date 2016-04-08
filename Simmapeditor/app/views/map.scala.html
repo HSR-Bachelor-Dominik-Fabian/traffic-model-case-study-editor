@@ -24,7 +24,7 @@
                 });
                 var SenozonLight = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     subdomains: 'abcd',
-                    id: 'firehollaender.727c5230',
+                    id: 'firehollaender.b2cc84a4',
                     accessToken: 'pk.eyJ1IjoiZmlyZWhvbGxhZW5kZXIiLCJhIjoiY2lsdzlmamExMDA5dXY5bTQ2bWl2MTZoNCJ9.Q8uzzgMdko8ZbcA6Kbwzlw',
                     noWrap:true
                 });
@@ -39,7 +39,7 @@
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-                var geojsonURL = 'http://152.96.56.47:4000{s}/api/quadtile/1/{z}/{x}/{y}';
+                var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
                 //var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
                 var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
                     clipTiles: false,
