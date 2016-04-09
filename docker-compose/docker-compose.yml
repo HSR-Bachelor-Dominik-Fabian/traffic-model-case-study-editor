@@ -2,7 +2,7 @@ version: '2'
 services:
   simmapservice:
     build: ./simmapservice/
-    image: devmaster-simmapserviceimage
+    image: <prefix>-simmapserviceimage
     external_links:
       -  "<prefix>-simmapdatabase:postgres"
     ports:
