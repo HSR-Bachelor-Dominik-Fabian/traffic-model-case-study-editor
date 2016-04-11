@@ -35,6 +35,7 @@
                     var streetDetails=$("#streetDetails")
                     var scope = angular.element(streetDetails).scope();
                     scope.updateFeature(null, null, null, map);
+                    $(".sidebar").css("margin-left", "-200px");
                 });
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
@@ -82,6 +83,10 @@
                     map.addLayer(layer);
                     basicControl.addOverlay(layer, name);
                 }
+
+                $(".sidebar").on("click", function() {
+                    $(".sidebar").css("margin-left", "0px");
+                });
             });
     </script>
 }
@@ -102,17 +107,25 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Settings<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+                        <li class="nav-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Settings">Settings<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Changesets <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a>
-                            <ul class="dropdown-menu forAnimate" role="menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-toggle="tooltip" data-placement="right" title="ChangeSet">Changesets <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a>
+                            <ul class="dropdown-menu" role="menu">
                                 <li>Active Changeset:</li>
                                 <li>Schweiz</li>
                                 <li class="divider"></li>
                                 <li>Create new ChangeSet:</li>
-                                <input type="text" style="display: inline;"/>
+                                <input type="text"/>
                                 <li class="divider"></li>
-                                <li><a href="#">Load ChangeSet</a></li>
+                                <li>Load ChangeSet</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-toggle="tooltip" data-placement="right" title="Import Network">Import Network <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-upload"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>Active Changeset:</li>
+                                <li>Schweiz</li>
+                                <li class="divider"></li>
                             </ul>
                         </li>
                     </ul>

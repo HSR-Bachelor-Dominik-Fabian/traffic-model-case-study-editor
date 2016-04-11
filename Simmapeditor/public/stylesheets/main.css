@@ -37,6 +37,7 @@ path:hover {
 }
 .leaflet-touch .leaflet-control-zoomslider {
     border: 2px solid rgba(0,0,0,0.2)!important;
+    margin-bottom: 40px!important;
 }
 
 .street {
@@ -62,7 +63,6 @@ path:hover {
 
 nav.sidebar, .main{
     position: absolute;
-    padding-bottom: 200px;
     -webkit-transition: margin 200ms ease-out;
     -moz-transition: margin 200ms ease-out;
     -o-transition: margin 200ms ease-out;
@@ -70,10 +70,6 @@ nav.sidebar, .main{
 }
 
 @media (min-width: 765px) {
-
-    nav.sidebar:hover + .main{
-        margin-left: 200px;
-    }
 
     nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
         margin-left: 0px;
@@ -117,9 +113,9 @@ nav.sidebar, .main{
     }
 
     nav.sidebar{
-        width: 200px;
+        width: 240px;
         height: 100%;
-        margin-left: -160px;
+        margin-left: -200px;
         float: left;
         margin-bottom: 0px;
     }
@@ -128,23 +124,15 @@ nav.sidebar, .main{
         width: 100%;
     }
 
-    nav.sidebar:hover{
-        margin-left: 0px;
-    }
-
     nav.sidebar:active{
         margin-left: 0px;
-    }
-
-    .forAnimate{
-        opacity: 0;
     }
 }
 
 @media (min-width: 1330px) {
 
     nav.sidebar{
-        margin-left: 0px;
+        margin-left: -200px;
         float: left;
     }
 
