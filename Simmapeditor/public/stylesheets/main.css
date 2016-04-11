@@ -24,6 +24,7 @@ svg {
     align-items: center;
 }
 path {
+    fill: #000;
     stroke-width: 1.5px;
 }
 path:hover {
@@ -39,14 +40,25 @@ path:hover {
 }
 
 .street {
-    stroke-width: 4px;
-    stroke: #6F98A4;
-    fill:#ffffff;
+    weight: 3;
+    stroke: #3FC977;
+    stroke-width: 2.4px;
+}
+
+.street_12, .street_13, .street_14 {
+    weight: 2;
+    stroke: #34A461;
+    stroke-width: 3.2px;
+}
+
+.street_10, .street_11 {
+    weight: 1;
+    stroke: #2C8A52;
+    stroke-width: 3.8px;
 }
 .menu {
     font-size: 2em;
 }
-
 
 nav.sidebar, .main{
     position: absolute;
