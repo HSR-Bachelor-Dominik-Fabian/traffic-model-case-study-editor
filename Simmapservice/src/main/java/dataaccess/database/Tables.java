@@ -4,10 +4,13 @@
 package dataaccess.database;
 
 
+import dataaccess.database.tables.Changeset;
 import dataaccess.database.tables.Link;
+import dataaccess.database.tables.LinkChange;
 import dataaccess.database.tables.Network;
 import dataaccess.database.tables.NetworkOptions;
 import dataaccess.database.tables.Node;
+import dataaccess.database.tables.NodeChange;
 
 import javax.annotation.Generated;
 
@@ -26,9 +29,19 @@ import javax.annotation.Generated;
 public class Tables {
 
 	/**
+	 * The table public.Changeset
+	 */
+	public static final Changeset CHANGESET = dataaccess.database.tables.Changeset.CHANGESET;
+
+	/**
 	 * The table public.Link
 	 */
 	public static final Link LINK = dataaccess.database.tables.Link.LINK;
+
+	/**
+	 * The table public.Link_Change
+	 */
+	public static final LinkChange LINK_CHANGE = dataaccess.database.tables.LinkChange.LINK_CHANGE;
 
 	/**
 	 * The table public.Network
@@ -44,4 +57,9 @@ public class Tables {
 	 * The table public.Node
 	 */
 	public static final Node NODE = dataaccess.database.tables.Node.NODE;
+
+	/**
+	 * The table public.Node_Change
+	 */
+	public static final NodeChange NODE_CHANGE = dataaccess.database.tables.NodeChange.NODE_CHANGE;
 }

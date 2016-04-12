@@ -4,13 +4,19 @@
 package dataaccess.database;
 
 
+import dataaccess.database.tables.Changeset;
 import dataaccess.database.tables.Link;
+import dataaccess.database.tables.LinkChange;
 import dataaccess.database.tables.Network;
 import dataaccess.database.tables.NetworkOptions;
 import dataaccess.database.tables.Node;
+import dataaccess.database.tables.NodeChange;
+import dataaccess.database.tables.records.ChangesetRecord;
+import dataaccess.database.tables.records.LinkChangeRecord;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;
 import dataaccess.database.tables.records.NetworkRecord;
+import dataaccess.database.tables.records.NodeChangeRecord;
 import dataaccess.database.tables.records.NodeRecord;
 
 import javax.annotation.Generated;
@@ -43,37 +49,53 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final UniqueKey<ChangesetRecord> CHANGESET_PRIMARYKEY = UniqueKeys0.CHANGESET_PRIMARYKEY;
 	public static final UniqueKey<LinkRecord> LINKID = UniqueKeys0.LINKID;
+	public static final UniqueKey<LinkChangeRecord> LINK_CHANGE_LINKID = UniqueKeys0.LINK_CHANGE_LINKID;
 	public static final UniqueKey<NetworkRecord> ID = UniqueKeys0.ID;
 	public static final UniqueKey<NetworkOptionsRecord> NETWORK_OPTIONSID = UniqueKeys0.NETWORK_OPTIONSID;
 	public static final UniqueKey<NodeRecord> NODEID = UniqueKeys0.NODEID;
+	public static final UniqueKey<NodeChangeRecord> NODE_CHANGEID = UniqueKeys0.NODE_CHANGEID;
 
 	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final ForeignKey<ChangesetRecord, NetworkRecord> CHANGESET__CHANGESET_NETWORKID = ForeignKeys0.CHANGESET__CHANGESET_NETWORKID;
 	public static final ForeignKey<LinkRecord, NetworkRecord> LINK__LINK_NETWORK = ForeignKeys0.LINK__LINK_NETWORK;
 	public static final ForeignKey<LinkRecord, NodeRecord> LINK__LINK_NODE_FROM = ForeignKeys0.LINK__LINK_NODE_FROM;
 	public static final ForeignKey<LinkRecord, NodeRecord> LINK__LINK_NODE_TO = ForeignKeys0.LINK__LINK_NODE_TO;
+	public static final ForeignKey<LinkChangeRecord, ChangesetRecord> LINK_CHANGE__LINK_CHANGE_CHANGESET = ForeignKeys0.LINK_CHANGE__LINK_CHANGE_CHANGESET;
+	public static final ForeignKey<LinkChangeRecord, NetworkRecord> LINK_CHANGE__LINK_CHANGE_LINK_NETWORK = ForeignKeys0.LINK_CHANGE__LINK_CHANGE_LINK_NETWORK;
 	public static final ForeignKey<NetworkOptionsRecord, NetworkRecord> NETWORK_OPTIONS__NETWORK_NETWORK_OPTIONS = ForeignKeys0.NETWORK_OPTIONS__NETWORK_NETWORK_OPTIONS;
 	public static final ForeignKey<NodeRecord, NetworkRecord> NODE__NETWORKID = ForeignKeys0.NODE__NETWORKID;
+	public static final ForeignKey<NodeChangeRecord, ChangesetRecord> NODE_CHANGE__NODE_CHANGE_CHANGESETNR = ForeignKeys0.NODE_CHANGE__NODE_CHANGE_CHANGESETNR;
+	public static final ForeignKey<NodeChangeRecord, NetworkRecord> NODE_CHANGE__NODE_CHANGE_NETWORKID = ForeignKeys0.NODE_CHANGE__NODE_CHANGE_NETWORKID;
 
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
 
 	private static class UniqueKeys0 extends AbstractKeys {
+		public static final UniqueKey<ChangesetRecord> CHANGESET_PRIMARYKEY = createUniqueKey(Changeset.CHANGESET, Changeset.CHANGESET.ID);
 		public static final UniqueKey<LinkRecord> LINKID = createUniqueKey(Link.LINK, Link.LINK.ID, Link.LINK.NETWORKID);
+		public static final UniqueKey<LinkChangeRecord> LINK_CHANGE_LINKID = createUniqueKey(LinkChange.LINK_CHANGE, LinkChange.LINK_CHANGE.ID, LinkChange.LINK_CHANGE.CHANGESETNR, LinkChange.LINK_CHANGE.NETWORKID);
 		public static final UniqueKey<NetworkRecord> ID = createUniqueKey(Network.NETWORK, Network.NETWORK.ID);
 		public static final UniqueKey<NetworkOptionsRecord> NETWORK_OPTIONSID = createUniqueKey(NetworkOptions.NETWORK_OPTIONS, NetworkOptions.NETWORK_OPTIONS.NETWORKID, NetworkOptions.NETWORK_OPTIONS.OPTIONNAME);
 		public static final UniqueKey<NodeRecord> NODEID = createUniqueKey(Node.NODE, Node.NODE.ID, Node.NODE.NETWORKID);
+		public static final UniqueKey<NodeChangeRecord> NODE_CHANGEID = createUniqueKey(NodeChange.NODE_CHANGE, NodeChange.NODE_CHANGE.ID, NodeChange.NODE_CHANGE.CHANGESETNR, NodeChange.NODE_CHANGE.NETWORKID);
 	}
 
 	private static class ForeignKeys0 extends AbstractKeys {
+		public static final ForeignKey<ChangesetRecord, NetworkRecord> CHANGESET__CHANGESET_NETWORKID = createForeignKey(dataaccess.database.Keys.ID, Changeset.CHANGESET, Changeset.CHANGESET.NETWORKID);
 		public static final ForeignKey<LinkRecord, NetworkRecord> LINK__LINK_NETWORK = createForeignKey(dataaccess.database.Keys.ID, Link.LINK, Link.LINK.NETWORKID);
 		public static final ForeignKey<LinkRecord, NodeRecord> LINK__LINK_NODE_FROM = createForeignKey(dataaccess.database.Keys.NODEID, Link.LINK, Link.LINK.FROM, Link.LINK.NETWORKID);
 		public static final ForeignKey<LinkRecord, NodeRecord> LINK__LINK_NODE_TO = createForeignKey(dataaccess.database.Keys.NODEID, Link.LINK, Link.LINK.TO, Link.LINK.NETWORKID);
+		public static final ForeignKey<LinkChangeRecord, ChangesetRecord> LINK_CHANGE__LINK_CHANGE_CHANGESET = createForeignKey(dataaccess.database.Keys.CHANGESET_PRIMARYKEY, LinkChange.LINK_CHANGE, LinkChange.LINK_CHANGE.CHANGESETNR);
+		public static final ForeignKey<LinkChangeRecord, NetworkRecord> LINK_CHANGE__LINK_CHANGE_LINK_NETWORK = createForeignKey(dataaccess.database.Keys.ID, LinkChange.LINK_CHANGE, LinkChange.LINK_CHANGE.NETWORKID);
 		public static final ForeignKey<NetworkOptionsRecord, NetworkRecord> NETWORK_OPTIONS__NETWORK_NETWORK_OPTIONS = createForeignKey(dataaccess.database.Keys.ID, NetworkOptions.NETWORK_OPTIONS, NetworkOptions.NETWORK_OPTIONS.NETWORKID);
 		public static final ForeignKey<NodeRecord, NetworkRecord> NODE__NETWORKID = createForeignKey(dataaccess.database.Keys.ID, Node.NODE, Node.NODE.NETWORKID);
+		public static final ForeignKey<NodeChangeRecord, ChangesetRecord> NODE_CHANGE__NODE_CHANGE_CHANGESETNR = createForeignKey(dataaccess.database.Keys.CHANGESET_PRIMARYKEY, NodeChange.NODE_CHANGE, NodeChange.NODE_CHANGE.CHANGESETNR);
+		public static final ForeignKey<NodeChangeRecord, NetworkRecord> NODE_CHANGE__NODE_CHANGE_NETWORKID = createForeignKey(dataaccess.database.Keys.ID, NodeChange.NODE_CHANGE, NodeChange.NODE_CHANGE.NETWORKID);
 	}
 }

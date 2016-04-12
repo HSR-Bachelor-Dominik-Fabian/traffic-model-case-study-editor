@@ -4,10 +4,13 @@
 package dataaccess.database;
 
 
+import dataaccess.database.tables.Changeset;
 import dataaccess.database.tables.Link;
+import dataaccess.database.tables.LinkChange;
 import dataaccess.database.tables.Network;
 import dataaccess.database.tables.NetworkOptions;
 import dataaccess.database.tables.Node;
+import dataaccess.database.tables.NodeChange;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +35,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-	private static final long serialVersionUID = 1507289445;
+	private static final long serialVersionUID = 224718826;
 
 	/**
 	 * The reference instance of <code>public</code>
@@ -55,9 +58,12 @@ public class Public extends SchemaImpl {
 
 	private final List<Table<?>> getTables0() {
 		return Arrays.<Table<?>>asList(
+			Changeset.CHANGESET,
 			Link.LINK,
+			LinkChange.LINK_CHANGE,
 			Network.NETWORK,
 			NetworkOptions.NETWORK_OPTIONS,
-			Node.NODE);
+			Node.NODE,
+			NodeChange.NODE_CHANGE);
 	}
 }

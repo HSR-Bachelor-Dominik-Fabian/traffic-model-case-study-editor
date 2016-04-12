@@ -2,20 +2,17 @@ package dataaccess;
 
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
-import dataaccess.database.tables.Node;
-import dataaccess.database.tables.records.LinkRecord;
-import dataaccess.database.tables.records.NetworkOptionsRecord;
-import dataaccess.database.tables.records.NetworkRecord;
-import dataaccess.database.tables.records.NodeRecord;
+import dataaccess.database.tables.LinkChange;
+import dataaccess.database.tables.records.*;
+import dataaccess.utils.DataAccessUtil;
+import org.geotools.data.shapefile.index.Data;
 import org.jooq.*;
 import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -27,35 +24,51 @@ public class SimmapDataAccessFacade {
     }
     private final Properties properties;
     public int[] setNetwork(NetworkRecord[] records){
-        return this.insertOrUpdate(records, Tables.NETWORK);
+        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NETWORK);
     }
 
     public int[] setNode(NodeRecord[] records){
-        return this.insertOrUpdate(records, Tables.NODE);
+        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NODE);
     }
 
     public int[] setLink(LinkRecord[] records){
-        return this.insertOrUpdate(records, Tables.LINK);
+        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.LINK);
     }
 
     public int[] setNetworkOptions(NetworkOptionsRecord[] records){
-        return this.insertOrUpdate(records, Tables.NETWORK_OPTIONS);
+        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NETWORK_OPTIONS);
     }
 
     public Result<NetworkRecord> getAllNetworks(){
-        return this.getRecords(Tables.NETWORK);
+        return DataAccessUtil.getRecords(this.properties, Tables.NETWORK);
     }
 
     public Result<LinkRecord> getAllLinks(){
-        return this.getRecords(Tables.LINK);
+        return DataAccessUtil.getRecords(this.properties, Tables.LINK);
     }
 
     public Result<NodeRecord> getAllNodes(){
-        return this.getRecords(Tables.NODE);
+        return DataAccessUtil.getRecords(this.properties, Tables.NODE);
     }
 
     public Result<NetworkOptionsRecord> getAllNetworkOptions(){
-        return this.getRecords(Tables.NETWORK_OPTIONS);
+        return DataAccessUtil.getRecords(this.properties, Tables.NETWORK_OPTIONS);
+    }
+
+    public Result<ChangesetRecord> getAllChangesets(){return DataAccessUtil.getRecords(this.properties, Tables.CHANGESET);}
+
+    public Result getLinkChangesfromChangeset(long changesetNr) {
+        String url = properties.getProperty("psqlpath");
+        String user = properties.getProperty("psqluser");
+        String password = properties.getProperty("psqlpassword");
+        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+            return context.select(Tables.LINK_CHANGE.fields()).from(Tables.LINK_CHANGE).where(Tables.LINK_CHANGE.CHANGESETNR.eq(changesetNr)).fetch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public Result getLinkFromQuadKey(String QuadKey, int NetworkId, int zoomLevel){
@@ -105,42 +118,6 @@ public class SimmapDataAccessFacade {
         return null;
     }
 
-    private Result getRecords(Table table){
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
-            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
-            return  context.select().from(table).fetch();
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    private int[] insertOrUpdate(Record[] records, Table table){
-        int[] output = null;
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
-            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
-            ArrayList<Query> queries = new ArrayList<>();
-
-            for(Record rec: records){
-                if (rec != null) {
-                    queries.add(context.insertInto(table).set(rec).onDuplicateKeyUpdate().set(rec));
-                }
-            }
-            output = context.batch(queries).execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return output;
-    }
 }
