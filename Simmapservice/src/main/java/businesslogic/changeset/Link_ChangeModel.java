@@ -10,6 +10,7 @@ import java.util.Date;
  */
 public class Link_ChangeModel {
     //region Private Variables
+    private LinkModel defaultValues = null;
     private String id = null;
     private Long changesetNr = null;
     private Integer networkId = null;
@@ -31,6 +32,15 @@ public class Link_ChangeModel {
     //endregion
 
     //region Getter/Setter
+
+    public LinkModel getDefaultValues() {
+        return defaultValues;
+    }
+
+    public void setDefaultValues(LinkModel defaultValues) {
+        this.defaultValues = defaultValues;
+    }
+
     public String getId() {
         return id;
     }
@@ -178,52 +188,52 @@ public class Link_ChangeModel {
 
     //region Methods
 
-    boolean isEverythingSet(){
-        return (id!=null) && (changesetNr!=null) && (networkId!=null) && (quadKey!= null) && (length != null)
-                && (freespeed != null) && (freespeed != null) && (capacity != null) && (permlanes != null)
-                && (oneway != null) && (modes != null) && (minlevel != null)
-                && (lastModified != null) && (long1 != null) && (lat1 != null) && (long2 != null) && (lat2 != null);
+    void fillModel(LinkChangeRecord record, LinkRecord linkRecord){
+        if(record != null && linkRecord!= null) {
+            id = (id == null) ? record.getId() : id;
+            changesetNr = (changesetNr == null) ? record.getChangesetnr() : changesetNr;
+            networkId = (networkId == null) ? record.getNetworkid() : networkId;
+            quadKey = (quadKey == null) ? record.getQuadkey() : quadKey;
+            length = (length == null) ? record.getLength() : length;
+            freespeed = (freespeed == null) ? record.getFreespeed() : freespeed;
+            capacity = (capacity == null) ? record.getCapacity() : capacity;
+            permlanes = (permlanes == null) ? record.getPermlanes() : permlanes;
+            oneway = (oneway == null) ? record.getOneway() : oneway;
+            modes = (modes == null) ? record.getModes() : modes;
+            from = (from == null) ? record.getFrom() : from;
+            to = (to == null) ? record.getTo() : to;
+            minlevel = (minlevel == null) ? record.getMinlevel() : minlevel;
+            lastModified = (lastModified == null) ? record.getLastmodified() : lastModified;
+            long1 = (long1 == null) ? record.getLong1() : long1;
+            lat1 = (lat1 == null) ? record.getLat1() : lat1;
+            long2 = (long2 == null) ? record.getLong2() : long2;
+            lat2 = (lat2 == null) ? record.getLat2() : lat2;
+            defaultValues = new LinkModel(linkRecord);
+            fillModel();
+        }
+        else{
+            throw new IllegalArgumentException("record and linkRecord can't be null");
+        }
     }
 
-    void fillModel(LinkChangeRecord record){
-        id = (id == null)?record.getId():id;
-        changesetNr = (changesetNr == null)?record.getChangesetnr():changesetNr;
-        networkId = (networkId == null)?record.getNetworkid():networkId;
-        quadKey = (quadKey == null)?record.getQuadkey():quadKey;
-        length = (length == null)?record.getLength():length;
-        freespeed = (freespeed == null)?record.getFreespeed():freespeed;
-        capacity = (capacity == null)? record.getCapacity():capacity;
-        permlanes = (permlanes == null)? record.getPermlanes():permlanes;
-        oneway = (oneway == null)?record.getOneway():oneway;
-        modes = (modes == null)? record.getModes():modes;
-        from = (from == null)?record.getFrom():from;
-        to = (to == null)? record.getTo():to;
-        minlevel = (minlevel == null)?record.getMinlevel():minlevel;
-        lastModified = (lastModified == null)?record.getLastmodified():lastModified;
-        long1 = (long1 == null)?record.getLong1():long1;
-        lat1 = (lat1 == null)?record.getLat1():lat1;
-        long2 = (long2 == null)?record.getLong2():long2;
-        lat2 = (lat2 == null)?record.getLat2():lat2;
-    }
-
-    void fillModel(LinkRecord record){
-        id = (id == null)?record.getId():id;
-        networkId = (networkId == null)?record.getNetworkid():networkId;
-        quadKey = (quadKey == null)?record.getQuadkey():quadKey;
-        length = (length == null)?record.getLength():length;
-        freespeed = (freespeed == null)?record.getFreespeed():freespeed;
-        capacity = (capacity == null)? record.getCapacity():capacity;
-        permlanes = (permlanes == null)? record.getPermlanes():permlanes;
-        oneway = (oneway == null)?record.getOneway():oneway;
-        modes = (modes == null)? record.getModes():modes;
-        from = (from == null)?record.getFrom():from;
-        to = (to == null)? record.getTo():to;
-        minlevel = (minlevel == null)?record.getMinlevel():minlevel;
-        lastModified = (lastModified == null)?record.getLastmodified():lastModified;
-        long1 = (long1 == null)?record.getLong1():long1;
-        lat1 = (lat1 == null)?record.getLat1():lat1;
-        long2 = (long2 == null)?record.getLong2():long2;
-        lat2 = (lat2 == null)?record.getLat2():lat2;
+    private void fillModel(){
+        id = (id == null)?defaultValues.getId():id;
+        networkId = (networkId == null)?defaultValues.getNetworkId():networkId;
+        quadKey = (quadKey == null)?defaultValues.getQuadKey():quadKey;
+        length = (length == null)?defaultValues.getLength():length;
+        freespeed = (freespeed == null)?defaultValues.getFreespeed():freespeed;
+        capacity = (capacity == null)? defaultValues.getCapacity():capacity;
+        permlanes = (permlanes == null)? defaultValues.getPermlanes():permlanes;
+        oneway = (oneway == null)?defaultValues.getOneway():oneway;
+        modes = (modes == null)? defaultValues.getModes():modes;
+        from = (from == null)?defaultValues.getFrom():from;
+        to = (to == null)? defaultValues.getTo():to;
+        minlevel = (minlevel == null)?defaultValues.getMinlevel():minlevel;
+        lastModified = (lastModified == null)?defaultValues.getLastModified():lastModified;
+        long1 = (long1 == null)?defaultValues.getLong1():long1;
+        lat1 = (lat1 == null)?defaultValues.getLat1():lat1;
+        long2 = (long2 == null)?defaultValues.getLong2():long2;
+        lat2 = (lat2 == null)?defaultValues.getLat2():lat2;
     }
 
     //endregion

@@ -1,6 +1,5 @@
 package businesslogic.changeset;
 
-import dataaccess.database.tables.records.NodeChangeRecord;
 import dataaccess.database.tables.records.NodeRecord;
 
 import java.math.BigDecimal;
@@ -8,11 +7,13 @@ import java.math.BigDecimal;
 /**
  * Created by dohee on 13.04.2016.
  */
-public class Node_ChangeModel {
+public class NodeModel {
+    public NodeModel(NodeRecord record){
+        fillModel(record);
+    }
+
     //region Private Variables
-    private NodeModel defaultValues = null;
     private String id = null;
-    private Long changesetNr= null;
     private Integer networkId = null;
     private String quadKey = null;
     private BigDecimal x = null;
@@ -22,23 +23,6 @@ public class Node_ChangeModel {
     //endregion
 
     //region Getter/Setter
-
-
-    public NodeModel getDefaultValues() {
-        return defaultValues;
-    }
-
-    public void setDefaultValues(NodeModel defaultValues) {
-        this.defaultValues = defaultValues;
-    }
-
-    public Long getChangesetNr() {
-        return changesetNr;
-    }
-
-    public void setChangesetNr(Long changesetNr) {
-        this.changesetNr = changesetNr;
-    }
 
     public String getId() {
         return id;
@@ -95,30 +79,20 @@ public class Node_ChangeModel {
     public void setLongitude(Number longitude) {
         this.longitude = longitude;
     }
+
+
     //endregion
 
     //region Methods
-    void fillModel(NodeChangeRecord record, NodeRecord nodeRecord){
+    void fillModel(NodeRecord record){
         id = (id == null)?record.getId():id;
-        changesetNr = (changesetNr == null)?record.getChangesetnr():changesetNr;
         networkId = (networkId == null)?record.getNetworkid():networkId;
         quadKey = (quadKey == null)?record.getQuadkey():quadKey;
         x = (x == null)?record.getX():x;
         y = (y == null)?record.getY():y;
         latitude = (latitude == null)?record.getLat():latitude;
         longitude = (longitude == null)?record.getLong():longitude;
-        defaultValues = new NodeModel(nodeRecord);
-        fillModel();
     }
 
-    private void fillModel(){
-        id = (id == null)?defaultValues.getId():id;
-        networkId = (networkId == null)?defaultValues.getNetworkId():networkId;
-        quadKey = (quadKey == null)?defaultValues.getQuadKey():quadKey;
-        x = (x == null)?defaultValues.getX():x;
-        y = (y == null)?defaultValues.getY():y;
-        latitude = (latitude == null)?defaultValues.getLatitude():latitude;
-        longitude = (longitude == null)?defaultValues.getLongitude():longitude;
-    }
     //endregion
 }

@@ -57,7 +57,7 @@ public class QuadtileResource {
         System.out.println("Get Data: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + " ms");
 
         builder = Response.ok(json.toString());
-        builder.cacheControl(cc).tag(etag);//TODO: tag
+        builder.cacheControl(cc).tag(etag);
         return builder.build();
     }
 }

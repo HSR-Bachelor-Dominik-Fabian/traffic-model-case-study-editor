@@ -4,6 +4,7 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import simmapservice.resources.ChangesetResource;
 import simmapservice.resources.QuadtileResource;
 import simmapservice.resources.StreetserviceResource;
 import simmapservice.resources.XMLImportResource;
@@ -36,6 +37,7 @@ public class Streetservice extends Application<StreetserviceConfiguration>{
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(new XMLImportResource(properties));
         environment.jersey().register(new QuadtileResource(properties));
+        environment.jersey().register(new ChangesetResource(properties));
 
         final FilterRegistration.Dynamic cors =
                 environment.servlets().addFilter("CORS", CrossOriginFilter.class);
