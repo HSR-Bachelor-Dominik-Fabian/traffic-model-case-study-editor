@@ -17,6 +17,7 @@ svg {
     height: 30px;
     opacity: 0.6;
     background-color: rgba(50,50,50,0.5);
+    z-index: 2000;
 }
 .footer .container p {
     color: #FFFFFF;
@@ -36,7 +37,7 @@ path:hover {
     height: 100%;
 }
 .leaflet-touch .leaflet-control-zoomslider {
-    border: 2px solid rgba(0,0,0,0.2)!important;
+    border: 1px solid rgba(0,0,0,0.2)!important;
     margin-bottom: 40px!important;
 }
 
@@ -151,4 +152,71 @@ nav:hover .forAnimate{
 }
 section{
     padding-left: 15px;
+}
+
+.form-border {
+    padding: 10px;
+    margin: 10px 10px 10px 10px;
+    border-radius: 8px;
+    background-color: rgb(236, 236, 236);
+}
+
+.form-field-group {
+    margin-bottom: 10px;
+    width: 100%;
+    transition: margin-bottom 200ms;
+    margin-bottom: 10px;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.form-label {
+    position: relative;
+    font-weight: bold;
+    border: 1px solid #cfcfcf;
+    padding: 5px 0 5px 10px;
+    background: #f6f6f6;
+    display: block;
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+    margin: 0;
+}
+
+div {
+    display: block;
+}
+
+.form-field-group .form-text-editable, .form-field-group .form-text-uneditable {
+    position: relative;
+    width: 100%;
+    border: 1px solid #CCC;
+    padding: 5px 0 5px 10px;
+    min-height: 30px;
+    border-top: 0;
+    display: block;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+    margin: 0;
+}
+
+.form-field-group .form-text-editable {
+    background-color: white;
+}
+
+.form-field-group .form-checkbox-editable {
+    display: block;
+}
+
+.form-select-editable {
+    border-radius: 0 0 4px 4px!important;
+    height: 30px!important;
+    border-top: 0!important;
+}
+
+#streetDetails {
+    border: 1px solid #cfcfcf;
+    background: #f6f6f6;
 }
