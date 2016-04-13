@@ -32,12 +32,9 @@ import java.util.concurrent.TimeUnit;
  * Created by fke on 22.03.2016.
  */
 public class XMLImportLogic {
-
-    private final Properties properties;
     private final SimmapDataAccessFacade dataAccess;
 
     public XMLImportLogic(Properties properties) {
-        this.properties = properties;
         this.dataAccess = new SimmapDataAccessFacade(properties);
     }
 

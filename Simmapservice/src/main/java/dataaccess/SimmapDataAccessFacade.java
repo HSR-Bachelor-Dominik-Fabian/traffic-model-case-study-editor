@@ -55,7 +55,59 @@ public class SimmapDataAccessFacade {
         return DataAccessUtil.getRecords(this.properties, Tables.NETWORK_OPTIONS);
     }
 
-    public Result<ChangesetRecord> getAllChangesets(){return DataAccessUtil.getRecords(this.properties, Tables.CHANGESET);}
+    public Result getAllChangesetsPerUser(int userNr){
+        String url = properties.getProperty("psqlpath");
+        String user = properties.getProperty("psqluser");
+        String password = properties.getProperty("psqlpassword");
+        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+            return context.select(Tables.CHANGESET.fields()).from(Tables.CHANGESET).where(Tables.CHANGESET.USERNR.eq(userNr)).fetch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public ChangesetRecord getChangsetFromNumber(long changsetNr){
+        String url = properties.getProperty("psqlpath");
+        String user = properties.getProperty("psqluser");
+        String password = properties.getProperty("psqlpassword");
+        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+            return (ChangesetRecord)context.select(Tables.CHANGESET.fields()).from(Tables.CHANGESET).where(Tables.CHANGESET.ID.eq(changsetNr)).fetchOne();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    public NodeRecord getNodeFromId(String id){
+        String url = properties.getProperty("psqlpath");
+        String user = properties.getProperty("psqluser");
+        String password = properties.getProperty("psqlpassword");
+        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+            return (NodeRecord)context.select(Tables.NODE.fields()).from(Tables.NODE).where(Tables.NODE.ID.eq(id)).fetchOne();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    public LinkRecord getLinkFromId(String id){
+        String url = properties.getProperty("psqlpath");
+        String user = properties.getProperty("psqluser");
+        String password = properties.getProperty("psqlpassword");
+        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+            return (LinkRecord)context.select(Tables.LINK.fields()).from(Tables.LINK).where(Tables.LINK.ID.eq(id)).fetchOne();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public Result getLinkChangesfromChangeset(long changesetNr) {
         String url = properties.getProperty("psqlpath");
@@ -64,6 +116,20 @@ public class SimmapDataAccessFacade {
         try(Connection conn = DriverManager.getConnection(url, user, password)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return context.select(Tables.LINK_CHANGE.fields()).from(Tables.LINK_CHANGE).where(Tables.LINK_CHANGE.CHANGESETNR.eq(changesetNr)).fetch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Result getNodeChangefromChangeset(long changesetNr){
+        String url = properties.getProperty("psqlpath");
+        String user = properties.getProperty("psqluser");
+        String password = properties.getProperty("psqlpassword");
+        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+            return context.select(Tables.NODE_CHANGE.fields()).from(Tables.NODE_CHANGE).where(Tables.NODE_CHANGE.CHANGESETNR.eq(changesetNr)).fetch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
