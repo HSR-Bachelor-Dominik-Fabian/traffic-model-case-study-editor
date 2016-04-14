@@ -45,6 +45,11 @@ svg {
     font-size: 2em;
 }
 
+#hiddenMenu{
+    background-color: rgb(51, 51, 51);
+    background-color: rgba(51, 51, 51, 0.8);
+}
+
 .navbar-minimal {
     width: 60px;
     height: 60px;
@@ -62,7 +67,10 @@ svg {
     height: 60px;
     z-index: 100;
     cursor: pointer;
-    background-color: rgb(158, 202, 59);
+    background-color: #6f99a5;
+}
+.navbar-minimal > .navbar-toggler:hover{
+    background-color: #4a717c;
 }
 
 .navbar-minimal > .navbar-toggler > span {
@@ -120,7 +128,7 @@ svg {
     border-bottom-width: 0px;
 }
 .navbar-minimal > .navbar-menu > li > a:hover {
-    background-color: rgb(158, 202, 59);
+    background-color: #91acb4;
 }
 .navbar-minimal > .navbar-menu > li > a > .glyphicon {
     float: right;
