@@ -40,8 +40,8 @@
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-                var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
-                //var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
+                //var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
+                var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
                 var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
                     clipTiles: false,
                     identified: function(feature){
@@ -58,6 +58,7 @@
                     if (feature.properties) {
                         layer.setStyle({color: "#6f98a4",opacity: 0.9 , className: "street street_"+feature.properties.zoomlevel});
                         layer.on("click", function(e){
+                            feature.setStyle({color: "#ffd700"});
                             var streetDetails = $("#streetDetails");
                             var scope = angular.element(streetDetails).scope();
                             scope.updateFeature(feature, layer, e.latlng, map);
@@ -77,6 +78,10 @@
                 L.easyButton({ position:"topright",states:[{onClick: function(btn, map){
                     $("#importMenu").offcanvas("show");
                 },icon:'glyphicon-import'}]}).addTo(map);
+
+                L.easyButton({ position:"topright",states:[{onClick: function(btn, map){
+                    map.setView(new L.LatLng(-33.5, -70.6), 10);
+                },icon:'glyphicon-screenshot'}]}).addTo(map);
 
                 function addOverLay(layer, name) {
                     map.addLayer(layer);
@@ -135,8 +140,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">XML Import</div>
                 <div class="panel-body">
-                    <form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">
-                        <!--<form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">-->
+                    <!--<form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">-->
+                        <form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">
                         <p>
                                     Network name : <input type="text" name="name">
                                 </p>
@@ -159,58 +164,35 @@
             </div>
         </div>
         <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas=".leaflet-right" ng-controller="StreetDetailController">
-            <div class="panel panel-default">
-                <div class="panel-heading">Properties</div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th>ID</th>
-                                <td>{{streetModel.properties.id}}</td>
-                            </tr>
-                            <tr>
-                                <th>Oneway</th>
-                                <td>{{streetModel.properties.oneway}}</td>
-                            </tr>
-                            <tr>
-                                <th>Modes</th>
-                                <td>{{streetModel.properties.modes}}</td>
-                            </tr>
-                            <tr>
-                                <th>Length</th>
-                                <td>{{streetModel.properties.length}}</td>
-                            </tr>
-                            <tr>
-                                <th>Freespeed</th>
-                                <td>{{streetModel.properties.freespeed}}</td>
-                            </tr>
-                            <tr>
-                                <th>Permlanes</th>
-                                <td>{{streetModel.properties.permlanes}}</td>
-                            </tr>
-                            <tr>
-                                <th>Capacity</th>
-                                <td>{{streetModel.properties.capacity}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="form-border">
+                <div class="form-field-group">
+                    <label class="form-label">ID</label>
+                    <p class="form-text-uneditable">{{streetModel.properties.id}}</p>
                 </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Geometry</div>
-                <div class="panel-body">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <th>Coordinates</th>
-                                <td>{{streetModel.geometry.coordinates}}</td>
-                            </tr>
-                            <tr>
-                                <th>Type</th>
-                                <td>{{streetModel.geometry.type}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="form-field-group">
+                    <label class="form-label">Oneway</label>
+                    <select class="form-control form-select-editable" ng-model="streetModel.properties.oneway" ng-options="o.v as o.n for o in [{ n: 'false', v: false }, { n: 'true', v: true }]">
+                    </select>
+                </div>
+                <div class="form-field-group">
+                    <label class="form-label">Modes</label>
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.modes">
+                </div>
+                <div class="form-field-group">
+                    <label class="form-label">Length (meter)</label>
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.length">
+                </div>
+                <div class="form-field-group">
+                    <label class="form-label">Freespeed (km/h)</label>
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.freespeed">
+                </div>
+                <div class="form-field-group">
+                    <label class="form-label">Permlanes</label>
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.permlanes">
+                </div>
+                <div class="form-field-group">
+                    <label class="form-label">Capacity</label>
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.capacity">
                 </div>
             </div>
         </div>

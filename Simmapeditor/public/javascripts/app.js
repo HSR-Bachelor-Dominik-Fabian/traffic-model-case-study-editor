@@ -8,6 +8,10 @@
         $scope.newFeature = function (feature, layer, latlng, map) {
             var streetDetails = $("#streetDetails")
             $scope.streetModel = feature;
+
+            $scope.streetModel.properties.freespeed = parseInt($scope.streetModel.properties.freespeed * 3.6);
+            $scope.streetModel.properties.length = parseFloat($scope.streetModel.properties.length).toFixed(2);
+
             $scope.layer = layer;
             streetDetails.offcanvas("show");
             layer.setStyle({color: "#F0EA72"});
