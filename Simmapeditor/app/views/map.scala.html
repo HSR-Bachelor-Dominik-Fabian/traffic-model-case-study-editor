@@ -35,13 +35,12 @@
                     var streetDetails=$("#streetDetails")
                     var scope = angular.element(streetDetails).scope();
                     scope.updateFeature(null, null, null, map);
-                    $(".sidebar").css("margin-left", "-200px");
                 });
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-                //var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
-                var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
+                var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
+                //var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
                 var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
                     clipTiles: false,
                     identified: function(feature){
@@ -87,9 +86,8 @@
                     map.addLayer(layer);
                     basicControl.addOverlay(layer, name);
                 }
-
-                $(".sidebar").on("click", function() {
-                    $(".sidebar").css("margin-left", "0px");
+                $(".navbar-toggler").on("click", function(){
+                    $("#hiddenMenu").offcanvas("toggle");
                 });
             });
     </script>
@@ -99,49 +97,37 @@
         <div id="map" class="col-xs-12">
 
         </div>
-        <nav class="navbar navbar-default sidebar" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="nav-item"><a href="#" data-toggle="tooltip" data-placement="right" title="Settings">Settings<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-toggle="tooltip" data-placement="right" title="ChangeSet">Changesets <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>Active Changeset:</li>
-                                <li>Schweiz</li>
-                                <li class="divider"></li>
-                                <li>Create new ChangeSet:</li>
-                                <input type="text"/>
-                                <li class="divider"></li>
-                                <li>Load ChangeSet</li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-toggle="tooltip" data-placement="right" title="Import Network">Import Network <span class="caret"></span><span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-upload"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>Active Changeset:</li>
-                                <li>Schweiz</li>
-                                <li class="divider"></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
+        <nav id="navmenuLeft" class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+            <div class="navbar-toggler animate">
+                <span class="menu-icon"></span>
             </div>
+            <ul class="navbar-menu animate">
+                <li>
+                    <a href="#about-us" class="animate">
+                        <span class="desc animate"> Who We Are </span>
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#blog" class="animate">
+                        <span class="desc animate"> What We Say </span>
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#contact-us" class="animate">
+                        <span class="desc animate"> How To Reach Us </span>
+                        <span class="glyphicon glyphicon-comment"></span>
+                    </a>
+                </li>
+            </ul>
         </nav>
-        <div id="importMenu" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas=".leaflet-right">
+        <div id="hiddenMenu" class="col-xs-3 navmenu-fixed-left offcanvas offcanvas-container" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft">
             <div class="panel panel-default">
                 <div class="panel-heading">XML Import</div>
                 <div class="panel-body">
-                    <!--<form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">-->
-                        <form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">
+                        <!--<form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">-->
+                    <form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">
                         <p>
                                     Network name : <input type="text" name="name">
                                 </p>
@@ -163,7 +149,34 @@
                 </div>
             </div>
         </div>
-        <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas=".leaflet-right" ng-controller="StreetDetailController">
+        <div id="importMenu" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#importMenu, .leaflet-right">
+            <div class="panel panel-default">
+                <div class="panel-heading">XML Import</div>
+                <div class="panel-body">
+                    <form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">
+                        <!--<form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">-->
+                        <p>
+                                    Network name : <input type="text" name="name">
+                                </p>
+                        <p>
+                                    Choose a file : <input type="file" name="file" />
+                                </p>
+                        <p>
+                                    Choose a format :
+                            <select name="format">
+                                <option value="WGS84">WGS84</option>
+                                <option value="EPSG:3857">EPSG:3857</option>
+                                <option value="EPSG:21781">EPSG:21781</option>
+                                <option value="EPSG:26914">EPSG:26914</option>
+                                <option value="EPSG:32719">EPSG:32719</option>
+                            </select>
+                        </p>
+                        <input type="submit" value="Upload" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#streetDetails, .leaflet-right" ng-controller="StreetDetailController">
             <div class="form-border">
                 <div class="form-field-group">
                     <label class="form-label">ID</label>
