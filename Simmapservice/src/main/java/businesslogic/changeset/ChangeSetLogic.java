@@ -29,36 +29,32 @@ public class ChangesetLogic {
 
     public ChangesetFullModel getFullChangeset(long changsetNr){
         ChangesetRecord changesetRecord = dataAccess.getChangsetFromNumber(changsetNr);
-        ChangesetFullModel fullModel = new ChangesetFullModel(changesetRecord);
+        if(changesetRecord !=null){
+            ChangesetFullModel fullModel = new ChangesetFullModel(changesetRecord);
 
-        Result<NodeChangeRecord> nodeChange = dataAccess.getNodeChangefromChangeset(changsetNr);
-        List<Node_ChangeModel> node_changeModels = new ArrayList();
-        for (NodeChangeRecord record:  nodeChange) {
-            Node_ChangeModel temp = new Node_ChangeModel();
-            temp.fillModel(record);
-            if(!temp.isEverythingSet()){
-                NodeRecord node = dataAccess.getNodeFromId(temp.getId());
-                temp.fillModel(node);
+            Result<NodeChangeRecord> nodeChange = dataAccess.getNodeChangefromChangeset(changsetNr);
+            List<Node_ChangeModel> node_changeModels = new ArrayList();
+            for (NodeChangeRecord record:  nodeChange) {
+                Node_ChangeModel temp = new Node_ChangeModel();
+                NodeRecord node = dataAccess.getNodeFromId(record.getId());
+                temp.fillModel(record,node);
+                node_changeModels.add(temp);
             }
-            node_changeModels.add(temp);
-        }
 
-        fullModel.setNode_changeModels(node_changeModels);
+            fullModel.setNode_changeModels(node_changeModels);
 
-        Result<LinkChangeRecord> linkChange = dataAccess.getLinkChangesfromChangeset(changsetNr);
-        List<Link_ChangeModel> link_changeModels = new ArrayList();
-        for(LinkChangeRecord record : linkChange){
-            Link_ChangeModel temp = new Link_ChangeModel();
-            temp.fillModel(record);
-            if(!temp.isEverythingSet()){
-                LinkRecord link = dataAccess.getLinkFromId(temp.getId());
-                temp.fillModel(link);
+            Result<LinkChangeRecord> linkChange = dataAccess.getLinkChangesfromChangeset(changsetNr);
+            List<Link_ChangeModel> link_changeModels = new ArrayList();
+            for(LinkChangeRecord record : linkChange){
+                Link_ChangeModel temp = new Link_ChangeModel();
+                LinkRecord link = dataAccess.getLinkFromId(record.getId());
+                temp.fillModel(record,link);
+                link_changeModels.add(temp);
             }
-            link_changeModels.add(temp);
+
+            fullModel.setLink_changeModels(link_changeModels);
+            return fullModel;
         }
-
-        fullModel.setLink_changeModels(link_changeModels);
-
-        return fullModel;
+        return null;
     }
 }
