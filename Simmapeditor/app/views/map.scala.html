@@ -35,6 +35,7 @@
                     var streetDetails=$("#streetDetails")
                     var scope = angular.element(streetDetails).scope();
                     scope.updateFeature(null, null, null, map);
+                    $(".street-active").removeClass("street-active");
                 });
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
@@ -57,7 +58,10 @@
                     if (feature.properties) {
                         layer.setStyle({color: "#6f98a4",opacity: 0.9 , className: "street street_"+feature.properties.zoomlevel});
                         layer.on("click", function(e){
-                            feature.setStyle({color: "#ffd700"});
+                            $(".street-active").removeClass("street-active");
+                            var path = e.target;
+                            var container = path._container;
+                            $('> path', container).addClass('street-active');
                             var streetDetails = $("#streetDetails");
                             var scope = angular.element(streetDetails).scope();
                             scope.updateFeature(feature, layer, e.latlng, map);
@@ -126,8 +130,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">XML Import</div>
                 <div class="panel-body">
-                        <!--<form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">-->
-                    <form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">
+                    <form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">
+                        <!--<form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">-->
                         <p>
                                     Network name : <input type="text" name="name">
                                 </p>
@@ -193,11 +197,11 @@
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Length (meter)</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.length">
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.lengthCalculated">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Freespeed (km/h)</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.freespeed">
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.freespeedCalculated">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Permlanes</label>

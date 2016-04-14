@@ -24,14 +24,7 @@ svg {
     display: flex;
     align-items: center;
 }
-path {
-    fill: #000;
-    stroke-width: 1.5px;
-}
-path:hover {
-    fill: white;
-    fill-opacity: .7;
-}
+
 .offcanvas-container{
     background-color: white;
     height: 100%;
@@ -39,6 +32,11 @@ path:hover {
 .leaflet-touch .leaflet-control-zoomslider {
     border: 1px solid rgba(0,0,0,0.2)!important;
     margin-bottom: 40px!important;
+}
+
+.street:hover, .street-active {
+    stroke: #F0EA72!important;
+    cursor: pointer;
 }
 
 .street {
