@@ -40,8 +40,8 @@
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-                //var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
-                var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
+                var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
+                //var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
                 var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
                     clipTiles: false,
                     identified: function(feature){
