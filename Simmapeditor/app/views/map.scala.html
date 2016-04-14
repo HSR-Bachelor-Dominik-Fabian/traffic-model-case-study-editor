@@ -127,31 +127,7 @@
             </ul>
         </nav>
         <div id="hiddenMenu" class="col-xs-3 navmenu-fixed-left offcanvas offcanvas-container" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft">
-            <div class="panel panel-default">
-                <div class="panel-heading">XML Import</div>
-                <div class="panel-body">
-                    <!--<form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">-->
-                        <form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">
-                        <p>
-                                    Network name : <input type="text" name="name">
-                                </p>
-                        <p>
-                                    Choose a file : <input type="file" name="file" />
-                                </p>
-                        <p>
-                                    Choose a format :
-                            <select name="format">
-                                <option value="WGS84">WGS84</option>
-                                <option value="EPSG:3857">EPSG:3857</option>
-                                <option value="EPSG:21781">EPSG:21781</option>
-                                <option value="EPSG:26914">EPSG:26914</option>
-                                <option value="EPSG:32719">EPSG:32719</option>
-                            </select>
-                        </p>
-                        <input type="submit" value="Upload" />
-                    </form>
-                </div>
-            </div>
+
         </div>
         <div id="importMenu" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#importMenu, .leaflet-right">
             <div class="panel panel-default">
@@ -213,12 +189,5 @@
                 </div>
             </div>
         </div>
-        <!--
-        <footer class="footer">
-            <div class="container">
-                <p>Senozon AG</p>
-            </div>
-        </footer>
-        -->
     </div>
 </div>
