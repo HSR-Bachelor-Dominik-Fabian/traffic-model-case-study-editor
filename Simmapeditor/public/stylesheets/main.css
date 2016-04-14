@@ -10,20 +10,6 @@ html, body {
 svg {
     position: relative;
 }
-.footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 30px;
-    opacity: 0.6;
-    background-color: rgba(50,50,50,0.5);
-    z-index: 2000;
-}
-.footer .container p {
-    color: #FFFFFF;
-    display: flex;
-    align-items: center;
-}
 
 .offcanvas-container{
     background-color: white;
@@ -31,7 +17,6 @@ svg {
 }
 .leaflet-touch .leaflet-control-zoomslider {
     border: 1px solid rgba(0,0,0,0.2)!important;
-    margin-bottom: 40px!important;
 }
 
 .street:hover, .street-active {
@@ -219,7 +204,7 @@ div {
     display: block;
 }
 
-.form-field-group .form-text-editable, .form-field-group .form-text-uneditable {
+.form-field-group > .form-text-editable, .form-field-group > .form-text-uneditable {
     position: relative;
     width: 100%;
     border: 1px solid #CCC;
@@ -232,11 +217,11 @@ div {
     margin: 0;
 }
 
-.form-field-group .form-text-editable {
+.form-field-group > .form-text-editable {
     background-color: white;
 }
 
-.form-field-group .form-checkbox-editable {
+.form-field-group > .form-checkbox-editable {
     display: block;
 }
 
