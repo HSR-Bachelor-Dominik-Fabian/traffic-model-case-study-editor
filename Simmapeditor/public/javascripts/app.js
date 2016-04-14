@@ -9,12 +9,11 @@
             var streetDetails = $("#streetDetails")
             $scope.streetModel = feature;
 
-            $scope.streetModel.properties.freespeed = parseInt($scope.streetModel.properties.freespeed * 3.6);
-            $scope.streetModel.properties.length = parseFloat($scope.streetModel.properties.length).toFixed(2);
+            $scope.streetModel.properties.freespeedCalculated = parseInt($scope.streetModel.properties.freespeed * 3.6);
+            $scope.streetModel.properties.lengthCalculated = parseFloat($scope.streetModel.properties.length).toFixed(2);
 
             $scope.layer = layer;
             streetDetails.offcanvas("show");
-            layer.setStyle({color: "#F0EA72"});
             if ($scope.marker != null) {
                 L.removeLayer(marker);
             }
@@ -28,7 +27,7 @@
             $scope.streetModel = null;
             var layer = $scope.layer;
             if (layer != null) {
-                layer.setStyle({color: "#6f98a4"});
+                // Set color?
             }
             ;
             $scope.layer = null;
