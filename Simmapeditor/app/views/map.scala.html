@@ -77,7 +77,7 @@
                 map.addControl(new L.Control.Zoomslider( {position: "bottomright"} ));
                 L.control.scale( {position: "bottomleft", imperial: false} ).addTo(map);
                 addOverLay(geojsonTileLayer, "Test Layer");
-
+                /*
                 L.easyButton({ position:"topright",states:[{onClick: function(btn, map){
                     $("#importMenu").offcanvas("show");
                 },icon:'glyphicon-import'}]}).addTo(map);
@@ -85,7 +85,7 @@
                 L.easyButton({ position:"topright",states:[{onClick: function(btn, map){
                     map.setView(new L.LatLng(-33.5, -70.6), 10);
                 },icon:'glyphicon-screenshot'}]}).addTo(map);
-
+                */
                 function addOverLay(layer, name) {
                     map.addLayer(layer);
                     basicControl.addOverlay(layer, name);
@@ -157,6 +157,9 @@
             </div>
         </div>
         <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#streetDetails, .leaflet-right" ng-controller="StreetDetailController">
+            <div class="from-header">
+                    Strasse bearbeiten
+            </div>
             <div class="form-border">
                 <div class="form-field-group">
                     <label class="form-label">ID</label>
