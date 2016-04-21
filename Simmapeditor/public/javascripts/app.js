@@ -8,7 +8,6 @@
         var storageHandler = new StorageHandler();
 
         $scope.changeModel = function() {
-            $scope.streetModel.properties.length = $scope.streetModel.properties.lengthCalculated;
             $scope.streetModel.properties.freespeed = parseFloat($scope.streetModel.properties.freespeedCalculated / 3.6)
             storageHandler.addNewChange($scope.streetModel);
         }
@@ -18,7 +17,6 @@
             $scope.streetModel = feature;
 
             $scope.streetModel.properties.freespeedCalculated = parseInt($scope.streetModel.properties.freespeed * 3.6);
-            $scope.streetModel.properties.lengthCalculated = parseFloat($scope.streetModel.properties.length).toFixed(4);
 
             $scope.layer = layer;
             streetDetails.offcanvas("show");

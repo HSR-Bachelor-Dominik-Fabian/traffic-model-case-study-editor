@@ -206,23 +206,23 @@
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Modes</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.modes">
+                    <input type="text" step="any" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.modes">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Length (meter)</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.lengthCalculated">
+                    <input type="number" step="any" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.length">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Freespeed (km/h)</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.freespeedCalculated">
+                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.freespeedCalculated">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Permlanes</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.permlanes">
+                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.permlanes">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Capacity</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.capacity">
+                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.capacity">
                 </div>
             </div>
         </div>
