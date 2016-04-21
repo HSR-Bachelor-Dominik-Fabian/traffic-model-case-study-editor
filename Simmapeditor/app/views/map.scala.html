@@ -100,7 +100,9 @@
                 var storageHandler = new StorageHandler();
 
                 if (!storageHandler.localChangeSetExists()) {
-                    L.Util.ajax("http://localhost:9001/api/changesets/1").then(function(data) {
+                    //var changesetURL = "http://localhost:9001/api/changesets/1";
+                    var changesetURL = "http://152.96.56.47:40005/api/changesets/1";
+                    L.Util.ajax(changesetURL).then(function(data) {
                         var storageHandler = new StorageHandler();
                         try {
                             storageHandler.setLocalChangeset(data);
