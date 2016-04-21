@@ -106,7 +106,8 @@ function StorageHandler() {
     };
 
     this._addNewLinkChangeModelToChangeset = function(model, localChangeset) {
-        var getLinkURL = "http://localhost:9001/api/street/" + model.properties.id;
+        //var getLinkURL = "http://localhost:9001/api/street/" + model.properties.id;
+        var getLinkURL = "http://152.96.56.47:40005/api/street/" + model.properties.id;
         $.getJSON(getLinkURL, function(data){
             var storageHandler = new StorageHandler();
 
