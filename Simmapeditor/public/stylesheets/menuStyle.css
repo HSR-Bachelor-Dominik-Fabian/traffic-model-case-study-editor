@@ -1,0 +1,122 @@
+.menuBtn {
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    padding: 25px 80px;
+    display: inline-block;
+    margin: 15px 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.menuBtn:after {
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.menuBtn-6g {
+    padding: 25px 60px 25px 120px;
+}
+
+.menuBtn-6g:hover {
+    background: #6f99a5;
+
+}
+
+.menuBtn-6 {
+    background: #484546;
+    color: #fff;
+
+}
+.menuBtn-6g:before {
+    background: rgba(0,0,0,0.05);
+}
+
+
+.menuBtn-6:active {
+    background: #4a717c;
+    top: 2px;
+
+}
+
+.mainmenu-bar {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(51, 51, 51);
+    background-color: rgba(51, 51, 51, 0.8);
+    border: 0px !important;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0 !important;
+    z-index: 1000;
+}
+
+.mainmenu-bar > .mainmenu-title{
+    color: white;
+    float:left;
+    position: relative;
+    height: 60px;
+    padding-left: 13px;
+    z-index: 100;
+}
+.mainmenu-title > p {
+    margin-top:18px;
+    font-size:12pt;
+    color: white;
+}
+
+.menuBtn-6:before {
+    font-family:"Glyphicons Halflings";
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    line-height: 3;
+    font-size: 140%;
+    width: 60px;
+}
+
+.mainmenu-toggler {
+    position: relative;
+    float:left;
+    height: 60px;
+    width: 60px;
+    z-index: 100;
+    cursor: pointer;
+    background-color: #484546;
+}
+.mainmenu-toggler:hover{
+    background-color: #6f99a5;
+}
+
+.mainmenu-toggler > span {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin: -8px -8px 0 0;
+    width: 16px;
+    height: 16px;
+    color: white;
+    -webkit-transition: -webkit-transform .3s ease-out 0s;
+    -moz-transition: -moz-transform .3s ease-out 0s;
+    -o-transition: -moz-transform .3s ease-out 0s;
+    -ms-transition: -ms-transform .3s ease-out 0s;
+    transition: transform .3s ease-out 0s;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+}

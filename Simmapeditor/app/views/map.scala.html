@@ -32,7 +32,7 @@
                 var map = new L.Map("map", {center: [46.83, 8.3], zoom: 8, layers: [SenozonLight],
                     attributionControl: false,minZoom: 3, maxZoom: 18, noWrap: true , zoomControl: false, maxBounds: [[-180, -180],[180,180]]});
                 map.on("click", function(){
-                    var streetDetails=$("#streetDetails")
+                    var streetDetails=$("#streetDetails");
                     var scope = angular.element(streetDetails).scope();
                     scope.updateFeature(null, null, null, map);
                     $(".street-active").removeClass("street-active");
@@ -107,27 +107,28 @@
             </div>
             <ul class="navbar-menu animate">
                 <li>
-                    <a href="#about-us" class="animate">
-                        <span class="desc animate"> Who We Are </span>
-                        <span class="glyphicon glyphicon-user"></span>
+                    <a id="saveButton" href="#save">
+                        <span class="glyphicon glyphicon-floppy-disk" data-toggle="tooltip" data-placement="right" title="Tooltip on right"></span>
+                        <span class="badge badge-count">3</span>
+                        <span class="infoBubble">3</span>
                     </a>
+
                 </li>
                 <li>
-                    <a href="#blog" class="animate">
-                        <span class="desc animate"> What We Say </span>
+                    <a href="#blog">
                         <span class="glyphicon glyphicon-info-sign"></span>
                     </a>
                 </li>
                 <li>
-                    <a href="#contact-us" class="animate">
-                        <span class="desc animate"> How To Reach Us </span>
+                    <a href="#contact-us">
                         <span class="glyphicon glyphicon-comment"></span>
                     </a>
                 </li>
             </ul>
         </nav>
-        <div id="hiddenMenu" class="col-xs-3 navmenu-fixed-left offcanvas offcanvas-container" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft">
-
+        <div id="hiddenMenu" class="col-xs-3 nopadding navmenu-fixed-left offcanvas offcanvas-container" ng-controller="StreetMenuController" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft">
+            <rootMenu ng-show="menuState=='rootMenu'"></rootMenu>
+            <loadChangesetMenu ng-show="menuState=='loadChangeset'"></loadChangesetMenu>
         </div>
         <div id="importMenu" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#importMenu, .leaflet-right">
             <div class="panel panel-default">
