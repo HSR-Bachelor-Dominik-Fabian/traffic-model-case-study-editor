@@ -1,4 +1,6 @@
-@main("SimMapEditor") {
+@import java.util.Properties
+@(props: Properties)
+@main(props) {
     <script type="application/javascript">
             $(document).ready( function() {
                 var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -41,8 +43,7 @@
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
                 var addGeoJsonTileLayer = function() {
-                    var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
-                    //var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
+                    var geojsonURL = MyProps["rootURL"] + '/api/quadtile/1/{z}/{x}/{y}';
                     var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
                         clipTiles: false,
                         identified: function(feature){
@@ -100,8 +101,7 @@
                 var storageHandler = new StorageHandler();
 
                 if (!storageHandler.localChangeSetExists()) {
-                    //var changesetURL = "http://localhost:9001/api/changesets/1";
-                    var changesetURL = "http://152.96.56.47:40005/api/changesets/1";
+                    var changesetURL = MyProps["rootURL"] + "/api/changesets/" + 1;
                     L.Util.ajax(changesetURL).then(function(data) {
                         var storageHandler = new StorageHandler();
                         try {
@@ -170,8 +170,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">XML Import</div>
                 <div class="panel-body">
-                    <form action="http://152.96.56.47:40005/api/xml" method="post" enctype="multipart/form-data">
-                        <!--<form action="http://localhost:9001/api/xml" method="post" enctype="multipart/form-data">-->
+                    <form action="@props.getProperty("rootURL")/api/xml" method="post" enctype="multipart/form-data">
                         <p>
                                     Network name : <input type="text" name="name">
                                 </p>
