@@ -229,6 +229,9 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
 
             // Transform the geojson into a new Layer
             try {
+                if (this.options.modified && typeof(this.options.modified) === 'function') {
+                    geojson = this.options.modified(geojson);
+                }
                 incomingLayer = L.GeoJSON.geometryToLayer(geojson, options.pointToLayer, options.coordsToLatLng);
             }
             // Ignore GeoJSON objects that could not be parsed
