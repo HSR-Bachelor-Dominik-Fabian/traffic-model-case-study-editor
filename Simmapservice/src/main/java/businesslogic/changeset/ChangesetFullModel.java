@@ -1,6 +1,7 @@
 package businesslogic.changeset;
 
 import dataaccess.database.tables.records.ChangesetRecord;
+import org.jooq.tools.json.JSONObject;
 
 import java.util.List;
 

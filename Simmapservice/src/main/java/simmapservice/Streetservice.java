@@ -6,7 +6,7 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import simmapservice.resources.ChangesetResource;
 import simmapservice.resources.QuadtileResource;
-import simmapservice.resources.StreetserviceResource;
+import simmapservice.resources.StreetServiceResource;
 import simmapservice.resources.XMLImportResource;
 
 import java.io.BufferedInputStream;
@@ -20,19 +20,19 @@ import javax.servlet.FilterRegistration;
 /**
  * Created by dohee on 15.03.2016.
  */
-public class Streetservice extends Application<StreetserviceConfiguration>{
+public class StreetService extends Application<StreetServiceConfiguration>{
     public static void main(String[] args) throws Exception {
-        new Streetservice().run(args);
+        new StreetService().run(args);
     }
 
     @Override
-    public void run(StreetserviceConfiguration configuration, Environment environment) throws Exception {
+    public void run(StreetServiceConfiguration configuration, Environment environment) throws Exception {
         Properties properties = new Properties();
         BufferedInputStream stream = new BufferedInputStream(new FileInputStream("config.properties"));
         properties.load(stream);
         stream.close();
 
-        StreetserviceResource streetserviceResource = new StreetserviceResource();
+        StreetServiceResource streetserviceResource = new StreetServiceResource(properties);
         environment.jersey().register(streetserviceResource);
         environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(new XMLImportResource(properties));
