@@ -27,7 +27,7 @@ function StorageHandler() {
         return feature;
     }
 
-    this._generateModelToGeoJson = function(fullChangeModel) {
+    this._convertFullModelToGeoJson = function(fullChangeModel) {
         var geoJson = {};
         geoJson.features = [];
         for (var link_changeModelIndex in fullChangeModel.link_changeModels) {
@@ -49,13 +49,21 @@ function StorageHandler() {
 
     this.setLocalChangeset = function(fullChangeModel) {
         if (this._isLocalStorageSupported()) {
-            var geoJson = this._generateModelToGeoJson(fullChangeModel);
+            var geoJson = this._convertFullModelToGeoJson(fullChangeModel);
             fullChangeModel.geoJson = geoJson;
             localStorage.setItem("changeset", JSON.stringify(fullChangeModel));
         } else {
             console.log("local Storage not supported from your browser.");
         }
     };
+
+    this._setUpdatedLocalChangeset = function(changeSet) {
+        if (this._isLocalStorageSupported()) {
+            localStorage.setItem("changeset", JSON.stringify(changeSet));
+        } else {
+            console.log("local Storage not supported from your browser.");
+        }
+    }
 
     this.localChangeSetExists = function() {
         return this.getLocalChangeset() !== null;
@@ -68,25 +76,38 @@ function StorageHandler() {
         for (var index in localChangeset.link_changeModels) {
             var link_changeModel = localChangeset.link_changeModels[index];
             if (link_changeModel.id === model.properties.id) {
-                this._changeExistingLinkChangeModelInChangeSet(model, link_changeModel, localChangeset);
+                this._changeExistingLinkChangeModelInChangeset(model, link_changeModel, localChangeset);
                 linkExistsInChangeset = true;
                 break;
             }
         }
         if (!linkExistsInChangeset) {
-            this._addNewLinkChangeModelToChangeSet(model, localChangeset);
+            this._addNewLinkChangeModelToChangeset(model, localChangeset);
         }
     };
 
-    this._changeExistingLinkChangeModelInChangeSet = function(model, link_changeModel, localChangeset) {
+    this._changeExistingLinkChangeModelInChangeset = function(model, link_changeModel, localChangeset) {
+        var geoJsonFeatureIndex
+        for (geoJsonFeatureIndex in localChangeset.geoJson.features) {
+            var geoJsonFeature = localChangeset.geoJson.features[geoJsonFeatureIndex];
+            if (geoJsonFeature.properties.id === model.properties.id) {
+                break;
+            }
+        }
+
         $.each(model.properties, function(key, value) {
-            link_changeModel[key] = value;
+            if (key.indexOf('Calculated') === -1) {
+                link_changeModel[key] = value;
+                localChangeset.geoJson.features[geoJsonFeatureIndex].properties[key] = value;
+            }
         });
-        this.setLocalChangeset(localChangeset);
+
+        this._setUpdatedLocalChangeset(localChangeset);
     };
 
-    this._addNewLinkChangeModelToChangeSet = function(model, localChangeset) {
-        var getLinkURL = "http://localhost:9001/api/street/" + model.properties.id;
+    this._addNewLinkChangeModelToChangeset = function(model, localChangeset) {
+        //var getLinkURL = "http://localhost:9001/api/street/" + model.properties.id;
+        var getLinkURL = "http://152.96.56.47:40005/api/street/" + model.properties.id;
         $.getJSON(getLinkURL, function(data){
             var storageHandler = new StorageHandler();
 
@@ -98,14 +119,14 @@ function StorageHandler() {
             });
 
             $.each(model.properties, function(key, value) {
-                if (key.contains()) {
-
+                if (key.indexOf('Calculated') === -1) {
+                    link_changeModel[key] = value;
                 }
-                link_changeModel[key] = value;
             });
 
             localChangeset.link_changeModels.push(link_changeModel);
-            storageHandler.setLocalChangeset(localChangeset);
+            localChangeset.geoJson.features.push(storageHandler._convertModelToGeoJsonFeature(link_changeModel));
+            storageHandler._setUpdatedLocalChangeset(localChangeset);
         });
     };
 
