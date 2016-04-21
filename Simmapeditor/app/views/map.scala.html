@@ -40,19 +40,42 @@
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                         g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-                var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
-                //var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
-                var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
-                    clipTiles: false,
-                    identified: function(feature){
-                        return feature.properties.id;
-                    },
-                    unique: function (feature) {
-                        return feature.properties.zoomlevel;
-                    }
-                },{
-                    onEachFeature: onEachFeature
-                });
+                var addGeoJsonTileLayer = function() {
+                    var geojsonURL = 'http://152.96.56.47:40005/api/quadtile/1/{z}/{x}/{y}';
+                    //var geojsonURL = 'http://localhost:9001/api/quadtile/1/{z}/{x}/{y}';
+                    var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
+                        clipTiles: false,
+                        identified: function(feature){
+                            return feature.properties.id;
+                        },
+                        unique: function (feature) {
+                            return feature.properties.zoomlevel;
+                        },
+                        modified: function (feature) {
+                            var storageHandler = new StorageHandler();
+                            var changeset = storageHandler.getLocalChangeset();
+                            var geoJson = changeset.geoJson;
+                            for (var changedFeature in geoJson.features) {
+                                if (geoJson.features[changedFeature].properties.id === feature.properties.id) {
+                                    return geoJson.features[changedFeature];
+                                }
+                            }
+                            return feature;
+                        }
+                    },{
+                        onEachFeature: onEachFeature
+                    });
+                    addOverLay(geojsonTileLayer, "Test Layer");
+                }
+
+                var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de,
+                    "Black and White": OpenStreetMap_BlackAndWhite, "MapBox": MapBox, "MapBoxLight": MapBoxLight, "SenozonLight": SenozonLight};
+
+                var basicControl = L.control.layers(baseLayers, {}).addTo(map);
+                L.control.attribution(null);
+                map.addControl(new L.Control.Zoomslider( {position: "bottomright"} ));
+                L.control.scale( {position: "bottomleft", imperial: false} ).addTo(map);
+
 
                 function onEachFeature(feature, layer){
                     if (feature.properties) {
@@ -69,15 +92,29 @@
                     }
                 }
 
-                var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de,
-                    "Black and White": OpenStreetMap_BlackAndWhite, "MapBox": MapBox, "MapBoxLight": MapBoxLight, "SenozonLight": SenozonLight};
+                function addOverLay(layer, name) {
+                    map.addLayer(layer);
+                    basicControl.addOverlay(layer, name);
+                }
 
-                var basicControl = L.control.layers(baseLayers, {}).addTo(map);
-                L.control.attribution(null);
-                map.addControl(new L.Control.Zoomslider( {position: "bottomright"} ));
-                L.control.scale( {position: "bottomleft", imperial: false} ).addTo(map);
-                addOverLay(geojsonTileLayer, "Test Layer");
+                var storageHandler = new StorageHandler();
 
+                if (!storageHandler.localChangeSetExists()) {
+                    L.Util.ajax("http://localhost:9001/api/changesets/1").then(function(data) {
+                        var storageHandler = new StorageHandler();
+                        try {
+                            storageHandler.setLocalChangeset(data);
+                            addGeoJsonTileLayer();
+                        } catch(e) {
+                            console.log(e);
+                        }
+                    });
+                } else {
+                    addGeoJsonTileLayer();
+                }
+
+
+                /*
                 L.easyButton({ position:"topright",states:[{onClick: function(btn, map){
                     $("#importMenu").offcanvas("show");
                 },icon:'glyphicon-import'}]}).addTo(map);
@@ -85,11 +122,8 @@
                 L.easyButton({ position:"topright",states:[{onClick: function(btn, map){
                     map.setView(new L.LatLng(-33.5, -70.6), 10);
                 },icon:'glyphicon-screenshot'}]}).addTo(map);
+                */
 
-                function addOverLay(layer, name) {
-                    map.addLayer(layer);
-                    basicControl.addOverlay(layer, name);
-                }
                 $(".navbar-toggler").on("click", function(){
                     $("#hiddenMenu").offcanvas("toggle");
                 });
@@ -158,6 +192,9 @@
             </div>
         </div>
         <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#streetDetails, .leaflet-right" ng-controller="StreetDetailController">
+            <div class="from-header">
+                    Strasse bearbeiten
+            </div>
             <div class="form-border">
                 <div class="form-field-group">
                     <label class="form-label">ID</label>
@@ -165,28 +202,28 @@
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Oneway</label>
-                    <select class="form-control form-select-editable" ng-model="streetModel.properties.oneway" ng-options="o.v as o.n for o in [{ n: 'false', v: false }, { n: 'true', v: true }]">
+                    <select class="form-control form-select-editable" ng-change="changeModel()" ng-model="streetModel.properties.oneway" ng-options="o.v as o.n for o in [{ n: 'false', v: false }, { n: 'true', v: true }]">
                     </select>
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Modes</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.modes">
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.modes">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Length (meter)</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.lengthCalculated">
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.lengthCalculated">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Freespeed (km/h)</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.freespeedCalculated">
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.freespeedCalculated">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Permlanes</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.permlanes">
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.permlanes">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Capacity</label>
-                    <input type="text" id="input-oneway" class="form-text-editable" ng-model="streetModel.properties.capacity">
+                    <input type="text" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.capacity">
                 </div>
             </div>
         </div>

@@ -15,12 +15,20 @@
         $scope.streetModel = null;
         $scope.layer = null;
         $scope.marker = null;
+        var storageHandler = new StorageHandler();
+
+        $scope.changeModel = function() {
+            $scope.streetModel.properties.length = $scope.streetModel.properties.lengthCalculated;
+            $scope.streetModel.properties.freespeed = parseFloat($scope.streetModel.properties.freespeedCalculated / 3.6)
+            storageHandler.addNewChange($scope.streetModel);
+        }
+
         $scope.newFeature = function (feature, layer, latlng, map) {
             var streetDetails = $("#streetDetails");
             $scope.streetModel = feature;
 
             $scope.streetModel.properties.freespeedCalculated = parseInt($scope.streetModel.properties.freespeed * 3.6);
-            $scope.streetModel.properties.lengthCalculated = parseFloat($scope.streetModel.properties.length).toFixed(2);
+            $scope.streetModel.properties.lengthCalculated = parseFloat($scope.streetModel.properties.length).toFixed(4);
 
             $scope.layer = layer;
             streetDetails.offcanvas("show");

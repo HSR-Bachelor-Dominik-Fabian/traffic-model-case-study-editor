@@ -19,6 +19,52 @@ svg {
     border: 1px solid rgba(0,0,0,0.2)!important;
 }
 
+.leaflet-control-zoomslider-in, .leaflet-control-zoomslider-out {
+    border-radius: 0px 0px 0px 0px!important;
+}
+
+.leaflet-control-zoomslider-knob {
+    border: 1px solid #fff!important;
+}
+
+.leaflet-control-zoomslider-wrap, .leaflet-control-zoomslider-body {
+    background-color: rgba(51, 51, 51, 0.8)!important;
+    border: none!important;
+}
+
+.leaflet-control-zoomslider-wrap {
+    border-bottom: 1px solid #ccc!important;
+}
+
+.leaflet-bar a {
+    background-color: rgba(51, 51, 51, 0.8)!important;
+    color: white!important;
+}
+
+.leaflet-control-layers {
+    border: 0px !important;
+    border-radius: 0px !important;
+    background-color: rgba(51, 51, 51, 0.8)!important;
+
+}
+
+.leaflet-control-layers-expanded > .leaflet-control-layers-list {
+    background-color: transparent!important;
+    color: white;
+    padding: 10px 25px 10px 25px;
+    border: 0px !important;
+}
+
+.leaflet-control-layers-toggle {
+    width: 60px!important;
+    height: 60px!important;
+    background-color: transparent;
+    border: 0px !important;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0 !important;
+}
+
 .street:hover, .street-active {
     stroke: #F0EA72!important;
     cursor: pointer;
@@ -177,8 +223,7 @@ section{
 .form-border {
     padding: 10px;
     margin: 10px 10px 10px 10px;
-    border-radius: 8px;
-    background-color: rgb(236, 236, 236);
+    /*background-color: rgba(255, 255, 255, 0.1);*/
 }
 
 .form-field-group {
@@ -196,11 +241,11 @@ section{
 .form-label {
     position: relative;
     font-weight: bold;
-    border: 1px solid #cfcfcf;
+    border: none;
     padding: 5px 0 5px 10px;
-    background: #f6f6f6;
+    background: transparent;
+    color: #dddddd;
     display: block;
-    border-radius: 4px 4px 0 0;
     overflow: hidden;
     margin: 0;
 }
@@ -212,33 +257,49 @@ div {
 .form-field-group > .form-text-editable, .form-field-group > .form-text-uneditable {
     position: relative;
     width: 100%;
-    border: 1px solid #CCC;
+    border: 1px solid #dddddd;
     padding: 5px 0 5px 10px;
     min-height: 30px;
-    border-top: 0;
     display: block;
-    border-radius: 0 0 4px 4px;
     overflow: hidden;
     margin: 0;
+    color: #FFF;
+    background-color: rgba(51, 51, 51, 0.2);
+}
+
+.form-text-uneditable {
+    opacity: 0.8;
 }
 
 .form-field-group > .form-text-editable {
-    background-color: white;
 }
 
-.form-field-group > .form-checkbox-editable {
-    display: block;
+.form-field-group > .form-text-editable:hover, .form-field-group > .form-text-editable:active{
+    background-color: #91acb4;
 }
 
 .form-select-editable {
-    border-radius: 0 0 4px 4px!important;
+    border-radius: 0 0 0 0!important;
     height: 30px!important;
-    border-top: 0!important;
+    border: 1px solid #dddddd!important;
+    background: transparent!important;
+    color: #dddddd!important;
+}
+
+select option {
+    color: black;
+}
+
+.form-header {
+    padding-left: 10px;
+    font-size: medium;
+    background: none;
+    color: #6f99a5;
 }
 
 #streetDetails {
-    border: 1px solid #cfcfcf;
-    background: #f6f6f6;
+    border: none;
+    background-color: rgba(51, 51, 51, 0.8);
 }
 
 .nopadding{

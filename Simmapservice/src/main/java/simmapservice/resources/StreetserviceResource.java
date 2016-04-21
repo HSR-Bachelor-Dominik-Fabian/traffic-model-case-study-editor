@@ -1,18 +1,29 @@
 package simmapservice.resources;
 
-import businesslogic.mercatorconvert.BoundingBox;
-import businesslogic.mercatorconvert.Converter;
+import businesslogic.changeset.LinkModel;
+import businesslogic.datafetch.DataFetchLogic;
+import dataaccess.database.tables.records.LinkRecord;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Properties;
 
-@Path("/networks/{z}/{x}/{y}")
-public class StreetserviceResource {
+@Path("/street/{id}")
+public class StreetServiceResource {
+
+    private final Properties properties;
+
+    public StreetServiceResource(Properties properties) {
+        this.properties = properties;
+    }
+
     @GET
-    public Response getNetwork(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y){
-        System.out.println("x:" + x + ", y:"+ y + ", z:" + z);
-        BoundingBox coord = Converter.tile2boundingBox(x,y,z);
-        System.out.println("north:" + coord.north + ", west:"+ coord.west + ", south:" + coord.south + ", east:" + coord.east);
-        return Response.ok().build();
+    public Response getStreetById(@PathParam("id") String id){
+
+        DataFetchLogic dataFetch = new DataFetchLogic(this.properties);
+        LinkModel link = dataFetch.getLinkById(id);
+
+        return Response.ok(link, MediaType.APPLICATION_JSON).build();
     }
 }

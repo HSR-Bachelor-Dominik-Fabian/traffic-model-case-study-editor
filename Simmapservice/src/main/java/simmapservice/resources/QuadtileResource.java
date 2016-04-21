@@ -29,14 +29,14 @@ public class QuadtileResource {
     @GET
     public Response getQuadTile(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y, @PathParam("networkid") int networkID, @Context Request request) {
 
-        DataFetchLogic dataFetchLogic = new DataFetchLogic();
+        DataFetchLogic dataFetchLogic = new DataFetchLogic(this.properties);
 
         CacheControl cc = new CacheControl();
         cc.setMaxAge(88400);
         cc.setPrivate(true);
         Response.ResponseBuilder builder = null;
         Stopwatch stopwatch1 = Stopwatch.createStarted();
-        Date date = dataFetchLogic.getLastModified(x,y,z,networkID, this.properties);
+        Date date = dataFetchLogic.getLastModified(x,y,z,networkID);
         stopwatch1.stop();
         System.out.println("Get Cache: " + stopwatch1.elapsed(TimeUnit.MILLISECONDS) + " ms");
         if(date == null){
@@ -52,7 +52,7 @@ public class QuadtileResource {
         }
 
         Stopwatch stopwatch = Stopwatch.createStarted();
-        JSONObject json =  dataFetchLogic.getDataForTile(x, y, z, networkID, this.properties);
+        JSONObject json =  dataFetchLogic.getDataForTile(x, y, z, networkID);
         stopwatch.stop();
         System.out.println("Get Data: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + " ms");
 

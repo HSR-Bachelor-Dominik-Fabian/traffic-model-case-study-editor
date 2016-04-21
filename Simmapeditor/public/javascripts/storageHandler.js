@@ -1,0 +1,112 @@
+/**
+ * Created by fke on 19.04.2016.
+ */
+
+function StorageHandler() {
+
+    this._isLocalStorageSupported = function() {
+        return typeof(Storage) !== "undefined";
+    };
+
+    this._convertModelToGeoJsonFeature = function(model) {
+        var feature = {};
+        var lat1 = model["lat1"], lat2 = model["lat2"], lon1 = model["long1"], lon2 = model["long2"];
+
+        var coordinates = [];
+        var point1 = [lon1,lat1], point2 = [lon2,lat2];
+        coordinates.push(point1,point2);
+        var geometry = { "coordinates": coordinates, "type": "LineString"};
+        feature.geometry = geometry;
+        feature.type = "Feature";
+
+        var properties = { "modes": model["modes"], "zoomlevel": model["minlevel"], "length": model["length"],
+            "freespeed": model["freespeed"], "permlanes": model["permlanes"], "id": model["id"],
+            "oneway": model["oneway"], "capacity": model["capacity"]};
+
+        feature.properties = properties;
+        return feature;
+    }
+
+    this._generateModelToGeoJson = function(fullChangeModel) {
+        var geoJson = {};
+        geoJson.features = [];
+        for (var link_changeModelIndex in fullChangeModel.link_changeModels) {
+            var link_changeModel = fullChangeModel.link_changeModels[link_changeModelIndex];
+            var geoJsonFeature = this._convertModelToGeoJsonFeature(link_changeModel);
+            geoJson.features.push(geoJsonFeature);
+        }
+        geoJson.type = "FeatureCollection";
+        return geoJson;
+    }
+
+    this.getLocalChangeset = function() {
+        if (this._isLocalStorageSupported()) {
+            return JSON.parse(localStorage.getItem("changeset"));
+        } else {
+            console.log("local Storage not supported from your browser.");
+        }
+    };
+
+    this.setLocalChangeset = function(fullChangeModel) {
+        if (this._isLocalStorageSupported()) {
+            var geoJson = this._generateModelToGeoJson(fullChangeModel);
+            fullChangeModel.geoJson = geoJson;
+            localStorage.setItem("changeset", JSON.stringify(fullChangeModel));
+        } else {
+            console.log("local Storage not supported from your browser.");
+        }
+    };
+
+    this.localChangeSetExists = function() {
+        return this.getLocalChangeset() !== null;
+    };
+
+    this.addNewChange = function(model) {
+        var localChangeset = this.getLocalChangeset();
+
+        var linkExistsInChangeset = false;
+        for (var index in localChangeset.link_changeModels) {
+            var link_changeModel = localChangeset.link_changeModels[index];
+            if (link_changeModel.id === model.properties.id) {
+                this._changeExistingLinkChangeModelInChangeSet(model, link_changeModel, localChangeset);
+                linkExistsInChangeset = true;
+                break;
+            }
+        }
+        if (!linkExistsInChangeset) {
+            this._addNewLinkChangeModelToChangeSet(model, localChangeset);
+        }
+    };
+
+    this._changeExistingLinkChangeModelInChangeSet = function(model, link_changeModel, localChangeset) {
+        $.each(model.properties, function(key, value) {
+            link_changeModel[key] = value;
+        });
+        this.setLocalChangeset(localChangeset);
+    };
+
+    this._addNewLinkChangeModelToChangeSet = function(model, localChangeset) {
+        var getLinkURL = "http://localhost:9001/api/street/" + model.properties.id;
+        $.getJSON(getLinkURL, function(data){
+            var storageHandler = new StorageHandler();
+
+            var link_changeModel = {};
+            link_changeModel.defaultValues = data;
+
+            $.each(data, function(key, value) {
+                link_changeModel[key] = value;
+            });
+
+            $.each(model.properties, function(key, value) {
+                if (key.contains()) {
+
+                }
+                link_changeModel[key] = value;
+            });
+
+            localChangeset.link_changeModels.push(link_changeModel);
+            storageHandler.setLocalChangeset(localChangeset);
+        });
+    };
+
+}
