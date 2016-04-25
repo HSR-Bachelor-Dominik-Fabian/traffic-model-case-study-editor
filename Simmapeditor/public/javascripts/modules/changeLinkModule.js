@@ -8,7 +8,7 @@
         var storageHandler = new StorageHandler();
 
         $scope.changeModel = function() {
-            $scope.streetModel.properties.freespeed = parseFloat($scope.streetModel.properties.freespeedCalculated / 3.6)
+            $scope.streetModel.properties.freespeed = $scope.streetModel.properties.freespeedCalculated / 3.6;
             storageHandler.addNewChange($scope.streetModel);
         };
 
@@ -30,9 +30,9 @@
 
         $scope.removeFeature = function (map, beforeNew) {
             var streetDetails = $("#streetDetails");
-            if (!beforeNew) streetDetails.offcanvas("hide");
             $scope.streetModel = null;
             $scope.layer = null;
+            if (!beforeNew) streetDetails.offcanvas("hide");
             var marker = $scope.marker;
             if (marker != null) {
                 map.removeLayer(marker);

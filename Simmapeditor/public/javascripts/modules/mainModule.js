@@ -37,10 +37,12 @@
                 var map = new L.Map("map", {center: [46.83, 8.3], zoom: 8, layers: [SenozonLight],
                     attributionControl: false,minZoom: 3, maxZoom: 18, noWrap: true , zoomControl: false, maxBounds: [[-180, -180],[180,180]]});
                 layerInstance.mapInstance = map;
-                map.on("click", function(){
+
+                $('#streetDetails').on('hide.bs.offcanvas', function (e) {
                     $rootScope.$broadcast('updateFeature', {feature: null, layer: null, latlng: null, map: map});
                     $(".street-active").removeClass("street-active");
                 });
+
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                     g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
