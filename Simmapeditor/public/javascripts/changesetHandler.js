@@ -3,10 +3,9 @@
  */
 
 function ChangesetHandler() {
-    var rootUrl = "http://localhost:9001/";
-    //var rootUrl = "http://152.96.56.47:40005/";
+    var rootUrl = MyProps["rootURL"];
     this.getAllChangesets = function() {
-        var getLinkURL = rootUrl + "api/changesets/user/1";
+        var getLinkURL = rootUrl + "/api/changesets/user/1";
         var result;
         $.ajax({
             type:'GET',
@@ -32,7 +31,7 @@ function ChangesetHandler() {
     };
 
     this._loadChangeSet = function(changesetNr){
-        var getLinkURL = rootUrl + "api/changesets/" + changesetNr;
+        var getLinkURL = rootUrl + "/api/changesets/" + changesetNr;
         var result;
         $.ajax({
             type:'GET',
