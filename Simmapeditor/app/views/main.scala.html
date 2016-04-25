@@ -3,8 +3,8 @@
 
 <!DOCTYPE html>
 
-<html ng-app="simmapeditorApp">
-    <head>
+<html>
+    <head class="ng-scope">
         <script>
                 var MyProps = {};
                 MyProps["rootURL"] = "@props.getProperty("rootURL")";
@@ -26,7 +26,9 @@
 
         <script type="text/javascript" src="@routes.Assets.at("javascripts/storageHandler.js")"></script>
         <script type="text/javascript" src="@routes.Assets.at("javascripts/changesetHandler.js")"></script>
-        <script type="text/javascript" src="@routes.Assets.at("javascripts/app.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/modules/mainModule.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/modules/changeLinkModule.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/modules/menuModule.js")"></script>
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/leaflet.css")"/>
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.min.css")"/>
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/jasny-bootstrap.min.css")"/>
