@@ -36,6 +36,7 @@
 
                 var map = new L.Map("map", {center: [46.83, 8.3], zoom: 8, layers: [SenozonLight],
                     attributionControl: false,minZoom: 3, maxZoom: 18, noWrap: true , zoomControl: false, maxBounds: [[-180, -180],[180,180]]});
+                layerInstance.mapInstance = map;
                 map.on("click", function(){
                     $rootScope.$broadcast('updateFeature', {feature: null, layer: null, latlng: null, map: map});
                     $(".street-active").removeClass("street-active");
@@ -67,6 +68,7 @@
                     },{
                         onEachFeature: onEachFeature
                     });
+                    layerInstance.instance = geojsonTileLayer;
                     addOverLay(geojsonTileLayer, "Test Layer");
                 };
 

@@ -73,22 +73,25 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
     },
     _reset: function () {
         this._removeOldClipPaths();
-        var zoom = this._map.getZoom();
+        if(arguments.length > 0 && arguments[0].hard == true){
+            var zoom = 0;
+        }
+        else {
+            var zoom = this._map.getZoom();
+        }
         var maxZoom = this._map.getMaxZoom();
-
-        for(var i = zoom + 1; i <= maxZoom; i++){
-            if(i in this._keyLayers){
+        for (var i = zoom + 1; i <= maxZoom; i++) {
+            if (i in this._keyLayers) {
                 this.geojsonLayer.removeLayer(this._keyLayers[i]);
                 delete this._keyLayers[i];
-                if(i in this._layerToKeyStore){
-                    for(var key in this._layerToKeyStore[i]){
+                if (i in this._layerToKeyStore) {
+                    for (var key in this._layerToKeyStore[i]) {
                         delete this._keyStore[this._layerToKeyStore[i][key]];
                     }
                     delete this._layerToKeyStore[i];
                 }
             }
         }
-
         L.TileLayer.Ajax.prototype._reset.apply(this, arguments);
     },
 
