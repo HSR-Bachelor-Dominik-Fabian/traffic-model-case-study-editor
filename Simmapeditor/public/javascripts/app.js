@@ -6,8 +6,8 @@
     simmapeditorApp.directive("loadchangesetmenu", function() {
         return {templateUrl: "/partials/loadchangesetmenu"};
     });
-
-    simmapeditorApp.directive("simmap", function(){
+    simmapeditorApp.value("layerInstance", {instance: null, mapInstance: null});
+    simmapeditorApp.directive("simmap", ['layerInstance', function(layerInstance){
        return {
             link: function($scope, element, attrs){
                 var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -40,6 +40,7 @@
 
                 var map = new L.Map("map", {center: [46.83, 8.3], zoom: 8, layers: [SenozonLight],
                     attributionControl: false,minZoom: 3, maxZoom: 18, noWrap: true , zoomControl: false, maxBounds: [[-180, -180],[180,180]]});
+                layerInstance.mapInstance = map;
                 map.on("click", function(){
                     var streetDetails=$("#streetDetails");
                     var scope = angular.element(streetDetails).scope();
@@ -73,6 +74,7 @@
                     },{
                         onEachFeature: onEachFeature
                     });
+                    layerInstance.instance = geojsonTileLayer;
                     addOverLay(geojsonTileLayer, "Test Layer");
                 };
 
@@ -111,9 +113,9 @@
                 addGeoJsonTileLayer();
             }
        };
-    });
+    }]);
 
-    simmapeditorApp.controller("StreetMenuController", ['$scope', function($scope) {
+    simmapeditorApp.controller("StreetMenuController", ['$scope','layerInstance', function($scope, layerInstance) {
         $scope.menuState="rootMenu";
         $scope.changesetsToLoad = null;
         $scope.$watch('menuState', function(newValue){
@@ -126,6 +128,9 @@
         $scope.onChangesetLoadClicked = function(item){
             var changeSetHandler = new ChangesetHandler();
             changeSetHandler.loadChangesetIntoLocalStorage(item.id);
+            /*layerInstance.mapInstance.removeLayer(layerInstance.instance);
+            layerInstance.mapInstance.addLayer(layerInstance.instance);*/
+            layerInstance.instance.redraw();
         };
     }]);
     simmapeditorApp.controller("StreetDetailController", ['$scope', function($scope) {
@@ -137,7 +142,7 @@
         $scope.changeModel = function() {
             $scope.streetModel.properties.freespeed = parseFloat($scope.streetModel.properties.freespeedCalculated / 3.6)
             storageHandler.addNewChange($scope.streetModel);
-        }
+        };
 
         $scope.newFeature = function (feature, layer, latlng, map) {
             var streetDetails = $("#streetDetails");
