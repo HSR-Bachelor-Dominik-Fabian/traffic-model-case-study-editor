@@ -132,6 +132,11 @@
             layerInstance.mapInstance.addLayer(layerInstance.instance);*/
             layerInstance.instance.redraw();
         };
+        //TODO: Move to better Controller after Modularisation
+        $scope.onChangesetSaveClicked = function(){
+            var changeSetHandler = new ChangesetHandler();
+            changeSetHandler.saveChangeSet();
+        };
     }]);
     simmapeditorApp.controller("StreetDetailController", ['$scope', function($scope) {
         $scope.streetModel = null;

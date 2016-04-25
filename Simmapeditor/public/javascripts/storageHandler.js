@@ -25,7 +25,7 @@ function StorageHandler() {
 
         feature.properties = properties;
         return feature;
-    }
+    };
 
     this._convertFullModelToGeoJson = function(fullChangeModel) {
         var geoJson = {};
@@ -37,7 +37,7 @@ function StorageHandler() {
         }
         geoJson.type = "FeatureCollection";
         return geoJson;
-    }
+    };
 
     this.getLocalChangeset = function() {
         if (this._isLocalStorageSupported()) {
@@ -63,7 +63,7 @@ function StorageHandler() {
         } else {
             console.log("local Storage not supported from your browser.");
         }
-    }
+    };
 
     this.localChangeSetExists = function() {
         return this.getLocalChangeset() !== null;

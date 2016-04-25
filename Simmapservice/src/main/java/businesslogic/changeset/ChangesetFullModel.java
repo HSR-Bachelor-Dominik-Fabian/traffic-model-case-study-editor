@@ -1,5 +1,7 @@
 package businesslogic.changeset;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import dataaccess.database.tables.records.ChangesetRecord;
 import org.jooq.tools.json.JSONObject;
 
@@ -8,7 +10,9 @@ import java.util.List;
 /**
  * Created by dohee on 13.04.2016.
  */
+@JsonIgnoreProperties({"geoJson"})
 public class ChangesetFullModel extends ChangesetModel {
+    ChangesetFullModel(){super();}
     ChangesetFullModel(ChangesetRecord record){
         super(record);
     }
