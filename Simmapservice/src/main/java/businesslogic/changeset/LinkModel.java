@@ -8,6 +8,7 @@ import java.util.Date;
  * Created by dohee on 13.04.2016.
  */
 public class LinkModel {
+    public LinkModel(){}
     public LinkModel(LinkRecord record){
         fillModel(record);
     }

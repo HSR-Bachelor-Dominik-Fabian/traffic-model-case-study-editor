@@ -10,7 +10,7 @@
         $scope.changeModel = function() {
             $scope.streetModel.properties.freespeed = parseFloat($scope.streetModel.properties.freespeedCalculated / 3.6)
             storageHandler.addNewChange($scope.streetModel);
-        }
+        };
 
         $scope.newFeature = function (feature, layer, latlng, map) {
             var streetDetails = $("#streetDetails");
@@ -53,7 +53,7 @@
                     $scope.newFeature(feature, layer, latlng, map);
                 }
             }
-        }
+        };
 
         $scope.$on('updateFeature', function(event, args) {
             $scope.updateFeature(args.feature, args.layer, args.latlng, args.map);

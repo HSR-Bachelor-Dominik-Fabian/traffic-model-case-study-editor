@@ -1,7 +1,7 @@
 (function(){
     var mainModule = angular.module('mainModule', ['changeLinkModule', 'menuModule']);
-
-    mainModule.directive("simmap", function($rootScope){
+    mainModule.value("layerInstance", {instance: null, mapInstance: null});
+    mainModule.directive("simmap", ["$rootScope","layerInstance", function($rootScope, layerInstance){
        return {
             scope: true,
             link: function($scope, element, attrs){
@@ -105,5 +105,5 @@
                 addGeoJsonTileLayer();
             }
        };
-    });
+    }]);
 })();

@@ -13,13 +13,13 @@
     <div class="row">
         <div simmap id="map" class="col-xs-12">
         </div>
-        <nav id="navmenuLeft" class="navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+        <nav id="navmenuLeft" class="navbar navbar-fixed-left navbar-minimal animate" role="navigation" ng-controller="StreetMenuController" ng-app="menuModule">
             <div class="navbar-toggler animate">
                 <span class="menu-icon"></span>
             </div>
             <ul class="navbar-menu animate">
                 <li>
-                    <a id="saveButton" href="#save">
+                    <a id="saveButton" ng-click="onChangesetSaveClicked()">
                         <span class="glyphicon glyphicon-floppy-disk" data-toggle="tooltip" data-placement="right" title="Tooltip on right"></span>
                         <span class="badge badge-count">155</span>
                     </a>

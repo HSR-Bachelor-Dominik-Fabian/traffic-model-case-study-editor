@@ -1,5 +1,5 @@
 (function(){
-    var menuModule = angular.module('menuModule', []);
+    var menuModule = angular.module('menuModule', ["mainModule"]);
 
     menuModule.directive("rootmenu", function() {
         return {templateUrl: "/partials/rootmenu"};
@@ -8,7 +8,7 @@
         return {templateUrl: "/partials/loadchangesetmenu"};
     });
 
-    menuModule.controller("StreetMenuController", ['$scope', function($scope) {
+    menuModule.controller("StreetMenuController", ['$scope', "layerInstance", function($scope, layerInstance) {
         $scope.menuState="rootMenu";
         $scope.changesetsToLoad = null;
         $scope.$watch('menuState', function(newValue){
@@ -21,6 +21,11 @@
         $scope.onChangesetLoadClicked = function(item){
             var changeSetHandler = new ChangesetHandler();
             changeSetHandler.loadChangesetIntoLocalStorage(item.id);
+            layerInstance.instance.redraw();
+        };
+        $scope.onChangesetSaveClicked = function(){
+            var changeSetHandler = new ChangesetHandler();
+            changeSetHandler.saveChangeSet();
         };
     }]);
 })();

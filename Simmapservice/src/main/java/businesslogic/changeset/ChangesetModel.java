@@ -1,11 +1,13 @@
 package businesslogic.changeset;
 
+import dataaccess.database.tables.Changeset;
 import dataaccess.database.tables.records.ChangesetRecord;
 
 /**
  * Created by dohee on 13.04.2016.
  */
 public class ChangesetModel {
+    ChangesetModel(){}
     ChangesetModel(ChangesetRecord record){
         fillModel(record);
     }
