@@ -1,10 +1,14 @@
-@(title: String)(content: Html)
+@import java.util.Properties
+@(props: Properties)(content: Html)
 
 <!DOCTYPE html>
 
 <html ng-app="simmapeditorApp">
     <head>
-        <title>@title</title>
+        <script>
+                var MyProps = {};
+                MyProps["rootURL"] = "@props.getProperty("rootURL")";
+        </script>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/menuStyle.css")">
         <link rel="shortcut icon" type="image/ico" href="@routes.Assets.at("images/favicon.ico")">

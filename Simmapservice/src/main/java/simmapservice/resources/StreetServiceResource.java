@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Properties;
 
-@Path("/street/{id}")
+@Path("/link/{id}")
 public class StreetServiceResource {
 
     private final Properties properties;
