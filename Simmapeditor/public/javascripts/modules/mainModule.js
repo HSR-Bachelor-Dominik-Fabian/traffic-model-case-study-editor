@@ -1,15 +1,11 @@
 (function(){
-    var simmapeditorApp = angular.module("simmapeditorApp", []);
-    simmapeditorApp.directive("rootmenu", function() {
-        return {templateUrl: "/partials/rootmenu"};
-    });
-    simmapeditorApp.directive("loadchangesetmenu", function() {
-        return {templateUrl: "/partials/loadchangesetmenu"};
-    });
+    var mainModule = angular.module('mainModule', ['changeLinkModule', 'menuModule']);
 
-    simmapeditorApp.directive("simmap", function(){
+    mainModule.directive("simmap", function($rootScope){
        return {
+            scope: true,
             link: function($scope, element, attrs){
+
                 var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     noWrap:true
                 });
@@ -41,9 +37,7 @@
                 var map = new L.Map("map", {center: [46.83, 8.3], zoom: 8, layers: [SenozonLight],
                     attributionControl: false,minZoom: 3, maxZoom: 18, noWrap: true , zoomControl: false, maxBounds: [[-180, -180],[180,180]]});
                 map.on("click", function(){
-                    var streetDetails=$("#streetDetails");
-                    var scope = angular.element(streetDetails).scope();
-                    scope.updateFeature(null, null, null, map);
+                    $rootScope.$broadcast('updateFeature', {feature: null, layer: null, latlng: null, map: map});
                     $(".street-active").removeClass("street-active");
                 });
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
@@ -93,9 +87,7 @@
                             var path = e.target;
                             var container = path._container;
                             $('> path', container).addClass('street-active');
-                            var streetDetails = $("#streetDetails");
-                            var scope = angular.element(streetDetails).scope();
-                            scope.updateFeature(feature, layer, e.latlng, map);
+                            $rootScope.$broadcast('updateFeature', {feature: feature, layer: layer, latlng: e.latlng, map: map});
                         });
                     }
                 }
@@ -112,73 +104,4 @@
             }
        };
     });
-
-    simmapeditorApp.controller("StreetMenuController", ['$scope', function($scope) {
-        $scope.menuState="rootMenu";
-        $scope.changesetsToLoad = null;
-        $scope.$watch('menuState', function(newValue){
-            $scope.changesetsToLoad = null;
-            if(newValue == "loadChangeset"){
-                var changeSetHandler = new ChangesetHandler();
-                $scope.changesetsToLoad = changeSetHandler.getAllChangesets();
-            }
-        });
-        $scope.onChangesetLoadClicked = function(item){
-            var changeSetHandler = new ChangesetHandler();
-            changeSetHandler.loadChangesetIntoLocalStorage(item.id);
-        };
-    }]);
-    simmapeditorApp.controller("StreetDetailController", ['$scope', function($scope) {
-        $scope.streetModel = null;
-        $scope.layer = null;
-        $scope.marker = null;
-        var storageHandler = new StorageHandler();
-
-        $scope.changeModel = function() {
-            $scope.streetModel.properties.freespeed = parseFloat($scope.streetModel.properties.freespeedCalculated / 3.6)
-            storageHandler.addNewChange($scope.streetModel);
-        }
-
-        $scope.newFeature = function (feature, layer, latlng, map) {
-            var streetDetails = $("#streetDetails");
-            $scope.streetModel = feature;
-
-            $scope.streetModel.properties.freespeedCalculated = parseInt($scope.streetModel.properties.freespeed * 3.6);
-
-            $scope.layer = layer;
-            streetDetails.offcanvas("show");
-            if ($scope.marker != null) {
-                L.removeLayer(marker);
-            }
-
-            $scope.marker = L.marker(latlng).addTo(map);
-            $scope.$apply();
-        };
-        $scope.removeFeature = function (map, beforeNew) {
-            var streetDetails = $("#streetDetails");
-            if (!beforeNew) streetDetails.offcanvas("hide");
-            $scope.streetModel = null;
-            $scope.layer = null;
-            var marker = $scope.marker;
-            if (marker != null) {
-                map.removeLayer(marker);
-            }
-            $scope.marker = null;
-            $scope.$apply();
-        };
-        $scope.updateFeature = function (feature, layer, latlng, map) {
-            if ($scope.streetModel != null) {
-                if (feature == null) {
-                    $scope.removeFeature(map, false)
-                } else {
-                    $scope.removeFeature(map, true);
-                    $scope.newFeature(feature, layer, latlng, map);
-                }
-            } else {
-                if (feature != null) {
-                    $scope.newFeature(feature, layer, latlng, map);
-                }
-            }
-        }
-    }]);
 })();
