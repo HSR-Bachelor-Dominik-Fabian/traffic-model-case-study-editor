@@ -66,6 +66,9 @@ L.TileLayer.GeoJSON = L.TileLayer.Ajax.extend({
     },
     onRemove: function (map) {
         map.removeLayer(this.geojsonLayer);
+        _keyLayers = {};
+        _keyStore = {};
+        _layerrToKeyStore = {};
         L.TileLayer.Ajax.prototype.onRemove.call(this, map);
     },
     _reset: function () {

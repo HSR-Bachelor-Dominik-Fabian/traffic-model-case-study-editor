@@ -66,7 +66,7 @@
                         onEachFeature: onEachFeature
                     });
                     addOverLay(geojsonTileLayer, "Test Layer");
-                }
+                };
 
                 var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de,
                     "Black and White": OpenStreetMap_BlackAndWhite, "MapBox": MapBox, "MapBoxLight": MapBoxLight, "SenozonLight": SenozonLight};
@@ -97,11 +97,16 @@
                     basicControl.addOverlay(layer, name);
                 }
 
-                var storageHandler = new StorageHandler();
+
+                var changesetHandler = new ChangesetHandler();
+                changesetHandler.initializeChangeset();
+                addGeoJsonTileLayer();
+
+                /*var storageHandler = new StorageHandler();
 
                 if (!storageHandler.localChangeSetExists()) {
-                    //var changesetURL = "http://localhost:9001/api/changesets/1";
-                    var changesetURL = "http://152.96.56.47:40005/api/changesets/1";
+                    var changesetURL = "http://localhost:9001/api/changesets/1";
+                    //var changesetURL = "http://152.96.56.47:40005/api/changesets/1";
                     L.Util.ajax(changesetURL).then(function(data) {
                         var storageHandler = new StorageHandler();
                         try {
@@ -113,7 +118,7 @@
                     });
                 } else {
                     addGeoJsonTileLayer();
-                }
+                }*/
 
 
                 /*

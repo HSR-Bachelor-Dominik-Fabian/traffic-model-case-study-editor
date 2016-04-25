@@ -10,6 +10,18 @@
 
     simmapeditorApp.controller("StreetMenuController", ['$scope', function($scope) {
         $scope.menuState="rootMenu";
+        $scope.changesetsToLoad = null;
+        $scope.$watch('menuState', function(newValue){
+            $scope.changesetsToLoad = null;
+            if(newValue == "loadChangeset"){
+                var changeSetHandler = new ChangesetHandler();
+                $scope.changesetsToLoad = changeSetHandler.getAllChangesets();
+            }
+        });
+        $scope.onChangesetLoadClicked = function(item){
+            var changeSetHandler = new ChangesetHandler();
+            changeSetHandler.loadChangesetIntoLocalStorage(item.id);
+        };
     }]);
     simmapeditorApp.controller("StreetDetailController", ['$scope', function($scope) {
         $scope.streetModel = null;
