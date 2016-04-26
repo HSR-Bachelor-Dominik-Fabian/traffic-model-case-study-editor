@@ -41,7 +41,7 @@ function ChangesetStorageHandler() {
 
     this.getLocalChangeset = function() {
         if (this._isLocalStorageSupported()) {
-            return JSON.parse(localStorage.getItem("changeset"));
+            return JSON.parse(sessionStorage.getItem("changeset"));
         } else {
             console.log("local Storage not supported from your browser.");
         }
@@ -51,7 +51,7 @@ function ChangesetStorageHandler() {
         if (this._isLocalStorageSupported()) {
             var geoJson = this._convertFullModelToGeoJson(fullChangeModel);
             fullChangeModel.geoJson = geoJson;
-            localStorage.setItem("changeset", JSON.stringify(fullChangeModel));
+            sessionStorage.setItem("changeset", JSON.stringify(fullChangeModel));
         } else {
             console.log("local Storage not supported from your browser.");
         }
@@ -59,7 +59,7 @@ function ChangesetStorageHandler() {
 
     this._setUpdatedLocalChangeset = function(changeSet) {
         if (this._isLocalStorageSupported()) {
-            localStorage.setItem("changeset", JSON.stringify(changeSet));
+            sessionStorage.setItem("changeset", JSON.stringify(changeSet));
         } else {
             console.log("local Storage not supported from your browser.");
         }
