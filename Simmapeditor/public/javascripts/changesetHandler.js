@@ -1,7 +1,3 @@
-/**
- * Created by fke on 19.04.2016.
- */
-
 function ChangesetHandler() {
     this.getAllChangesets = function() {
         var getLinkURL = MyProps["rootURL"] + "/api/changesets/user/1";
@@ -18,13 +14,13 @@ function ChangesetHandler() {
         return result;
     };
     this.initializeChangeset = function (){
-        var storageHandler = new StorageHandler();
+        var storageHandler = new ChangesetStorageHandler();
         if (!storageHandler.localChangeSetExists()) {
             this.loadChangesetIntoLocalStorage(this.getAllChangesets()[0].id);
         }
     };
     this.loadChangesetIntoLocalStorage = function(changesetNr){
-        var storageHandler = new StorageHandler();
+        var storageHandler = new ChangesetStorageHandler();
         var changeSet = this._loadChangeSet(changesetNr);
         storageHandler.setLocalChangeset(changeSet);
     };
@@ -45,7 +41,7 @@ function ChangesetHandler() {
     };
 
     this.saveChangeSet = function(){
-        var storageHandler = new StorageHandler();
+        var storageHandler = new ChangesetStorageHandler();
         var data = storageHandler.getLocalChangeset();
         var getLinkURL = MyProps["rootURL"] + "/api/changesets/" + data.id;
         $.ajax({

@@ -57,7 +57,7 @@
                             return feature.properties.zoomlevel;
                         },
                         modified: function (feature) {
-                            var storageHandler = new StorageHandler();
+                            var storageHandler = new ChangesetStorageHandler();
                             var changeset = storageHandler.getLocalChangeset();
                             var geoJson = changeset.geoJson;
                             for (var changedFeature in geoJson.features) {

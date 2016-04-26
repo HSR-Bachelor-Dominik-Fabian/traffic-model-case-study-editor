@@ -5,7 +5,7 @@
         $scope.streetModel = null;
         $scope.layer = null;
         $scope.marker = null;
-        var storageHandler = new StorageHandler();
+        var storageHandler = new ChangesetStorageHandler();
 
         $scope.changeModel = function() {
             $scope.streetModel.properties.freespeed = $scope.streetModel.properties.freespeedCalculated / 3.6;
