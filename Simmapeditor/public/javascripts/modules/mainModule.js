@@ -71,7 +71,7 @@
                         onEachFeature: onEachFeature
                     });
                     layerInstance.instance = geojsonTileLayer;
-                    addOverLay(geojsonTileLayer, "Test Layer");
+                    addOverLay(geojsonTileLayer, "Link Layer");
                 };
 
                 var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de,
