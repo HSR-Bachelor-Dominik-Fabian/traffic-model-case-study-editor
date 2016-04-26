@@ -1,7 +1,7 @@
 (function(){
     var changeLinkModule = angular.module('changeLinkModule', []);
 
-    changeLinkModule.controller("StreetDetailController", function($scope) {
+    changeLinkModule.controller("StreetDetailController", function($scope, $rootScope) {
         $scope.streetModel = null;
         $scope.layer = null;
         $scope.marker = null;
@@ -10,6 +10,7 @@
         $scope.changeModel = function() {
             $scope.streetModel.properties.freespeed = $scope.streetModel.properties.freespeedCalculated / 3.6;
             storageHandler.addNewChange($scope.streetModel);
+            $rootScope.$broadcast('addChange');
         };
 
         $scope.newFeature = function (feature, layer, latlng, map) {

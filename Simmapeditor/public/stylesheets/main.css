@@ -4,60 +4,63 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
 #mapContainer, #mapContainer .row, #map {
     height: 100%;
 }
+
 svg {
     position: relative;
 }
 
-.offcanvas-container{
+.offcanvas-container {
     background-color: white;
     height: 100%;
 }
+
 .leaflet-touch .leaflet-control-zoomslider {
-    border: 1px solid rgba(0,0,0,0.2)!important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
 }
 
 .leaflet-control-zoomslider-in, .leaflet-control-zoomslider-out {
-    border-radius: 0px 0px 0px 0px!important;
+    border-radius: 0px 0px 0px 0px !important;
 }
 
 .leaflet-control-zoomslider-knob {
-    border: 1px solid #fff!important;
+    border: 1px solid #fff !important;
 }
 
 .leaflet-control-zoomslider-wrap, .leaflet-control-zoomslider-body {
-    background-color: rgba(51, 51, 51, 0.8)!important;
-    border: none!important;
+    background-color: rgba(51, 51, 51, 0.8) !important;
+    border: none !important;
 }
 
 .leaflet-control-zoomslider-wrap {
-    border-bottom: 1px solid #ccc!important;
+    border-bottom: 1px solid #ccc !important;
 }
 
 .leaflet-bar a {
-    background-color: rgba(51, 51, 51, 0.8)!important;
-    color: white!important;
+    background-color: rgba(51, 51, 51, 0.8) !important;
+    color: white !important;
 }
 
 .leaflet-control-layers {
     border: 0px !important;
     border-radius: 0px !important;
-    background-color: rgba(51, 51, 51, 0.8)!important;
+    background-color: rgba(51, 51, 51, 0.8) !important;
 
 }
 
 .leaflet-control-layers-expanded > .leaflet-control-layers-list {
-    background-color: transparent!important;
+    background-color: transparent !important;
     color: white;
     padding: 10px 25px 10px 25px;
     border: 0px !important;
 }
 
 .leaflet-control-layers-toggle {
-    width: 60px!important;
-    height: 60px!important;
+    width: 60px !important;
+    height: 60px !important;
     background-color: transparent;
     border: 0px !important;
     -webkit-border-radius: 0;
@@ -66,7 +69,7 @@ svg {
 }
 
 .street:hover, .street-active {
-    stroke: #F0EA72!important;
+    stroke: #F0EA72 !important;
     cursor: pointer;
 }
 
@@ -87,11 +90,12 @@ svg {
     stroke: #2C8A52;
     stroke-width: 3.8px;
 }
+
 .menu {
     font-size: 2em;
 }
 
-#hiddenMenu{
+#hiddenMenu {
     background-color: rgb(51, 51, 51);
     background-color: rgba(51, 51, 51, 0.8);
 }
@@ -122,7 +126,8 @@ svg {
     cursor: pointer;
     background-color: #6f99a5;
 }
-.navbar-minimal > .navbar-toggler:hover{
+
+.navbar-minimal > .navbar-toggler:hover {
     background-color: #4a717c;
 }
 
@@ -158,12 +163,14 @@ svg {
     background-color: rgb(51, 51, 51);
     background-color: rgba(51, 51, 51, 0.8);
 }
+
 .navbar-minimal > .navbar-menu > li {
     margin: 0px;
     padding: 0px;
     border-width: 0px;
     height: 54px;
 }
+
 .navbar-minimal > .navbar-menu > li > a {
     position: relative;
     display: inline-block;
@@ -180,14 +187,21 @@ svg {
 .navbar-minimal > .navbar-menu > li > a:last-child {
     border-bottom-width: 0px;
 }
+
 .navbar-minimal > .navbar-menu > li > a:hover {
     background-color: #91acb4;
 }
+
 .navbar-minimal > .navbar-menu > li > a > .glyphicon {
+    font-size: 20px;
     float: right;
 }
 
-section{
+.navbar-menu .animate > li > a {
+    padding: 15px 20px !important;
+}
+
+section {
     padding-left: 15px;
 }
 
@@ -245,16 +259,16 @@ div {
 .form-field-group > .form-text-editable {
 }
 
-.form-field-group > .form-text-editable:hover, .form-field-group > .form-text-editable:active{
+.form-field-group > .form-text-editable:hover, .form-field-group > .form-text-editable:active {
     background-color: #91acb4;
 }
 
 .form-select-editable {
-    border-radius: 0 0 0 0!important;
-    height: 30px!important;
-    border: 1px solid #dddddd!important;
-    background: transparent!important;
-    color: #dddddd!important;
+    border-radius: 0 0 0 0 !important;
+    height: 30px !important;
+    border: 1px solid #dddddd !important;
+    background: transparent !important;
+    color: #dddddd !important;
 }
 
 select option {
@@ -273,6 +287,6 @@ select option {
     background-color: rgba(51, 51, 51, 0.8);
 }
 
-.nopadding{
+.nopadding {
     padding: 0 !important;
 }

@@ -9,7 +9,8 @@
     });
 
     menuModule.controller("StreetMenuController", ['$scope', "layerInstance", function($scope, layerInstance) {
-        $scope.menuState="rootMenu";
+        $scope.menuState = "rootMenu";
+        $scope.changeCount = 0;
         $scope.changesetsToLoad = null;
         $scope.$watch('menuState', function(newValue){
             $scope.changesetsToLoad = null;
@@ -27,5 +28,13 @@
             var changeSetHandler = new ChangesetHandler();
             changeSetHandler.saveChangeSet();
         };
+
+        $scope.$on('addChange', function(event, args) {
+            $scope.changeCount++;
+        });
+
+        $scope.$on('removeChange', function(event, args) {
+            $scope.changeCount--;
+        });
     }]);
 })();
