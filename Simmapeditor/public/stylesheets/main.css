@@ -172,10 +172,12 @@ svg {
 }
 
 .navbar-minimal > .navbar-menu > li > a {
+    width: 60px!important;
+    height: 54px!important;
     position: relative;
     display: inline-block;
     color: rgb(255, 255, 255);
-    padding: 20px 23px;
+    padding: 17px 20px;
     text-align: left;
     cursor: pointer;
     border-bottom: 1px solid rgb(81, 81, 81);
@@ -195,10 +197,6 @@ svg {
 .navbar-minimal > .navbar-menu > li > a > .glyphicon {
     font-size: 20px;
     float: right;
-}
-
-.navbar-menu .animate > li > a {
-    padding: 15px 20px !important;
 }
 
 section {
