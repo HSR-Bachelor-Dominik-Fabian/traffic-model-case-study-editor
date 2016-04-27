@@ -37,6 +37,8 @@ function ChangesetHandler() {
         var storageHandler = new ChangesetStorageHandler();
         var changeSet = this._loadChangeSet(MyProps["rootURL"] + "/api/changesets/" + changesetNr);
         storageHandler.setLocalChangeset(changeSet);
+        var undoRedoHandler = new UndoRedoHandler();
+        undoRedoHandler.clearUndoRedoStack();
     };
 
     this._loadChangeSet = function(getLinkURL){

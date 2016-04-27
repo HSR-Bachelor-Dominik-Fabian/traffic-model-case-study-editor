@@ -13,6 +13,11 @@ function UndoRedoHandler() {
         }
     };
 
+    this.clearUndoRedoStack = function() {
+        this._setRedoStack([]);
+        this._setUndoStack([]);
+    };
+
     this.addChange = function(changeModel) {
         this._setRedoStack([]);
         var undoStack = this._getUndoStack();
@@ -97,10 +102,6 @@ function UndoRedoHandler() {
         }
     };
 
-    this.getUndoStackSize = function() {
-        return this._getUndoStack().length;
-    };
-
     this._getRedoStack = function() {
         if (this._isLocalStorageSupported()) {
             return JSON.parse(sessionStorage.getItem('redoStack'));
@@ -115,10 +116,6 @@ function UndoRedoHandler() {
         } else {
             console.log("Local storage is not supported.");
         }
-    };
-
-    this.getRedoStackSize = function() {
-        return this._getRedoStack().length;
     };
 
     this.undoRedoStackExists = function() {
