@@ -1,22 +1,22 @@
-(function(){
-    var menuModule = angular.module('menuModule', ["mainModule"]);
+(function () {
+    var menuModule = angular.module('menuModule', ['mainModule', 'ngMaterial']);
 
-    menuModule.directive("rootmenu", function() {
-        return {templateUrl: "/partials/rootmenu"};
+    menuModule.directive('rootmenu', function () {
+        return {templateUrl: '/partials/rootmenu'};
     });
-    menuModule.directive("loadchangesetmenu", function() {
-        return {templateUrl: "/partials/loadchangesetmenu"};
+    menuModule.directive('loadchangesetmenu', function () {
+        return {templateUrl: '/partials/loadchangesetmenu'};
     });
 
-    menuModule.controller("StreetMenuController", ['$scope', "layerInstance", function($scope, layerInstance) {
-        $scope.menuState = "rootMenu";
+    menuModule.controller('StreetMenuController', ['$scope', '$mdDialog', 'layerInstance', function ($scope, $mdDialog, layerInstance) {
+        $scope.menuState = 'rootMenu';
         $scope.changeCount = 0;
         $scope.isUndoDisabled = false;
         $scope.isRedoDisabled = false;
         $scope.changesetsToLoad = null;
 
         $scope.$watch(function () {
-            return sessionStorage.getItem("undoStack");
+            return sessionStorage.getItem('undoStack');
         }, function (newVal, oldVal) {
             $scope.changeCount = JSON.parse(newVal).length;
             if ($scope.changeCount === 0) {
@@ -29,7 +29,7 @@
         }, true);
 
         $scope.$watch(function () {
-            return sessionStorage.getItem("redoStack");
+            return sessionStorage.getItem('redoStack');
         }, function (newVal, oldVal) {
             var redoStack = JSON.parse(newVal);
             if (redoStack.length === 0) {
@@ -41,30 +41,56 @@
             }
         }, true);
 
-        $scope.$watch('menuState', function(newValue){
+        $scope.$watch('menuState', function (newValue) {
             $scope.changesetsToLoad = null;
-            if(newValue === "loadChangeset"){
+            if (newValue === 'loadChangeset') {
                 var changeSetHandler = new ChangesetHandler();
                 $scope.changesetsToLoad = changeSetHandler.getAllChangesets();
             }
         });
-        $scope.onChangesetLoadClicked = function(item){
+        $scope.onChangesetLoadClicked = function (item) {
             var changeSetHandler = new ChangesetHandler();
             changeSetHandler.loadChangesetIntoLocalStorage(item.id);
             layerInstance.instance.redraw();
         };
-        $scope.onChangesetSaveClicked = function(){
+        $scope.onChangesetSaveClicked = function () {
             var changeSetHandler = new ChangesetHandler();
-            changeSetHandler.saveChangeSet();
+            var changesetStorageHandler = new ChangesetStorageHandler();
+            var changeset = changesetStorageHandler.getLocalChangeset();
+            if (changeset.name == null) {
+                showNameDialog(changeset, changesetStorageHandler, changeSetHandler);
+            } else {
+                changeSetHandler.saveChangeSet();
+            }
         };
 
-        $scope.onUndoClicked = function() {
+        var showNameDialog = function (changeset, changesetStorageHandler, changeSetHandler) {
+            var nameNeededDialog = $mdDialog.prompt()
+                .title('Ihr Changeset hat noch keinen Namen.')
+                .textContent('Geben Sie hier einen Namen für Ihr Changeset an.')
+                .placeholder('Changeset Name')
+                .ariaLabel('Changeset Name')
+                .openFrom('#saveButton')
+                .closeTo('#saveButton')
+                .ok('Changeset speichern')
+                .cancel('Abbrechen');
+            $mdDialog.show(nameNeededDialog).then(function (result) {
+                changeset.name = result;
+                changesetStorageHandler._setUpdatedLocalChangeset(changeset);
+                changeSetHandler.saveChangeSet();
+            }, function () {
+                $("#saveError").show();
+                $("#saveError").fadeOut(5000);
+            });
+        };
+
+        $scope.onUndoClicked = function () {
             var undoRedoHandler = new UndoRedoHandler();
             undoRedoHandler.undo();
             layerInstance.instance.redraw();
         };
 
-        $scope.onRedoClicked = function() {
+        $scope.onRedoClicked = function () {
             var undoRedoHandler = new UndoRedoHandler();
             undoRedoHandler.redo();
             layerInstance.instance.redraw();

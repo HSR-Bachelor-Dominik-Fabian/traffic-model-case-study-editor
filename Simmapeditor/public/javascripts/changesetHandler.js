@@ -1,7 +1,7 @@
 function ChangesetHandler() {
     this.getAllChangesets = function() {
         var getLinkURL = MyProps["rootURL"] + "/api/changesets/user/1";
-        var result;
+        var result = [];
         $.ajax({
             type:'GET',
             url:getLinkURL,
@@ -16,9 +16,22 @@ function ChangesetHandler() {
     this.initializeChangeset = function (){
         var storageHandler = new ChangesetStorageHandler();
         if (!storageHandler.localChangeSetExists()) {
-            this.loadChangesetIntoLocalStorage(this.getAllChangesets()[0].id);
+            var allChangesets = this.getAllChangesets();
+            if (allChangesets.length !== 0) {
+                this.loadChangesetIntoLocalStorage(allChangesets[0].id);
+            } else {
+                this._loadEmptyChangesetIntoLocalStorage();
+            }
         }
     };
+
+    this._loadEmptyChangesetIntoLocalStorage = function() {
+        var storageHandler = new ChangesetStorageHandler();
+        var fullChangeModel = {"id": null, "name": null, "networkId": 1, "userNr": 1, "link_changeModels": [],
+                                "node_changeModels": []};
+        storageHandler.setLocalChangeset(fullChangeModel);
+    };
+
     this.loadChangesetIntoLocalStorage = function(changesetNr){
         var storageHandler = new ChangesetStorageHandler();
         var changeSet = this._loadChangeSet(MyProps["rootURL"] + "/api/changesets/" + changesetNr);
