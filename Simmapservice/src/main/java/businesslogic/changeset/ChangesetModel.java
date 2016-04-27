@@ -58,8 +58,9 @@ public class ChangesetModel {
 
     ChangesetRecord getRecord(){
         ChangesetRecord record = new ChangesetRecord();
-
-        record.setId(id);
+        if(id != null) {
+            record.setId(id);
+        }
         record.setName(name);
         record.setNetworkid(networkId);
         record.setUsernr(userNr);

@@ -7,9 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.Properties;
 
@@ -38,9 +38,13 @@ public class ChangesetResource {
     }
     @POST @Path("/user/{userid}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postNewChangeset(@PathParam("userid") int userid, ChangesetFullModel fullModel){
-        //return Response.created().build();
-        return null; //TODO: return created
+    public Response postNewChangeset(@PathParam("userid") int userid, ChangesetFullModel fullModel, @Context UriInfo uriInfo){
+        ChangesetLogic businessLogic = new ChangesetLogic(this.properties);
+        if(fullModel.getId() != null){
+            return Response.status(409).entity("Has already an id cannot be inserted").build();
+        }
+        Long id = businessLogic.insertChangeset(fullModel);
+        return Response.created(URI.create("/api/changesets/"+id)).build();
     }
     @PUT @Path("/{id}")
     public Response putUpdateChangeset(@PathParam("id") long id, ChangesetFullModel fullModel){

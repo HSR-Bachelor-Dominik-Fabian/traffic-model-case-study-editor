@@ -15,6 +15,7 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
@@ -34,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Changeset extends TableImpl<ChangesetRecord> {
 
-	private static final long serialVersionUID = -342635046;
+	private static final long serialVersionUID = -1554197780;
 
 	/**
 	 * The reference instance of <code>public.Changeset</code>
@@ -52,7 +53,7 @@ public class Changeset extends TableImpl<ChangesetRecord> {
 	/**
 	 * The column <code>public.Changeset.Id</code>.
 	 */
-	public final TableField<ChangesetRecord, Long> ID = createField("Id", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+	public final TableField<ChangesetRecord, Long> ID = createField("Id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * The column <code>public.Changeset.Name</code>.
@@ -89,6 +90,14 @@ public class Changeset extends TableImpl<ChangesetRecord> {
 
 	private Changeset(String alias, Table<ChangesetRecord> aliased, Field<?>[] parameters) {
 		super(alias, Public.PUBLIC, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Identity<ChangesetRecord, Long> getIdentity() {
+		return Keys.IDENTITY_CHANGESET;
 	}
 
 	/**
