@@ -45,6 +45,7 @@
         <div id="hiddenMenu" class="col-xs-3 nopadding navmenu-fixed-left offcanvas offcanvas-container" ng-controller="StreetMenuController" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft" ng-app="menuModule">
             <rootMenu ng-show="menuState=='rootMenu'"></rootMenu>
             <loadChangesetMenu ng-show="menuState=='loadChangeset'"></loadChangesetMenu>
+            <deleteChangesetMenu ng-show="menuState=='deleteChangeset'"></deleteChangesetMenu>
         </div>
         <div id="importMenu" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#importMenu, .leaflet-right">
             <div class="panel panel-default">

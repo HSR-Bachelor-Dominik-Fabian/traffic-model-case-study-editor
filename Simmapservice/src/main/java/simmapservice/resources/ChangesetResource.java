@@ -67,4 +67,15 @@ public class ChangesetResource {
             return Response.serverError().entity(exc).type(MediaType.APPLICATION_JSON).build();
         }
     }
+
+    @DELETE @Path("/{id}")
+    public Response deleteChangeset(@PathParam("id") long id){
+        ChangesetLogic businessLogic = new ChangesetLogic(this.properties);
+        ChangesetFullModel changesetFullModel = businessLogic.getFullChangeset(id);
+        if(changesetFullModel.getId() == null){
+            return Response.status(409).entity("Changeset not found").build();
+        }
+        businessLogic.deleteChangeset(changesetFullModel);
+        return Response.noContent().build();
+    }
 }

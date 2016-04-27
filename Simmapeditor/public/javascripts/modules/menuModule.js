@@ -7,6 +7,9 @@
     menuModule.directive('loadchangesetmenu', function () {
         return {templateUrl: '/partials/loadchangesetmenu'};
     });
+    menuModule.directive('deletechangesetmenu', function () {
+        return {templateUrl: '/partials/deletechangesetmenu'};
+    });
 
     menuModule.controller('StreetMenuController', ['$scope', '$mdDialog', 'layerInstance', function ($scope, $mdDialog, layerInstance) {
         $scope.menuState = 'rootMenu';

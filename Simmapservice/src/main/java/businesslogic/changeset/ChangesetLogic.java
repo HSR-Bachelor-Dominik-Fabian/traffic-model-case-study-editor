@@ -85,4 +85,11 @@ public class ChangesetLogic {
         dataAccess.updateLink_Changes(fullModel.getLink_changeModelsToUpdate());
         dataAccess.updateNode_Changes(fullModel.getNode_changeModelsToUpdate());
     }
+
+    public void deleteChangeset(ChangesetFullModel fullModel){
+        ChangesetRecord changesetRecord = fullModel.getRecord();
+        dataAccess.deleteLink_Changes(fullModel.getAllLink_changeModelsAsRecord());
+        dataAccess.deleteNode_Changes(fullModel.getAllNode_changeModelsAsRecord());
+        dataAccess.deleteChangeset(changesetRecord);
+    }
 }
