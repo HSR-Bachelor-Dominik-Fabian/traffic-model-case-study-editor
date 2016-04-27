@@ -222,6 +222,6 @@ public class SimmapDataAccessFacade {
     }
 
     public Long insertChangeset(ChangesetRecord record){
-        return ((Record1<Long>)DataAccessUtil.insertRecord(this.properties, record, Tables.CHANGESET, Arrays.asList(Tables.CHANGESET.ID))).value1();
+        return (Long)DataAccessUtil.insertRecord(this.properties, record, Tables.CHANGESET, Arrays.asList(Tables.CHANGESET.ID)).getValue(0);
     }
 }

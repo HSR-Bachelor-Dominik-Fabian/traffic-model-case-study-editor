@@ -22,6 +22,7 @@ import dataaccess.database.tables.records.NodeRecord;
 import javax.annotation.Generated;
 
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
 
@@ -44,6 +45,7 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final Identity<ChangesetRecord, Long> IDENTITY_CHANGESET = Identities0.IDENTITY_CHANGESET;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
@@ -75,6 +77,10 @@ public class Keys {
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
+
+	private static class Identities0 extends AbstractKeys {
+		public static Identity<ChangesetRecord, Long> IDENTITY_CHANGESET = createIdentity(Changeset.CHANGESET, Changeset.CHANGESET.ID);
+	}
 
 	private static class UniqueKeys0 extends AbstractKeys {
 		public static final UniqueKey<ChangesetRecord> CHANGESET_PRIMARYKEY = createUniqueKey(Changeset.CHANGESET, Changeset.CHANGESET.ID);

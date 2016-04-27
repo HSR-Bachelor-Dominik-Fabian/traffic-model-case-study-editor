@@ -34,12 +34,11 @@ function ChangesetHandler() {
 
     this.loadChangesetIntoLocalStorage = function(changesetNr){
         var storageHandler = new ChangesetStorageHandler();
-        var changeSet = this._loadChangeSet(changesetNr);
+        var changeSet = this._loadChangeSet(MyProps["rootURL"] + "/api/changesets/" + changesetNr);
         storageHandler.setLocalChangeset(changeSet);
     };
 
-    this._loadChangeSet = function(changesetNr){
-        var getLinkURL = MyProps["rootURL"] + "/api/changesets/" + changesetNr;
+    this._loadChangeSet = function(getLinkURL){
         var result;
         $.ajax({
             type:'GET',
@@ -66,6 +65,28 @@ function ChangesetHandler() {
                 data: JSON.stringify(data),
                 dataType: "json",
                 success:function(){
+                    $("#saveSuccess").show();
+                    $("#saveSuccess").fadeOut(5000);
+                },
+                error: function(){
+                    $("#saveError").show();
+                    $("#saveError").fadeOut(5000);
+                }
+            });
+        }
+        else{
+            var getLinkURL = MyProps["rootURL"] + "/api/changesets/user/1"
+            $.ajax({
+                type:'POST',
+                url:getLinkURL,
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(data),
+                success:function(data, status, xhr){
+                    var location = xhr.getResponseHeader('Location');
+                    var storageHandler = new ChangesetStorageHandler();
+                    var changeSetHandler = new ChangesetHandler();
+                    var changeSet = changeSetHandler._loadChangeSet(location);
+                    storageHandler.setLocalChangeset(changeSet);
                     $("#saveSuccess").show();
                     $("#saveSuccess").fadeOut(5000);
                 },

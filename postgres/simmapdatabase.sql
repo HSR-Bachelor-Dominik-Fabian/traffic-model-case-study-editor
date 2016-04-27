@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.1
 -- Dumped by pg_dump version 9.5.1
 
--- Started on 2016-04-14 09:43:18
+-- Started on 2016-04-27 14:13:07
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -24,7 +24,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2161 (class 0 OID 0)
+-- TOC entry 2164 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -33,6 +33,21 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 188 (class 1259 OID 24956)
+-- Name: changeset_pk_id; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE changeset_pk_id
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE changeset_pk_id OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -44,7 +59,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE "Changeset" (
-    "Id" bigint NOT NULL,
+    "Id" bigint DEFAULT nextval('changeset_pk_id'::regclass) NOT NULL,
     "Name" text,
     "UserNr" integer,
     "NetworkId" integer
@@ -82,7 +97,7 @@ CREATE TABLE "Link" (
 ALTER TABLE "Link" OWNER TO postgres;
 
 --
--- TOC entry 2162 (class 0 OID 0)
+-- TOC entry 2165 (class 0 OID 0)
 -- Dependencies: 181
 -- Name: COLUMN "Link"."Oneway"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -166,7 +181,7 @@ CREATE TABLE "Node" (
 ALTER TABLE "Node" OWNER TO postgres;
 
 --
--- TOC entry 2163 (class 0 OID 0)
+-- TOC entry 2166 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: COLUMN "Node"."Id"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -176,7 +191,7 @@ COMMENT ON COLUMN "Node"."Id" IS '
 
 
 --
--- TOC entry 2164 (class 0 OID 0)
+-- TOC entry 2167 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: COLUMN "Node"."QuadKey"; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -205,7 +220,7 @@ CREATE TABLE "Node_Change" (
 ALTER TABLE "Node_Change" OWNER TO postgres;
 
 --
--- TOC entry 2021 (class 2606 OID 24884)
+-- TOC entry 2024 (class 2606 OID 24884)
 -- Name: Changeset_PrimaryKey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -214,7 +229,7 @@ ALTER TABLE ONLY "Changeset"
 
 
 --
--- TOC entry 2014 (class 2606 OID 16571)
+-- TOC entry 2017 (class 2606 OID 16571)
 -- Name: Id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -223,7 +238,7 @@ ALTER TABLE ONLY "Network"
 
 
 --
--- TOC entry 2009 (class 2606 OID 16573)
+-- TOC entry 2012 (class 2606 OID 16573)
 -- Name: LinkId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -232,7 +247,7 @@ ALTER TABLE ONLY "Link"
 
 
 --
--- TOC entry 2027 (class 2606 OID 24942)
+-- TOC entry 2030 (class 2606 OID 24942)
 -- Name: Link_Change_LinkId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -241,7 +256,7 @@ ALTER TABLE ONLY "Link_Change"
 
 
 --
--- TOC entry 2016 (class 2606 OID 16575)
+-- TOC entry 2019 (class 2606 OID 16575)
 -- Name: Network_OptionsId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -250,7 +265,7 @@ ALTER TABLE ONLY "Network_Options"
 
 
 --
--- TOC entry 2018 (class 2606 OID 16577)
+-- TOC entry 2021 (class 2606 OID 16577)
 -- Name: NodeId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -259,7 +274,7 @@ ALTER TABLE ONLY "Node"
 
 
 --
--- TOC entry 2023 (class 2606 OID 24905)
+-- TOC entry 2026 (class 2606 OID 24905)
 -- Name: Node_ChangeId; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -268,7 +283,7 @@ ALTER TABLE ONLY "Node_Change"
 
 
 --
--- TOC entry 2025 (class 1259 OID 24953)
+-- TOC entry 2028 (class 1259 OID 24953)
 -- Name: Link_Change_DataAccessIndex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -276,7 +291,7 @@ CREATE INDEX "Link_Change_DataAccessIndex" ON "Link_Change" USING btree ("QuadKe
 
 
 --
--- TOC entry 2010 (class 1259 OID 16756)
+-- TOC entry 2013 (class 1259 OID 16756)
 -- Name: Link_DataAccessIndex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -286,7 +301,7 @@ ALTER TABLE "Link" CLUSTER ON "Link_DataAccessIndex";
 
 
 --
--- TOC entry 2019 (class 1259 OID 16578)
+-- TOC entry 2022 (class 1259 OID 16578)
 -- Name: NodeQuadKeyIndex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -294,7 +309,7 @@ CREATE INDEX "NodeQuadKeyIndex" ON "Node" USING btree ("QuadKey");
 
 
 --
--- TOC entry 2024 (class 1259 OID 24916)
+-- TOC entry 2027 (class 1259 OID 24916)
 -- Name: Node_ChangeQuadKeyIndex; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -302,7 +317,7 @@ CREATE INDEX "Node_ChangeQuadKeyIndex" ON "Node_Change" USING btree ("QuadKey");
 
 
 --
--- TOC entry 2028 (class 1259 OID 24955)
+-- TOC entry 2031 (class 1259 OID 24955)
 -- Name: fki_Link_Change_Change_Node_To; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -310,7 +325,7 @@ CREATE INDEX "fki_Link_Change_Change_Node_To" ON "Link_Change" USING btree ("To"
 
 
 --
--- TOC entry 2029 (class 1259 OID 24954)
+-- TOC entry 2032 (class 1259 OID 24954)
 -- Name: fki_Link_Change_Node_From; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -318,7 +333,7 @@ CREATE INDEX "fki_Link_Change_Node_From" ON "Link_Change" USING btree ("From", "
 
 
 --
--- TOC entry 2011 (class 1259 OID 16580)
+-- TOC entry 2014 (class 1259 OID 16580)
 -- Name: fki_Link_Node_From; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -326,7 +341,7 @@ CREATE INDEX "fki_Link_Node_From" ON "Link" USING btree ("From", "NetworkId");
 
 
 --
--- TOC entry 2012 (class 1259 OID 16581)
+-- TOC entry 2015 (class 1259 OID 16581)
 -- Name: fki_Link_Node_To; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -334,7 +349,7 @@ CREATE INDEX "fki_Link_Node_To" ON "Link" USING btree ("To", "NetworkId");
 
 
 --
--- TOC entry 2035 (class 2606 OID 24876)
+-- TOC entry 2038 (class 2606 OID 24876)
 -- Name: Changeset_NetworkID; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -343,7 +358,7 @@ ALTER TABLE ONLY "Changeset"
 
 
 --
--- TOC entry 2039 (class 2606 OID 24948)
+-- TOC entry 2042 (class 2606 OID 24948)
 -- Name: Link_Change_Changeset; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -352,7 +367,7 @@ ALTER TABLE ONLY "Link_Change"
 
 
 --
--- TOC entry 2038 (class 2606 OID 24943)
+-- TOC entry 2041 (class 2606 OID 24943)
 -- Name: Link_Change_Link_Network; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -361,7 +376,7 @@ ALTER TABLE ONLY "Link_Change"
 
 
 --
--- TOC entry 2030 (class 2606 OID 16582)
+-- TOC entry 2033 (class 2606 OID 16582)
 -- Name: Link_Network; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -370,7 +385,7 @@ ALTER TABLE ONLY "Link"
 
 
 --
--- TOC entry 2031 (class 2606 OID 16587)
+-- TOC entry 2034 (class 2606 OID 16587)
 -- Name: Link_Node_From; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -379,7 +394,7 @@ ALTER TABLE ONLY "Link"
 
 
 --
--- TOC entry 2032 (class 2606 OID 16592)
+-- TOC entry 2035 (class 2606 OID 16592)
 -- Name: Link_Node_To; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -388,7 +403,7 @@ ALTER TABLE ONLY "Link"
 
 
 --
--- TOC entry 2034 (class 2606 OID 16597)
+-- TOC entry 2037 (class 2606 OID 16597)
 -- Name: NetworkId; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -397,7 +412,7 @@ ALTER TABLE ONLY "Node"
 
 
 --
--- TOC entry 2033 (class 2606 OID 16602)
+-- TOC entry 2036 (class 2606 OID 16602)
 -- Name: Network_Network_Options; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -406,7 +421,7 @@ ALTER TABLE ONLY "Network_Options"
 
 
 --
--- TOC entry 2037 (class 2606 OID 24911)
+-- TOC entry 2040 (class 2606 OID 24911)
 -- Name: Node_Change_ChangesetNr; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -415,7 +430,7 @@ ALTER TABLE ONLY "Node_Change"
 
 
 --
--- TOC entry 2036 (class 2606 OID 24906)
+-- TOC entry 2039 (class 2606 OID 24906)
 -- Name: Node_Change_NetworkId; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -424,7 +439,7 @@ ALTER TABLE ONLY "Node_Change"
 
 
 --
--- TOC entry 2160 (class 0 OID 0)
+-- TOC entry 2163 (class 0 OID 0)
 -- Dependencies: 7
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -435,7 +450,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-04-14 09:43:18
+-- Completed on 2016-04-27 14:13:07
 
 --
 -- PostgreSQL database dump complete
