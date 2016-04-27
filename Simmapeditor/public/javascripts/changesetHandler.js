@@ -37,8 +37,6 @@ function ChangesetHandler() {
         var storageHandler = new ChangesetStorageHandler();
         var changeSet = this._loadChangeSet(MyProps["rootURL"] + "/api/changesets/" + changesetNr);
         storageHandler.setLocalChangeset(changeSet);
-        var undoRedoHandler = new UndoRedoHandler();
-        undoRedoHandler.clearUndoRedoStack();
     };
 
     this._loadChangeSet = function(getLinkURL){
@@ -76,6 +74,8 @@ function ChangesetHandler() {
                     $("#saveError").fadeOut(5000);
                 }
             });
+            var undoRedoHandler = new UndoRedoHandler();
+            undoRedoHandler.clearUndoRedoStack();
         }
         else{
             var getLinkURL = MyProps["rootURL"] + "/api/changesets/user/1"

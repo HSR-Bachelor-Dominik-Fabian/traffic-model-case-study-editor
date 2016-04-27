@@ -13,6 +13,7 @@
         $scope.changeCount = 0;
         $scope.isUndoDisabled = false;
         $scope.isRedoDisabled = false;
+        $scope.isSaveDisabled = false;
         $scope.changesetsToLoad = null;
 
         $scope.$watch(function () {
@@ -21,10 +22,14 @@
             $scope.changeCount = JSON.parse(newVal).length;
             if ($scope.changeCount === 0) {
                 $("#undoButton").addClass('deactivatedButton');
+                $("#saveButton").addClass('deactivatedButton');
                 $scope.isUndoDisabled = true;
+                $scope.isSaveDisabled = true;
             } else {
                 $("#undoButton").removeClass('deactivatedButton');
+                $("#saveButton").removeClass('deactivatedButton');
                 $scope.isUndoDisabled = false;
+                $scope.isSaveDisabled = false;
             }
         }, true);
 
