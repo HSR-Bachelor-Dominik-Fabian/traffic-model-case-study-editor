@@ -189,6 +189,15 @@ svg {
 
 .navbar-minimal > .navbar-menu > .success-message{
     background-color: #5cb85c;
+    border-bottom: 1px solid  #5cb85c;
+}
+.navbar-minimal > .navbar-menu > .success-message:hover{
+    background-color: #5cb85c;
+}
+.navbar-minimal > .navbar-menu > .success-message:active{
+    background-color: #5cb85c;
+}
+.navbar-minimal > .navbar-menu > .save-message{
     top: 0px;
     left: 60px;
     position: absolute;
@@ -197,16 +206,19 @@ svg {
     color: rgb(255, 255, 255);
     padding: 20px 23px;
     text-align: left;
-    border-bottom: 1px solid  #5cb85c;
     width: 100%;
     text-decoration: none;
     margin: 0px;
 }
-.navbar-minimal > .navbar-menu > .success-message:hover{
-    background-color: #5cb85c;
+.navbar-minimal > .navbar-menu > .error-message{
+    background-color: #ff1f03;
+    border-bottom: 1px solid  #ff1f03;
 }
-.navbar-minimal > .navbar-menu > .success-message:active{
-    background-color: #5cb85c;
+.navbar-minimal > .navbar-menu > .error-message:hover{
+    background-color: #ff1f03;
+}
+.navbar-minimal > .navbar-menu > .error-message:active{
+    background-color: #ff1f03;
 }
 
 .infoBubble{

@@ -58,7 +58,11 @@ function ChangesetHandler() {
                 dataType: "json",
                 success:function(){
                     $("#saveSuccess").show();
-                    $("#saveSuccess").hide(5000);
+                    $("#saveSuccess").fadeOut(5000);
+                },
+                error: function(){
+                    $("#saveError").show();
+                    $("#saveError").fadeOut(5000);
                 }
             });
         }
