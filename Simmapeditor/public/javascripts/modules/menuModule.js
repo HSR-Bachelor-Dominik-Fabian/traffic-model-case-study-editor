@@ -29,6 +29,20 @@
             changeSetHandler.saveChangeSet();
         };
 
+        $scope.onUndoClicked = function() {
+            var undoRedoHandler = new UndoRedoHandler();
+            undoRedoHandler.undo();
+            $scope.changeCount--;
+            layerInstance.instance.redraw();
+        };
+
+        $scope.onRedoClicked = function() {
+            var undoRedoHandler = new UndoRedoHandler();
+            undoRedoHandler.redo();
+            $scope.changeCount++;
+            layerInstance.instance.redraw();
+        };
+
         $scope.$on('addChange', function(event, args) {
             $scope.changeCount++;
         });

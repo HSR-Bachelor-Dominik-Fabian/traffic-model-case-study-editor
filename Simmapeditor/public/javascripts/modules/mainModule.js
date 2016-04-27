@@ -101,6 +101,8 @@
                     basicControl.addOverlay(layer, name);
                 }
 
+                var undoRedoHandler = new UndoRedoHandler();
+                undoRedoHandler.initializeUndoRedoStack();
 
                 var changesetHandler = new ChangesetHandler();
                 changesetHandler.initializeChangeset();

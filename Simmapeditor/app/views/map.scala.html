@@ -20,18 +20,18 @@
             <ul class="navbar-menu animate">
                 <li>
                     <a id="saveButton" ng-click="onChangesetSaveClicked()">
-                        <span class="glyphicon glyphicon-floppy-disk" data-toggle="tooltip" data-placement="right" title="Tooltip on right"></span>
+                        <span class="glyphicon glyphicon-floppy-disk" data-toggle="tooltip" data-placement="right" title="Save"></span>
                         <span class="badge badge-count" ng-bind="changeCount"></span>
                     </a>
                 </li>
                 <li>
-                    <a href="#blog">
-                        <span class="glyphicon glyphicon-info-sign"></span>
+                    <a id="undoButton" ng-click="onUndoClicked()" data-toggle="tooltip" data-placement="right" title="Undo">
+                        <span class="glyphicon glyphicon-arrow-left"></span>
                     </a>
                 </li>
                 <li>
-                    <a href="#contact-us">
-                        <span class="glyphicon glyphicon-comment"></span>
+                    <a id="redoButton" ng-click="onRedoClicked()" data-toggle="tooltip" data-placement="right" title="Redo">
+                        <span class="glyphicon glyphicon-arrow-right"></span>
                     </a>
                 </li>
             </ul>
@@ -77,28 +77,28 @@
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Oneway</label>
-                    <select class="form-control form-select-editable" ng-change="changeModel()" ng-model="streetModel.properties.oneway" ng-options="o.v as o.n for o in [{ n: 'false', v: false }, { n: 'true', v: true }]">
+                    <select class="form-control form-select-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.oneway" ng-options="o.v as o.n for o in [{ n: 'false', v: false }, { n: 'true', v: true }]">
                     </select>
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Modes</label>
-                    <input type="text" step="any" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.modes">
+                    <input type="text" step="any" id="input-oneway" class="form-text-editable" ng-model-onblur ng-change="changeModel()" ng-model="streetModel.properties.modes">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Length (meter)</label>
-                    <input type="number" step="any" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.length">
+                    <input type="number" step="any" id="input-oneway" class="form-text-editable" ng-model-onblur ng-change="changeModel()" ng-model="streetModel.properties.length">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Freespeed (km/h)</label>
-                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.freespeedCalculated">
+                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.freespeedCalculated">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Permlanes</label>
-                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.permlanes">
+                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.permlanes">
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Capacity</label>
-                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model="streetModel.properties.capacity">
+                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.capacity">
                 </div>
             </div>
         </div>
