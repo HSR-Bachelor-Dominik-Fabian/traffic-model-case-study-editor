@@ -221,35 +221,6 @@ svg {
     background-color: #ff1f03;
 }
 
-.infoBubble{
-    position: absolute;
-    top: 50%;
-    left: 70px;
-    margin-top: -20px;
-    margin-left: 5px;
-    text-align: left;
-    white-space: nowrap;
-    padding: 10px 13px;
-    border-width: 0px !important;
-    background-color: rgb(111, 153, 165);
-    background-color: rgba(111, 153, 165, 0.8);
-    opacity: 1;
-}
-.infoBubble:after {
-    z-index: -1;
-    position: absolute;
-    top: 50%;
-    left: -10px;
-    margin-top: -10px;
-    content: '';
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid rgb(111, 153, 165);
-    border-right-color: rgba(111, 153, 165, 0.8);
-}
-
 section{
     padding-left: 15px;
 }
