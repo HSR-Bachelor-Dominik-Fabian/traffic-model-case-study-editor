@@ -14,11 +14,12 @@ public class Node_ChangeModel {
     private String id = null;
     private Long changesetNr= null;
     private Integer networkId = null;
+    private boolean deleted = false;
     private String quadKey = null;
     private BigDecimal x = null;
     private BigDecimal y = null;
-    private Number latitude = null;
-    private Number longitude = null;
+    private BigDecimal latitude = null;
+    private BigDecimal longitude = null;
     //endregion
 
     //region Getter/Setter
@@ -56,6 +57,10 @@ public class Node_ChangeModel {
         this.networkId = networkId;
     }
 
+    public boolean isDeleted() { return deleted; }
+
+    public void setDeleted(boolean deleted) { this.deleted = deleted; }
+
     public String getQuadKey() {
         return quadKey;
     }
@@ -80,22 +85,37 @@ public class Node_ChangeModel {
         this.y = y;
     }
 
-    public Number getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Number latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public Number getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Number longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
     //endregion
+
+    NodeChangeRecord getNodeChangeRecord(){
+        NodeChangeRecord record = new NodeChangeRecord();
+
+        record.setId(id);
+        record.setChangesetnr(changesetNr);
+        record.setNetworkid(networkId);
+        record.setQuadkey((!quadKey.equals(defaultValues.getQuadKey()))?quadKey:null);
+        record.setX((!x.equals(defaultValues.getX()))?x:null);
+        record.setY((!y.equals(defaultValues.getY()))?y:null);
+        record.setLat((!latitude.equals(defaultValues.getLatitude()))?latitude:null);
+        record.setLong((!longitude.equals(defaultValues.getLongitude()))?longitude:null);
+
+        return record;
+    }
 
     //region Methods
     void fillModel(NodeChangeRecord record, NodeRecord nodeRecord){

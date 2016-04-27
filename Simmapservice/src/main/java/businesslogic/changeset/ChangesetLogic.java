@@ -57,4 +57,32 @@ public class ChangesetLogic {
         }
         return null;
     }
+
+    public boolean hasChangeset(long changesetNumber){
+        return dataAccess.hasChangeset(changesetNumber);
+    }
+
+    public Long insertChangeset(ChangesetFullModel fullModel) throws IllegalArgumentException{
+        if(fullModel.getId() != null){
+            throw new IllegalArgumentException("Changeset has already an id");
+        }
+
+        Long newID = dataAccess.insertChangeset(fullModel.getRecord());
+        fullModel.updateChangesetNr(newID);
+        dataAccess.deleteLink_Changes(fullModel.getLink_changeModelsToDelete());
+        dataAccess.deleteNode_Changes(fullModel.getNode_changeModelsToDelete());
+        dataAccess.updateLink_Changes(fullModel.getLink_changeModelsToUpdate());
+        dataAccess.updateNode_Changes(fullModel.getNode_changeModelsToUpdate());
+
+        return newID;
+    }
+
+    public void updateChangeset(ChangesetFullModel fullModel){
+        ChangesetRecord changesetRecord = fullModel.getRecord();
+        dataAccess.updateChangeset(changesetRecord);
+        dataAccess.deleteLink_Changes(fullModel.getLink_changeModelsToDelete());
+        dataAccess.deleteNode_Changes(fullModel.getNode_changeModelsToDelete());
+        dataAccess.updateLink_Changes(fullModel.getLink_changeModelsToUpdate());
+        dataAccess.updateNode_Changes(fullModel.getNode_changeModelsToUpdate());
+    }
 }

@@ -2,7 +2,8 @@ package businesslogic.changeset;
 
 import dataaccess.database.tables.records.LinkRecord;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.sql.Date;
 
 /**
  * Created by dohee on 13.04.2016.
@@ -17,20 +18,20 @@ public class LinkModel {
     private String id = null;
     private Integer networkId = null;
     private String quadKey = null;
-    private Number length = null;
-    private Number freespeed = null;
-    private Number capacity = null;
-    private Number permlanes = null;
+    private BigDecimal length = null;
+    private BigDecimal freespeed = null;
+    private BigDecimal capacity = null;
+    private BigDecimal permlanes = null;
     private Boolean oneway = null;
     private String modes = null;
     private String from = null;
     private String to = null;
     private Integer minlevel = null;
     private Date lastModified = null;
-    private Number long1 = null;
-    private Number lat1 = null;
-    private Number long2 = null;
-    private Number lat2 = null;
+    private BigDecimal long1 = null;
+    private BigDecimal lat1 = null;
+    private BigDecimal long2 = null;
+    private BigDecimal lat2 = null;
     //endregion
 
     //region Getter/Setter
@@ -59,35 +60,35 @@ public class LinkModel {
         this.quadKey = quadKey;
     }
 
-    public Number getLength() {
+    public BigDecimal getLength() {
         return length;
     }
 
-    public void setLength(Number length) {
+    public void setLength(BigDecimal length) {
         this.length = length;
     }
 
-    public Number getFreespeed() {
+    public BigDecimal getFreespeed() {
         return freespeed;
     }
 
-    public void setFreespeed(Number freespeed) {
+    public void setFreespeed(BigDecimal freespeed) {
         this.freespeed = freespeed;
     }
 
-    public Number getCapacity() {
+    public BigDecimal getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(Number capacity) {
+    public void setCapacity(BigDecimal capacity) {
         this.capacity = capacity;
     }
 
-    public Number getPermlanes() {
+    public BigDecimal getPermlanes() {
         return permlanes;
     }
 
-    public void setPermlanes(Number permlanes) {
+    public void setPermlanes(BigDecimal permlanes) {
         this.permlanes = permlanes;
     }
 
@@ -139,35 +140,35 @@ public class LinkModel {
         this.lastModified = lastModified;
     }
 
-    public Number getLong1() {
+    public BigDecimal getLong1() {
         return long1;
     }
 
-    public void setLong1(Number long1) {
+    public void setLong1(BigDecimal long1) {
         this.long1 = long1;
     }
 
-    public Number getLat1() {
+    public BigDecimal getLat1() {
         return lat1;
     }
 
-    public void setLat1(Number lat1) {
+    public void setLat1(BigDecimal lat1) {
         this.lat1 = lat1;
     }
 
-    public Number getLong2() {
+    public BigDecimal getLong2() {
         return long2;
     }
 
-    public void setLong2(Number long2) {
+    public void setLong2(BigDecimal long2) {
         this.long2 = long2;
     }
 
-    public Number getLat2() {
+    public BigDecimal getLat2() {
         return lat2;
     }
 
-    public void setLat2(Number lat2) {
+    public void setLat2(BigDecimal lat2) {
         this.lat2 = lat2;
     }
 

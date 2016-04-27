@@ -187,6 +187,28 @@ svg {
     float: right;
 }
 
+.navbar-minimal > .navbar-menu > .success-message{
+    background-color: #5cb85c;
+    top: 0px;
+    left: 60px;
+    position: absolute;
+    cursor: default;
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    padding: 20px 23px;
+    text-align: left;
+    border-bottom: 1px solid  #5cb85c;
+    width: 100%;
+    text-decoration: none;
+    margin: 0px;
+}
+.navbar-minimal > .navbar-menu > .success-message:hover{
+    background-color: #5cb85c;
+}
+.navbar-minimal > .navbar-menu > .success-message:active{
+    background-color: #5cb85c;
+}
+
 .infoBubble{
     position: absolute;
     top: 50%;

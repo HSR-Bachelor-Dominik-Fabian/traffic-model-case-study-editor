@@ -19,8 +19,8 @@ public class NodeModel {
     private String quadKey = null;
     private BigDecimal x = null;
     private BigDecimal y = null;
-    private Number latitude = null;
-    private Number longitude = null;
+    private BigDecimal latitude = null;
+    private BigDecimal longitude = null;
     //endregion
 
     //region Getter/Setter
@@ -65,19 +65,19 @@ public class NodeModel {
         this.y = y;
     }
 
-    public Number getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Number latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public Number getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Number longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 

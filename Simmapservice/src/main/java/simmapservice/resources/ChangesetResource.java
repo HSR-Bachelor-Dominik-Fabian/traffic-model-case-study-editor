@@ -44,8 +44,12 @@ public class ChangesetResource {
     }
     @PUT @Path("/{id}")
     public Response putUpdateChangeset(@PathParam("id") long id, ChangesetFullModel fullModel){
-
-        return null;
+        ChangesetLogic businessLogic = new ChangesetLogic(this.properties);
+        if(!businessLogic.hasChangeset(id)){
+            return Response.status(409).entity("Changeset not found").build();
+        }
+        businessLogic.updateChangeset(fullModel);
+        return Response.noContent().build();
     }
 
     @GET @Path("/{id}")

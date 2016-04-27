@@ -37,6 +37,7 @@ function ChangesetHandler() {
             url:getLinkURL,
             dataType:'json',
             async:false,
+            cache: false,
             success:function(data){
                 result = data;
             }
@@ -47,16 +48,19 @@ function ChangesetHandler() {
     this.saveChangeSet = function(){
         var storageHandler = new StorageHandler();
         var data = storageHandler.getLocalChangeset();
-        var getLinkURL = MyProps["rootURL"] + "/api/changesets/" + data.id;
-        $.ajax({
-            type:'PUT',
-            url:getLinkURL,
-            contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify(data),
-            dataType: "json",
-            success:function(){
-
-            }
-        });
+        if(data.id != null){
+            var getLinkURL = MyProps["rootURL"] + "/api/changesets/" + data.id;
+            $.ajax({
+                type:'PUT',
+                url:getLinkURL,
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(data),
+                dataType: "json",
+                success:function(){
+                    $("#saveSuccess").show();
+                    $("#saveSuccess").hide(5000);
+                }
+            });
+        }
     };
 }
