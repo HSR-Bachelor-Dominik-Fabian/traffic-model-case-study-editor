@@ -12,16 +12,16 @@ public class ChangesetModel {
         fillModel(record);
     }
 
-    private long id;
+    private Long id;
     private String name;
     private int networkId;
     private int userNr;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -54,5 +54,16 @@ public class ChangesetModel {
         name = record.getName();
         networkId = record.getNetworkid();
         userNr = record.getUsernr();
+    }
+
+    ChangesetRecord getRecord(){
+        ChangesetRecord record = new ChangesetRecord();
+
+        record.setId(id);
+        record.setName(name);
+        record.setNetworkid(networkId);
+        record.setUsernr(userNr);
+
+        return record;
     }
 }

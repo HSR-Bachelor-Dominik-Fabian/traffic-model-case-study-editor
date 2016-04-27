@@ -24,6 +24,12 @@
                         <span class="badge badge-count" ng-bind="changeCount"></span>
                     </a>
                 </li>
+                <li id="saveSuccess" class="save-message success-message" style="display:none;">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </li>
+                <li id="saveError" class="save-message error-message" style="display:none;">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </li>
                 <li>
                     <a id="undoButton" ng-click="isUndoDisabled || onUndoClicked()" data-toggle="tooltip" data-placement="right" title="Undo">
                         <span class="glyphicon glyphicon-arrow-left"></span>

@@ -110,7 +110,7 @@ function ChangesetStorageHandler() {
         $.getJSON(getLinkURL, function(data){
             var storageHandler = new ChangesetStorageHandler();
 
-            var link_changeModel = {};
+            var link_changeModel = {"changesetNr":localChangeset.id};
             link_changeModel.defaultValues = data;
 
             $.each(data, function(key, value) {
