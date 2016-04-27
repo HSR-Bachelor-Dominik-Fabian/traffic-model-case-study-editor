@@ -19,7 +19,7 @@
             </div>
             <ul class="navbar-menu animate">
                 <li>
-                    <a id="saveButton" ng-click="onChangesetSaveClicked()">
+                    <a id="saveButton" ng-click="isSaveDisabled || onChangesetSaveClicked()">
                         <span class="glyphicon glyphicon-floppy-disk" data-toggle="tooltip" data-placement="right" title="Save"></span>
                         <span class="badge badge-count" ng-bind="changeCount"></span>
                     </a>

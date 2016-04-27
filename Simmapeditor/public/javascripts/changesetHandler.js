@@ -4,6 +4,7 @@ function ChangesetHandler() {
         var result = [];
         $.ajax({
             type:'GET',
+            cache: false,
             url:getLinkURL,
             dataType:'json',
             async:false,
@@ -73,6 +74,8 @@ function ChangesetHandler() {
                     $("#saveError").fadeOut(5000);
                 }
             });
+            var undoRedoHandler = new UndoRedoHandler();
+            undoRedoHandler.clearUndoRedoStack();
         }
         else{
             var getLinkURL = MyProps["rootURL"] + "/api/changesets/user/1"

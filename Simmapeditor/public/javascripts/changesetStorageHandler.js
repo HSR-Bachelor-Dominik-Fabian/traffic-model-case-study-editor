@@ -52,6 +52,8 @@ function ChangesetStorageHandler() {
             var geoJson = this._convertFullModelToGeoJson(fullChangeModel);
             fullChangeModel.geoJson = geoJson;
             sessionStorage.setItem("changeset", JSON.stringify(fullChangeModel));
+            var undoRedoHandler = new UndoRedoHandler();
+            undoRedoHandler.clearUndoRedoStack();
         } else {
             console.log("local Storage not supported from your browser.");
         }
