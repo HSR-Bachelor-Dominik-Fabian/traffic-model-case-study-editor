@@ -44,7 +44,7 @@ public class ChangesetResource {
             return Response.status(409).entity("Has already an id cannot be inserted").build();
         }
         Long id = businessLogic.insertChangeset(fullModel);
-        return Response.created(URI.create("/api/changesets/"+id)).build();
+        return Response.created(URI.create("/api/changesets/"+id)).header("Access-Control-Expose-Headers","Location").build();
     }
     @PUT @Path("/{id}")
     public Response putUpdateChangeset(@PathParam("id") long id, ChangesetFullModel fullModel){
