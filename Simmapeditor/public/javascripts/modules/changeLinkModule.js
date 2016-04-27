@@ -32,7 +32,6 @@
             changesetStorageHandler.addNewChange($scope.streetModel);
             undoRedoHandler.addChange($scope._getChangeModelForUndoRedoStack());
             $scope.streetModelDefault = JSON.parse(JSON.stringify($scope.streetModel));
-            $rootScope.$broadcast('addChange');
         };
 
         $scope._getChangeModelForUndoRedoStack = function() {

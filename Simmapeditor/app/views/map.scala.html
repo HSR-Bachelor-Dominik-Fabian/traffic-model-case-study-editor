@@ -25,12 +25,12 @@
                     </a>
                 </li>
                 <li>
-                    <a id="undoButton" ng-click="onUndoClicked()" data-toggle="tooltip" data-placement="right" title="Undo">
+                    <a id="undoButton" ng-click="isUndoDisabled || onUndoClicked()" data-toggle="tooltip" data-placement="right" title="Undo">
                         <span class="glyphicon glyphicon-arrow-left"></span>
                     </a>
                 </li>
                 <li>
-                    <a id="redoButton" ng-click="onRedoClicked()" data-toggle="tooltip" data-placement="right" title="Redo">
+                    <a id="redoButton" ng-click="isRedoDisabled || onRedoClicked()" data-toggle="tooltip" data-placement="right" title="Redo">
                         <span class="glyphicon glyphicon-arrow-right"></span>
                     </a>
                 </li>

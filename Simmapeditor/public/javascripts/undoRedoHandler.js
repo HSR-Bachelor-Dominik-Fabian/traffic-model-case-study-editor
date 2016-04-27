@@ -24,57 +24,61 @@ function UndoRedoHandler() {
         var undoStack = this._getUndoStack();
         var redoStack = this._getRedoStack();
         var undoEntry = undoStack.pop();
-        var redoEntry = {};
-        redoEntry.id = undoEntry.id;
-        redoEntry.key = undoEntry.key;
-        var changesetStorageHandler = new ChangesetStorageHandler();
-        var changeset = changesetStorageHandler.getLocalChangeset();
-        for (var index in changeset.link_changeModels) {
-            var linkChangeModel = changeset.link_changeModels[index];
-            if (linkChangeModel.id === undoEntry.id) {
-                redoEntry.value = linkChangeModel[undoEntry.key];
-                linkChangeModel[undoEntry.key] = undoEntry.value;
+        if (undoEntry !== undefined && undoEntry !== null) {
+            var redoEntry = {};
+            redoEntry.id = undoEntry.id;
+            redoEntry.key = undoEntry.key;
+            var changesetStorageHandler = new ChangesetStorageHandler();
+            var changeset = changesetStorageHandler.getLocalChangeset();
+            for (var index in changeset.link_changeModels) {
+                var linkChangeModel = changeset.link_changeModels[index];
+                if (linkChangeModel.id === undoEntry.id) {
+                    redoEntry.value = linkChangeModel[undoEntry.key];
+                    linkChangeModel[undoEntry.key] = undoEntry.value;
+                }
             }
-        }
-        for (var index in changeset.geoJson.features) {
-            var geoJsonFeature = changeset.geoJson.features[index];
-            if (geoJsonFeature.properties.id === undoEntry.id) {
-                geoJsonFeature.properties[undoEntry.key] = undoEntry.value;
+            for (var index in changeset.geoJson.features) {
+                var geoJsonFeature = changeset.geoJson.features[index];
+                if (geoJsonFeature.properties.id === undoEntry.id) {
+                    geoJsonFeature.properties[undoEntry.key] = undoEntry.value;
+                }
             }
+            changesetStorageHandler._setUpdatedLocalChangeset(changeset);
+            redoStack.push(redoEntry);
+            this._setUndoStack(undoStack);
+            this._setRedoStack(redoStack);
         }
-        changesetStorageHandler._setUpdatedLocalChangeset(changeset);
-        redoStack.push(redoEntry);
-        this._setUndoStack(undoStack);
-        this._setRedoStack(redoStack);
     };
 
     this.redo = function() {
         var undoStack = this._getUndoStack();
         var redoStack = this._getRedoStack();
         var redoEntry = redoStack.pop();
-        var undoEntry = {};
+        if (redoEntry !== undefined && redoEntry !== null) {
+            var undoEntry = {};
 
-        undoEntry.id = redoEntry.id;
-        undoEntry.key = redoEntry.key;
-        var changesetStorageHandler = new ChangesetStorageHandler();
-        var changeset = changesetStorageHandler.getLocalChangeset();
-        for (var index in changeset.link_changeModels) {
-            var linkChangeModel = changeset.link_changeModels[index];
-            if (linkChangeModel.id === redoEntry.id) {
-                undoEntry.value = linkChangeModel[redoEntry.key];
-                linkChangeModel[redoEntry.key] = redoEntry.value;
+            undoEntry.id = redoEntry.id;
+            undoEntry.key = redoEntry.key;
+            var changesetStorageHandler = new ChangesetStorageHandler();
+            var changeset = changesetStorageHandler.getLocalChangeset();
+            for (var index in changeset.link_changeModels) {
+                var linkChangeModel = changeset.link_changeModels[index];
+                if (linkChangeModel.id === redoEntry.id) {
+                    undoEntry.value = linkChangeModel[redoEntry.key];
+                    linkChangeModel[redoEntry.key] = redoEntry.value;
+                }
             }
-        }
-        for (var index in changeset.geoJson.features) {
-            var geoJsonFeature = changeset.geoJson.features[index];
-            if (geoJsonFeature.properties.id === redoEntry.id) {
-                geoJsonFeature.properties[redoEntry.key] = redoEntry.value;
+            for (var index in changeset.geoJson.features) {
+                var geoJsonFeature = changeset.geoJson.features[index];
+                if (geoJsonFeature.properties.id === redoEntry.id) {
+                    geoJsonFeature.properties[redoEntry.key] = redoEntry.value;
+                }
             }
+            changesetStorageHandler._setUpdatedLocalChangeset(changeset);
+            undoStack.push(undoEntry);
+            this._setUndoStack(undoStack);
+            this._setRedoStack(redoStack);
         }
-        changesetStorageHandler._setUpdatedLocalChangeset(changeset);
-        undoStack.push(undoEntry);
-        this._setUndoStack(undoStack);
-        this._setRedoStack(redoStack);
     };
 
     this._getUndoStack = function() {
@@ -93,6 +97,10 @@ function UndoRedoHandler() {
         }
     };
 
+    this.getUndoStackSize = function() {
+        return this._getUndoStack().length;
+    };
+
     this._getRedoStack = function() {
         if (this._isLocalStorageSupported()) {
             return JSON.parse(sessionStorage.getItem('redoStack'));
@@ -107,6 +115,10 @@ function UndoRedoHandler() {
         } else {
             console.log("Local storage is not supported.");
         }
+    };
+
+    this.getRedoStackSize = function() {
+        return this._getRedoStack().length;
     };
 
     this.undoRedoStackExists = function() {
