@@ -4,6 +4,7 @@ function ChangesetHandler() {
         var result = [];
         $.ajax({
             type:'GET',
+            cache: false,
             url:getLinkURL,
             dataType:'json',
             async:false,
