@@ -7,9 +7,6 @@
     menuModule.directive('loadchangesetmenu', function () {
         return {templateUrl: '/partials/loadchangesetmenu'};
     });
-    menuModule.directive('deletechangesetmenu', function () {
-        return {templateUrl: '/partials/deletechangesetmenu'};
-    });
 
     menuModule.controller('StreetMenuController', ['$scope', '$mdDialog', 'layerInstance', function ($scope, $mdDialog, layerInstance) {
         $scope.menuState = 'rootMenu';
@@ -52,14 +49,46 @@
         $scope.$watch('menuState', function (newValue) {
             $scope.changesetsToLoad = null;
             if (newValue === 'loadChangeset') {
-                var changeSetHandler = new ChangesetHandler();
-                $scope.changesetsToLoad = changeSetHandler.getAllChangesets();
+                $scope._fillOpenChangeset();
             }
         });
-        $scope.onChangesetLoadClicked = function (item) {
+        $scope.isActiveChangeset = function(id){
+            var changesetStorageHandler = new ChangesetStorageHandler();
+            var changeset = changesetStorageHandler.getLocalChangeset();
+            return changeset.id === id;
+        };
+        $scope._fillOpenChangeset = function(){
             var changeSetHandler = new ChangesetHandler();
-            changeSetHandler.loadChangesetIntoLocalStorage(item.id);
+            $scope.changesetsToLoad = changeSetHandler.getAllChangesets();
+        };
+        $scope.onChangesetLoadClicked = function (item) {
+            var changesetHandler = new ChangesetHandler();
+            changesetHandler.loadChangesetIntoLocalStorage(item.id);
             layerInstance.instance.redraw();
+        };
+        $scope.onChangesetDeleteClicked = function (item) {
+            var deleteChangesetDialog = $mdDialog.confirm()
+                .title('Löschen?')
+                .textContent('Wollen Sie das Changeset "'+item.name+'" löschen?')
+                .openFrom('#deleteButtonChangeset' + item.id)
+                .closeTo('#saveButton')
+                .ok('Löschen')
+                .cancel('Abbrechen');
+            $mdDialog.show(deleteChangesetDialog).then(function () {
+                var changesetHandler = new ChangesetHandler();
+                var success = changesetHandler.deleteChangeset(item.id);
+                if(success){
+                    alert("Deleted");
+                    layerInstance.instance.redraw();
+                    $scope._fillOpenChangeset();
+                }
+                else{
+                    alert("Not Deleted");
+                }
+            }, function () {
+
+            });
+
         };
         $scope.onChangesetSaveClicked = function () {
             var changeSetHandler = new ChangesetHandler();

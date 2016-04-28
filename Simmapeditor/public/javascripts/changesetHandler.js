@@ -54,6 +54,33 @@ function ChangesetHandler() {
         return result;
     };
 
+    this.deleteChangeset = function (id){
+        var storageHandler = new ChangesetStorageHandler();
+        var data = storageHandler.getLocalChangeset();
+        var getLinkURL = MyProps["rootURL"] + "/api/changesets/" + id;
+        var success = false;
+        $.ajax({
+            type:'DELETE',
+            url:getLinkURL,
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data),
+            dataType: "json",
+            async:false,
+            success:function(){
+                success = true;
+            },
+            error: function(){
+                success = false;
+            }
+        });
+
+        if(success && data.id === id){
+            storageHandler.clearLocalChangeset();
+            this.initializeChangeset();
+        }
+        return success;
+    };
+
     this.saveChangeSet = function(){
         var storageHandler = new ChangesetStorageHandler();
         var data = storageHandler.getLocalChangeset();
