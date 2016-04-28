@@ -28,8 +28,8 @@ function ChangesetHandler() {
 
     this._loadEmptyChangesetIntoLocalStorage = function() {
         var storageHandler = new ChangesetStorageHandler();
-        var fullChangeModel = {"id": null, "name": null, "networkId": 1, "userNr": 1, "link_changeModels": [],
-                                "node_changeModels": []};
+        var fullChangeModel = {"id": null, "name": null, "networkId": 1, "userNr": 1,
+            "lastModified": Date.now(), "link_changeModels": [], "node_changeModels": []};
         storageHandler.setLocalChangeset(fullChangeModel);
     };
 
@@ -57,6 +57,7 @@ function ChangesetHandler() {
     this.saveChangeSet = function(){
         var storageHandler = new ChangesetStorageHandler();
         var data = storageHandler.getLocalChangeset();
+        data.lastModified = Date.now();
         if(data.id != null){
             var getLinkURL = MyProps["rootURL"] + "/api/changesets/" + data.id;
             $.ajax({
@@ -68,14 +69,15 @@ function ChangesetHandler() {
                 success:function(){
                     $("#saveSuccess").show();
                     $("#saveSuccess").fadeOut(5000);
+                    storageHandler._setUpdatedLocalChangeset(data);
+                    var undoRedoHandler = new UndoRedoHandler();
+                    undoRedoHandler.clearUndoRedoStack();
                 },
                 error: function(){
                     $("#saveError").show();
                     $("#saveError").fadeOut(5000);
                 }
             });
-            var undoRedoHandler = new UndoRedoHandler();
-            undoRedoHandler.clearUndoRedoStack();
         }
         else{
             var getLinkURL = MyProps["rootURL"] + "/api/changesets/user/1"

@@ -69,6 +69,7 @@
                 showNameDialog(changeset, changesetStorageHandler, changeSetHandler);
             } else {
                 changeSetHandler.saveChangeSet();
+                showMessageDialog('Changeset wurde erfolgreich gespeichert.');
             }
         };
 
@@ -92,6 +93,7 @@
                 changeset.name = result;
                 changesetStorageHandler._setUpdatedLocalChangeset(changeset);
                 changeSetHandler.saveChangeSet();
+                showMessageDialog('Changeset \"' + result + '\" wurde erfolgreich gespeichert.');
             }, function () {
                 $("#saveError").show();
                 $("#saveError").fadeOut(5000);
