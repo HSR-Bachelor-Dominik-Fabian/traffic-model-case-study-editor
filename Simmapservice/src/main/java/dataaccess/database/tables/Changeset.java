@@ -8,6 +8,7 @@ import dataaccess.database.Keys;
 import dataaccess.database.Public;
 import dataaccess.database.tables.records.ChangesetRecord;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Changeset extends TableImpl<ChangesetRecord> {
 
-	private static final long serialVersionUID = -1554197780;
+	private static final long serialVersionUID = 1840405046;
 
 	/**
 	 * The reference instance of <code>public.Changeset</code>
@@ -69,6 +70,11 @@ public class Changeset extends TableImpl<ChangesetRecord> {
 	 * The column <code>public.Changeset.NetworkId</code>.
 	 */
 	public final TableField<ChangesetRecord, Integer> NETWORKID = createField("NetworkId", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>public.Changeset.LastModified</code>.
+	 */
+	public final TableField<ChangesetRecord, Timestamp> LASTMODIFIED = createField("LastModified", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaulted(true), this, "");
 
 	/**
 	 * Create a <code>public.Changeset</code> table reference
