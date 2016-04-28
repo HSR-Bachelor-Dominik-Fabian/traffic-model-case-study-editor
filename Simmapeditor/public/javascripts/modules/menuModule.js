@@ -79,12 +79,12 @@
                 var changesetHandler = new ChangesetHandler();
                 var success = changesetHandler.deleteChangeset(item.id);
                 if(success){
-                    alert("Deleted");
+                    showMessageDialog('Changeset "' + item.name +'" wurde erfolgreich gelöscht.');
                     layerInstance.instance.redraw();
                     $scope._fillOpenChangeset();
                 }
                 else{
-                    alert("Not Deleted");
+                    showMessageDialog('Fehler beim löschen von Changeset "' + item.name +'".');
                 }
             }, function () {
 
