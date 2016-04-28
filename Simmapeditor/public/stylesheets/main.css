@@ -109,7 +109,7 @@ svg {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 0 !important;
-    z-index: 1000;
+    z-index: 40;
 }
 
 .navbar-minimal .badge-count {
@@ -122,7 +122,7 @@ svg {
 .navbar-minimal > .navbar-toggler {
     position: relative;
     height: 60px;
-    z-index: 100;
+    z-index: 41;
     cursor: pointer;
     background-color: #6f99a5;
 }
@@ -326,6 +326,14 @@ select option {
 .deactivatedButton {
     opacity: 0.4;
     cursor: default!important;
+}
+
+.leaflet-top, .leaflet-bottom{
+    z-index: 40!important;
+}
+
+.navmenu-fixed-left, .navmenu-fixed-right, .navbar-offcanvas{
+    z-index: 50!important;
 }
 
 .glyphicon-plus:before, .glyphicon-folder-open:before {

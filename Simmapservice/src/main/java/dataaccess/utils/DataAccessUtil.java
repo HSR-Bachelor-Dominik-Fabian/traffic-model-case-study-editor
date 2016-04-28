@@ -116,4 +116,20 @@ public class DataAccessUtil {
 
         return output;
     }
+
+    public static int deleteRecord(Properties properties, UpdatableRecord<?> record){
+        int output = 0;
+
+        String url = properties.getProperty("psqlpath");
+        String user = properties.getProperty("psqluser");
+        String password = properties.getProperty("psqlpassword");
+        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+            output = context.batchDelete(record).execute()[0];
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return output;
+    }
 }

@@ -59,6 +59,16 @@ function ChangesetStorageHandler() {
         }
     };
 
+    this.clearLocalChangeset = function(){
+        if (this._isLocalStorageSupported()) {
+            sessionStorage.removeItem("changeset");
+            var undoRedoHandler = new UndoRedoHandler();
+            undoRedoHandler.clearUndoRedoStack();
+        } else {
+            console.log("local Storage not supported from your browser.");
+        }
+    };
+
     this._setUpdatedLocalChangeset = function(changeSet) {
         if (this._isLocalStorageSupported()) {
             sessionStorage.setItem("changeset", JSON.stringify(changeSet));

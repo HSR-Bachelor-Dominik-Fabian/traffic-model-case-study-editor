@@ -35,6 +35,10 @@ public class ChangesetFullModel extends ChangesetModel {
         this.link_changeModels = link_changeModels;
     }
     @JsonIgnore
+    public List<LinkChangeRecord> getAllLink_changeModelsAsRecord(){
+        return link_changeModels.parallelStream().map(Link_ChangeModel::getLinkChangeRecord).collect(Collectors.toList());
+    }
+    @JsonIgnore
     public List<LinkChangeRecord> getLink_changeModelsToUpdate(){
         return link_changeModels.parallelStream().filter(model->!model.isDeleted())
                 .map(Link_ChangeModel::getLinkChangeRecord).collect(Collectors.toList());
@@ -49,6 +53,10 @@ public class ChangesetFullModel extends ChangesetModel {
     }
     public void setNode_changeModels(List<Node_ChangeModel> node_changeModels) {
         this.node_changeModels = node_changeModels;
+    }
+    @JsonIgnore
+    public List<NodeChangeRecord> getAllNode_changeModelsAsRecord(){
+        return node_changeModels.parallelStream().map(Node_ChangeModel::getNodeChangeRecord).collect(Collectors.toList());
     }
     @JsonIgnore
     public List<NodeChangeRecord> getNode_changeModelsToUpdate(){
