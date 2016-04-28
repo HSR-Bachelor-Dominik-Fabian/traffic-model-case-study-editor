@@ -77,7 +77,7 @@
                 var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de,
                     "Black and White": OpenStreetMap_BlackAndWhite, "MapBox": MapBox, "MapBoxLight": MapBoxLight, "SenozonLight": SenozonLight};
 
-                var basicControl = L.control.layers(baseLayers, {}).addTo(map);
+                //var basicControl = L.control.layers(baseLayers, {}).addTo(map);
                 L.control.attribution(null);
                 map.addControl(new L.Control.Zoomslider( {position: "bottomright"} ));
                 L.control.scale( {position: "bottomleft", imperial: false} ).addTo(map);
@@ -98,7 +98,7 @@
 
                 function addOverLay(layer, name) {
                     map.addLayer(layer);
-                    basicControl.addOverlay(layer, name);
+                    //basicControl.addOverlay(layer, name);
                 }
 
                 var undoRedoHandler = new UndoRedoHandler();

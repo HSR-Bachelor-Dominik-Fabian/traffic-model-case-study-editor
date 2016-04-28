@@ -8,7 +8,8 @@
         return {templateUrl: '/partials/loadchangesetmenu'};
     });
 
-    menuModule.controller('StreetMenuController', ['$scope', '$mdDialog', 'layerInstance', function ($scope, $mdDialog, layerInstance) {
+    menuModule.controller('StreetMenuController', ['$scope', '$mdDialog', '$mdToast', 'layerInstance',
+            function ($scope, $mdDialog, $mdToast, layerInstance) {
         $scope.menuState = 'rootMenu';
         $scope.changeCount = 0;
         $scope.isUndoDisabled = false;
@@ -53,11 +54,13 @@
                 $scope.changesetsToLoad = changeSetHandler.getAllChangesets();
             }
         });
+
         $scope.onChangesetLoadClicked = function (item) {
             var changeSetHandler = new ChangesetHandler();
             changeSetHandler.loadChangesetIntoLocalStorage(item.id);
             layerInstance.instance.redraw();
         };
+
         $scope.onChangesetSaveClicked = function () {
             var changeSetHandler = new ChangesetHandler();
             var changesetStorageHandler = new ChangesetStorageHandler();
@@ -67,6 +70,12 @@
             } else {
                 changeSetHandler.saveChangeSet();
             }
+        };
+
+        $scope.onNewChangesetClicked = function () {
+            var changesetHandler = new ChangesetHandler();
+            changesetHandler._loadEmptyChangesetIntoLocalStorage();
+            showMessageDialog('Leeres Changeset wurde erstellt.');
         };
 
         var showNameDialog = function (changeset, changesetStorageHandler, changeSetHandler) {
@@ -87,6 +96,15 @@
                 $("#saveError").show();
                 $("#saveError").fadeOut(5000);
             });
+        };
+
+        var showMessageDialog = function (message) {
+            $mdToast.show(
+                $mdToast.simple()
+                    .textContent(message)
+                    .position('top right')
+                    .hideDelay(5000)
+            );
         };
 
         $scope.onUndoClicked = function () {
