@@ -65,7 +65,8 @@ public class SimmapDataAccessFacade {
         String password = properties.getProperty("psqlpassword");
         try(Connection conn = DriverManager.getConnection(url, user, password)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
-            return context.select().from(Tables.CHANGESET).where(Tables.CHANGESET.USERNR.eq(userNr)).fetch();
+            return context.select().from(Tables.CHANGESET).where(Tables.CHANGESET.USERNR.eq(userNr))
+                    .orderBy(Tables.CHANGESET.LASTMODIFIED.desc()).fetch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
