@@ -1,0 +1,204 @@
+.menuBtn {
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    padding: 25px 80px;
+    display: inline-block;
+    margin: 15px 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.menuBtn:after {
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.menuBtn-6g {
+    padding: 25px 60px 25px 120px;
+}
+
+.menuBtn-6g:hover {
+    background: #6f99a5;
+
+}
+
+.menuBtn-6 {
+    background: #484546;
+    color: #fff;
+
+}
+.menuBtn-6g:before {
+    background: rgba(0,0,0,0.05);
+}
+
+
+.menuBtn-6:active {
+    background: #4a717c;
+    top: 2px;
+
+}
+
+.mainmenu-bar {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(51, 51, 51);
+    background-color: rgba(51, 51, 51, 0.8);
+    border: 0px !important;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0 !important;
+    z-index: 40;
+}
+
+.mainmenu-bar > .mainmenu-title{
+    color: white;
+    float:left;
+    position: relative;
+    height: 60px;
+    padding-left: 13px;
+    z-index: 40;
+}
+.mainmenu-title > p {
+    margin-top:18px;
+    font-size:12pt;
+    color: white;
+}
+
+.menuBtn-6:before {
+    font-family:"Glyphicons Halflings";
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    line-height: 3;
+    font-size: 140%;
+    width: 60px;
+}
+
+.mainmenu-toggler {
+    position: relative;
+    float:left;
+    height: 60px;
+    width: 60px;
+    z-index: 40;
+    cursor: pointer;
+    background-color: #484546;
+}
+.mainmenu-toggler:hover{
+    background-color: #6f99a5;
+}
+
+.mainmenu-toggler > span {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin: -8px -8px 0 0;
+    width: 16px;
+    height: 16px;
+    color: white;
+    -webkit-transition: -webkit-transform .3s ease-out 0s;
+    -moz-transition: -moz-transform .3s ease-out 0s;
+    -o-transition: -moz-transform .3s ease-out 0s;
+    -ms-transition: -ms-transform .3s ease-out 0s;
+    transition: transform .3s ease-out 0s;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+}
+
+.menu-tile > div:before{
+    font-family:"Glyphicons Halflings";
+    position: relative;
+    display:inline-block;
+    width:100%;
+    text-align: center;
+    top: 10px;
+    font-size:30pt;
+}
+
+.menu-tile{
+    height: 110px;
+    padding: 2px !important;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;
+}
+.menu-tile > div{
+    height: 100%;
+    color:white;
+    background-color: rgb(51, 51, 51);
+    background-color: rgba(51, 51, 51, 0.8);
+    cursor:pointer;
+    z-index: 0;
+}
+.menu-tile > .deleteButton{
+    right: 2px;
+    font-family:"Glyphicons Halflings";
+    color: white;
+    opacity: 0.3;
+    position:absolute;
+    display: inline-block;
+    padding: 4px;
+    height:28px;
+    width:28px;
+    text-align:center;
+    z-index: 1;
+    cursor:pointer;
+}
+.menu-tile > .deleteButton:hover{
+    background-color: #6f99a5;
+    opacity: 1;
+}
+.menu-tile > .deleteButton:active{
+    opacity: 1;
+    background-color: #4a717c;
+}
+.menu-tile >div:hover:after{
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    background-color: #6f99a5;
+    opacity: 0.4;
+}
+.menu-tile >div:active:after{
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    background-color: #4a717c;
+    opacity: 0.4;
+}
+.menu-tile > div > span{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    top: 20px;
+    font-size: 11pt;
+    background-color: #484546;
+    text-align:center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.menu-tile > .glyphicon-check:before{
+    color: #34a461;
+}

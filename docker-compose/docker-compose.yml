@@ -1,0 +1,18 @@
+version: '2'
+services:
+  simmapservice:
+    build: ./simmapservice/
+    image: <prefix>-simmapserviceimage
+    external_links:
+      -  "<prefix>-simmapdatabase:postgres"
+    ports:
+      - "9001"
+    networks:
+      - <prefix>-simmapnetwork
+  simmapwebsite:
+    build: ./simmapeditor/
+    ports:
+      - "40004:9000"
+networks:
+  <prefix>-simmapnetwork:
+    external: true

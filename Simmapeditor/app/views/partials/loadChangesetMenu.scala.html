@@ -1,0 +1,19 @@
+<div class="mainmenu-bar">
+    <div class="mainmenu-toggler animate" ng-click="menuState='rootMenu'">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </div>
+    <div class="mainmenu-title">
+        <p>Changeset Laden</p>
+    </div>
+</div>
+<div ng-show="changesetsToLoad !== null" class="container-fluid">
+    <div ng-repeat="item in changesetsToLoad" class="col-sm-6 menu-tile">
+        <span id="deleteButtonChangeset{{item.id}}" class="deleteButton glyphicon-trash" ng-click="onChangesetDeleteClicked(item)"></span>
+        <div ng-class="isActiveChangeset(item.id)?'glyphicon-check':'glyphicon-edit'" ng-click="onChangesetLoadClicked(item)">
+            <span>{{item.name}}</span>
+        </div>
+    </div>
+</div>
+<div ng-show="changesetsToLoad == null" class="container-fluid">
+    <p>Loading...</p>
+</div>
