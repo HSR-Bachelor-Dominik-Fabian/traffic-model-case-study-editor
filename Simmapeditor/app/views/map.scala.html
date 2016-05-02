@@ -83,7 +83,9 @@
                 </div>
                 <div class="form-field-group">
                     <label class="form-label">Oneway</label>
-                    <select class="form-control form-select-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.oneway" ng-options="o.v as o.n for o in [{ n: 'false', v: false }, { n: 'true', v: true }]">
+                    <select class="form-control form-select-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.oneway">
+                        <option ng-value="true" ng-selected="streetModel.properties.oneway===true">true</option>
+                        <option ng-value="false" ng-selected="streetModel.properties.oneway ===false">false</option>
                     </select>
                 </div>
                 <div class="form-field-group">
