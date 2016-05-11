@@ -180,8 +180,8 @@
         <entry key="sourceDirectory">
           <value>
             <ProjectSettingsEntry>
-              <option name="sourceDir" value="C:\Users\dohee\Source\IntelliJ\BA\traffic-model-case-study-editor\Simmapeditor\app" />
-              <option name="confDir" value="C:\Users\dohee\Source\IntelliJ\BA\traffic-model-case-study-editor\Simmapeditor\app" />
+              <option name="sourceDir" value="C:\Users\fke\Source\Repos\Bachelorarbeit\traffic-model-case-study-editor\Simmapeditor\app" />
+              <option name="confDir" value="C:\Users\fke\Source\Repos\Bachelorarbeit\traffic-model-case-study-editor\Simmapeditor\app" />
             </ProjectSettingsEntry>
           </value>
         </entry>
@@ -212,7 +212,7 @@
         <entry key="uri">
           <value>
             <ProjectSettingsEntry>
-              <option name="uri" value="/C:/Users/dohee/Source/IntelliJ/BA/traffic-model-case-study-editor/Simmapeditor" />
+              <option name="uri" value="/C:/Users/fke/Source/Repos/Bachelorarbeit/traffic-model-case-study-editor/Simmapeditor" />
             </ProjectSettingsEntry>
           </value>
         </entry>
@@ -285,7 +285,6 @@
     </library>
     <library name="SBT: cglib:cglib-nodep:2.1_3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/cglib/cglib-nodep/2.1_3/jars/cglib-nodep.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/cglib/cglib-nodep/jars/cglib-nodep-2.1_3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -295,7 +294,6 @@
     </library>
     <library name="SBT: ch.qos.logback:logback-classic:1.1.3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/ch.qos.logback/logback-classic/1.1.3/jars/logback-classic.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/ch.qos.logback/logback-classic/jars/logback-classic-1.1.3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -305,7 +303,6 @@
     </library>
     <library name="SBT: ch.qos.logback:logback-core:1.1.3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/ch.qos.logback/logback-core/1.1.3/jars/logback-core.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/ch.qos.logback/logback-core/jars/logback-core-1.1.3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -315,7 +312,6 @@
     </library>
     <library name="SBT: com.fasterxml.jackson.core:jackson-annotations:2.5.4:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.fasterxml.jackson.core/jackson-annotations/2.5.4/bundles/jackson-annotations.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.5.4.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -325,7 +321,6 @@
     </library>
     <library name="SBT: com.fasterxml.jackson.core:jackson-core:2.5.4:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.fasterxml.jackson.core/jackson-core/2.5.4/bundles/jackson-core.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.5.4.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -335,7 +330,6 @@
     </library>
     <library name="SBT: com.fasterxml.jackson.core:jackson-databind:2.5.4:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.fasterxml.jackson.core/jackson-databind/2.5.4/bundles/jackson-databind.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.5.4.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -345,7 +339,6 @@
     </library>
     <library name="SBT: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.5.4:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/2.5.4/bundles/jackson-datatype-jdk8.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/bundles/jackson-datatype-jdk8-2.5.4.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -355,7 +348,6 @@
     </library>
     <library name="SBT: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.5.4:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.5.4/bundles/jackson-datatype-jsr310.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/bundles/jackson-datatype-jsr310-2.5.4.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -365,7 +357,6 @@
     </library>
     <library name="SBT: com.fasterxml:classmate:1.0.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.fasterxml/classmate/1.0.0/bundles/classmate.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.fasterxml/classmate/bundles/classmate-1.0.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -382,7 +373,6 @@
     </library>
     <library name="SBT: com.google.code.findbugs:jsr305:2.0.3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.google.code.findbugs/jsr305/2.0.3/jars/jsr305.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.google.code.findbugs/jsr305/jars/jsr305-2.0.3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -392,7 +382,6 @@
     </library>
     <library name="SBT: com.google.code.gson:gson:2.3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.google.code.gson/gson/2.3/jars/gson.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.google.code.gson/gson/jars/gson-2.3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -411,7 +400,6 @@
     </library>
     <library name="SBT: com.google.inject.extensions:guice-assistedinject:4.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.google.inject.extensions/guice-assistedinject/4.0/jars/guice-assistedinject.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.google.inject.extensions/guice-assistedinject/jars/guice-assistedinject-4.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -421,7 +409,6 @@
     </library>
     <library name="SBT: com.google.inject:guice:4.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.google.inject/guice/4.0/jars/guice.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.google.inject/guice/jars/guice-4.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -449,7 +436,6 @@
     </library>
     <library name="SBT: com.jolbox:bonecp:0.8.0.RELEASE:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.jolbox/bonecp/0.8.0.RELEASE/bundles/bonecp.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.jolbox/bonecp/bundles/bonecp-0.8.0.RELEASE.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -459,7 +445,6 @@
     </library>
     <library name="SBT: com.ning:async-http-client:1.9.21:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.ning/async-http-client/1.9.21/jars/async-http-client.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.ning/async-http-client/jars/async-http-client-1.9.21.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -469,7 +454,6 @@
     </library>
     <library name="SBT: com.novocode:junit-interface:0.11:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.novocode/junit-interface/0.11/jars/junit-interface.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.novocode/junit-interface/jars/junit-interface-0.11.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -497,7 +481,6 @@
     </library>
     <library name="SBT: com.typesafe.netty:netty-http-pipelining:1.1.4:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.typesafe.netty/netty-http-pipelining/1.1.4/jars/netty-http-pipelining.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.typesafe.netty/netty-http-pipelining/jars/netty-http-pipelining-1.1.4.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -678,7 +661,6 @@
     </library>
     <library name="SBT: com.typesafe.play:twirl-api_2.11:1.1.1:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.typesafe.play/twirl-api_2.11/1.1.1/jars/twirl-api_2.11.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.typesafe.play/twirl-api_2.11/jars/twirl-api_2.11-1.1.1.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -706,7 +688,6 @@
     </library>
     <library name="SBT: com.zaxxer:HikariCP:2.3.7:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/com.zaxxer/HikariCP/2.3.7/bundles/HikariCP.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/com.zaxxer/HikariCP/bundles/HikariCP-2.3.7.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -716,7 +697,6 @@
     </library>
     <library name="SBT: commons-codec:commons-codec:1.10:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/commons-codec/commons-codec/1.10/jars/commons-codec.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.10.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -726,7 +706,6 @@
     </library>
     <library name="SBT: commons-collections:commons-collections:3.2.1:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/commons-collections/commons-collections/3.2.1/jars/commons-collections.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -754,7 +733,6 @@
     </library>
     <library name="SBT: commons-logging:commons-logging:1.1.3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/commons-logging/commons-logging/1.1.3/jars/commons-logging.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -798,7 +776,6 @@
     </library>
     <library name="SBT: javax.transaction:jta:1.1:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/javax.transaction/jta/1.1/jars/jta.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/javax.transaction/jta/jars/jta-1.1.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -808,7 +785,6 @@
     </library>
     <library name="SBT: javax.validation:validation-api:1.1.0.Final:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/javax.validation/validation-api/1.1.0.Final/jars/validation-api.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/javax.validation/validation-api/jars/validation-api-1.1.0.Final.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -825,7 +801,6 @@
     </library>
     <library name="SBT: joda-time:joda-time:2.8.1:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/joda-time/joda-time/2.8.1/jars/joda-time.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/joda-time/joda-time/jars/joda-time-2.8.1.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -835,7 +810,6 @@
     </library>
     <library name="SBT: junit:junit:4.12:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/junit/junit/4.12/jars/junit.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.12.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -845,7 +819,6 @@
     </library>
     <library name="SBT: net.java.dev.jna:jna:3.4.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/net.java.dev.jna/jna/3.4.0/jars/jna.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/net.java.dev.jna/jna/jars/jna-3.4.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -855,7 +828,6 @@
     </library>
     <library name="SBT: net.java.dev.jna:platform:3.4.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/net.java.dev.jna/platform/3.4.0/jars/platform.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/net.java.dev.jna/platform/jars/platform-3.4.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -883,7 +855,6 @@
     </library>
     <library name="SBT: net.sf.ehcache:ehcache-core:2.6.11:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/net.sf.ehcache/ehcache-core/2.6.11/jars/ehcache-core.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/net.sf.ehcache/ehcache-core/jars/ehcache-core-2.6.11.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -902,7 +873,6 @@
     </library>
     <library name="SBT: net.sourceforge.cssparser:cssparser:0.9.14:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/net.sourceforge.cssparser/cssparser/0.9.14/jars/cssparser.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/net.sourceforge.cssparser/cssparser/jars/cssparser-0.9.14.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -912,7 +882,6 @@
     </library>
     <library name="SBT: net.sourceforge.htmlunit:htmlunit-core-js:2.15:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/net.sourceforge.htmlunit/htmlunit-core-js/2.15/jars/htmlunit-core-js.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/net.sourceforge.htmlunit/htmlunit-core-js/jars/htmlunit-core-js-2.15.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -922,7 +891,6 @@
     </library>
     <library name="SBT: net.sourceforge.htmlunit:htmlunit:2.15:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/net.sourceforge.htmlunit/htmlunit/2.15/jars/htmlunit.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/net.sourceforge.htmlunit/htmlunit/jars/htmlunit-2.15.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -932,7 +900,6 @@
     </library>
     <library name="SBT: net.sourceforge.nekohtml:nekohtml:1.9.21:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/net.sourceforge.nekohtml/nekohtml/1.9.21/jars/nekohtml.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/net.sourceforge.nekohtml/nekohtml/jars/nekohtml-1.9.21.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -942,7 +909,6 @@
     </library>
     <library name="SBT: oauth.signpost:signpost-commonshttp4:1.2.1.2:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/oauth.signpost/signpost-commonshttp4/1.2.1.2/jars/signpost-commonshttp4.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/oauth.signpost/signpost-commonshttp4/jars/signpost-commonshttp4-1.2.1.2.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -952,7 +918,6 @@
     </library>
     <library name="SBT: oauth.signpost:signpost-core:1.2.1.2:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/oauth.signpost/signpost-core/1.2.1.2/jars/signpost-core.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/oauth.signpost/signpost-core/jars/signpost-core-1.2.1.2.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -962,7 +927,6 @@
     </library>
     <library name="SBT: org.apache.commons:commons-exec:1.1:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.apache.commons/commons-exec/1.1/jars/commons-exec.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.commons/commons-exec/jars/commons-exec-1.1.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -980,9 +944,7 @@
       </SOURCES>
     </library>
     <library name="SBT: org.apache.httpcomponents:httpclient:4.0.1:jar">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.apache.httpcomponents/httpclient/4.0.1/jars/httpclient.jar!/" />
-      </CLASSES>
+      <CLASSES />
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.httpcomponents/httpclient/srcs/httpclient-4.0.1-sources.jar!/" />
@@ -990,7 +952,6 @@
     </library>
     <library name="SBT: org.apache.httpcomponents:httpclient:4.3.4:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.apache.httpcomponents/httpclient/4.3.4/jars/httpclient.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.3.4.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -999,9 +960,7 @@
       </SOURCES>
     </library>
     <library name="SBT: org.apache.httpcomponents:httpcore:4.0.1:jar">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.apache.httpcomponents/httpcore/4.0.1/jars/httpcore.jar!/" />
-      </CLASSES>
+      <CLASSES />
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.httpcomponents/httpcore/srcs/httpcore-4.0.1-sources.jar!/" />
@@ -1009,7 +968,6 @@
     </library>
     <library name="SBT: org.apache.httpcomponents:httpcore:4.3.2:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.apache.httpcomponents/httpcore/4.3.2/jars/httpcore.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.3.2.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1019,7 +977,6 @@
     </library>
     <library name="SBT: org.apache.httpcomponents:httpmime:4.3.3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.apache.httpcomponents/httpmime/4.3.3/jars/httpmime.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.httpcomponents/httpmime/jars/httpmime-4.3.3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1029,7 +986,6 @@
     </library>
     <library name="SBT: org.apache.tomcat:tomcat-servlet-api:8.0.21:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.apache.tomcat/tomcat-servlet-api/8.0.21/jars/tomcat-servlet-api.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.tomcat/tomcat-servlet-api/jars/tomcat-servlet-api-8.0.21.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1057,7 +1013,6 @@
     </library>
     <library name="SBT: org.eclipse.jetty:jetty-http:8.1.15.v20140411:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.eclipse.jetty/jetty-http/8.1.15.v20140411/jars/jetty-http.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jetty/jetty-http/jars/jetty-http-8.1.15.v20140411.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1067,7 +1022,6 @@
     </library>
     <library name="SBT: org.eclipse.jetty:jetty-io:8.1.15.v20140411:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.eclipse.jetty/jetty-io/8.1.15.v20140411/jars/jetty-io.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jetty/jetty-io/jars/jetty-io-8.1.15.v20140411.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1077,7 +1031,6 @@
     </library>
     <library name="SBT: org.eclipse.jetty:jetty-util:8.1.15.v20140411:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.eclipse.jetty/jetty-util/8.1.15.v20140411/jars/jetty-util.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jetty/jetty-util/jars/jetty-util-8.1.15.v20140411.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1087,7 +1040,6 @@
     </library>
     <library name="SBT: org.eclipse.jetty:jetty-websocket:8.1.15.v20140411:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.eclipse.jetty/jetty-websocket/8.1.15.v20140411/jars/jetty-websocket.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.jetty/jetty-websocket/jars/jetty-websocket-8.1.15.v20140411.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1097,7 +1049,6 @@
     </library>
     <library name="SBT: org.fluentlenium:fluentlenium-core:0.10.3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.fluentlenium/fluentlenium-core/0.10.3/jars/fluentlenium-core.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.fluentlenium/fluentlenium-core/jars/fluentlenium-core-0.10.3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1179,7 +1130,6 @@
     </library>
     <library name="SBT: org.hamcrest:hamcrest-core:1.3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.hamcrest/hamcrest-core/1.3/jars/hamcrest-core.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1189,7 +1139,6 @@
     </library>
     <library name="SBT: org.hibernate:hibernate-validator:5.0.3.Final:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.hibernate/hibernate-validator/5.0.3.Final/jars/hibernate-validator.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.hibernate/hibernate-validator/jars/hibernate-validator-5.0.3.Final.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1217,7 +1166,6 @@
     </library>
     <library name="SBT: org.jboss.logging:jboss-logging:3.2.1.Final:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.jboss.logging/jboss-logging/3.2.1.Final/jars/jboss-logging.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.logging/jboss-logging/jars/jboss-logging-3.2.1.Final.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1236,7 +1184,6 @@
     </library>
     <library name="SBT: org.joda:joda-convert:1.7:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.joda/joda-convert/1.7/jars/joda-convert.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.joda/joda-convert/jars/joda-convert-1.7.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1273,7 +1220,6 @@
     </library>
     <library name="SBT: org.reflections:reflections:0.9.9:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.reflections/reflections/0.9.9/jars/reflections.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.reflections/reflections/jars/reflections-0.9.9.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1283,7 +1229,6 @@
     </library>
     <library name="SBT: org.scala-lang.modules:scala-java8-compat_2.11:0.3.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.scala-lang.modules/scala-java8-compat_2.11/0.3.0/bundles/scala-java8-compat_2.11.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.scala-lang.modules/scala-java8-compat_2.11/bundles/scala-java8-compat_2.11-0.3.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1345,7 +1290,6 @@
     </library>
     <library name="SBT: org.scala-lang:scala-reflect:2.11.6:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.scala-lang/scala-reflect/2.11.6/jars/scala-reflect.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.6.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1364,7 +1308,6 @@
     </library>
     <library name="SBT: org.scala-stm:scala-stm_2.11:0.7:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.scala-stm/scala-stm_2.11/0.7/jars/scala-stm_2.11.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.scala-stm/scala-stm_2.11/jars/scala-stm_2.11-0.7.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1419,7 +1362,6 @@
     </library>
     <library name="SBT: org.seleniumhq.selenium:selenium-api:2.44.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.seleniumhq.selenium/selenium-api/2.44.0/jars/selenium-api.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.seleniumhq.selenium/selenium-api/jars/selenium-api-2.44.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1429,7 +1371,6 @@
     </library>
     <library name="SBT: org.seleniumhq.selenium:selenium-chrome-driver:2.44.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.seleniumhq.selenium/selenium-chrome-driver/2.44.0/jars/selenium-chrome-driver.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.seleniumhq.selenium/selenium-chrome-driver/jars/selenium-chrome-driver-2.44.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1439,7 +1380,6 @@
     </library>
     <library name="SBT: org.seleniumhq.selenium:selenium-firefox-driver:2.44.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.seleniumhq.selenium/selenium-firefox-driver/2.44.0/jars/selenium-firefox-driver.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.seleniumhq.selenium/selenium-firefox-driver/jars/selenium-firefox-driver-2.44.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1449,7 +1389,6 @@
     </library>
     <library name="SBT: org.seleniumhq.selenium:selenium-htmlunit-driver:2.44.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.seleniumhq.selenium/selenium-htmlunit-driver/2.44.0/jars/selenium-htmlunit-driver.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.seleniumhq.selenium/selenium-htmlunit-driver/jars/selenium-htmlunit-driver-2.44.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1459,7 +1398,6 @@
     </library>
     <library name="SBT: org.seleniumhq.selenium:selenium-ie-driver:2.44.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.seleniumhq.selenium/selenium-ie-driver/2.44.0/jars/selenium-ie-driver.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.seleniumhq.selenium/selenium-ie-driver/jars/selenium-ie-driver-2.44.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1469,7 +1407,6 @@
     </library>
     <library name="SBT: org.seleniumhq.selenium:selenium-java:2.44.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.seleniumhq.selenium/selenium-java/2.44.0/jars/selenium-java.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.seleniumhq.selenium/selenium-java/jars/selenium-java-2.44.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1479,7 +1416,6 @@
     </library>
     <library name="SBT: org.seleniumhq.selenium:selenium-remote-driver:2.44.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.seleniumhq.selenium/selenium-remote-driver/2.44.0/jars/selenium-remote-driver.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.seleniumhq.selenium/selenium-remote-driver/jars/selenium-remote-driver-2.44.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1489,7 +1425,6 @@
     </library>
     <library name="SBT: org.seleniumhq.selenium:selenium-safari-driver:2.44.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.seleniumhq.selenium/selenium-safari-driver/2.44.0/jars/selenium-safari-driver.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.seleniumhq.selenium/selenium-safari-driver/jars/selenium-safari-driver-2.44.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1499,7 +1434,6 @@
     </library>
     <library name="SBT: org.seleniumhq.selenium:selenium-support:2.44.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.seleniumhq.selenium/selenium-support/2.44.0/jars/selenium-support.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.seleniumhq.selenium/selenium-support/jars/selenium-support-2.44.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1509,7 +1443,6 @@
     </library>
     <library name="SBT: org.slf4j:jcl-over-slf4j:1.7.12:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.slf4j/jcl-over-slf4j/1.7.12/jars/jcl-over-slf4j.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/jcl-over-slf4j/jars/jcl-over-slf4j-1.7.12.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1519,7 +1452,6 @@
     </library>
     <library name="SBT: org.slf4j:jul-to-slf4j:1.7.12:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.slf4j/jul-to-slf4j/1.7.12/jars/jul-to-slf4j.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/jul-to-slf4j/jars/jul-to-slf4j-1.7.12.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1583,7 +1515,6 @@
     </library>
     <library name="SBT: org.springframework:spring-beans:4.1.6.RELEASE:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.springframework/spring-beans/4.1.6.RELEASE/jars/spring-beans.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.springframework/spring-beans/jars/spring-beans-4.1.6.RELEASE.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1593,7 +1524,6 @@
     </library>
     <library name="SBT: org.springframework:spring-context:4.1.6.RELEASE:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.springframework/spring-context/4.1.6.RELEASE/jars/spring-context.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.springframework/spring-context/jars/spring-context-4.1.6.RELEASE.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1603,7 +1533,6 @@
     </library>
     <library name="SBT: org.springframework:spring-core:4.1.6.RELEASE:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.springframework/spring-core/4.1.6.RELEASE/jars/spring-core.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.springframework/spring-core/jars/spring-core-4.1.6.RELEASE.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1613,7 +1542,6 @@
     </library>
     <library name="SBT: org.w3c.css:sac:1.3:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.w3c.css/sac/1.3/jars/sac.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.w3c.css/sac/jars/sac-1.3.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1623,7 +1551,6 @@
     </library>
     <library name="SBT: org.webbitserver:webbit:0.4.14:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.webbitserver/webbit/0.4.14/jars/webbit.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.webbitserver/webbit/jars/webbit-0.4.14.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1633,7 +1560,6 @@
     </library>
     <library name="SBT: org.yaml:snakeyaml:1.15:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/org.yaml/snakeyaml/1.15/bundles/snakeyaml.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/org.yaml/snakeyaml/bundles/snakeyaml-1.15.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1643,7 +1569,6 @@
     </library>
     <library name="SBT: tyrex:tyrex:1.0.1:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/tyrex/tyrex/1.0.1/jars/tyrex.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/tyrex/tyrex/jars/tyrex-1.0.1.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1651,7 +1576,6 @@
     </library>
     <library name="SBT: xalan:serializer:2.7.1:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/xalan/serializer/2.7.1/jars/serializer.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/xalan/serializer/jars/serializer-2.7.1.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1659,7 +1583,6 @@
     </library>
     <library name="SBT: xalan:xalan:2.7.1:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/xalan/xalan/2.7.1/jars/xalan.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/xalan/xalan/jars/xalan-2.7.1.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1669,7 +1592,6 @@
     </library>
     <library name="SBT: xerces:xercesImpl:2.11.0:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/xerces/xercesImpl/2.11.0/jars/xercesImpl.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/xerces/xercesImpl/jars/xercesImpl-2.11.0.jar!/" />
       </CLASSES>
       <JAVADOC />
@@ -1679,7 +1601,6 @@
     </library>
     <library name="SBT: xml-apis:xml-apis:1.4.01:jar">
       <CLASSES>
-        <root url="jar://$USER_HOME$/Downloads/typesafe-activator-1.3.6/activator-dist-1.3.6/repository/xml-apis/xml-apis/1.4.01/jars/xml-apis.jar!/" />
         <root url="jar://$USER_HOME$/.ivy2/cache/xml-apis/xml-apis/jars/xml-apis-1.4.01.jar!/" />
       </CLASSES>
       <JAVADOC />
