@@ -17,7 +17,8 @@ public class Application extends Controller {
         Properties properties = new Properties();
         BufferedInputStream stream = null;
         try {
-            stream = new BufferedInputStream(new FileInputStream("config.properties"));
+            String resource = Play.application().classloader().getResource("config.properties").getFile();
+            stream = new BufferedInputStream(new FileInputStream(resource));
             properties.load(stream);
             stream.close();
         } catch (FileNotFoundException e) {
