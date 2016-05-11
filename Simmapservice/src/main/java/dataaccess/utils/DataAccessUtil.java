@@ -17,9 +17,7 @@ public class DataAccessUtil {
     public static Result getRecords(Properties properties, Table table, IConnection connectionUtil){
         try(Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
-            return  context.select().from(table).fetch();
-
-
+            return context.select().from(table).fetch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
