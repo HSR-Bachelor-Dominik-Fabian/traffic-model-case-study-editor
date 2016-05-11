@@ -180,7 +180,7 @@
         <entry key="sourceDirectory">
           <value>
             <ProjectSettingsEntry>
-              <option name="sourceDir" value="$PROJECT_DIR$/../Simmapeditor\Simmapeditor\app" />
+              <option name="sourceDir" value="C:\Users\fke\Source\Repos\Bachelorarbeit\traffic-model-case-study-editor\Simmapeditor\app" />
               <option name="confDir" value="C:\Users\fke\Source\Repos\Bachelorarbeit\traffic-model-case-study-editor\Simmapeditor\app" />
             </ProjectSettingsEntry>
           </value>
