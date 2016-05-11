@@ -9,9 +9,8 @@ import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;
 import dataaccess.database.tables.records.NetworkRecord;
 import dataaccess.database.tables.records.NodeRecord;
+import dataaccess.utils.ProdConnection;
 import org.jooq.Result;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
 
@@ -35,7 +34,7 @@ public class XMLImportLogic {
     private final SimmapDataAccessFacade dataAccess;
 
     public XMLImportLogic(Properties properties) {
-        this.dataAccess = new SimmapDataAccessFacade(properties);
+        this.dataAccess = new SimmapDataAccessFacade(properties, new ProdConnection());
     }
 
     public void importNetwork2DB(InputStream inputStream, String format, String networkName) {

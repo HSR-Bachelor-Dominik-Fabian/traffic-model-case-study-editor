@@ -2,19 +2,15 @@ package dataaccess;
 
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
-import dataaccess.database.tables.LinkChange;
 import dataaccess.database.tables.records.*;
 import dataaccess.utils.DataAccessUtil;
-import javafx.scene.control.Tab;
-import org.geotools.data.shapefile.index.Data;
+import dataaccess.utils.IConnection;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -23,47 +19,47 @@ import java.util.Properties;
  * Created by dohee on 22.03.2016.
  */
 public class SimmapDataAccessFacade {
-    public SimmapDataAccessFacade(Properties props){
+    public SimmapDataAccessFacade(Properties props, IConnection connectionUtil){
         this.properties = props;
+        this.connectionUtil = connectionUtil;
     }
     private final Properties properties;
+    private final IConnection connectionUtil;
+
     public int[] setNetwork(NetworkRecord[] records){
-        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NETWORK);
+        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NETWORK, this.connectionUtil);
     }
 
     public int[] setNode(NodeRecord[] records){
-        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NODE);
+        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NODE, this.connectionUtil);
     }
 
     public int[] setLink(LinkRecord[] records){
-        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.LINK);
+        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.LINK, this.connectionUtil);
     }
 
     public int[] setNetworkOptions(NetworkOptionsRecord[] records){
-        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NETWORK_OPTIONS);
+        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NETWORK_OPTIONS, this.connectionUtil);
     }
 
     public Result<NetworkRecord> getAllNetworks(){
-        return DataAccessUtil.getRecords(this.properties, Tables.NETWORK);
+        return DataAccessUtil.getRecords(this.properties, Tables.NETWORK, this.connectionUtil);
     }
 
     public Result<LinkRecord> getAllLinks(){
-        return DataAccessUtil.getRecords(this.properties, Tables.LINK);
+        return DataAccessUtil.getRecords(this.properties, Tables.LINK, this.connectionUtil);
     }
 
     public Result<NodeRecord> getAllNodes(){
-        return DataAccessUtil.getRecords(this.properties, Tables.NODE);
+        return DataAccessUtil.getRecords(this.properties, Tables.NODE, this.connectionUtil);
     }
 
     public Result<NetworkOptionsRecord> getAllNetworkOptions(){
-        return DataAccessUtil.getRecords(this.properties, Tables.NETWORK_OPTIONS);
+        return DataAccessUtil.getRecords(this.properties, Tables.NETWORK_OPTIONS, this.connectionUtil);
     }
 
     public Result getAllChangesetsPerUser(int userNr){
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return context.select().from(Tables.CHANGESET).where(Tables.CHANGESET.USERNR.eq(userNr))
                     .orderBy(Tables.CHANGESET.LASTMODIFIED.desc()).fetch();
@@ -75,10 +71,7 @@ public class SimmapDataAccessFacade {
     }
 
     public ChangesetRecord getChangsetFromNumber(long changsetNr){
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return (ChangesetRecord)context.select().from(Tables.CHANGESET).where(Tables.CHANGESET.ID.eq(changsetNr)).fetchOne();
         } catch (SQLException e) {
@@ -88,10 +81,7 @@ public class SimmapDataAccessFacade {
         return null;
     }
     public NodeRecord getNodeFromId(String id){
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return (NodeRecord)context.select().from(Tables.NODE).where(Tables.NODE.ID.eq(id)).fetchOne();
         } catch (SQLException e) {
@@ -101,10 +91,7 @@ public class SimmapDataAccessFacade {
         return null;
     }
     public LinkRecord getLinkFromId(String id){
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return (LinkRecord)context.select().from(Tables.LINK).where(Tables.LINK.ID.eq(id)).fetchOne();
         } catch (SQLException e) {
@@ -115,10 +102,7 @@ public class SimmapDataAccessFacade {
     }
 
     public Result getLinkChangesfromChangeset(long changesetNr) {
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return context.select().from(Tables.LINK_CHANGE).where(Tables.LINK_CHANGE.CHANGESETNR.eq(changesetNr)).fetch();
         } catch (SQLException e) {
@@ -129,10 +113,7 @@ public class SimmapDataAccessFacade {
     }
 
     public Result getNodeChangefromChangeset(long changesetNr){
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return context.select().from(Tables.NODE_CHANGE).where(Tables.NODE_CHANGE.CHANGESETNR.eq(changesetNr)).fetch();
         } catch (SQLException e) {
@@ -143,10 +124,7 @@ public class SimmapDataAccessFacade {
     }
 
     public Result getLinkFromQuadKey(String QuadKey, int NetworkId, int zoomLevel){
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
 
             Link l = Tables.LINK.as("l");
@@ -168,10 +146,7 @@ public class SimmapDataAccessFacade {
     }
 
     public Date getLastModifiedQuadKey(String QuadKey, int NetworkId, int zoomLevel){
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             Link l = Tables.LINK.as("l");
 
@@ -190,10 +165,7 @@ public class SimmapDataAccessFacade {
     }
 
     public boolean hasChangeset(long changesetNr){
-        String url = properties.getProperty("psqlpath");
-        String user = properties.getProperty("psqluser");
-        String password = properties.getProperty("psqlpassword");
-        try(Connection conn = DriverManager.getConnection(url, user, password)) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return context.selectCount().from(Tables.CHANGESET).where(Tables.CHANGESET.ID.eq(changesetNr)).fetchOne().value1() > 0;
         } catch (SQLException e) {
@@ -203,30 +175,30 @@ public class SimmapDataAccessFacade {
     }
 
     public int[] deleteLink_Changes(List<LinkChangeRecord> records){
-        return DataAccessUtil.deleteRecords(this.properties, records, Tables.LINK_CHANGE);
+        return DataAccessUtil.deleteRecords(this.properties, records, Tables.LINK_CHANGE, this.connectionUtil);
     }
 
     public int[] deleteNode_Changes(List<NodeChangeRecord> records){
-        return DataAccessUtil.deleteRecords(this.properties, records, Tables.NODE_CHANGE);
+        return DataAccessUtil.deleteRecords(this.properties, records, Tables.NODE_CHANGE, this.connectionUtil);
     }
 
     public int[] updateLink_Changes(List<LinkChangeRecord> records){
-        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.LINK_CHANGE);
+        return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.LINK_CHANGE, this.connectionUtil);
     }
 
     public int[] updateNode_Changes(List<NodeChangeRecord> records){
-        return DataAccessUtil.insertOrUpdate(this.properties,records, Tables.NODE_CHANGE);
+        return DataAccessUtil.insertOrUpdate(this.properties,records, Tables.NODE_CHANGE, this.connectionUtil);
     }
 
     public int updateChangeset(ChangesetRecord record){
-        return DataAccessUtil.updateRecord(this.properties, record, Tables.CHANGESET);
+        return DataAccessUtil.updateRecord(this.properties, record, Tables.CHANGESET, this.connectionUtil);
     }
 
     public Long insertChangeset(ChangesetRecord record){
-        return (Long)DataAccessUtil.insertRecord(this.properties, record, Tables.CHANGESET, Arrays.asList(Tables.CHANGESET.ID)).getValue(0);
+        return (Long)DataAccessUtil.insertRecord(this.properties, record, Tables.CHANGESET, Arrays.asList(Tables.CHANGESET.ID), this.connectionUtil).getValue(0);
     }
 
     public int deleteChangeset(ChangesetRecord record){
-        return DataAccessUtil.deleteRecord(this.properties, record);
+        return DataAccessUtil.deleteRecord(this.properties, record, this.connectionUtil);
     }
 }

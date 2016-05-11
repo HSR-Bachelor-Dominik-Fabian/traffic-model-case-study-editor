@@ -2,6 +2,7 @@ package businesslogic.changeset;
 
 import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.tables.records.*;
+import dataaccess.utils.ProdConnection;
 import org.jooq.Result;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Properties;
 public class ChangesetLogic {
     private SimmapDataAccessFacade dataAccess;
     public ChangesetLogic(Properties properties){
-        this.dataAccess = new SimmapDataAccessFacade(properties);
+        this.dataAccess = new SimmapDataAccessFacade(properties, new ProdConnection());
     }
 
     public List<ChangesetModel> getAllChangesets(int userNr){

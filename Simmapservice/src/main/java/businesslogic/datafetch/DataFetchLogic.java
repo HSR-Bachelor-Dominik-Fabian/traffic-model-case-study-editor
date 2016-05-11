@@ -5,6 +5,7 @@ import businesslogic.Utils.QuadTileUtils;
 import businesslogic.changeset.LinkModel;
 import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.tables.records.LinkRecord;
+import dataaccess.utils.ProdConnection;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.json.JSONObject;
@@ -27,7 +28,7 @@ public class DataFetchLogic {
         JSONObject output;
 
         String QuadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
-        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties);
+        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
         Result<Record> result = dataAccess.getLinkFromQuadKey(QuadKey, networkid, zoom);
 
         output = GeoJSONUtil.getGeoFromLinkRequest(result, zoom);
@@ -37,7 +38,7 @@ public class DataFetchLogic {
 
     public Date getLastModified(int x, int y , int zoom, int networkid){
         String QuadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
-        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties);
+        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
 
         return dataAccess.getLastModifiedQuadKey(QuadKey, networkid, zoom);
     }
@@ -45,7 +46,7 @@ public class DataFetchLogic {
     public LinkModel getLinkById(String id) {
         JSONObject output;
 
-        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties);
+        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
         LinkRecord link = dataAccess.getLinkFromId(id);
         LinkModel linkModel = new LinkModel(link);
 
