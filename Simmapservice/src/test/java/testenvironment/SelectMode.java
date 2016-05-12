@@ -6,5 +6,6 @@ package testenvironment;
 public enum SelectMode {
     GETONE,
     GETMULTIPLE,
-    GETNONE
+    GETNONE,
+    NOCONNECTION
 }

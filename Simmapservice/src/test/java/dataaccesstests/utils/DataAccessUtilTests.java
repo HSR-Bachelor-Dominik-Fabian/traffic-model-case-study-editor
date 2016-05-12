@@ -7,6 +7,7 @@ import dataaccess.utils.DataAccessUtil;
 import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
 import org.junit.Test;
+import org.postgresql.util.PSQLException;
 import testenvironment.*;
 
 import java.util.Properties;
@@ -18,6 +19,7 @@ import static org.junit.Assert.*;
  */
 public class DataAccessUtilTests {
 
+    //region GetRecord Tests
     @Test
     public void testGetRecordsPositiveSelect(){
         Result<LinkRecord> records = DataAccessUtil.getRecords(new Properties(), Tables.LINK, new TestConnection(SelectMode.GETONE));
@@ -28,7 +30,7 @@ public class DataAccessUtilTests {
     @Test
     public void testGetMultipleRecordsPositiveSelect(){
         Result<NodeRecord> records = DataAccessUtil.getRecords(new Properties(), Tables.NODE, new TestConnection(SelectMode.GETMULTIPLE));
-        assertEquals(2, records.size());
+        assertEquals(TestDataUtil.getMultipleSelectNodeTestRecords().size(), records.size());
         assertArrayEquals(TestDataUtil.getMultipleSelectNodeTestRecords().toArray(), records.toArray());
     }
 
@@ -43,4 +45,17 @@ public class DataAccessUtilTests {
         Result<LinkRecord> records = DataAccessUtil.getRecords(new Properties(), Tables.LINK, new TestConnection(SelectMode.GETNONE));
         assertEquals(0, records.size());
     }
+
+    @Test
+    public void testGetRecordsNoConnection(){
+        Result<LinkRecord> records = DataAccessUtil.getRecords(new Properties(), Tables.LINK, new TestConnection(SelectMode.NOCONNECTION));
+        assertNull(records);
+    }
+    //endregion
+
+    //region insertOrUpdate Tests
+
+
+
+    //endregion
 }

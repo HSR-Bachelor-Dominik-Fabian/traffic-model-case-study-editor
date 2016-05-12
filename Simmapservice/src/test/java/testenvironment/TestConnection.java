@@ -1,9 +1,12 @@
 package testenvironment;
 
 import dataaccess.utils.IConnection;
+import org.hsqldb.jdbc.JDBCConnection;
+import org.jooq.tools.jdbc.DefaultConnection;
 import org.jooq.tools.jdbc.MockConnection;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -18,9 +21,14 @@ public class TestConnection implements IConnection {
 
     @Override
     public Connection getConnectionFromProps(Properties properties) throws SQLException {
-        TestDatabaseProviderPositive provider = new TestDatabaseProviderPositive();
-        provider.setSelectMode(this.selectMode);
-        MockConnection connection = new MockConnection(provider);
-        return connection;
+        if(this.selectMode != SelectMode.NOCONNECTION) {
+            TestDatabaseProviderPositive provider = new TestDatabaseProviderPositive();
+            provider.setSelectMode(this.selectMode);
+            return new MockConnection(provider);
+        }
+        else{
+            return DriverManager.getConnection(TestDataUtil.getTestPSQLPath(), TestDataUtil.getTestUsername()
+                    , TestDataUtil.getTestPassword());
+        }
     }
 }

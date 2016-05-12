@@ -19,7 +19,7 @@ public class DataAccessUtil {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return context.select().from(table).fetch();
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace();//TODO: Error Handling
         }
         return null;
     }

@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by dohee on 11.05.2016.
@@ -61,5 +62,27 @@ public class TestDataUtil {
         output.add(record2);
 
         return output;
+    }
+
+    public static Properties getTestProperties(){
+        Properties props = new Properties();
+
+        props.setProperty("psqlpath", getTestPSQLPath());
+        props.setProperty("psqluser", getTestUsername());
+        props.setProperty("psqlpassword", getTestPassword());
+
+        return props;
+    }
+
+    public static String getTestPSQLPath(){
+        return "jdbc:postgresql://localhost:1234/notworkingdata";
+    }
+
+    public static String getTestUsername(){
+        return "testuser";
+    }
+
+    public static String getTestPassword(){
+        return "testpassword";
     }
 }
