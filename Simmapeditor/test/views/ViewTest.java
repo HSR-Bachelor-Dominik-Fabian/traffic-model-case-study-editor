@@ -1,37 +1,34 @@
-import org.junit.*;
+package views;
 
-import play.Application;
-import play.GlobalSettings;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import play.Play;
-import play.test.*;
+import play.test.FakeApplication;
 import play.twirl.api.Content;
 import play.twirl.api.Html;
+import util.FakeApplicationUtil;
 
-import java.io.*;
-import java.net.URL;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Properties;
 
-import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
+import static org.fest.assertions.Assertions.assertThat;
 
-public class IntegrationTest {
+public class ViewTest {
 
     private static FakeApplication fakeApplication;
 
     @BeforeClass
     public static void startFakeApplication() {
-        fakeApplication = fakeApplication( new GlobalSettings() {
-            @Override
-            public void onStart(Application app) {
-                System.out.println("Starting Fake Application");
-            }
-        });
-        start(fakeApplication);
+        fakeApplication = FakeApplicationUtil.startFakeApplication();
     }
 
     @AfterClass
     public static void stopFakeApplication() {
-        stop(fakeApplication);
+        FakeApplicationUtil.stopFakeApplication(fakeApplication);
     }
 
     @Test
@@ -75,14 +72,5 @@ public class IntegrationTest {
             e.printStackTrace();
         }
         return properties;
-    }
-
-    @Test
-    public void testStartOfWebPage() {
-        /*running(testServer(9000, fakeApplication), HTMLUNIT, browser -> {
-            browser.goTo("http://localhost:9000");
-            System.out.println(browser.pageSource());
-            assertThat(browser.pageSource()).contains("");
-        });*/
     }
 }
