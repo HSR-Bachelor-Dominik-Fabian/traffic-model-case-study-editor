@@ -14,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
+import views.html.partials.rootMenu;
+import views.html.partials.loadChangesetMenu;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -33,13 +35,13 @@ public class ViewTest {
 
     @Test
     public void renderPartialViewRootMenu() {
-        Content html = views.html.partials.rootMenu.render();
+        Content html = rootMenu.render();
         assertThat(html.contentType()).isEqualTo("text/html");
     }
 
     @Test
     public void renderPartialViewLoadChangesetMenu() {
-        Content html = views.html.partials.loadChangesetMenu.render();
+        Content html = loadChangesetMenu.render();
         assertThat(html.contentType()).isEqualTo("text/html");
     }
 
