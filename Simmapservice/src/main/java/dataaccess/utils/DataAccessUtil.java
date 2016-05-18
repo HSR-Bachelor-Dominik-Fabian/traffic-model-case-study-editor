@@ -47,7 +47,7 @@ public class DataAccessUtil {
         return insertOrUpdate(properties, records.toArray(new Record[records.size()]), table, connectionUtil);
     }
 
-    public static int[] deleteRecords(Properties properties, List<? extends UpdatableRecord<?>> records, Table table, IConnection connectionUtil){
+    public static int[] deleteRecords(Properties properties, List<? extends UpdatableRecord<?>> records, IConnection connectionUtil){
         int[] output = null;
         try(Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
@@ -59,19 +59,7 @@ public class DataAccessUtil {
         return output;
     }
 
-    public static int[] updateRecords(Properties properties, List<? extends UpdatableRecord<?>> records, Table table, IConnection connectionUtil){
-        int[] output = null;
-        try(Connection conn = connectionUtil.getConnectionFromProps(properties)) {
-            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
-            output = context.batchUpdate(records).execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return output;
-    }
-
-    public static int updateRecord(Properties properties, UpdatableRecord<?> record, Table table, IConnection connectionUtil){
+    public static int updateRecord(Properties properties, UpdatableRecord<?> record, IConnection connectionUtil){
         int output = 0;
         try(Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);

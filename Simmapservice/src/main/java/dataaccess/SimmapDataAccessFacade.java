@@ -175,11 +175,11 @@ public class SimmapDataAccessFacade {
     }
 
     public int[] deleteLink_Changes(List<LinkChangeRecord> records){
-        return DataAccessUtil.deleteRecords(this.properties, records, Tables.LINK_CHANGE, this.connectionUtil);
+        return DataAccessUtil.deleteRecords(this.properties, records, this.connectionUtil);
     }
 
     public int[] deleteNode_Changes(List<NodeChangeRecord> records){
-        return DataAccessUtil.deleteRecords(this.properties, records, Tables.NODE_CHANGE, this.connectionUtil);
+        return DataAccessUtil.deleteRecords(this.properties, records, this.connectionUtil);
     }
 
     public int[] updateLink_Changes(List<LinkChangeRecord> records){
@@ -191,7 +191,7 @@ public class SimmapDataAccessFacade {
     }
 
     public int updateChangeset(ChangesetRecord record){
-        return DataAccessUtil.updateRecord(this.properties, record, Tables.CHANGESET, this.connectionUtil);
+        return DataAccessUtil.updateRecord(this.properties, record, this.connectionUtil);
     }
 
     public Long insertChangeset(ChangesetRecord record){
