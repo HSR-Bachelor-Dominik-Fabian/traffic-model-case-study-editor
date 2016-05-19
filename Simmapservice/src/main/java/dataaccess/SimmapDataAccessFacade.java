@@ -15,9 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created by dohee on 22.03.2016.
- */
 public class SimmapDataAccessFacade {
     public SimmapDataAccessFacade(Properties props, IConnection connectionUtil){
         this.properties = props;

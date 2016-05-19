@@ -13,9 +13,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created by dohee on 13.04.2016.
- */
 @Produces("application/json")
 @Path("/changesets")
 public class ChangesetResource {

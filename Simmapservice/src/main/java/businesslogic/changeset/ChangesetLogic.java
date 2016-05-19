@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created by dohee on 13.04.2016.
- */
 public class ChangesetLogic {
     private SimmapDataAccessFacade dataAccess;
     public ChangesetLogic(Properties properties){

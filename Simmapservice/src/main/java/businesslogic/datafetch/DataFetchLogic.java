@@ -13,9 +13,6 @@ import org.json.JSONObject;
 import java.sql.Date;
 import java.util.Properties;
 
-/**
- * Created by dohee on 24.03.2016.
- */
 public class DataFetchLogic {
 
     private Properties properties;

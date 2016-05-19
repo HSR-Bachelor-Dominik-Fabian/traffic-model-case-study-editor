@@ -6,9 +6,6 @@ import dataaccess.database.tables.records.ChangesetRecord;
 import java.sql.Timestamp;
 import java.util.Date;
 
-/**
- * Created by dohee on 13.04.2016.
- */
 public class ChangesetModel {
     ChangesetModel(){}
     ChangesetModel(ChangesetRecord record){
