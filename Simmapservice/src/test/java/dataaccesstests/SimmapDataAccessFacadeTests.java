@@ -5,6 +5,7 @@ import dataaccess.database.Tables;
 import dataaccess.database.tables.records.*;
 import dataaccess.utils.DataAccessUtil;
 import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
@@ -203,10 +204,23 @@ public class SimmapDataAccessFacadeTests {
         Result<NodeChangeRecord> record = facade.getNodeChangefromChangeset(1);
         assertEquals(TestDataUtil.getMultipleSelectNodeChangeTestRecords().size(), record.size());
         List<NodeChangeRecord> expected = TestDataUtil.getMultipleSelectNodeChangeTestRecords();
-        assertEquals(expected, record);
+        assertArrayEquals(expected.toArray(), record.toArray());
     }
     @Test @Ignore("Exception Handling not ready yet")
     public void getNodeChangefromChangesetNegative(){
+
+    }
+
+    @Test
+    public void getLinkFromQuadKeyPositive(){
+        SimmapDataAccessFacade facade = new SimmapDataAccessFacade(new Properties(), new TestConnection(ConnectionMode.MULTIPLE));
+        Result<Record> record = facade.getLinkFromQuadKey("123", 1, 12);
+        assertEquals(TestDataUtil.getMultipleSelectLinkTestRecords().size(), record.size());
+        List<Record> expected = TestDataUtil.getMultipleSelectLinkTestRecords();
+        assertEquals(expected, record);
+    }
+    @Test @Ignore("Exception Handling not ready yet")
+    public void getLinkFromQuadKeyNegative(){
 
     }
 }

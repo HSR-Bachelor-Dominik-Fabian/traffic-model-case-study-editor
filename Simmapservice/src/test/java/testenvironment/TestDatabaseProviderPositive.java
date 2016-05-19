@@ -10,6 +10,7 @@ import org.jooq.tools.jdbc.MockExecuteContext;
 import org.jooq.tools.jdbc.MockResult;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -139,6 +140,13 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
                 result = dslContext.newResult(Tables.NODE);
                 result.addAll(nodeRecords);
                 mockResult = new MockResult(nodeRecords.size(), result);
+                break;
+            //getLinkFromQuadKey
+            case "select \"l\".\"Id\", \"l\".\"Length\", \"l\".\"Freespeed\", \"l\".\"Capacity\", \"l\".\"Permlanes\", \"l\".\"Oneway\", \"l\".\"Modes\", \"l\".\"Long1\", \"l\".\"Lat1\", \"l\".\"Long2\", \"l\".\"Lat2\" from \"public\".\"Link\" as \"l\" where ((\"l\".\"QuadKey\" like '123%' or \"l\".\"QuadKey\" = '' or \"l\".\"QuadKey\" = '1') and \"l\".\"NetworkId\" = 1 and \"l\".\"MinLevel\" <= 12)":
+                List<Record> linkRecords = TestDataUtil.getMultipleSelectLinkTestRecords();
+                result = dslContext.newResult(Tables.LINK.as("l"));
+                result.addAll(linkRecords);
+                mockResult = new MockResult(linkRecords.size(), result);
                 break;
             default:
                 mockResult = new MockResult(0, null);

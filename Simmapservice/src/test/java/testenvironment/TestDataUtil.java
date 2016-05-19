@@ -1,7 +1,12 @@
 package testenvironment;
 
 import dataaccess.database.Tables;
+import dataaccess.database.tables.Link;
 import dataaccess.database.tables.records.*;
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -276,5 +281,43 @@ public class TestDataUtil {
         nodeChangeRecords.add(record2);
 
         return nodeChangeRecords;
+    }
+
+    public static List<Record> getMultipleSelectLinkTestRecords() {
+        List<Record> linkRecords = new ArrayList();
+        DSLContext context = DSL.using(SQLDialect.POSTGRES);
+        Link l = Tables.LINK.as("l");
+        Record record = context.newRecord(l.ID, l.LENGTH, l.FREESPEED, l.CAPACITY, l.PERMLANES, l.ONEWAY,
+                l.MODES, l.LONG1, l.LAT1, l.LONG2, l.LAT2);
+        record.setValue(l.ID,"L1");
+        record.setValue(l.LENGTH, new BigDecimal(1200));
+        record.setValue(l.FREESPEED, new BigDecimal(33.33));
+        record.setValue(l.CAPACITY, new BigDecimal(1000));
+        record.setValue(l.PERMLANES, new BigDecimal(2));
+        record.setValue(l.ONEWAY, true);
+        record.setValue(l.MODES, "car");
+        record.setValue(l.LONG1, new BigDecimal(12));
+        record.setValue(l.LAT1, new BigDecimal(12));
+        record.setValue(l.LONG2, new BigDecimal(23));
+        record.setValue(l.LAT2, new BigDecimal(23));
+
+        linkRecords.add(record);
+
+        Record record2 = context.newRecord(l.ID, l.LENGTH, l.FREESPEED, l.CAPACITY, l.PERMLANES, l.ONEWAY,
+                l.MODES, l.LONG1, l.LAT1, l.LONG2, l.LAT2);
+        record2.setValue(l.ID,"L2");
+        record2.setValue(l.LENGTH, new BigDecimal(1200));
+        record2.setValue(l.FREESPEED, new BigDecimal(33.33));
+        record2.setValue(l.CAPACITY, new BigDecimal(1000));
+        record2.setValue(l.PERMLANES, new BigDecimal(2));
+        record2.setValue(l.ONEWAY, true);
+        record2.setValue(l.MODES, "car");
+        record2.setValue(l.LONG1, new BigDecimal(12));
+        record2.setValue(l.LAT1, new BigDecimal(12));
+        record2.setValue(l.LONG2, new BigDecimal(23));
+        record2.setValue(l.LAT2, new BigDecimal(23));
+
+        linkRecords.add(record2);
+        return linkRecords;
     }
 }
