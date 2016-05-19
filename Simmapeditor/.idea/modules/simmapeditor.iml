@@ -12,7 +12,6 @@
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/test" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/web/public/test" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/../../target/web/public/main" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/resolution-cache" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/scala-2.11/routes/main" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/scala-2.11/routes/test" />
@@ -22,6 +21,7 @@
       <excludeFolder url="file://$MODULE_DIR$/../../target/scala-2.11/twirl/test" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/streams" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/test-reports" />
+      <excludeFolder url="file://$MODULE_DIR$/../../target/web" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/web/classes" />
       <excludeFolder url="file://$MODULE_DIR$/../../target/web/web-modules" />
     </content>
@@ -185,5 +185,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jasmine-DefinitelyTyped" level="project" />
   </component>
 </module>
