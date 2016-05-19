@@ -4,6 +4,7 @@ import dataaccess.utils.IConnection;
 import org.jooq.tools.jdbc.MockConnection;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -11,16 +12,21 @@ import java.util.Properties;
  * Created by dohee on 11.05.2016.
  */
 public class TestConnection implements IConnection {
-    public TestConnection(SelectMode selectMode){
-        this.selectMode = selectMode;
+    public TestConnection(ConnectionMode connectionMode){
+        this.connectionMode = connectionMode;
     }
-    private SelectMode selectMode;
+    private ConnectionMode connectionMode;
 
     @Override
     public Connection getConnectionFromProps(Properties properties) throws SQLException {
-        TestDatabaseProviderPositive provider = new TestDatabaseProviderPositive();
-        provider.setSelectMode(this.selectMode);
-        MockConnection connection = new MockConnection(provider);
-        return connection;
+        if(this.connectionMode != ConnectionMode.NOCONNECTION) {
+            TestDatabaseProviderPositive provider = new TestDatabaseProviderPositive();
+            provider.setConnectionMode(this.connectionMode);
+            return new MockConnection(provider);
+        }
+        else{
+            return DriverManager.getConnection(TestDataUtil.getTestPSQLPath(), TestDataUtil.getTestUsername()
+                    , TestDataUtil.getTestPassword());
+        }
     }
 }
