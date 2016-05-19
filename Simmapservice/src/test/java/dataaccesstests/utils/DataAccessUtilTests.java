@@ -5,14 +5,14 @@ import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NodeRecord;
 import dataaccess.utils.DataAccessUtil;
 import org.geotools.data.DataAccess;
-import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.Result;
+import org.jooq.*;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DSL;
 import org.junit.Ignore;
 import org.junit.Test;
 import testenvironment.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;

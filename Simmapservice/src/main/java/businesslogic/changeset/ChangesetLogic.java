@@ -29,7 +29,7 @@ public class ChangesetLogic {
     }
 
     public ChangesetFullModel getFullChangeset(long changsetNr){
-        ChangesetRecord changesetRecord = dataAccess.getChangsetFromNumber(changsetNr);
+        ChangesetRecord changesetRecord = dataAccess.getChangesetFromNumber(changsetNr);
         if(changesetRecord !=null){
             ChangesetFullModel fullModel = new ChangesetFullModel(changesetRecord);
 

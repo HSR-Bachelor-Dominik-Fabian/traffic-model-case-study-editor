@@ -42,20 +42,8 @@ public class SimmapDataAccessFacade {
         return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NETWORK_OPTIONS, this.connectionUtil);
     }
 
-    public Result<NetworkRecord> getAllNetworks(){
-        return DataAccessUtil.getRecords(this.properties, Tables.NETWORK, this.connectionUtil);
-    }
-
-    public Result<LinkRecord> getAllLinks(){
-        return DataAccessUtil.getRecords(this.properties, Tables.LINK, this.connectionUtil);
-    }
-
     public Result<NodeRecord> getAllNodes(){
         return DataAccessUtil.getRecords(this.properties, Tables.NODE, this.connectionUtil);
-    }
-
-    public Result<NetworkOptionsRecord> getAllNetworkOptions(){
-        return DataAccessUtil.getRecords(this.properties, Tables.NETWORK_OPTIONS, this.connectionUtil);
     }
 
     public Result getAllChangesetsPerUser(int userNr){
@@ -70,7 +58,7 @@ public class SimmapDataAccessFacade {
         return null;
     }
 
-    public ChangesetRecord getChangsetFromNumber(long changsetNr){
+    public ChangesetRecord getChangesetFromNumber(long changsetNr){
         try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return (ChangesetRecord)context.select().from(Tables.CHANGESET).where(Tables.CHANGESET.ID.eq(changsetNr)).fetchOne();
