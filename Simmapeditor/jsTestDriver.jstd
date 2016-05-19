@@ -1,0 +1,23 @@
+server: http://localhost:4223
+load:
+  - public/javascripts/lib/jasmine.js
+  - public/javascripts/lib/jasmine-html.js
+  - public/javascripts/lib/boot.js
+  - public/javascripts/lib/console.js
+
+  - public/javascripts/lib/leaflet.js
+  - public/javascripts/lib/L.Control.Zoomslider.js
+
+  - public/javascripts/lib/jquery-1.12.1.min.js
+  - public/javascripts/lib/angular.js
+  - public/javascripts/lib/angular*.js
+  - public/javascripts/modules/*.js
+  - public/javascripts/*.js
+
+  - public/stylesheets/lib/jasmine.css
+test:
+  - test/frontend/menuModule.Test.js
+  - test/frontend/changesetStorageHandler.Test.js
+  - test/frontend/changeLinkModule.Test.js
+  - test/frontend/changesetHandler.Test.js
+  - test/frontend/undoRedoHandler.Test.js

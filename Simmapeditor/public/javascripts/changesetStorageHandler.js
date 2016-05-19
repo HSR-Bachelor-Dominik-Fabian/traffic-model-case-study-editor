@@ -1,7 +1,3 @@
-/**
- * Created by fke on 19.04.2016.
- */
-
 function ChangesetStorageHandler() {
 
     this._isLocalStorageSupported = function() {
@@ -119,6 +115,7 @@ function ChangesetStorageHandler() {
 
     this._addNewLinkChangeModelToChangeset = function(model, localChangeset) {
         var getLinkURL = MyProps["rootURL"] + "/api/link/" + model.properties.id;
+
         $.getJSON(getLinkURL, function(data){
             var storageHandler = new ChangesetStorageHandler();
 
