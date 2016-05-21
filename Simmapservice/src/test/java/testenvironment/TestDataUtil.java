@@ -5,12 +5,14 @@ import dataaccess.database.tables.Link;
 import dataaccess.database.tables.records.*;
 import org.jooq.DSLContext;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -319,5 +321,17 @@ public class TestDataUtil {
 
         linkRecords.add(record2);
         return linkRecords;
+    }
+
+    public static Date getDateLastModifiedTestRecord() {
+
+        return Date.valueOf(LocalDate.of(1992,11,19));
+    }
+
+    public static Record getChangesetIDReturnRecord(){
+        DSLContext context = DSL.using(SQLDialect.POSTGRES);
+        Record1<Long> record = context.newRecord(Tables.CHANGESET.ID);
+        record.value1((long) 1);
+        return record;
     }
 }
