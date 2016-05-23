@@ -3,6 +3,7 @@ package businesslogic.datafetch;
 import businesslogic.Utils.GeoJSONUtil;
 import businesslogic.Utils.QuadTileUtils;
 import businesslogic.changeset.LinkModel;
+import common.DataAccessLayerException;
 import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.utils.ProdConnection;
@@ -23,7 +24,7 @@ public class DataFetchLogic {
         this.properties = properties;
     }
 
-    public JSONObject getDataForTile(int x, int y , int zoom, int networkid){
+    public JSONObject getDataForTile(int x, int y, int zoom, int networkid) throws DataAccessLayerException {
         JSONObject output;
 
         String quadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
@@ -42,14 +43,14 @@ public class DataFetchLogic {
         return output;
     }
 
-    public Date getLastModified(int x, int y , int zoom, int networkid){
+    public Date getLastModified(int x, int y, int zoom, int networkid) throws DataAccessLayerException {
         String QuadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
         SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
 
         return dataAccess.getLastModifiedQuadKey(QuadKey, networkid, zoom);
     }
 
-    public LinkModel getLinkById(String id) {
+    public LinkModel getLinkById(String id) throws DataAccessLayerException {
         JSONObject output;
 
         SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
