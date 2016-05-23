@@ -1,5 +1,7 @@
 package simmapservice.resources;
+
 import businesslogic.xmlImport.XMLImportLogic;
+import common.DataAccessLayerException;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,14 +14,11 @@ import javax.ws.rs.core.Response;
 import java.io.*;
 import java.util.Properties;
 
-/**
- * Created by dohee on 17.03.2016.
- */
 @Path("/xml")
 @Consumes(MediaType.MULTIPART_FORM_DATA)
 public class XMLImportResource {
 
-    public XMLImportResource(Properties props){
+    public XMLImportResource(Properties props) {
         this.props = props;
     }
 
@@ -29,10 +28,13 @@ public class XMLImportResource {
     public Response postImport(@FormDataParam("file") InputStream inputStream, @FormDataParam("fileName") String fileName,
                                @FormDataParam("format") String format, @Context HttpServletResponse response,
                                @FormDataParam("name") String networkName) throws IOException {
+        try {
+            XMLImportLogic importLogic = new XMLImportLogic(props);
+            importLogic.importNetwork2DB(inputStream, format, networkName);
 
-        XMLImportLogic importLogic = new XMLImportLogic(props);
-        importLogic.importNetwork2DB(inputStream, format, networkName);
-
-        return Response.ok().build();
+            return Response.ok().build();
+        } catch (DataAccessLayerException exc) {
+            return Response.serverError().entity(exc).type(MediaType.APPLICATION_JSON).build();
+        }
     }
 }

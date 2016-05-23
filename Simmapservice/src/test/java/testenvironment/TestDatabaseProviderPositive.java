@@ -31,40 +31,45 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
     public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
         DSLContext dslContext = DSL.using(SQLDialect.POSTGRES);
         MockResult[] mock = new MockResult[1];
-        if (ctx.batch()) {
-            String[] sqls = ctx.batchSQL();
-            if (ctx.batchMultiple()) {
-                mock = new MockResult[sqls.length];
-                for (int i = 0; i < sqls.length; i++) {
-                    String sql = sqls[i];
-                    if (sql.toLowerCase().startsWith("insert")) {
-                        mock[i] = calculateNonBatchInsertStatement(dslContext, sql, ctx.bindings());
+        if(connectionMode != ConnectionMode.ERROR) {
+            if (ctx.batch()) {
+                String[] sqls = ctx.batchSQL();
+                if (ctx.batchMultiple()) {
+                    mock = new MockResult[sqls.length];
+                    for (int i = 0; i < sqls.length; i++) {
+                        String sql = sqls[i];
+                        if (sql.toLowerCase().startsWith("insert")) {
+                            mock[i] = calculateNonBatchInsertStatement(dslContext, sql, ctx.bindings());
+                        }
+                    }
+                } else {
+                    String sql = sqls[0];
+                    Object[][] bindings = ctx.batchBindings();
+                    mock = new MockResult[bindings.length];
+                    for (int i = 0; i < bindings.length; i++) {
+                        if (sql.toLowerCase().startsWith("delete")) {
+                            mock[i] = calculateNonBatchDeleteStatement(dslContext, sql, ctx.batchBindings()[i]);
+                        }
                     }
                 }
             } else {
-                String sql = sqls[0];
-                Object[][] bindings = ctx.batchBindings();
-                mock = new MockResult[bindings.length];
-                for (int i = 0; i < bindings.length; i++) {
-                    if (sql.toLowerCase().startsWith("delete")) {
-                        mock[i] = calculateNonBatchDeleteStatement(dslContext, sql, ctx.batchBindings()[i]);
-                    }
+                String sql = ctx.sql();
+                System.out.println(ctx.sql());
+                if (sql.toLowerCase().startsWith("select")) {
+                    mock[0] = calculateNonBatchSelectStatement(dslContext, ctx.sql(), ctx.bindings());
+                } else if (sql.toLowerCase().startsWith("insert")) {
+                    mock[0] = calculateNonBatchInsertStatement(dslContext, ctx.sql(), ctx.bindings());
+                } else if (sql.toLowerCase().startsWith("delete")) {
+                    mock[0] = calculateNonBatchDeleteStatement(dslContext, ctx.sql(), ctx.bindings());
+                } else if (sql.toLowerCase().startsWith("update")) {
+                    mock[0] = calculateNonBatchUpdateStatement(dslContext, ctx.sql(), ctx.bindings());
                 }
-            }
-        } else {
-            String sql = ctx.sql();
-            System.out.println(ctx.sql());
-            if (sql.toLowerCase().startsWith("select")) {
-                mock[0] = calculateNonBatchSelectStatement(dslContext, ctx.sql(), ctx.bindings());
-            } else if (sql.toLowerCase().startsWith("insert")) {
-                mock[0] = calculateNonBatchInsertStatement(dslContext, ctx.sql(), ctx.bindings());
-            } else if (sql.toLowerCase().startsWith("delete")) {
-                mock[0] = calculateNonBatchDeleteStatement(dslContext, ctx.sql(), ctx.bindings());
-            } else if (sql.toLowerCase().startsWith("update")) {
-                mock[0] = calculateNonBatchUpdateStatement(dslContext, ctx.sql(), ctx.bindings());
-            }
 
 
+            }
+        }
+        else{
+            throw TestDataUtil.getSQLException();
         }
         return mock;
     }

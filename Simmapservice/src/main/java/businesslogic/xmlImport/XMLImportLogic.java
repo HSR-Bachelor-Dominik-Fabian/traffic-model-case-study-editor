@@ -4,6 +4,7 @@ import businesslogic.Utils.EPSGTransformUtil;
 import businesslogic.Utils.QuadTileUtils;
 import com.google.common.base.Stopwatch;
 import com.vividsolutions.jts.geom.Coordinate;
+import common.DataAccessLayerException;
 import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;
@@ -36,8 +37,8 @@ public class XMLImportLogic {
     public XMLImportLogic(Properties properties) {
         this.dataAccess = new SimmapDataAccessFacade(properties, new ProdConnection());
     }
-
-    public void importNetwork2DB(InputStream inputStream, String format, String networkName) {
+    //TODO: Exception Handling Business Layer
+    public void importNetwork2DB(InputStream inputStream, String format, String networkName) throws DataAccessLayerException {
         try {
             XMLInputFactory factory = XMLInputFactory.newInstance();
 
@@ -92,7 +93,7 @@ public class XMLImportLogic {
         }
     }
 
-    private int importNetwork2DB(String networkName) {
+    private int importNetwork2DB(String networkName) throws DataAccessLayerException {
         // TODO: dynamically detect id, after autoincrement
         NetworkRecord network = new NetworkRecord();
         network.setId(1);
@@ -101,7 +102,7 @@ public class XMLImportLogic {
         return 1;
     }
 
-    private void importNodes2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) {
+    private void importNodes2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessLayerException {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         try {
@@ -148,7 +149,7 @@ public class XMLImportLogic {
         System.out.println("Time: " + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
     }
 
-    private void importOptions2DB(XMLStreamReader streamReader, int networkId) {
+    private void importOptions2DB(XMLStreamReader streamReader, int networkId) throws DataAccessLayerException {
         NetworkOptionsRecord[] options = new NetworkOptionsRecord[3];
 
         if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
@@ -178,7 +179,7 @@ public class XMLImportLogic {
         }
     }
 
-    private void importLinks2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) {
+    private void importLinks2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessLayerException {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         Result<NodeRecord> nodes = dataAccess.getAllNodes();

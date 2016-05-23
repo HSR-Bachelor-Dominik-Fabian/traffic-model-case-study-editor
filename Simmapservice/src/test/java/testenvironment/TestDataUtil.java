@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Properties;
 
@@ -333,5 +334,10 @@ public class TestDataUtil {
         Record1<Long> record = context.newRecord(Tables.CHANGESET.ID);
         record.value1((long) 1);
         return record;
+    }
+
+    public static SQLException getSQLException(){
+        Throwable throwable = new IllegalStateException("BadState");
+        return new SQLException("SQL Test Exception","Test2",2 , throwable);
     }
 }
