@@ -1,20 +1,29 @@
-(function(){
-    var mainModule = angular.module('mainModule', ['changeLinkModule', 'menuModule']);
+(function () {
+    var mainModule = angular.module('mainModule', ['changeLinkModule', 'menuModule', 'ngMaterial']);
     mainModule.value("layerInstance", {instance: null, mapInstance: null});
-    mainModule.directive("simmap", ["$rootScope","layerInstance", function($rootScope, layerInstance){
-       return {
+    mainModule.directive("simmap", ["$rootScope", "layerInstance", "$mdToast", function ($rootScope, layerInstance, $mdToast) {
+        return {
             scope: true,
-            link: function($scope, element, attrs){
+            link: function ($scope, element, attrs) {
 
                 var SenozonLight = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     subdomains: 'abcd',
                     id: 'firehollaender.b2cc84a4',
                     accessToken: 'pk.eyJ1IjoiZmlyZWhvbGxhZW5kZXIiLCJhIjoiY2lsdzlmamExMDA5dXY5bTQ2bWl2MTZoNCJ9.Q8uzzgMdko8ZbcA6Kbwzlw',
-                    noWrap:true
+                    noWrap: true
                 });
 
-                var map = new L.Map("map", {center: [46.83, 8.3], zoom: 8, layers: [SenozonLight],
-                    attributionControl: false,minZoom: 3, maxZoom: 18, noWrap: true , zoomControl: false, maxBounds: [[-180, -180],[180,180]]});
+                var map = new L.Map("map", {
+                    center: [46.83, 8.3],
+                    zoom: 8,
+                    layers: [SenozonLight],
+                    attributionControl: false,
+                    minZoom: 3,
+                    maxZoom: 18,
+                    noWrap: true,
+                    zoomControl: false,
+                    maxBounds: [[-180, -180], [180, 180]]
+                });
                 layerInstance.mapInstance = map;
 
                 $('#streetDetails').on('hide.bs.offcanvas', function (e) {
@@ -25,11 +34,11 @@
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                     g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-                var addGeoJsonTileLayer = function() {
+                var addGeoJsonTileLayer = function () {
                     var geojsonURL = MyProps["rootURL"] + '/api/quadtile/1/{z}/{x}/{y}';
-                    var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
+                    var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL, {
                         clipTiles: false,
-                        identified: function(feature){
+                        identified: function (feature) {
                             return feature.properties.id;
                         },
                         unique: function (feature) {
@@ -46,7 +55,7 @@
                             }
                             return feature;
                         }
-                    },{
+                    }, {
                         onEachFeature: onEachFeature
                     });
                     layerInstance.instance = geojsonTileLayer;
@@ -54,19 +63,24 @@
                 };
 
                 L.control.attribution(null);
-                map.addControl(new L.Control.Zoomslider( {position: 'bottomright'} ));
-                L.control.scale( {position: 'bottomleft', imperial: false} ).addTo(map);
+                map.addControl(new L.Control.Zoomslider({position: 'bottomright'}));
+                L.control.scale({position: 'bottomleft', imperial: false}).addTo(map);
 
-                function onEachFeature(feature, layer){
+                function onEachFeature(feature, layer) {
                     if (feature.properties) {
                         if (feature.geometry.type !== 'Point') {
-                            layer.setStyle({className: 'street street_'+feature.properties.zoomlevel});
-                            layer.on('click', function(e){
+                            layer.setStyle({className: 'street street_' + feature.properties.zoomlevel});
+                            layer.on('click', function (e) {
                                 $('.street-active').removeClass('street-active');
                                 var path = e.target;
                                 var container = path._container;
                                 $('> path', container).addClass('street-active');
-                                $rootScope.$broadcast('updateFeature', {feature: feature, layer: layer, latlng: e.latlng, map: map});
+                                $rootScope.$broadcast('updateFeature', {
+                                    feature: feature,
+                                    layer: layer,
+                                    latlng: e.latlng,
+                                    map: map
+                                });
                             });
                         } else {
                             layer.style = {className: 'point'};
@@ -78,13 +92,22 @@
                     map.addLayer(layer);
                 }
 
+                var showMessageDialog = function (message) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent(message)
+                            .position('top right')
+                            .hideDelay(5000)
+                    );
+                };
+
                 var undoRedoHandler = new UndoRedoHandler();
                 undoRedoHandler.initializeUndoRedoStack();
 
                 var changesetHandler = new ChangesetHandler();
-                changesetHandler.initializeChangeset();
+                changesetHandler.initializeChangeset(showMessageDialog);
                 addGeoJsonTileLayer();
             }
-       };
+        };
     }]);
 })();

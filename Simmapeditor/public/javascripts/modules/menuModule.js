@@ -60,11 +60,11 @@
         };
         $scope._fillOpenChangeset = function(){
             var changeSetHandler = new ChangesetHandler();
-            $scope.changesetsToLoad = changeSetHandler.getAllChangesets();
+            $scope.changesetsToLoad = changeSetHandler.getAllChangesets(showMessageDialog);
         };
         $scope.onChangesetLoadClicked = function (item) {
             var changesetHandler = new ChangesetHandler();
-            changesetHandler.loadChangesetIntoLocalStorage(item.id);
+            changesetHandler.loadChangesetIntoLocalStorage(item.id, showMessageDialog);
             layerInstance.instance.redraw();
         };
         $scope.onChangesetDeleteClicked = function (item) {
@@ -77,7 +77,7 @@
                 .cancel('Abbrechen');
             $mdDialog.show(deleteChangesetDialog).then(function () {
                 var changesetHandler = new ChangesetHandler();
-                var success = changesetHandler.deleteChangeset(item.id);
+                var success = changesetHandler.deleteChangeset(item.id, showMessageDialog);
                 if(success){
                     showMessageDialog('Changeset "' + item.name +'" wurde erfolgreich gelöscht.');
                     layerInstance.instance.redraw();
@@ -99,8 +99,7 @@
             if (changeset.name == null) {
                 showNameDialog(changeset, changesetStorageHandler, changeSetHandler);
             } else {
-                changeSetHandler.saveChangeSet();
-                showMessageDialog('Changeset wurde erfolgreich gespeichert.');
+                changeSetHandler.saveChangeSet(showMessageDialog);
             }
         };
 
