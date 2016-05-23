@@ -234,17 +234,17 @@ public class TestDataUtil {
         return records;
     }
 
-    public static ChangesetRecord getSingleSelectChangesetTestRecord(){
+    public static ChangesetRecord getSingleSelectChangesetTestRecord() {
         ChangesetRecord record = new ChangesetRecord();
         record.setId((long) 1);
         record.setNetworkid(1);
         record.setUsernr(1);
         record.setLastmodified(null);
         record.setName("Changeset1");
-        return  record;
+        return record;
     }
 
-    public static NodeRecord getSingleSelectNodeTestRecord(){
+    public static NodeRecord getSingleSelectNodeTestRecord() {
         NodeRecord record = new NodeRecord();
         record.setId("1");
         record.setNetworkid(1);
@@ -257,7 +257,7 @@ public class TestDataUtil {
         return record;
     }
 
-    public static LinkChangeRecord getSingleSelectLinkChangeTestRecord(){
+    public static LinkChangeRecord getSingleSelectLinkChangeTestRecord() {
         LinkChangeRecord record = new LinkChangeRecord();
 
         record.setId("1");
@@ -291,14 +291,16 @@ public class TestDataUtil {
         DSLContext context = DSL.using(SQLDialect.POSTGRES);
         Link l = Tables.LINK.as("l");
         Record record = context.newRecord(l.ID, l.LENGTH, l.FREESPEED, l.CAPACITY, l.PERMLANES, l.ONEWAY,
-                l.MODES, l.LONG1, l.LAT1, l.LONG2, l.LAT2);
-        record.setValue(l.ID,"L1");
+                l.MODES, l.FROM, l.TO, l.LONG1, l.LAT1, l.LONG2, l.LAT2);
+        record.setValue(l.ID, "L1");
         record.setValue(l.LENGTH, new BigDecimal(1200));
         record.setValue(l.FREESPEED, new BigDecimal(33.33));
         record.setValue(l.CAPACITY, new BigDecimal(1000));
         record.setValue(l.PERMLANES, new BigDecimal(2));
         record.setValue(l.ONEWAY, true);
         record.setValue(l.MODES, "car");
+        record.setValue(l.FROM, "N1");
+        record.setValue(l.TO, "N2");
         record.setValue(l.LONG1, new BigDecimal(12));
         record.setValue(l.LAT1, new BigDecimal(12));
         record.setValue(l.LONG2, new BigDecimal(23));
@@ -307,14 +309,16 @@ public class TestDataUtil {
         linkRecords.add(record);
 
         Record record2 = context.newRecord(l.ID, l.LENGTH, l.FREESPEED, l.CAPACITY, l.PERMLANES, l.ONEWAY,
-                l.MODES, l.LONG1, l.LAT1, l.LONG2, l.LAT2);
-        record2.setValue(l.ID,"L2");
+                l.MODES, l.FROM, l.TO, l.LONG1, l.LAT1, l.LONG2, l.LAT2);
+        record2.setValue(l.ID, "L2");
         record2.setValue(l.LENGTH, new BigDecimal(1200));
         record2.setValue(l.FREESPEED, new BigDecimal(33.33));
         record2.setValue(l.CAPACITY, new BigDecimal(1000));
         record2.setValue(l.PERMLANES, new BigDecimal(2));
         record2.setValue(l.ONEWAY, true);
         record2.setValue(l.MODES, "car");
+        record.setValue(l.FROM, "N1");
+        record.setValue(l.TO, "N2");
         record2.setValue(l.LONG1, new BigDecimal(12));
         record2.setValue(l.LAT1, new BigDecimal(12));
         record2.setValue(l.LONG2, new BigDecimal(23));
@@ -326,18 +330,18 @@ public class TestDataUtil {
 
     public static Date getDateLastModifiedTestRecord() {
 
-        return Date.valueOf(LocalDate.of(1992,11,19));
+        return Date.valueOf(LocalDate.of(1992, 11, 19));
     }
 
-    public static Record getChangesetIDReturnRecord(){
+    public static Record getChangesetIDReturnRecord() {
         DSLContext context = DSL.using(SQLDialect.POSTGRES);
         Record1<Long> record = context.newRecord(Tables.CHANGESET.ID);
         record.value1((long) 1);
         return record;
     }
 
-    public static SQLException getSQLException(){
+    public static SQLException getSQLException() {
         Throwable throwable = new IllegalStateException("BadState");
-        return new SQLException("SQL Test Exception","Test2",2 , throwable);
+        return new SQLException("SQL Test Exception", "Test2", 2, throwable);
     }
 }
