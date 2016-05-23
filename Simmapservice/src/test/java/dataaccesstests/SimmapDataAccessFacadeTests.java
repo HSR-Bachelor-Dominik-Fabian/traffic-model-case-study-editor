@@ -319,13 +319,13 @@ public class SimmapDataAccessFacadeTests {
     @Test(expected = DataAccessLayerException.class)
     public void getLinkFromQuadKeyNegative() throws DataAccessLayerException {
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(new Properties(), new TestConnection(ConnectionMode.ERROR));
-        facade.getLinkFromQuadKey("123", 1, 12);
+        facade.getLinksFromQuadKey("123", 1, 12);
     }
 
     @Test(expected = DataAccessLayerException.class)
     public void getLinkFromQuadKeyNoConnection() throws DataAccessLayerException {
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
-        facade.getLinkFromQuadKey("123", 1, 12);
+        facade.getLinksFromQuadKey("123", 1, 12);
     }
 
     @Test

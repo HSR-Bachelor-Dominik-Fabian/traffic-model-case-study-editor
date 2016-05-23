@@ -153,7 +153,7 @@ public class SimmapDataAccessFacade {
         return null;
     }
 
-    public Date getLastModifiedQuadKey(String quadKey, int networkId, int zoomLevel){
+    public Date getLastModifiedQuadKey(String quadKey, int networkId, int zoomLevel) throws DataAccessLayerException {
         try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             Link l = Tables.LINK.as("l");
