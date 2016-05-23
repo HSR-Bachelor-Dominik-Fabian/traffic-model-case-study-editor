@@ -2,6 +2,7 @@ package dataaccess;
 
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
+import dataaccess.database.tables.Node;
 import dataaccess.database.tables.records.*;
 import dataaccess.utils.DataAccessUtil;
 import dataaccess.utils.IConnection;
@@ -108,20 +109,20 @@ public class SimmapDataAccessFacade {
         return null;
     }
 
-    public Result getLinkFromQuadKey(String QuadKey, int NetworkId, int zoomLevel){
+    public Result getLinksFromQuadKey(String quadKey, int networkId, int zoomLevel){
         try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
 
             Link l = Tables.LINK.as("l");
 
             SelectJoinStep query = context.select(l.ID, l.LENGTH, l.FREESPEED, l.CAPACITY, l.PERMLANES, l.ONEWAY,
-                    l.MODES, l.LONG1, l.LAT1, l.LONG2, l.LAT2)
+                    l.MODES, l.FROM, l.TO, l.LONG1, l.LAT1, l.LONG2, l.LAT2)
                     .from(l);
-            Condition where = l.QUADKEY.like(QuadKey + "%");
-            for(int i = 0; i < QuadKey.length()-1; i++){
-                where = where.or(l.QUADKEY.eq(QuadKey.substring(0, i)));
+            Condition where = l.QUADKEY.like(quadKey + "%");
+            for(int i = 0; i < quadKey.length()-1; i++){
+                where = where.or(l.QUADKEY.eq(quadKey.substring(0, i)));
             }
-            query.where(where).and(l.NETWORKID.eq(NetworkId)).and(l.MINLEVEL.lessOrEqual(zoomLevel));
+            query.where(where).and(l.NETWORKID.eq(networkId)).and(l.MINLEVEL.lessOrEqual(zoomLevel));
             return query.fetch();
 
         } catch (SQLException e) {
@@ -130,18 +131,34 @@ public class SimmapDataAccessFacade {
         return null;
     }
 
-    public Date getLastModifiedQuadKey(String QuadKey, int NetworkId, int zoomLevel){
+    public Result getNodesFromIds(List<String> nodeIds, int networkId) {
+        try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
+            DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
+
+            Node n = Tables.NODE.as("n");
+
+            SelectConditionStep query = context.select(n.ID, n.NETWORKID, n.QUADKEY, n.LAT, n.LONG).from(n)
+                    .where(n.ID.in(nodeIds)).and(n.NETWORKID.eq(networkId));
+            return query.fetch();
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Date getLastModifiedQuadKey(String quadKey, int networkId, int zoomLevel){
         try(Connection conn = this.connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             Link l = Tables.LINK.as("l");
 
             SelectJoinStep<Record1<Date>> query = context.select(l.LASTMODIFIED.max()).from(l);
-            Condition where = l.QUADKEY.like(QuadKey + "%");
-            for(int i = 0; i < QuadKey.length()-1; i++){
-                where = where.or(l.QUADKEY.eq(QuadKey.substring(0, i)));
+            Condition where = l.QUADKEY.like(quadKey + "%");
+            for(int i = 0; i < quadKey.length()-1; i++){
+                where = where.or(l.QUADKEY.eq(quadKey.substring(0, i)));
             }
 
-            query.where(where).and(l.NETWORKID.eq(NetworkId)).and(l.MINLEVEL.lessOrEqual(zoomLevel));
+            query.where(where).and(l.NETWORKID.eq(networkId)).and(l.MINLEVEL.lessOrEqual(zoomLevel));
             return query.fetch().get(0).value1();
         } catch (SQLException e) {
             e.printStackTrace();

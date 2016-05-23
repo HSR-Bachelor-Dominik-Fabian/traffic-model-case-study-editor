@@ -214,7 +214,7 @@ public class SimmapDataAccessFacadeTests {
     @Test
     public void getLinkFromQuadKeyPositive(){
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(new Properties(), new TestConnection(ConnectionMode.MULTIPLE));
-        Result<Record> record = facade.getLinkFromQuadKey("123", 1, 12);
+        Result<Record> record = facade.getLinksFromQuadKey("123", 1, 12);
         assertEquals(TestDataUtil.getMultipleSelectLinkTestRecords().size(), record.size());
         List<Record> expected = TestDataUtil.getMultipleSelectLinkTestRecords();
         assertEquals(expected, record);

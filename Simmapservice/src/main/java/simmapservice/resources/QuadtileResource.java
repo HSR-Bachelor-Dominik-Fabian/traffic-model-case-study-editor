@@ -13,9 +13,6 @@ import java.sql.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by fke on 17.03.2016.
- */
 @Produces("application/json")
 @Path("/quadtile/{networkid}/{z}/{x}/{y}")
 public class QuadtileResource {

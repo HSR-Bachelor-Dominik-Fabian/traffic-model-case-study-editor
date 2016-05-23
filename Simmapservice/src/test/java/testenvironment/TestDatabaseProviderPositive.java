@@ -141,7 +141,7 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
                 result.addAll(nodeRecords);
                 mockResult = new MockResult(nodeRecords.size(), result);
                 break;
-            //getLinkFromQuadKey
+            //getLinksFromQuadKey
             case "select \"l\".\"Id\", \"l\".\"Length\", \"l\".\"Freespeed\", \"l\".\"Capacity\", \"l\".\"Permlanes\", \"l\".\"Oneway\", \"l\".\"Modes\", \"l\".\"Long1\", \"l\".\"Lat1\", \"l\".\"Long2\", \"l\".\"Lat2\" from \"public\".\"Link\" as \"l\" where ((\"l\".\"QuadKey\" like '123%' or \"l\".\"QuadKey\" = '' or \"l\".\"QuadKey\" = '1') and \"l\".\"NetworkId\" = 1 and \"l\".\"MinLevel\" <= 12)":
                 List<Record> linkRecords = TestDataUtil.getMultipleSelectLinkTestRecords();
                 result = dslContext.newResult(Tables.LINK.as("l"));

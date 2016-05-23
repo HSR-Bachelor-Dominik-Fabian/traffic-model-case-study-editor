@@ -11,6 +11,8 @@ import org.jooq.Result;
 import org.json.JSONObject;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class DataFetchLogic {
@@ -24,11 +26,18 @@ public class DataFetchLogic {
     public JSONObject getDataForTile(int x, int y , int zoom, int networkid){
         JSONObject output;
 
-        String QuadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
+        String quadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
         SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
-        Result<Record> result = dataAccess.getLinkFromQuadKey(QuadKey, networkid, zoom);
+        Result<Record> links = dataAccess.getLinksFromQuadKey(quadKey, networkid, zoom);
+        List<String> nodeIds = new ArrayList<>();
+        for(Record link : links) {
+            nodeIds.add((String) link.getValue("From"));
+            nodeIds.add((String) link.getValue("To"));
+        }
 
-        output = GeoJSONUtil.getGeoFromLinkRequest(result, zoom);
+        Result<Record> nodes = dataAccess.getNodesFromIds(nodeIds, networkid);
+
+        output = GeoJSONUtil.getGeoFromLinkAndNodeRequest(links, nodes, zoom);
 
         return output;
     }
