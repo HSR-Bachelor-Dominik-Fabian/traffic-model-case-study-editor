@@ -74,6 +74,7 @@ svg {
 }
 
 .street {
+    stroke-opacity: 0.9!important;
     weight: 3;
     stroke: #3FC977;
     stroke-width: 2.4px;

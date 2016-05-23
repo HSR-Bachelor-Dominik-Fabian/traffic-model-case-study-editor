@@ -6,27 +6,6 @@
             scope: true,
             link: function($scope, element, attrs){
 
-                var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    noWrap:true
-                });
-                var baseMap_de = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
-                    noWrap:true
-                })
-                var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-                    noWrap:true
-                });
-                var MapBox = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                    subdomains: 'abcd',
-                    id: 'mapbox.streets-basic',
-                    accessToken: 'pk.eyJ1IjoiZjNrZWxsZXIiLCJhIjoiY2lsa3VyNjB3MDA3am5ja3FxNHFld3E2NiJ9.A99UzeLIycU2I8jRCPixgg',
-                    noWrap:true
-                });
-                var MapBoxLight = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                    subdomains: 'abcd',
-                    id: 'mapbox.light',
-                    accessToken: 'pk.eyJ1IjoiZjNrZWxsZXIiLCJhIjoiY2lsa3VyNjB3MDA3am5ja3FxNHFld3E2NiJ9.A99UzeLIycU2I8jRCPixgg',
-                    noWrap:true
-                });
                 var SenozonLight = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     subdomains: 'abcd',
                     id: 'firehollaender.b2cc84a4',
@@ -74,31 +53,29 @@
                     addOverLay(geojsonTileLayer, "Link Layer");
                 };
 
-                var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de,
-                    "Black and White": OpenStreetMap_BlackAndWhite, "MapBox": MapBox, "MapBoxLight": MapBoxLight, "SenozonLight": SenozonLight};
-
-                //var basicControl = L.control.layers(baseLayers, {}).addTo(map);
                 L.control.attribution(null);
-                map.addControl(new L.Control.Zoomslider( {position: "bottomright"} ));
-                L.control.scale( {position: "bottomleft", imperial: false} ).addTo(map);
-
+                map.addControl(new L.Control.Zoomslider( {position: 'bottomright'} ));
+                L.control.scale( {position: 'bottomleft', imperial: false} ).addTo(map);
 
                 function onEachFeature(feature, layer){
                     if (feature.properties) {
-                        layer.setStyle({color: "#6f98a4",opacity: 0.9 , className: "street street_"+feature.properties.zoomlevel});
-                        layer.on("click", function(e){
-                            $(".street-active").removeClass("street-active");
-                            var path = e.target;
-                            var container = path._container;
-                            $('> path', container).addClass('street-active');
-                            $rootScope.$broadcast('updateFeature', {feature: feature, layer: layer, latlng: e.latlng, map: map});
-                        });
+                        if (feature.geometry.type !== 'Point') {
+                            layer.setStyle({className: 'street street_'+feature.properties.zoomlevel});
+                            layer.on('click', function(e){
+                                $('.street-active').removeClass('street-active');
+                                var path = e.target;
+                                var container = path._container;
+                                $('> path', container).addClass('street-active');
+                                $rootScope.$broadcast('updateFeature', {feature: feature, layer: layer, latlng: e.latlng, map: map});
+                            });
+                        } else {
+                            layer.style = {className: 'point'};
+                        }
                     }
                 }
 
-                function addOverLay(layer, name) {
+                function addOverLay(layer) {
                     map.addLayer(layer);
-                    //basicControl.addOverlay(layer, name);
                 }
 
                 var undoRedoHandler = new UndoRedoHandler();
