@@ -185,6 +185,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jasmine-DefinitelyTyped" level="project" />
   </component>
 </module>
