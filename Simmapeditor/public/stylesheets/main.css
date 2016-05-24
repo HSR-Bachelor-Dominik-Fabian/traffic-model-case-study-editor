@@ -80,6 +80,13 @@ svg {
     stroke-width: 2.4px;
 }
 
+.street-edit {
+    stroke-opacity: 0.9!important;
+    weight: 3;
+    stroke: #3FC977;
+    stroke-width: 2.4px;
+}
+
 .street_12, .street_13, .street_14 {
     weight: 2;
     stroke: #34A461;
@@ -348,4 +355,27 @@ select option {
 
 .md-toast-text {
     color: white !important;
+}
+
+.point {
+    stroke: #3c5fff;
+    stroke-fillColor: #3FC977;
+}
+
+.point:hover, .point-active {
+    radius: 5px;
+    stroke: #ff151a !important;
+    cursor: pointer;
+}
+
+.glyphicon-pencil {
+    font-size: 20px!important;
+}
+
+.editModeActive {
+    background-color: #6f99a5!important;
+}
+
+.point-hidden {
+    display: none;
 }

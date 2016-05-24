@@ -40,6 +40,11 @@
                         <span class="glyphicon glyphicon-arrow-right"></span>
                     </a>
                 </li>
+                <li>
+                    <a id="editButton" ng-click="onEditClicked()" data-toggle="tooltip" data-placement="right" title="Edit">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <div id="hiddenMenu" class="col-xs-3 nopadding navmenu-fixed-left offcanvas offcanvas-container" ng-controller="StreetMenuController" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft" ng-app="menuModule">

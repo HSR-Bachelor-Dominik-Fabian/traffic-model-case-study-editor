@@ -16,6 +16,27 @@
         $scope.isRedoDisabled = false;
         $scope.isSaveDisabled = false;
         $scope.changesetsToLoad = null;
+        $scope.editMode = false;
+
+        $scope.$watch('editMode', function(newVal, oldVal) {
+            if (newVal) {
+                $('#editButton').addClass('editModeActive');
+                if (layerInstance.editInstance != null && layerInstance.instance != null) {
+                    layerInstance.mapInstance.removeLayer(layerInstance.instance);
+                    layerInstance.mapInstance.addLayer(layerInstance.editInstance);
+                    layerInstance.instance.redraw();
+                    layerInstance.editInstance.redraw();
+                }
+            } else {
+                $('#editButton').removeClass('editModeActive');
+                if (layerInstance.editInstance != null && layerInstance.instance != null) {
+                    layerInstance.mapInstance.removeLayer(layerInstance.editInstance);
+                    layerInstance.mapInstance.addLayer(layerInstance.instance);
+                    layerInstance.instance.redraw();
+                    layerInstance.editInstance.redraw();
+                }
+            }
+        });
 
         $scope.$watch(function () {
             return sessionStorage.getItem('undoStack');
@@ -108,6 +129,16 @@
             var changesetHandler = new ChangesetHandler();
             changesetHandler._loadEmptyChangesetIntoLocalStorage();
             showMessageDialog('Leeres Changeset wurde erstellt.');
+        };
+
+        $scope.onEditClicked = function() {
+            if ($scope.editMode) {
+                $scope.editMode = false;
+                showMessageDialog('Sie befinden sich wieder im normalen Modus.');
+            } else {
+                $scope.editMode = true;
+                showMessageDialog('Sie haben nun in den "Strassen Editieren" Modus gewechselt.');
+            }
         };
 
         var showNameDialog = function (changeset, changesetStorageHandler, changeSetHandler) {

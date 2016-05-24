@@ -1,6 +1,6 @@
 (function(){
     var mainModule = angular.module('mainModule', ['changeLinkModule', 'menuModule']);
-    mainModule.value("layerInstance", {instance: null, mapInstance: null});
+    mainModule.value("layerInstance", {instance: null, mapInstance: null, editInstance: null});
     mainModule.directive("simmap", ["$rootScope","layerInstance", function($rootScope, layerInstance){
        return {
             scope: true,
@@ -21,7 +21,16 @@
                     $rootScope.$broadcast('updateFeature', {feature: null, layer: null, latlng: null, map: map});
                     $(".street-active").removeClass("street-active");
                 });
-
+                /*
+                map.on('zoomend', function(e) {
+                    var currentZoom = map.getZoom();
+                    if (currentZoom > 14) {
+                        $('.point-hidden').removeClass('point-hidden');
+                    } else {
+                        $('.point').addClass('point-hidden');
+                    }
+                });
+                */
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                     g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
@@ -50,7 +59,41 @@
                         onEachFeature: onEachFeature
                     });
                     layerInstance.instance = geojsonTileLayer;
-                    addOverLay(geojsonTileLayer, "Link Layer");
+                    map.addLayer(geojsonTileLayer);
+                };
+
+                var addEditGeoJsonTileLayer = function() {
+                    var geojsonURLEdit = MyProps["rootURL"] + '/api/quadtile/edit/1/{z}/{x}/{y}';
+                    var geojsonTileLayerEdit = new L.TileLayer.GeoJSON(geojsonURLEdit,{
+                        clipTiles: false,
+                        identified: function(feature){
+                            return feature.properties.id;
+                        },
+                        unique: function (feature) {
+                            return feature.properties.zoomlevel;
+                        },
+                        modified: function (feature) {
+                            var storageHandler = new ChangesetStorageHandler();
+                            var changeset = storageHandler.getLocalChangeset();
+                            var geoJson = changeset.geoJson;
+                            for (var changedFeature in geoJson.features) {
+                                if (geoJson.features[changedFeature].properties.id === feature.properties.id) {
+                                    return geoJson.features[changedFeature];
+                                }
+                            }
+                            return feature;
+                        }
+                    },{
+                        onEachFeature: onEachFeatureEdit,
+                        pointToLayer: function (feature, latlng){
+                            /*if (map.getZoom() > 14) {*/
+                                return L.circleMarker(latlng, { className: 'point', radius: 3, fillOpacity: 0});
+                            /*} else {
+                                return L.circleMarker(latlng, { className: 'point, point-hidden', radius: 3, fillOpacity: 0});
+                            }*/
+                        },
+                    });
+                    layerInstance.editInstance = geojsonTileLayerEdit;
                 };
 
                 L.control.attribution(null);
@@ -58,24 +101,30 @@
                 L.control.scale( {position: 'bottomleft', imperial: false} ).addTo(map);
 
                 function onEachFeature(feature, layer){
-                    if (feature.properties) {
-                        if (feature.geometry.type !== 'Point') {
-                            layer.setStyle({className: 'street street_'+feature.properties.zoomlevel});
-                            layer.on('click', function(e){
-                                $('.street-active').removeClass('street-active');
-                                var path = e.target;
-                                var container = path._container;
-                                $('> path', container).addClass('street-active');
-                                $rootScope.$broadcast('updateFeature', {feature: feature, layer: layer, latlng: e.latlng, map: map});
-                            });
-                        } else {
-                            layer.style = {className: 'point'};
-                        }
+                    if (feature.properties && feature.geometry && feature.geometry.type !== 'Point') {
+                        layer.setStyle({className: 'street street_'+feature.properties.zoomlevel});
+                        layer.on('click', function(e){
+                            $('.street-active').removeClass('street-active');
+                            var path = e.target;
+                            var container = path._container;
+                            $('> path', container).addClass('street-active');
+                            $rootScope.$broadcast('updateFeature', {feature: feature, layer: layer, latlng: e.latlng, map: map});
+                        });
                     }
                 }
 
-                function addOverLay(layer) {
-                    map.addLayer(layer);
+                function onEachFeatureEdit(feature, layer){
+                    if (feature.properties) {
+                        if (feature.geometry.type !== 'Point') {
+                            layer.setStyle({className: 'street-edit street_'+feature.properties.zoomlevel, clickable: false});
+                        } else {
+                            layer.on('click', function(e) {
+                                var path = e.target;
+                                var container = path._container;
+                                $('> path', container).addClass('point-active');
+                            });
+                        }
+                    }
                 }
 
                 var undoRedoHandler = new UndoRedoHandler();
@@ -84,6 +133,7 @@
                 var changesetHandler = new ChangesetHandler();
                 changesetHandler.initializeChangeset();
                 addGeoJsonTileLayer();
+                addEditGeoJsonTileLayer();
             }
        };
     }]);
