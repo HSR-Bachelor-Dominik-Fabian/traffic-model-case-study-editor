@@ -7,6 +7,9 @@
     menuModule.directive('loadchangesetmenu', function () {
         return {templateUrl: '/partials/loadchangesetmenu'};
     });
+    menuModule.directive('importmenu', function () {
+        return {templateUrl: '/partials/importmenu'};
+    });
 
     menuModule.controller('StreetMenuController', ['$scope', '$mdDialog', '$mdToast', 'layerInstance',
             function ($scope, $mdDialog, $mdToast, layerInstance) {
@@ -107,6 +110,10 @@
             var changesetHandler = new ChangesetHandler();
             changesetHandler._loadEmptyChangesetIntoLocalStorage();
             showMessageDialog('Leeres Changeset wurde erstellt.');
+        };
+
+        $scope.convertPropsToArray = function(propsString){
+            return propsString.split(',');
         };
 
         var showNameDialog = function (changeset, changesetStorageHandler, changeSetHandler) {

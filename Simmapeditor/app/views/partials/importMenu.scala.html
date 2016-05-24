@@ -1,0 +1,27 @@
+@import java.util.Properties
+@(props: Properties)
+<div class="mainmenu-bar">
+    <div class="mainmenu-toggler animate" ng-click="menuState='rootMenu'">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </div>
+    <div class="mainmenu-title">
+        <p>Netzwerk Import</p>
+    </div>
+</div>
+<div id="importMenu" class="container-fluid">
+    <form action="@props.getProperty("rootURL")/api/xml" method="post" enctype="multipart/form-data">
+        <div class="input-group">
+            <span class="input-group-addon">Netzwerkname:</span> <input class="form-control" type="text" name="name">
+        </div>
+        <div class="input-group ">
+            <span class="input-group-addon">Datei wählen:</span> <input class="form-control" type="file" name="file" />
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">Format wählen:</span>
+            <select name="format" class="form-control">
+                <option ng-repeat="item in convertPropsToArray('@props.getProperty("supportedNetworks")')" value="{{item}}">{{item}}</option>
+            </select>
+        </div>
+        <input type="submit" class="btn" value="Upload" />
+    </form>
+</div>

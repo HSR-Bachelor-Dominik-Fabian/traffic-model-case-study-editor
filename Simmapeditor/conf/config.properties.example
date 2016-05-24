@@ -1,1 +1,2 @@
 rootURL = <rootURL>
+supportedNetworks = WGS84,EPSG:3857,EPSG:21781,EPSG:26914,EPSG:32719
