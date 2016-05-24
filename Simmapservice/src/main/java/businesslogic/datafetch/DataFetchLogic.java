@@ -30,15 +30,31 @@ public class DataFetchLogic {
         String quadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
         SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
         Result<Record> links = dataAccess.getLinksFromQuadKey(quadKey, networkid, zoom);
-        List<String> nodeIds = new ArrayList<>();
-        for(Record link : links) {
-            nodeIds.add((String) link.getValue("From"));
-            nodeIds.add((String) link.getValue("To"));
+
+        output = GeoJSONUtil.getGeoJsonFromLinkRequest(links, zoom);
+
+        return output;
+    }
+
+    public JSONObject getDataForTileWithNodes(int x, int y, int zoom, int networkid) throws DataAccessLayerException {
+        JSONObject output;
+
+        String quadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
+        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
+        Result<Record> links = dataAccess.getLinksFromQuadKey(quadKey, networkid, zoom);
+        if (zoom > 14) {
+            List<String> nodeIds = new ArrayList<>();
+            for(Record link : links) {
+                nodeIds.add((String) link.getValue("From"));
+                nodeIds.add((String) link.getValue("To"));
+            }
+
+            Result<Record> nodes = dataAccess.getNodesFromIds(nodeIds, networkid);
+
+            output = GeoJSONUtil.getGeoJsonFromLinkAndNodeRequest(links, nodes, zoom);
+        } else {
+            output = GeoJSONUtil.getGeoJsonFromLinkRequest(links, zoom);
         }
-
-        Result<Record> nodes = dataAccess.getNodesFromIds(nodeIds, networkid);
-
-        output = GeoJSONUtil.getGeoFromLinkAndNodeRequest(links, nodes, zoom);
 
         return output;
     }

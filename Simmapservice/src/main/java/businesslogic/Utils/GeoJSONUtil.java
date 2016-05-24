@@ -7,10 +7,20 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeoJSONUtil {
-    public static JSONObject getGeoFromLinkAndNodeRequest(Result<Record> links, Result<Record> nodes, int zoom){
+
+    public static JSONObject getGeoJsonFromLinkAndNodeRequest(Result<Record> links, Result<Record> nodes, int zoom) {
+        return getGeoJson(links, nodes, zoom);
+    }
+
+    public static JSONObject getGeoJsonFromLinkRequest(Result<Record> links, int zoom) {
+        return getGeoJson(links, null, zoom);
+    }
+
+    private static JSONObject getGeoJson(Result<Record> links, Result<Record> nodes, int zoom){
         JSONObject baseJSON = new JSONObject();
 
         baseJSON.put("type", "FeatureCollection");
@@ -39,22 +49,23 @@ public class GeoJSONUtil {
 
             baseJSON.append("features", newFeature);
         }
-        
-        for (Record node : nodes) {
-            JSONObject newFeature = new JSONObject();
-            JSONObject geometry = new JSONObject();
+        if (nodes != null) {
+            for (Record node : nodes) {
+                JSONObject newFeature = new JSONObject();
+                JSONObject geometry = new JSONObject();
 
-            geometry.put("coordinates", new BigDecimal[]{(BigDecimal)node.getValue("Long"), (BigDecimal)node.getValue("Lat")});
-            geometry.put("type", "Point");
-            newFeature.put("geometry",geometry);
+                geometry.put("coordinates", new BigDecimal[]{(BigDecimal) node.getValue("Long"), (BigDecimal) node.getValue("Lat")});
+                geometry.put("type", "Point");
+                newFeature.put("geometry", geometry);
 
-            newFeature.put("type", "Feature");
-            JSONObject props = new JSONObject();
-            props.put("id", node.getValue("Id"));
-            props.put("zoomlevel", zoom);
-            newFeature.put("properties", props);
+                newFeature.put("type", "Feature");
+                JSONObject props = new JSONObject();
+                props.put("id", node.getValue("Id"));
+                props.put("zoomlevel", zoom);
+                newFeature.put("properties", props);
 
-            baseJSON.append("features", newFeature);
+                baseJSON.append("features", newFeature);
+            }
         }
         
         return baseJSON;
