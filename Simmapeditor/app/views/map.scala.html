@@ -10,10 +10,10 @@
     </script>
 }
 <div id="mapContainer" class="container-fluid" ng-app="mainModule">
-    <div class="row">
+    <div class="row" ng-app="menuModel">
         <div simmap id="map" class="col-xs-12">
         </div>
-        <nav id="navmenuLeft" class="navbar navbar-fixed-left navbar-minimal animate" role="navigation" ng-controller="StreetMenuController" ng-app="menuModule">
+        <nav id="navmenuLeft" class="navbar navbar-fixed-left navbar-minimal animate"  role="navigation" ng-controller="StreetMenuController">
             <div class="navbar-toggler animate">
                 <span class="menu-icon"></span>
             </div>
@@ -47,6 +47,15 @@
                 </li>
             </ul>
         </nav>
+        <div id="editMenu" ng-show="getEditMode()==true" class="navbar-minimal-top animate-slide" ng-controller="StreetMenuController">
+            <ul>
+                <li>
+                    <a data-toggle="tooltip" data-placement="right" title="Strasse Zeichnen">
+                        <span class="glyphicon glyphicon-road"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
         <div id="hiddenMenu" class="col-xs-3 nopadding navmenu-fixed-left offcanvas offcanvas-container" ng-controller="StreetMenuController" data-autohide="false" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft" ng-app="menuModule">
             <rootMenu ng-show="menuState=='rootMenu'"></rootMenu>
             <loadChangesetMenu ng-show="menuState=='loadChangeset'"></loadChangesetMenu>

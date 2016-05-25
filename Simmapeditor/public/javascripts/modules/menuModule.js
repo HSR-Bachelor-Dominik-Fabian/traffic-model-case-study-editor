@@ -11,17 +11,22 @@
         return {templateUrl: '/partials/importmenu'};
     });
 
-    menuModule.controller('StreetMenuController', ['$scope', '$mdDialog', '$mdToast', 'layerInstance',
-            function ($scope, $mdDialog, $mdToast, layerInstance) {
+    menuModule.service("dataService", function(){
+        this.editMode = false;
+    });
+
+    menuModule.controller('StreetMenuController', ['$scope', '$mdDialog', '$mdToast', 'layerInstance', 'dataService',
+            function ($scope, $mdDialog, $mdToast, layerInstance, dataService) {
         $scope.menuState = 'rootMenu';
         $scope.changeCount = 0;
         $scope.isUndoDisabled = false;
         $scope.isRedoDisabled = false;
         $scope.isSaveDisabled = false;
         $scope.changesetsToLoad = null;
-        $scope.editMode = false;
-
-        $scope.$watch('editMode', function(newVal, oldVal) {
+        $scope.getEditMode = function(){
+            return dataService.editMode;
+        };
+        $scope.$watch('getEditMode()', function(newVal, oldVal) {
             if (newVal) {
                 $('#editButton').addClass('editModeActive');
                 if (layerInstance.editInstance != null && layerInstance.instance != null) {
@@ -138,11 +143,11 @@
         };
 
         $scope.onEditClicked = function() {
-            if ($scope.editMode) {
-                $scope.editMode = false;
+            if (dataService.editMode) {
+                dataService.editMode = false;
                 showMessageDialog('Sie befinden sich wieder im normalen Modus.');
             } else {
-                $scope.editMode = true;
+                dataService.editMode = true;
                 showMessageDialog('Sie haben nun in den "Strassen Editieren" Modus gewechselt.');
             }
         };

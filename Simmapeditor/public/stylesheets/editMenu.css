@@ -1,0 +1,115 @@
+.navbar-minimal-top > ul > li {
+    display: inline-block;
+    float: left;
+    position:relative;
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+    height: 60px;
+    width: 60px;
+}
+
+.navbar-minimal-top{
+    position: absolute;
+    top: 0px;
+    margin: 0px;
+    left: 35%;
+    width: 30%;
+    text-align: center;
+    height: 54px;
+    padding: 0px;
+    list-style: none;
+    z-index: 50;
+    background-color: rgb(51, 51, 51);
+    background-color: rgba(51, 51, 51, 0.8);
+}
+
+.navbar-minimal-top > ul > li > a {
+    width: 60px!important;
+    height: 54px!important;
+    position: relative;
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    padding: 17px 20px;
+    text-align: left;
+    cursor: pointer;
+    border-bottom: 1px solid rgb(81, 81, 81);
+    width: 100%;
+    text-decoration: none;
+    margin: 0px;
+}
+
+.navbar-minimal-top > ul > li > a:last-child {
+    border-bottom-width: 0px;
+}
+
+.navbar-minimal-top > ul > li > a:hover {
+    background-color: #91acb4;
+    color: white;
+}
+.navbar-minimal-top > ul > li > a:active {
+    background-color: #4a717c;
+    color: white;
+}
+
+.navbar-minimal-top > ul > li > a > .glyphicon {
+    font-size: 19px;
+    float: right;
+}
+
+.animate-slide {
+    -webkit-transform: translate3d(0,0,0); /* Chrome, Safari, Opera */
+    transform: translate3d(0,0,0,);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+}
+
+.animate-slide.ng-hide-add,
+.animate-slide.ng-hide-remove {
+    display:block!important;
+}
+
+.animate-slide.ng-hide-remove.ng-hide-remove-active {
+    -webkit-animation:0.5s slide-up;
+    animation:0.5s slide-up;
+}
+
+.animate-slide.ng-hide-add.ng-hide-add-active {
+    -webkit-animation:0.5s slide-down;
+    animation:0.5s slide-down;
+}
+
+.animate-slide.ng-hide {
+    top:-100px;
+    display:block!important;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes slide-down
+{
+    0%   {top:0;}
+    100%  {top:-100px;}
+}
+
+/* Standard syntax */
+@keyframes slide-down
+{
+    0%   {top:0;}
+    100%  {top:-100px;}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes slide-up
+{
+    0%  {top:-100px;}
+    100%   {top:0;}
+}
+
+/* Standard syntax */
+@keyframes slide-up
+{
+    0%  {top:-100px;}
+    100%   {top:0;}
+}
