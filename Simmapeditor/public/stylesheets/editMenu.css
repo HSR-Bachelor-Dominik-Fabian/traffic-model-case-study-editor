@@ -1,7 +1,7 @@
 .navbar-minimal-top > ul > li {
     display: inline-block;
     float: left;
-    position:relative;
+    position: relative;
     margin: 0px;
     padding: 0px;
     border-width: 0px;
@@ -9,7 +9,7 @@
     width: 60px;
 }
 
-.navbar-minimal-top{
+.navbar-minimal-top {
     position: absolute;
     top: 0px;
     margin: 0px;
@@ -25,8 +25,8 @@
 }
 
 .navbar-minimal-top > ul > li > a {
-    width: 60px!important;
-    height: 54px!important;
+    width: 60px !important;
+    height: 54px !important;
     position: relative;
     display: inline-block;
     color: rgb(255, 255, 255);
@@ -47,6 +47,7 @@
     background-color: #91acb4;
     color: white;
 }
+
 .navbar-minimal-top > ul > li > a:active {
     background-color: #4a717c;
     color: white;
@@ -58,8 +59,8 @@
 }
 
 .animate-slide {
-    -webkit-transform: translate3d(0,0,0); /* Chrome, Safari, Opera */
-    transform: translate3d(0,0,0,);
+    -webkit-transform: translate3d(0, 0, 0); /* Chrome, Safari, Opera */
+    transform: translate3d(0, 0, 0,);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-perspective: 1000;
@@ -68,48 +69,106 @@
 
 .animate-slide.ng-hide-add,
 .animate-slide.ng-hide-remove {
-    display:block!important;
+    display: block !important;
 }
 
 .animate-slide.ng-hide-remove.ng-hide-remove-active {
-    -webkit-animation:0.5s slide-up;
-    animation:0.5s slide-up;
+    -webkit-animation: 0.5s slide-up;
+    animation: 0.5s slide-up;
 }
 
 .animate-slide.ng-hide-add.ng-hide-add-active {
-    -webkit-animation:0.5s slide-down;
-    animation:0.5s slide-down;
+    -webkit-animation: 0.5s slide-down;
+    animation: 0.5s slide-down;
 }
 
 .animate-slide.ng-hide {
-    top:-100px;
-    display:block!important;
+    top: -100px;
+    display: block !important;
 }
 
 /* Chrome, Safari, Opera */
-@-webkit-keyframes slide-down
-{
-    0%   {top:0;}
-    100%  {top:-100px;}
+@-webkit-keyframes slide-down {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: -100px;
+    }
 }
 
 /* Standard syntax */
-@keyframes slide-down
-{
-    0%   {top:0;}
-    100%  {top:-100px;}
+@keyframes slide-down {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: -100px;
+    }
 }
 
 /* Chrome, Safari, Opera */
-@-webkit-keyframes slide-up
-{
-    0%  {top:-100px;}
-    100%   {top:0;}
+@-webkit-keyframes slide-up {
+    0% {
+        top: -100px;
+    }
+    100% {
+        top: 0;
+    }
 }
 
 /* Standard syntax */
-@keyframes slide-up
-{
-    0%  {top:-100px;}
-    100%   {top:0;}
+@keyframes slide-up {
+    0% {
+        top: -100px;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+.editStreetDialog {
+    position: absolute;
+    top: 70px;
+    right: 100px;
+    width: 20%;
+    padding-bottom: 20px;
+    background-color: rgb(51, 51, 51);
+    background-color: rgba(51, 51, 51, 0.8);
+    color: white;
+}
+
+.editStreetDialog .input-group .form-control {
+    height: 40px;
+    border-radius: 0px;
+    background-color: rgb(51, 51, 51);
+    border: 1px solid rgb(51, 51, 51);
+    color: white;
+}
+
+.editStreetDialog .input-group .input-group-addon {
+    border-radius: 0px;
+    background-color: #484546;
+    border: 1px solid #484546;
+    color: white;
+}
+
+.editStreetDialog .input-group {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.editStreetDialog .input-group option {
+    color: white;
+}
+
+.editStreetDialog .btn {
+    border-radius: 0px !important;
+    background-color: #484546;
+    border: 1px solid #484546;
+    color: white;
+}
+
+.editStreetDialog .btn:active {
+    color: white;
 }

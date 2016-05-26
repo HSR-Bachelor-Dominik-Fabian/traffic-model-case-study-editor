@@ -47,14 +47,34 @@
                 </li>
             </ul>
         </nav>
-        <div id="editMenu" ng-show="getEditMode()==true" class="navbar-minimal-top animate-slide" ng-controller="StreetMenuController">
-            <ul>
-                <li>
-                    <a data-toggle="tooltip" data-placement="right" title="Strasse Zeichnen">
-                        <span class="glyphicon glyphicon-road"></span>
-                    </a>
-                </li>
-            </ul>
+        <div ng-show="getEditMode()==true"  ng-controller="StreetMenuController">
+            <div id="editMenu"  class="navbar-minimal-top animate-slide">
+                <ul>
+                    <li>
+                        <a data-toggle="tooltip" ng-click="onAddStreetClicked()" data-placement="right" title="Strasse Zeichnen">
+                            <span class="glyphicon glyphicon-road"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="addStreetDialog" class="editStreetDialog" ng-show="getStreetToEdit() != null">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h3 class="col-sm-12">Strasse zeichnen</h3>
+                    </div>
+                    <div class="row">
+                        <form class="col-sm-12" ng-submit="onSaveNewStreetClicked()">
+                            <div class="input-group">
+                                <span class="input-group-addon">Von:</span><input class="form-control" name="street-from" type="text" ng-model="getStreetToEdit().from" readonly="readonly" /><button ng-click="setFromStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Bis:</span><input class="form-control" name="street-to" type="text" ng-model="getStreetToEdit().to" readonly="readonly" /><button ng-click="setToStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
+                            </div>
+                            <input type="submit" class="btn" value="Speichern" />
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="hiddenMenu" class="col-xs-3 nopadding navmenu-fixed-left offcanvas offcanvas-container" ng-controller="StreetMenuController" data-autohide="false" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft" ng-app="menuModule">
             <rootMenu ng-show="menuState=='rootMenu'"></rootMenu>

@@ -1,7 +1,7 @@
 (function () {
     var mainModule = angular.module('mainModule', ['changeLinkModule', 'menuModule', 'ngMaterial']);
     mainModule.value("layerInstance", {instance: null, mapInstance: null, editInstance: null});
-    mainModule.directive("simmap", ["$rootScope", "layerInstance", "$mdToast", function ($rootScope, layerInstance, $mdToast) {
+    mainModule.directive("simmap", ["$rootScope", "layerInstance", "$mdToast", "dataService", function ($rootScope, layerInstance, $mdToast, dataService) {
         return {
             scope: true,
             link: function ($scope, element, attrs) {
@@ -31,15 +31,15 @@
                     $(".street-active").removeClass("street-active");
                 });
                 /*
-                map.on('zoomend', function(e) {
-                    var currentZoom = map.getZoom();
-                    if (currentZoom > 14) {
-                        $('.point-hidden').removeClass('point-hidden');
-                    } else {
-                        $('.point').addClass('point-hidden');
-                    }
-                });
-                */
+                 map.on('zoomend', function(e) {
+                 var currentZoom = map.getZoom();
+                 if (currentZoom > 14) {
+                 $('.point-hidden').removeClass('point-hidden');
+                 } else {
+                 $('.point').addClass('point-hidden');
+                 }
+                 });
+                 */
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                     g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
@@ -71,11 +71,11 @@
                     map.addLayer(geojsonTileLayer);
                 };
 
-                var addEditGeoJsonTileLayer = function() {
+                var addEditGeoJsonTileLayer = function () {
                     var geojsonURLEdit = MyProps["rootURL"] + '/api/quadtile/edit/1/{z}/{x}/{y}';
-                    var geojsonTileLayerEdit = new L.TileLayer.GeoJSON(geojsonURLEdit,{
+                    var geojsonTileLayerEdit = new L.TileLayer.GeoJSON(geojsonURLEdit, {
                         clipTiles: false,
-                        identified: function(feature){
+                        identified: function (feature) {
                             return feature.properties.id;
                         },
                         unique: function (feature) {
@@ -92,14 +92,14 @@
                             }
                             return feature;
                         }
-                    },{
+                    }, {
                         onEachFeature: onEachFeatureEdit,
-                        pointToLayer: function (feature, latlng){
+                        pointToLayer: function (feature, latlng) {
                             /*if (map.getZoom() > 14) {*/
-                                return L.circleMarker(latlng, { className: 'point', radius: 3, fillOpacity: 0});
+                            return L.circleMarker(latlng, {className: 'point', radius: 3, fillOpacity: 0});
                             /*} else {
-                                return L.circleMarker(latlng, { className: 'point, point-hidden', radius: 3, fillOpacity: 0});
-                            }*/
+                             return L.circleMarker(latlng, { className: 'point, point-hidden', radius: 3, fillOpacity: 0});
+                             }*/
                         },
                     });
                     layerInstance.editInstance = geojsonTileLayerEdit;
@@ -109,28 +109,50 @@
                 map.addControl(new L.Control.Zoomslider({position: 'bottomright'}));
                 L.control.scale({position: 'bottomleft', imperial: false}).addTo(map);
 
-                function onEachFeature(feature, layer){
+                function onEachFeature(feature, layer) {
                     if (feature.properties && feature.geometry && feature.geometry.type !== 'Point') {
-                        layer.setStyle({className: 'street street_'+feature.properties.zoomlevel});
-                        layer.on('click', function(e){
+                        layer.setStyle({className: 'street street_' + feature.properties.zoomlevel});
+                        layer.on('click', function (e) {
                             $('.street-active').removeClass('street-active');
                             var path = e.target;
                             var container = path._container;
                             $('> path', container).addClass('street-active');
-                            $rootScope.$broadcast('updateFeature', {feature: feature, layer: layer, latlng: e.latlng, map: map});
+                            $rootScope.$broadcast('updateFeature', {
+                                feature: feature,
+                                layer: layer,
+                                latlng: e.latlng,
+                                map: map
+                            });
                         });
                     }
                 }
 
-                function onEachFeatureEdit(feature, layer){
+                function onEachFeatureEdit(feature, layer) {
                     if (feature.properties) {
                         if (feature.geometry.type !== 'Point') {
-                            layer.setStyle({className: 'street-edit street_'+feature.properties.zoomlevel, clickable: false});
+                            layer.setStyle({
+                                className: 'street-edit street_' + feature.properties.zoomlevel + ' link_' + feature.properties.id,
+                                clickable: false
+                            });
                         } else {
-                            layer.on('click', function(e) {
-                                var path = e.target;
-                                var container = path._container;
-                                $('> path', container).addClass('point-active');
+                            layer.setStyle({className: 'node_' + feature.properties.id});
+                            layer.on('click', function (e) {
+                                if (dataService.editMode && dataService.getStreetToEdit() != null) {
+                                    var path = e.target;
+                                    var container = path._container;
+                                    var id = path.feature.properties.id;
+                                    if (dataService.getStreetToEdit().from == null) {
+                                        $rootScope.$apply(function () {
+                                            dataService.setFromStreet(id);
+                                        });
+                                    }
+                                    else {
+                                        $rootScope.$apply(function () {
+                                            dataService.setToStreet(id);
+                                        });
+                                    }
+
+                                }
                             });
                         }
                     }
