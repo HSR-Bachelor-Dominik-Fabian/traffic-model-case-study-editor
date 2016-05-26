@@ -252,12 +252,14 @@
                 var undoRedoHandler = new UndoRedoHandler();
                 undoRedoHandler.undo();
                 layerInstance.instance.redraw();
+                layerInstance.editInstance.redraw();
             };
 
             $scope.onRedoClicked = function () {
                 var undoRedoHandler = new UndoRedoHandler();
                 undoRedoHandler.redo();
                 layerInstance.instance.redraw();
+                layerInstance.editInstance.redraw();
             };
         }]);
 })();

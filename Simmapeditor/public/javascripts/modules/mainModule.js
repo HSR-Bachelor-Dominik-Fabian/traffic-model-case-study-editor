@@ -59,9 +59,12 @@
                             var geoJson = changeset.geoJson;
                             for (var changedFeature in geoJson.features) {
                                 if (geoJson.features[changedFeature].properties.id === feature.properties.id) {
-                                    return geoJson.features[changedFeature];
+                                    var result = geoJson.features[changedFeature];
+                                    result.isModified = true;
+                                    return result;
                                 }
                             }
+                            feature.isModified = false;
                             return feature;
                         }
                     }, {
@@ -87,20 +90,18 @@
                             var geoJson = changeset.geoJson;
                             for (var changedFeature in geoJson.features) {
                                 if (geoJson.features[changedFeature].properties.id === feature.properties.id) {
-                                    return geoJson.features[changedFeature];
+                                    var result = geoJson.features[changedFeature];
+                                    result.isModified = true;
+                                    return result;
                                 }
                             }
                             return feature;
                         }
                     }, {
                         onEachFeature: onEachFeatureEdit,
-                        pointToLayer: function (feature, latlng) {
-                            /*if (map.getZoom() > 14) {*/
-                            return L.circleMarker(latlng, {className: 'point', radius: 3, fillOpacity: 0});
-                            /*} else {
-                             return L.circleMarker(latlng, { className: 'point, point-hidden', radius: 3, fillOpacity: 0});
-                             }*/
-                        },
+                        pointToLayer: function (feature, latlng){
+                            return L.circleMarker(latlng, { className: 'point', radius: 3, fillOpacity: 0});
+                        }
                     });
                     layerInstance.editInstance = geojsonTileLayerEdit;
                 };
@@ -111,8 +112,12 @@
 
                 function onEachFeature(feature, layer) {
                     if (feature.properties && feature.geometry && feature.geometry.type !== 'Point') {
-                        layer.setStyle({className: 'street street_' + feature.properties.zoomlevel});
-                        layer.on('click', function (e) {
+                        if (feature.isModified) {
+                            layer.setStyle({className: 'street street-edited street_'+feature.properties.zoomlevel});
+                        } else {
+                            layer.setStyle({className: 'street street_'+feature.properties.zoomlevel});
+                        }
+                        layer.on('click', function(e){
                             $('.street-active').removeClass('street-active');
                             var path = e.target;
                             var container = path._container;
@@ -130,10 +135,11 @@
                 function onEachFeatureEdit(feature, layer) {
                     if (feature.properties) {
                         if (feature.geometry.type !== 'Point') {
-                            layer.setStyle({
-                                className: 'street-edit street_' + feature.properties.zoomlevel + ' link_' + feature.properties.id,
-                                clickable: false
-                            });
+                            if (feature.isModified) {
+                                layer.setStyle({className: 'street-edit street-edited street_'+feature.properties.zoomlevel, clickable: false});
+                            } else {
+                                layer.setStyle({className: 'street-edit street_'+feature.properties.zoomlevel, clickable: false});
+                            }
                         } else {
                             layer.setStyle({className: 'node_' + feature.properties.id});
                             layer.on('click', function (e) {
