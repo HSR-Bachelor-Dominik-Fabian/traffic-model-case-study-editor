@@ -19,7 +19,7 @@
         };
     });
 
-    changeLinkModule.controller("StreetDetailController", function($scope, $rootScope) {
+    changeLinkModule.controller("StreetDetailController", function($scope) {
         $scope.streetModel = null;
         $scope.streetModelDefault = null;
         $scope.layer = null;
@@ -32,6 +32,8 @@
             changesetStorageHandler.addNewChange($scope.streetModel);
             undoRedoHandler.addChange($scope._getChangeModelForUndoRedoStack());
             $scope.streetModelDefault = JSON.parse(JSON.stringify($scope.streetModel));
+            var path = $scope.layer._path;
+            $(path).addClass('street-edited');
         };
 
         $scope._getChangeModelForUndoRedoStack = function() {

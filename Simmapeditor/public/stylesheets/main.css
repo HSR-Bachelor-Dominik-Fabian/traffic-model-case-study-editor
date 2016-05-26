@@ -87,6 +87,10 @@ svg {
     stroke-width: 2.4px;
 }
 
+.street-edited {
+    stroke: #ff463c !important;
+}
+
 .street_12, .street_13, .street_14 {
     weight: 2;
     stroke: #34A461;
@@ -363,7 +367,9 @@ select option {
 }
 
 .point:hover, .point-active {
-    radius: 5px;
+    stroke-width: 4px;
+    fill: #ff151a !important;
+    stroke-opacity: 1;
     stroke: #ff151a !important;
     cursor: pointer;
 }
@@ -374,8 +380,4 @@ select option {
 
 .editModeActive {
     background-color: #6f99a5!important;
-}
-
-.point-hidden {
-    display: none;
 }
