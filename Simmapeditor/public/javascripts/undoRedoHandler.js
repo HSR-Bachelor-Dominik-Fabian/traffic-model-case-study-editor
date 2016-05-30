@@ -74,8 +74,8 @@ function UndoRedoHandler() {
                 var geoJsonFeature = changeset.geoJson.features[index];
                 if (geoJsonFeature.properties.id === undoEntry.id) {
                     if(undoEntry.key === "link_changed" && undoEntry.value.coordinates !== undefined){
-                        redoEntry.value.coordinates = geoJsonFeature.geometry;
-                        geoJsonFeature.geometry = undoEntry.value.coordinates;
+                        redoEntry.value.coordinates = geoJsonFeature.geometry.coordinates;
+                        geoJsonFeature.geometry.coordinates = undoEntry.value.coordinates;
                     }else {
                         geoJsonFeature.properties[undoEntry.key] = undoEntry.value;
                     }
@@ -137,8 +137,8 @@ function UndoRedoHandler() {
                 var geoJsonFeature = changeset.geoJson.features[index];
                 if (geoJsonFeature.properties.id === redoEntry.id) {
                     if(redoEntry.key === "link_changed" && redoEntry.value.coordinates !== undefined){
-                        undoEntry.value.coordinates = geoJsonFeature.geometry;
-                        geoJsonFeature.geometry = redoEntry.value.coordinates;
+                        undoEntry.value.coordinates = geoJsonFeature.geometry.coordinates;
+                        geoJsonFeature.geometry.coordinates = redoEntry.value.coordinates;
                     }else {
                         geoJsonFeature.properties[redoEntry.key] = redoEntry.value;
                     }
