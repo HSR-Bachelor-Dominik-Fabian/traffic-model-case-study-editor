@@ -17,7 +17,7 @@ function ChangesetStorageHandler() {
 
         var properties = { "modes": model["modes"], "zoomlevel": model["minlevel"], "length": model["length"],
             "freespeed": model["freespeed"], "permlanes": model["permlanes"], "id": model["id"],
-            "oneway": model["oneway"], "capacity": model["capacity"]};
+            "oneway": model["oneway"], "capacity": model["capacity"], "from": model["from"], "to": model["to"]};
 
         feature.properties = properties;
         return feature;

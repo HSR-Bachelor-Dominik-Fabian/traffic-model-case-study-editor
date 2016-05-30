@@ -94,7 +94,9 @@ public class QuadtileResource {
             JSONObject json = dataFetchLogic.getDataForTileWithNodes(x, y, z, networkID);
             stopwatch.stop();
             System.out.println("Get Data: " + stopwatch.elapsed(TimeUnit.MILLISECONDS) + " ms");
-
+            if (json == null) {
+                return Response.noContent().cacheControl(cc).build();
+            }
             builder = Response.ok(json.toString());
             builder.cacheControl(cc).tag(etag);
             return builder.build();
