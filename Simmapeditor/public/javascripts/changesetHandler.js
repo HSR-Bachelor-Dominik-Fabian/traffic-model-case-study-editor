@@ -9,7 +9,9 @@ function ChangesetHandler() {
             dataType:'json',
             async:false,
             success:function(data){
-                result = data;
+                if(data !== undefined){
+                    result = data;
+                }
             },
             error: function(data){
                 showMessageDialog('Fehler: ' + data.responseJSON.message);
