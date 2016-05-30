@@ -45,6 +45,8 @@ public class GeoJSONUtil {
             props.put("id", link.getValue("Id"));
             props.put("zoomlevel", zoom);
             props.put("capacity", link.getValue("Capacity"));
+            props.put("from", link.getValue("From"));
+            props.put("to", link.getValue("To"));
             newFeature.put("properties", props);
 
             baseJSON.append("features", newFeature);

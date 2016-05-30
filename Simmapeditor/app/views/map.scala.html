@@ -65,12 +65,12 @@
                     <div class="row">
                         <form class="col-sm-12" ng-submit="onSaveNewStreetClicked()">
                             <div class="input-group">
-                                <span class="input-group-addon">Von:</span><input class="form-control" name="street-from" type="text" ng-model="getStreetToEdit().from" readonly="readonly" /><button ng-click="setFromStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
+                                <span class="input-group-addon">Von:</span><input class="form-control" name="street-from" type="text" ng-model="getStreetToEdit().from.properties.id" readonly="readonly" /><button ng-click="setFromStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon">Bis:</span><input class="form-control" name="street-to" type="text" ng-model="getStreetToEdit().to" readonly="readonly" /><button ng-click="setToStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
+                                <span class="input-group-addon">Bis:</span><input class="form-control" name="street-to" type="text" ng-model="getStreetToEdit().to.properties.id" readonly="readonly" /><button ng-click="setToStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
                             </div>
-                            <input type="submit" class="btn" value="Speichern" />
+                            <input type="submit" class="btn" value="Speichern" /><input type="button" ng-click="setStreetToEdit(null)" class="btn" value="Abbrechen" />
                         </form>
                     </div>
                 </div>

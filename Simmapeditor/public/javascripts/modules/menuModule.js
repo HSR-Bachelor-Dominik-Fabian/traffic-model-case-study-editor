@@ -88,18 +88,18 @@
             $scope.$watch('getStreetToEdit().from'
                 , function (newVal, oldVal) {
                     if (oldVal != null) {
-                        $('.node_' + oldVal).removeClass('point-active');
+                        $('.node_' + oldVal.properties.id).removeClass('point-active');
                     }
                     if (newVal != null) {
-                        $('.node_' + newVal).addClass('point-active');
+                        $('.node_' + newVal.properties.id).addClass('point-active');
                     }
                 });
             $scope.$watch('getStreetToEdit().to', function (newVal, oldVal) {
                 if (oldVal != null) {
-                    $('.node_' + oldVal).removeClass('point-active');
+                    $('.node_' + oldVal.properties.id).removeClass('point-active');
                 }
                 if (newVal != null) {
-                    $('.node_' + newVal).addClass('point-active');
+                    $('.node_' + newVal.properties.id).addClass('point-active');
                 }
             });
 
@@ -190,7 +190,42 @@
             };
 
             $scope.onSaveNewStreetClicked = function () {
+                //TODO: feature direkt an add change übergeben
+                var changesetStorageHandler = new ChangesetStorageHandler();
+                var undoRedoHandler = new UndoRedoHandler();
+                var change = dataService.getStreetToEdit();
+                var link = change.link;
+                var from = change.from;
+                var to = change.to;
+                var changed = false;
+                var changeModel = {id: link.properties.id, key: "link_changed", value: {}};
+                if(link.properties.from !== from.properties.id){
+                    changeModel.value.from = link.properties.from;
+                    changeModel.value.long1 = link.geometry.coordinates[0][0];
+                    changeModel.value.lat1 = link.geometry.coordinates[0][1];
+                    link.properties.from = from.properties.id;
+                    link.properties.lat1 = from.geometry.coordinates[1];
+                    link.properties.long1 = from.geometry.coordinates[0];
+                    changed = true;
+                }
+                if(link.properties.to !== to.properties.id){
+                    changeModel.value.to = link.properties.to;
+                    changeModel.value.long2 = link.geometry.coordinates[1][0];
+                    changeModel.value.lat2 = link.geometry.coordinates[1][1];
+                    link.properties.to = to.properties.id;
+                    link.properties.lat2 = to.geometry.coordinates[1];
+                    link.properties.long2 = to.geometry.coordinates[0];
+                    changed = true;
+                }
+                if(changed){
+                    changeModel.value.coordinates = link.geometry.coordinates;
+                    link.geometry.coordinates = [from.geometry, to.geometry];
+                    changesetStorageHandler.addNewChange(link);
+                    undoRedoHandler.addChange(changeModel);
+                    layerInstance.editInstance.redraw();
+                }
                 dataService.setStreetToEdit(null);
+
                 showMessageDialog('Strasse gespeichert.')
             };
 
@@ -245,7 +280,7 @@
             };
 
             $scope.onAddStreetClicked = function () {
-                dataService.setStreetToEdit({from: null, to: null});
+                dataService.setStreetToEdit({from: null, to: null, link: null});
             };
 
             $scope.onUndoClicked = function () {

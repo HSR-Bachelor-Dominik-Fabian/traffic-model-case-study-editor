@@ -99,8 +99,8 @@
                         }
                     }, {
                         onEachFeature: onEachFeatureEdit,
-                        pointToLayer: function (feature, latlng){
-                            return L.circleMarker(latlng, { className: 'point', radius: 3, fillOpacity: 0});
+                        pointToLayer: function (feature, latlng) {
+                            return L.circleMarker(latlng, {className: 'point', radius: 3, fillOpacity: 0});
                         }
                     });
                     layerInstance.editInstance = geojsonTileLayerEdit;
@@ -113,11 +113,11 @@
                 function onEachFeature(feature, layer) {
                     if (feature.properties && feature.geometry && feature.geometry.type !== 'Point') {
                         if (feature.isModified) {
-                            layer.setStyle({className: 'street street-edited street_'+feature.properties.zoomlevel});
+                            layer.setStyle({className: 'street street-edited street_' + feature.properties.zoomlevel});
                         } else {
-                            layer.setStyle({className: 'street street_'+feature.properties.zoomlevel});
+                            layer.setStyle({className: 'street street_' + feature.properties.zoomlevel});
                         }
-                        layer.on('click', function(e){
+                        layer.on('click', function (e) {
                             $('.street-active').removeClass('street-active');
                             var path = e.target;
                             var container = path._container;
@@ -136,25 +136,52 @@
                     if (feature.properties) {
                         if (feature.geometry.type !== 'Point') {
                             if (feature.isModified) {
-                                layer.setStyle({className: 'street-edit street-edited street_'+feature.properties.zoomlevel, clickable: false});
+                                layer.setStyle({
+                                    className: 'link_' + feature.properties.id + ' street-edit street-edited street_' + feature.properties.zoomlevel
+                                });
                             } else {
-                                layer.setStyle({className: 'street-edit street_'+feature.properties.zoomlevel, clickable: false});
+                                layer.setStyle({
+                                    className: 'link_' + feature.properties.id + ' street-edit street_' + feature.properties.zoomlevel
+                                });
                             }
+
+                            layer.on('click', function (e) {
+                                $('.street-active').removeClass('street-active');
+                                var path = e.target;
+                                var container = path._container;
+                                $('> path', container).addClass('street-active');
+                                var id = path.feature.properties.id;
+                                var fromLayer = null;
+                                var toLayer = null;
+                                layerInstance.editInstance.geojsonLayer.eachLayer(function(sublayer){
+                                    var tempFromLayer = sublayer.getLayer('node_' + feature.properties.from);
+                                    if (tempFromLayer != null) {
+                                        fromLayer = tempFromLayer;
+                                    }
+                                    var tempToLayer = sublayer.getLayer('node_' + feature.properties.to);
+                                    if (tempToLayer != null) {
+                                        toLayer = tempToLayer;
+                                    }
+                                });
+                                $rootScope.$apply(function () {
+                                    dataService.setStreetToEdit({from: fromLayer.feature, to: toLayer.feature, link: path.feature});
+                                });
+                            });
                         } else {
                             layer.setStyle({className: 'node_' + feature.properties.id});
+                            layer._leaflet_id = 'node_' + feature.properties.id;
                             layer.on('click', function (e) {
                                 if (dataService.editMode && dataService.getStreetToEdit() != null) {
                                     var path = e.target;
-                                    var container = path._container;
-                                    var id = path.feature.properties.id;
+                                    var feature = path.feature;
                                     if (dataService.getStreetToEdit().from == null) {
                                         $rootScope.$apply(function () {
-                                            dataService.setFromStreet(id);
+                                            dataService.setFromStreet(feature);
                                         });
                                     }
                                     else {
                                         $rootScope.$apply(function () {
-                                            dataService.setToStreet(id);
+                                            dataService.setToStreet(feature);
                                         });
                                     }
 
