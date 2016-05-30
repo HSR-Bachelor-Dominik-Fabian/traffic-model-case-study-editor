@@ -32,7 +32,7 @@ public class QuadtileResource {
             DataFetchLogic dataFetchLogic = new DataFetchLogic(this.properties);
 
             CacheControl cc = new CacheControl();
-            cc.setMaxAge(88400);
+            cc.setMaxAge(3600);
             cc.setPrivate(true);
             Response.ResponseBuilder builder = null;
             Stopwatch stopwatch1 = Stopwatch.createStarted();
