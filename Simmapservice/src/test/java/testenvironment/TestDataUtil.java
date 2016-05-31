@@ -1,5 +1,9 @@
 package testenvironment;
 
+import businesslogic.changeset.LinkModel;
+import businesslogic.changeset.Link_ChangeModel;
+import businesslogic.changeset.NodeModel;
+import businesslogic.changeset.Node_ChangeModel;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
 import dataaccess.database.tables.records.*;
@@ -12,6 +16,7 @@ import org.jooq.impl.DSL;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.IllegalFormatException;
@@ -343,5 +348,57 @@ public class TestDataUtil {
     public static SQLException getSQLException() {
         Throwable throwable = new IllegalStateException("BadState");
         return new SQLException("SQL Test Exception", "Test2", 2, throwable);
+    }
+
+    public static ChangesetRecord getChangesetRecord() {
+        ChangesetRecord record = DSL.using(SQLDialect.POSTGRES).newRecord(Tables.CHANGESET);
+        record.setId((long) 1);
+        record.setName("Changeset1");
+        record.setNetworkid(1);
+        record.setUsernr(1);
+        record.setLastmodified(Timestamp.valueOf("2009-03-12 12:30:23"));
+        return record;
+    }
+
+    public static List<Link_ChangeModel> getListLinkChangeModels() {
+        List<Link_ChangeModel> models = new ArrayList<>();
+        LinkModel defaultModel = new LinkModel(TestDataUtil.getSingleSelectLinkTestRecord());
+
+        Link_ChangeModel model = new Link_ChangeModel();
+        model.setId("L1");
+        model.setDefaultValues(defaultModel);
+        model.setDeleted(false);
+        model.setFreespeed(new BigDecimal(3.333));
+        models.add(model);
+
+        return models;
+    }
+
+    public static List<Node_ChangeModel> getListNodeChangeModels() {
+        List<Node_ChangeModel> models = new ArrayList<>();
+        List<NodeRecord> nodeRecords  = TestDataUtil.getMultipleSelectNodeTestRecords();
+
+
+        Node_ChangeModel model = new Node_ChangeModel();
+        model.setId("N1");
+        model.setChangesetNr((long)3);
+        model.setDefaultValues(new NodeModel(nodeRecords.get(0)));
+        model.setNetworkId(1);
+        model.setDeleted(false);
+        model.setLatitude(new BigDecimal(123));
+        model.setY(new BigDecimal(123));
+        models.add(model);
+
+        Node_ChangeModel model1 = new Node_ChangeModel();
+        model1.setId("N2");
+        model1.setChangesetNr((long)3);
+        model1.setDefaultValues(new NodeModel(nodeRecords.get(1)));
+        model.setNetworkId(1);
+        model1.setDeleted(false);
+        model1.setLongitude(new BigDecimal(332));
+        model1.setX(new BigDecimal(3323));
+        models.add(model1);
+
+        return models;
     }
 }

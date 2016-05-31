@@ -7,8 +7,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class ChangesetModel {
-    ChangesetModel(){}
-    ChangesetModel(ChangesetRecord record){
+    ChangesetModel() {
+    }
+
+    ChangesetModel(ChangesetRecord record) {
         fillModel(record);
     }
 
@@ -50,11 +52,15 @@ public class ChangesetModel {
         this.userNr = userNr;
     }
 
-    public Date getLastModified() { return lastModified; }
+    public Date getLastModified() {
+        return lastModified;
+    }
 
-    public void setLastModified(Date lastModified) { this.lastModified = lastModified; }
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
 
-    void fillModel(ChangesetRecord record){
+    void fillModel(ChangesetRecord record) {
         id = record.getId();
         name = record.getName();
         networkId = record.getNetworkid();
@@ -62,9 +68,9 @@ public class ChangesetModel {
         lastModified = record.getLastmodified();
     }
 
-    ChangesetRecord getRecord(){
+    ChangesetRecord getRecord() {
         ChangesetRecord record = new ChangesetRecord();
-        if(id != null) {
+        if (id != null) {
             record.setId(id);
         }
         record.setName(name);
