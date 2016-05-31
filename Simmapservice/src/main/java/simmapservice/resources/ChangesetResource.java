@@ -27,7 +27,12 @@ public class ChangesetResource {
         try {
             ChangesetLogic businessLogic = new ChangesetLogic(this.properties);
             List<ChangesetModel> changesetModelList = businessLogic.getAllChangesets(userid);
-            return Response.ok(changesetModelList, MediaType.APPLICATION_JSON).build();
+            if(changesetModelList != null) {
+                return Response.ok(changesetModelList, MediaType.APPLICATION_JSON).build();
+            }
+            else{
+                return Response.noContent().build();
+            }
         } catch (DataAccessLayerException exc) {
             return Response.serverError().entity(exc).type(MediaType.APPLICATION_JSON).build();
         }

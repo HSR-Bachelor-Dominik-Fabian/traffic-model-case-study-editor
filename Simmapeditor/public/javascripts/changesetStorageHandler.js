@@ -110,6 +110,8 @@ function ChangesetStorageHandler() {
             }
         });
 
+        localChangeset.geoJson.features[geoJsonFeatureIndex].geometry.coordinates = [model.geometry.coordinates[0].coordinates, model.geometry.coordinates[1].coordinates];
+
         this._setUpdatedLocalChangeset(localChangeset);
     };
 
