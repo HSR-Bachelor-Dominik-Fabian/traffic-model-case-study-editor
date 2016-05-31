@@ -1,14 +1,11 @@
-package businesslogic.Utils;
+package businesslogic.utils;
 
-import dataaccess.database.tables.records.NodeRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GeoJSONUtil {
 

@@ -1,4 +1,4 @@
-package businesslogic.Utils;
+package businesslogic.utils;
 
 /**
  * Created by fke on 22.03.2016.

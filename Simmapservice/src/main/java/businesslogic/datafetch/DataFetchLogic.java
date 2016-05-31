@@ -1,7 +1,7 @@
 package businesslogic.datafetch;
 
-import businesslogic.Utils.GeoJSONUtil;
-import businesslogic.Utils.QuadTileUtils;
+import businesslogic.utils.GeoJSONUtil;
+import businesslogic.utils.QuadTileUtils;
 import businesslogic.changeset.LinkModel;
 import common.DataAccessLayerException;
 import dataaccess.SimmapDataAccessFacade;

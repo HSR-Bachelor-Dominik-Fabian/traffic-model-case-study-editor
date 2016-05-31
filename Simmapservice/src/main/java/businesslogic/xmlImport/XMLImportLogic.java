@@ -1,7 +1,7 @@
 package businesslogic.xmlImport;
 
-import businesslogic.Utils.EPSGTransformUtil;
-import businesslogic.Utils.QuadTileUtils;
+import businesslogic.utils.EPSGTransformUtil;
+import businesslogic.utils.QuadTileUtils;
 import com.google.common.base.Stopwatch;
 import com.vividsolutions.jts.geom.Coordinate;
 import common.DataAccessLayerException;

@@ -1,4 +1,4 @@
-package businesslogic.Utils;
+package businesslogic.utils;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;

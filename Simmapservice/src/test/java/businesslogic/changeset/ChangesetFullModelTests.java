@@ -1,4 +1,4 @@
-package businesslogic;
+package businesslogic.changeset;
 
 /**
  * Created by dohee on 31.05.2016.
