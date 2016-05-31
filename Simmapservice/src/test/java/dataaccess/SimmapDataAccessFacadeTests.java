@@ -1,7 +1,6 @@
-package dataaccesstests;
+package dataaccess;
 
 import common.DataAccessLayerException;
-import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.records.*;
 import dataaccess.utils.DataAccessUtil;
@@ -10,7 +9,6 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;

@@ -1,9 +1,8 @@
-package dataaccesstests.utils;
+package dataaccess.utils;
 
 import dataaccess.database.Tables;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NodeRecord;
-import dataaccess.utils.DataAccessUtil;
 import org.jooq.*;
 import common.DataAccessLayerException;
 import org.junit.Test;

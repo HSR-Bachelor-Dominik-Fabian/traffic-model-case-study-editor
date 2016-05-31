@@ -1,15 +1,11 @@
-package dataaccesstests.utils;
+package dataaccess.utils;
 
-import dataaccess.utils.ProdConnection;
-import org.jooq.tools.jdbc.MockFileDatabase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.postgresql.util.PSQLException;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import testenvironment.TestDataUtil;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
