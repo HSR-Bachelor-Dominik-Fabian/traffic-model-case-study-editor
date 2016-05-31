@@ -124,7 +124,7 @@ public class SimmapDataAccessFacade {
                     l.MODES, l.FROM, l.TO, l.LONG1, l.LAT1, l.LONG2, l.LAT2)
                     .from(l);
             Condition where = l.QUADKEY.like(quadKey + "%");
-            for(int i = 0; i < quadKey.length()-1; i++){
+            for(int i = 0; i <= quadKey.length()-1; i++){
                 where = where.or(l.QUADKEY.eq(quadKey.substring(0, i)));
             }
             query.where(where).and(l.NETWORKID.eq(networkId)).and(l.MINLEVEL.lessOrEqual(zoomLevel));

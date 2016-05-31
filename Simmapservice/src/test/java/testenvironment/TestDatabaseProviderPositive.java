@@ -135,7 +135,6 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
                 break;
             case "select * from \"NotExisting\"":
                 throw new SQLException("Table not found");
-
                 //testGetMultipleRecords
             case "select \"public\".\"Node\".\"Id\", \"public\".\"Node\".\"NetworkId\", \"public\".\"Node\".\"QuadKey\", \"public\".\"Node\".\"X\", \"public\".\"Node\".\"Y\", \"public\".\"Node\".\"Lat\", \"public\".\"Node\".\"Long\" from \"public\".\"Node\"":
                 List<NodeRecord> nodeRecords = TestDataUtil.getMultipleSelectNodeTestRecords();
@@ -144,7 +143,7 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
                 mockResult = new MockResult(nodeRecords.size(), result);
                 break;
             //getLinksFromQuadKey
-            case "select \"l\".\"Id\", \"l\".\"Length\", \"l\".\"Freespeed\", \"l\".\"Capacity\", \"l\".\"Permlanes\", \"l\".\"Oneway\", \"l\".\"Modes\", \"l\".\"From\", \"l\".\"To\", \"l\".\"Long1\", \"l\".\"Lat1\", \"l\".\"Long2\", \"l\".\"Lat2\" from \"public\".\"Link\" as \"l\" where ((\"l\".\"QuadKey\" like '123%' or \"l\".\"QuadKey\" = '' or \"l\".\"QuadKey\" = '1') and \"l\".\"NetworkId\" = 1 and \"l\".\"MinLevel\" <= 12)":
+            case "select \"l\".\"Id\", \"l\".\"Length\", \"l\".\"Freespeed\", \"l\".\"Capacity\", \"l\".\"Permlanes\", \"l\".\"Oneway\", \"l\".\"Modes\", \"l\".\"From\", \"l\".\"To\", \"l\".\"Long1\", \"l\".\"Lat1\", \"l\".\"Long2\", \"l\".\"Lat2\" from \"public\".\"Link\" as \"l\" where ((\"l\".\"QuadKey\" like '123%' or \"l\".\"QuadKey\" = '' or \"l\".\"QuadKey\" = '1' or \"l\".\"QuadKey\" = '12') and \"l\".\"NetworkId\" = 1 and \"l\".\"MinLevel\" <= 12)":
                 List<Record> linkRecords = TestDataUtil.getMultipleSelectLinkTestRecords();
                 result = dslContext.newResult(Tables.LINK.as("l"));
                 result.addAll(linkRecords);
