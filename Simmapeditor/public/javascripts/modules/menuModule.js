@@ -190,7 +190,6 @@
             };
 
             $scope.onSaveNewStreetClicked = function () {
-                //TODO: feature direkt an add change übergeben
                 var changesetStorageHandler = new ChangesetStorageHandler();
                 var undoRedoHandler = new UndoRedoHandler();
                 var change = dataService.getStreetToEdit();
@@ -245,7 +244,7 @@
                     showMessageDialog('Sie befinden sich wieder im normalen Modus.');
                 } else {
                     dataService.editMode = true;
-                    showMessageDialog('Sie haben nun in den "Strassen Editieren" Modus gewechselt.');
+                    showMessageDialog('Sie haben nun in den "Strassen Editieren" Modus gewechselt. Die Daten werden erst ab Zoomlevel 15 angezeigt.');
                 }
             };
 
