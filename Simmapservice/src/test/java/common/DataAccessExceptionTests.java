@@ -1,6 +1,5 @@
-package commontests;
+package common;
 
-import common.DataAccessLayerException;
 import org.jooq.exception.DataAccessException;
 import org.junit.Test;
 import testenvironment.TestDataUtil;
