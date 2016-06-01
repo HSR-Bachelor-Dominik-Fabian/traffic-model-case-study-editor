@@ -28,9 +28,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by fke on 22.03.2016.
- */
 public class XMLImportLogic {
     private final SimmapDataAccessFacade dataAccess;
 
@@ -98,7 +95,7 @@ public class XMLImportLogic {
         NetworkRecord network = new NetworkRecord();
         network.setId(1);
         network.setName(networkName);
-        dataAccess.setNetwork(new NetworkRecord[] {network});
+        dataAccess.setNetworks(new NetworkRecord[] {network});
         return 1;
     }
 
@@ -132,13 +129,13 @@ public class XMLImportLogic {
                 nodeRecords[index%25000] = newNodeRecord;
                 index++;
                 if (index != 0 && index%25000 == 0) {
-                    dataAccess.setNode(nodeRecords);
+                    dataAccess.setNodes(nodeRecords);
                     nodeRecords = new NodeRecord[25000];
                     index = 0;
                 }
                 streamReader.next();
             }
-            dataAccess.setNode(nodeRecords);
+            dataAccess.setNodes(nodeRecords);
         } catch (XMLStreamException e) {
             e.printStackTrace();
         } catch (TransformException e) {
@@ -203,13 +200,13 @@ public class XMLImportLogic {
                 linkRecords[index%25000] = newLink;
                 index++;
                 if (index != 0 && index%25000 == 0) {
-                    dataAccess.setLink(linkRecords);
+                    dataAccess.setLinks(linkRecords);
                     linkRecords = new LinkRecord[25000];
                     index = 0;
                 }
                 streamReader.next();
             }
-            dataAccess.setLink(linkRecords);
+            dataAccess.setLinks(linkRecords);
         } catch (XMLStreamException e) {
             e.printStackTrace();
         } catch (TransformException e) {

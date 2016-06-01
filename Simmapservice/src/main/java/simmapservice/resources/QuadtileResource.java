@@ -20,17 +20,24 @@ import java.util.concurrent.TimeUnit;
 public class QuadtileResource {
 
     private final Properties properties;
+    private DataFetchLogic dataFetchLogic;
 
     public QuadtileResource(Properties props) {
         this.properties = props;
+    }
+
+    public QuadtileResource(Properties props, DataFetchLogic dataFetchLogic) {
+        this.properties = props;
+        this.dataFetchLogic = dataFetchLogic;
     }
 
     @GET
     @Path("/{networkid}/{z}/{x}/{y}")
     public Response getQuadTile(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y, @PathParam("networkid") int networkID, @Context Request request) {
         try {
-            DataFetchLogic dataFetchLogic = new DataFetchLogic(this.properties);
-
+            if (dataFetchLogic == null) {
+                dataFetchLogic = new DataFetchLogic(this.properties);
+            }
             CacheControl cc = new CacheControl();
             cc.setMaxAge(3600);
             cc.setPrivate(true);
@@ -68,8 +75,9 @@ public class QuadtileResource {
     @Path("/edit/{networkid}/{z}/{x}/{y}")
     public Response getQuadTileWithNodes(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y, @PathParam("networkid") int networkID, @Context Request request) {
         try {
-            DataFetchLogic dataFetchLogic = new DataFetchLogic(this.properties);
-
+            if (dataFetchLogic == null) {
+                dataFetchLogic = new DataFetchLogic(this.properties);
+            }
             CacheControl cc = new CacheControl();
             cc.setMaxAge(88400);
             cc.setPrivate(true);

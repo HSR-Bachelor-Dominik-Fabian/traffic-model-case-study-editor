@@ -12,9 +12,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-/**
- * Created by dohee on 11.05.2016.
- */
 public class TestConnection implements IConnection {
     public TestConnection(ConnectionMode connectionMode){
         this.connectionMode = connectionMode;

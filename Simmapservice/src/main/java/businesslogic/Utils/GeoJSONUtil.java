@@ -6,18 +6,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class GeoJSONUtil {
 
-    public static JSONObject getGeoJsonFromLinkAndNodeRequest(Result<Record> links, Result<Record> nodes, int zoom) {
+    public static JSONObject getGeoJsonFromLinkAndNodeRequest(List<Record> links, List<Record> nodes, int zoom) {
         return getGeoJson(links, nodes, zoom);
     }
 
-    public static JSONObject getGeoJsonFromLinkRequest(Result<Record> links, int zoom) {
+    public static JSONObject getGeoJsonFromLinkRequest(List<Record> links, int zoom) {
         return getGeoJson(links, null, zoom);
     }
 
-    private static JSONObject getGeoJson(Result<Record> links, Result<Record> nodes, int zoom){
+    private static JSONObject getGeoJson(List<Record> links, List<Record> nodes, int zoom){
         JSONObject baseJSON = new JSONObject();
 
         baseJSON.put("type", "FeatureCollection");
