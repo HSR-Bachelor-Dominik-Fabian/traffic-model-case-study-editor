@@ -46,7 +46,7 @@ public class SimmapDataAccessFacadeTests {
         replay(DataAccessUtil.class);
 
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props, connection);
-        int[] results = facade.setNetwork(records);
+        int[] results = facade.setNetworks(records);
         assertEquals(records.length, results.length);
         for (int result : results) {
             assertEquals(1, result);
@@ -66,7 +66,7 @@ public class SimmapDataAccessFacadeTests {
         replay(DataAccessUtil.class);
 
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props, connection);
-        facade.setNetwork(records);
+        facade.setNetworks(records);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class SimmapDataAccessFacadeTests {
         replay(DataAccessUtil.class);
 
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props, connection);
-        int[] results = facade.setNode(records);
+        int[] results = facade.setNodes(records);
         assertEquals(records.length, results.length);
         for (int result : results) {
             assertEquals(1, result);
@@ -101,7 +101,7 @@ public class SimmapDataAccessFacadeTests {
         replay(DataAccessUtil.class);
 
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props, connection);
-        facade.setNode(records);
+        facade.setNodes(records);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class SimmapDataAccessFacadeTests {
         replay(DataAccessUtil.class);
 
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props, connection);
-        int[] results = facade.setLink(records);
+        int[] results = facade.setLinks(records);
         assertEquals(records.length, results.length);
         for (int result : results) {
             assertEquals(1, result);
@@ -133,7 +133,7 @@ public class SimmapDataAccessFacadeTests {
         replay(DataAccessUtil.class);
 
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props, connection);
-        facade.setLink(records);
+        facade.setLinks(records);
     }
 
     @Test

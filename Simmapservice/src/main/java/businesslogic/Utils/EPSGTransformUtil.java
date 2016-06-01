@@ -13,15 +13,12 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-/**
- * Created by fke on 22.03.2016.
- */
 public class EPSGTransformUtil {
     private CoordinateReferenceSystem sourceCrs;
     private CoordinateReferenceSystem targetCrs;
 
     public EPSGTransformUtil(String sourceCrs) throws FactoryException {
-        this(sourceCrs,"WGS84"); //"EPSG:3857"
+        this(sourceCrs, "WGS84"); //"EPSG:3857"
     }
 
     public EPSGTransformUtil(String sourceCrs, String targetCrs) throws FactoryException {

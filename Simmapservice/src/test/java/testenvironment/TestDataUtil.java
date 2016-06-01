@@ -333,6 +333,34 @@ public class TestDataUtil {
         return linkRecords;
     }
 
+    public static List<Record> getMultipleNodeTestRecords() {
+        List<Record> output = new ArrayList();
+
+        NodeRecord record = Tables.NODE.newRecord();
+        record.setId("N1");
+        record.setNetworkid(1);
+        record.setQuadkey("123");
+        record.setX(new BigDecimal(12));
+        record.setY(new BigDecimal(23));
+        record.setLat(new BigDecimal(12));
+        record.setLong(new BigDecimal(23));
+
+        output.add(record);
+
+        NodeRecord record2 = Tables.NODE.newRecord();
+        record2.setId("N2");
+        record2.setNetworkid(1);
+        record2.setQuadkey("123323");
+        record2.setX(new BigDecimal(12));
+        record2.setY(new BigDecimal(23));
+        record2.setLat(new BigDecimal(12));
+        record2.setLong(new BigDecimal(23));
+
+        output.add(record2);
+
+        return output;
+    }
+
     public static Date getDateLastModifiedTestRecord() {
 
         return Date.valueOf(LocalDate.of(1992, 11, 19));

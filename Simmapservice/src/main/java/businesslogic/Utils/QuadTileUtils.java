@@ -1,8 +1,5 @@
 package businesslogic.utils;
 
-/**
- * Created by fke on 22.03.2016.
- */
 public class QuadTileUtils {
 
     public static String getQuadTileKey(final int x, final int y, final int zoom) {

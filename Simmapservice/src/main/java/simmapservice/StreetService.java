@@ -17,9 +17,6 @@ import java.util.Properties;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 
-/**
- * Created by dohee on 15.03.2016.
- */
 public class StreetService extends Application<StreetServiceConfiguration>{
     public static void main(String[] args) throws Exception {
         new StreetService().run(args);

@@ -27,15 +27,15 @@ public class SimmapDataAccessFacade {
     private final Properties properties;
     private final IConnection connectionUtil;
 
-    public int[] setNetwork(NetworkRecord[] records) throws DataAccessLayerException {
+    public int[] setNetworks(NetworkRecord[] records) throws DataAccessLayerException {
         return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NETWORK, this.connectionUtil);
     }
 
-    public int[] setNode(NodeRecord[] records) throws DataAccessLayerException {
+    public int[] setNodes(NodeRecord[] records) throws DataAccessLayerException {
         return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.NODE, this.connectionUtil);
     }
 
-    public int[] setLink(LinkRecord[] records) throws DataAccessLayerException {
+    public int[] setLinks(LinkRecord[] records) throws DataAccessLayerException {
         return DataAccessUtil.insertOrUpdate(this.properties, records, Tables.LINK, this.connectionUtil);
     }
 
