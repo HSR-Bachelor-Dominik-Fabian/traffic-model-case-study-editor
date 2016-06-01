@@ -7,9 +7,6 @@ import testenvironment.TestDataUtil;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by dohee on 31.05.2016.
- */
 public class ChangesetModelTests {
     @Test
     public void testConstructor() {
