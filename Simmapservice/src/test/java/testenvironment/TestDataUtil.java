@@ -6,11 +6,9 @@ import businesslogic.changeset.NodeModel;
 import businesslogic.changeset.Node_ChangeModel;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
+import dataaccess.database.tables.LinkChange;
 import dataaccess.database.tables.records.*;
-import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Record1;
-import org.jooq.SQLDialect;
+import org.jooq.*;
 import org.jooq.impl.DSL;
 
 import java.math.BigDecimal;
@@ -273,7 +271,7 @@ public class TestDataUtil {
         return record;
     }
 
-    public static NodeChangeRecord getSingleSelectNodeChangeTestRecord(){
+    public static NodeChangeRecord getSingleSelectNodeChangeTestRecord() {
         NodeChangeRecord record1 = new NodeChangeRecord();
         record1.setId("N1");
         record1.setNetworkid(1);
@@ -413,12 +411,12 @@ public class TestDataUtil {
 
     public static List<Node_ChangeModel> getListNodeChangeModels() {
         List<Node_ChangeModel> models = new ArrayList<>();
-        List<NodeRecord> nodeRecords  = TestDataUtil.getMultipleSelectNodeTestRecords();
+        List<NodeRecord> nodeRecords = TestDataUtil.getMultipleSelectNodeTestRecords();
 
 
         Node_ChangeModel model = new Node_ChangeModel();
         model.setId("N1");
-        model.setChangesetNr((long)3);
+        model.setChangesetNr((long) 3);
         model.setDefaultValues(new NodeModel(nodeRecords.get(0)));
         model.setNetworkId(1);
         model.setDeleted(false);
@@ -428,7 +426,7 @@ public class TestDataUtil {
 
         Node_ChangeModel model1 = new Node_ChangeModel();
         model1.setId("N2");
-        model1.setChangesetNr((long)3);
+        model1.setChangesetNr((long) 3);
         model1.setDefaultValues(new NodeModel(nodeRecords.get(1)));
         model.setNetworkId(1);
         model1.setDeleted(false);
@@ -437,5 +435,23 @@ public class TestDataUtil {
         models.add(model1);
 
         return models;
+    }
+
+    public static Result<ChangesetRecord> getChangesetRecordsResult() {
+        Result<ChangesetRecord> result = DSL.using(SQLDialect.POSTGRES).newResult(Tables.CHANGESET);
+        result.addAll(TestDataUtil.getMultipleSelectChangesetTestRecords());
+        return result;
+    }
+
+    public static Result<NodeChangeRecord> getNodeChangeRecordResult() {
+        Result<NodeChangeRecord> result = DSL.using(SQLDialect.POSTGRES).newResult(Tables.NODE_CHANGE);
+        result.addAll(TestDataUtil.getMultipleSelectNodeChangeTestRecords());
+        return result;
+    }
+
+    public static Result<LinkChangeRecord> getLinkChangeRecordResult() {
+        Result<LinkChangeRecord> result = DSL.using(SQLDialect.POSTGRES).newResult(Tables.LINK_CHANGE);
+        result.add(TestDataUtil.getSingleSelectLinkChangeTestRecord());
+        return result;
     }
 }

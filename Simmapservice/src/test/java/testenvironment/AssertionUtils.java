@@ -1,13 +1,7 @@
 package testenvironment;
 
-import businesslogic.changeset.LinkModel;
-import businesslogic.changeset.Link_ChangeModel;
-import businesslogic.changeset.NodeModel;
-import businesslogic.changeset.Node_ChangeModel;
-import dataaccess.database.tables.records.LinkChangeRecord;
-import dataaccess.database.tables.records.LinkRecord;
-import dataaccess.database.tables.records.NodeChangeRecord;
-import dataaccess.database.tables.records.NodeRecord;
+import businesslogic.changeset.*;
+import dataaccess.database.tables.records.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -188,5 +182,13 @@ public class AssertionUtils {
         assertEquals(expected.getY(), model.getY());
         assertEquals(expected.getLat(), model.getLatitude());
         assertEquals(expected.getLong(), model.getLongitude());
+    }
+
+    public static void assertChangesetRecordEqualsModel(ChangesetRecord expected, ChangesetModel model){
+        assertEquals(expected.getId(), model.getId());
+        assertEquals((long)expected.getNetworkid(), (long)model.getNetworkId());
+        assertEquals(expected.getName(), model.getName());
+        assertEquals((long)expected.getUsernr(), (long)model.getUserNr());
+        assertEquals(expected.getLastmodified(), model.getLastModified());
     }
 }
