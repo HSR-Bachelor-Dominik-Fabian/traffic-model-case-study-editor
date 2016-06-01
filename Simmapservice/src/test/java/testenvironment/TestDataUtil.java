@@ -273,6 +273,15 @@ public class TestDataUtil {
         return record;
     }
 
+    public static NodeChangeRecord getSingleSelectNodeChangeTestRecord(){
+        NodeChangeRecord record1 = new NodeChangeRecord();
+        record1.setId("N1");
+        record1.setNetworkid(1);
+        record1.setChangesetnr((long) 1);
+        record1.setX(new BigDecimal(12.3));
+        return record1;
+    }
+
     public static List<NodeChangeRecord> getMultipleSelectNodeChangeTestRecords() {
         List<NodeChangeRecord> nodeChangeRecords = new ArrayList();
         NodeChangeRecord record1 = new NodeChangeRecord();

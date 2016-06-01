@@ -36,6 +36,27 @@ public class AssertionUtils {
         assertEquals(expected.getTo(), result.getTo());
     }
 
+    public static void assertLink_ChangeRecordToModelIsEquals(LinkChangeRecord expected, Link_ChangeModel result) {
+        assertEquals(expected.getId(), result.getId());
+        assertEquals(expected.getChangesetnr(), result.getChangesetNr());
+        assertEquals(expected.getNetworkid(), result.getNetworkId());
+        assertEquals(expected.getModes(), result.getModes());
+        assertEquals(expected.getCapacity(), result.getCapacity());
+        assertEquals(expected.getFreespeed(), result.getFreespeed());
+        assertEquals(expected.getFrom(), result.getFrom());
+        assertEquals(expected.getLastmodified(), result.getLastModified());
+        assertEquals(expected.getLat1(), result.getLat1());
+        assertEquals(expected.getLat2(), result.getLat2());
+        assertEquals(expected.getLength(), result.getLength());
+        assertEquals(expected.getLong1(), result.getLong1());
+        assertEquals(expected.getLong2(), result.getLong2());
+        assertEquals(expected.getMinlevel(), result.getMinlevel());
+        assertEquals(expected.getOneway(), result.getOneway());
+        assertEquals(expected.getPermlanes(), result.getPermlanes());
+        assertEquals(expected.getQuadkey(), result.getQuadKey());
+        assertEquals(expected.getTo(), result.getTo());
+    }
+
     public static void assertLinkModelEquals(LinkModel expected, LinkModel result) {
         if (expected != null) {
             assertNotNull(result);
@@ -70,6 +91,21 @@ public class AssertionUtils {
             assertEquals(expected.getLongitude(), result.getLongitude());
             assertEquals(expected.getNetworkId(), result.getNetworkId());
             assertEquals(expected.getQuadKey(), result.getQuadKey());
+            assertEquals(expected.getX(), result.getX());
+            assertEquals(expected.getY(), result.getY());
+        } else {
+            assertNull(result);
+        }
+    }
+
+    public static void assertNode_ChangeRecordToModelIsEquals(NodeChangeRecord expected, Node_ChangeModel result) {
+        if (expected != null) {
+            assertEquals(expected.getChangesetnr(), result.getChangesetNr());
+            assertEquals(expected.getId(), result.getId());
+            assertEquals(expected.getLat(), result.getLatitude());
+            assertEquals(expected.getLong(), result.getLongitude());
+            assertEquals(expected.getNetworkid(), result.getNetworkId());
+            assertEquals(expected.getQuadkey(), result.getQuadKey());
             assertEquals(expected.getX(), result.getX());
             assertEquals(expected.getY(), result.getY());
         } else {
