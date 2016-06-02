@@ -24,20 +24,13 @@ public class QuadtileResource {
 
     public QuadtileResource(Properties props) {
         this.properties = props;
-    }
-
-    public QuadtileResource(Properties props, DataFetchLogic dataFetchLogic) {
-        this.properties = props;
-        this.dataFetchLogic = dataFetchLogic;
+        this.dataFetchLogic = new DataFetchLogic(properties);
     }
 
     @GET
     @Path("/{networkid}/{z}/{x}/{y}")
     public Response getQuadTile(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y, @PathParam("networkid") int networkID, @Context Request request) {
         try {
-            if (dataFetchLogic == null) {
-                dataFetchLogic = new DataFetchLogic(this.properties);
-            }
             CacheControl cc = new CacheControl();
             cc.setMaxAge(3600);
             cc.setPrivate(true);
@@ -75,9 +68,6 @@ public class QuadtileResource {
     @Path("/edit/{networkid}/{z}/{x}/{y}")
     public Response getQuadTileWithNodes(@PathParam("z") int z, @PathParam("x") int x, @PathParam("y") int y, @PathParam("networkid") int networkID, @Context Request request) {
         try {
-            if (dataFetchLogic == null) {
-                dataFetchLogic = new DataFetchLogic(this.properties);
-            }
             CacheControl cc = new CacheControl();
             cc.setMaxAge(88400);
             cc.setPrivate(true);

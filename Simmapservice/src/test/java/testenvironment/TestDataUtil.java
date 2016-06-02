@@ -1,9 +1,6 @@
 package testenvironment;
 
-import businesslogic.changeset.LinkModel;
-import businesslogic.changeset.Link_ChangeModel;
-import businesslogic.changeset.NodeModel;
-import businesslogic.changeset.Node_ChangeModel;
+import businesslogic.changeset.*;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
 import dataaccess.database.tables.records.*;
@@ -13,6 +10,9 @@ import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -428,5 +428,21 @@ public class TestDataUtil {
         models.add(model1);
 
         return models;
+    }
+
+    public static List<ChangesetModel> getListChangesetModels() {
+        List<ChangesetModel> models = new ArrayList<>();
+
+        List<ChangesetRecord> changesetRecords = TestDataUtil.getMultipleSelectChangesetTestRecords();
+
+        for (ChangesetRecord model : changesetRecords) {
+            models.add(new ChangesetModel(model));
+        }
+
+        return models;
+    }
+
+    public static InputStream getInputStreamOfData() throws FileNotFoundException {
+        return new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("test.xml").getPath());
     }
 }

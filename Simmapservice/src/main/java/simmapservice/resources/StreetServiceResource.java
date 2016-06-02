@@ -9,7 +9,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Properties;
 
-@Path("/link/{id}")
+@Produces("application/json")
+@Path("/link")
 public class StreetServiceResource {
 
     private final Properties properties;
@@ -19,6 +20,7 @@ public class StreetServiceResource {
     }
 
     @GET
+    @Path("/{id}")
     public Response getStreetById(@PathParam("id") String id) {
         try {
             DataFetchLogic dataFetch = new DataFetchLogic(this.properties);

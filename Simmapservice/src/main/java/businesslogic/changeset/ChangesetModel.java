@@ -10,7 +10,7 @@ public class ChangesetModel {
     ChangesetModel() {
     }
 
-    ChangesetModel(ChangesetRecord record) {
+    public ChangesetModel(ChangesetRecord record) {
         fillModel(record);
     }
 

@@ -5,9 +5,6 @@ import org.jooq.exception.DataAccessException;
 
 import java.sql.SQLException;
 
-/**
- * Created by dohee on 23.05.2016.
- */
 public class DataAccessLayerException extends Exception {
     private String message;
     private Throwable cause;
