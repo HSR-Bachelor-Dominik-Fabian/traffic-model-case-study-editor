@@ -236,7 +236,7 @@ public class XMLImportLogic {
 
         newLink.setQuadkey(QuadTileUtils
                 .getMinCommonQuadTileKeyFromLatLong(fromCoord.y, fromCoord.x, toCoord.y, toCoord.x));
-        newLink.setOneway(Boolean.parseBoolean(streamReader.getAttributeValue(7)));
+        newLink.setOneway("1".equals(streamReader.getAttributeValue(7)));
         newLink.setNetworkid(networkId);
         newLink.setFreespeed(new BigDecimal(streamReader.getAttributeValue(4)));
         newLink.setCapacity(new BigDecimal(streamReader.getAttributeValue(5)));

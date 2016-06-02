@@ -4,7 +4,9 @@ import businesslogic.changeset.*;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
 import dataaccess.database.tables.LinkChange;
+import dataaccess.database.tables.NetworkOptions;
 import dataaccess.database.tables.records.*;
+import org.easymock.EasyMock;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 
@@ -451,6 +453,161 @@ public class TestDataUtil {
 
     public static InputStream getInputStreamOfData() throws FileNotFoundException {
         return new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("test.xml").getPath());
+    }
+
+    public static Result<NodeRecord> getStreamNodesAsResult() {
+        DSLContext context = DSL.using(SQLDialect.POSTGRES);
+        Result<NodeRecord> result = context.newResult(Tables.NODE);
+
+        for (NodeRecord record : getStreamNodesAsArray()) {
+            if(record != null){
+                result.add(record);
+            }
+        }
+
+        return result;
+    }
+
+    public static NodeRecord[] getStreamNodesAsArray() {
+        DSLContext context = DSL.using(SQLDialect.POSTGRES);
+        NodeRecord record1 = context.newRecord(Tables.NODE);
+        record1.setNetworkid(1);
+        record1.setId("4");
+        record1.setX(new BigDecimal("680827.0275615142"));
+        record1.setY(new BigDecimal("4825897.167274702"));
+        record1.setQuadkey("021332132011020100");
+        record1.setLat(new BigDecimal(43.5641113988393));
+        record1.setLong(new BigDecimal(-96.76092772102633));
+
+
+        NodeRecord record2 = context.newRecord(Tables.NODE);
+        record2.setNetworkid(1);
+        record2.setId("4_101");
+        record2.setX(new BigDecimal("680841.192323177"));
+        record2.setY(new BigDecimal("4825447.326025019"));
+        record2.setQuadkey("021332132011020300");
+        record2.setLat(new BigDecimal(43.56006060145680436335169360972940921783447265625));
+        record2.setLong(new BigDecimal(-96.760902433791017074327100999653339385986328125));
+
+        NodeRecord record3 = context.newRecord(Tables.NODE);
+        record3.setNetworkid(1);
+        record3.setId("4_102");
+        record3.setX(new BigDecimal("680855.3570848398"));
+        record3.setY(new BigDecimal("4824997.484775337"));
+        record3.setQuadkey("021332132011022100");
+        record3.setLat(new BigDecimal(43.55600980148104639511075220070779323577880859375));
+        record3.setLong(new BigDecimal(-96.7608771387973547462024725973606109619140625));
+
+        NodeRecord[] records = new NodeRecord[25000];
+        records[0] = record1;
+        records[1] = record2;
+        records[2] = record3;
+        return records;
+    }
+
+    public static NetworkOptionsRecord[] getStreamOptionsAsArray(){
+        NetworkOptionsRecord[] options = new NetworkOptionsRecord[3];
+        DSLContext context = DSL.using(SQLDialect.POSTGRES);
+        NetworkOptionsRecord record1 = context.newRecord(Tables.NETWORK_OPTIONS);
+        record1.setNetworkid(1);
+        record1.setOptionname("capperiod");
+        record1.setValue("01:00:00");
+        options[0] = record1;
+
+        NetworkOptionsRecord record2 = context.newRecord(Tables.NETWORK_OPTIONS);
+        record2.setNetworkid(1);
+        record2.setOptionname("effectivecellsize");
+        record2.setValue("7.5");
+        options[1] = record2;
+
+        NetworkOptionsRecord record3 = context.newRecord(Tables.NETWORK_OPTIONS);
+        record3.setNetworkid(1);
+        record3.setOptionname("effectivelanewidth");
+        record3.setValue("3.75");
+        options[2] = record3;
+
+        return options;
+    }
+
+    public static LinkRecord[] getStreamLinksAsArray(){
+        DSLContext context = DSL.using(SQLDialect.POSTGRES);
+        LinkRecord[] linkRecords = new LinkRecord[25000];
+
+        LinkRecord linkRecord1 = context.newRecord(Tables.LINK);
+        linkRecord1.setId("10_1");
+        linkRecord1.setFrom("4");
+        linkRecord1.setTo("4_101");
+        linkRecord1.setQuadkey("021332132011020");
+        linkRecord1.setOneway(true);
+        linkRecord1.setNetworkid(1);
+        linkRecord1.setFreespeed(new BigDecimal("13.9"));
+        linkRecord1.setCapacity(new BigDecimal("1964.0"));
+        linkRecord1.setPermlanes(new BigDecimal("2.0"));
+        linkRecord1.setModes("car");
+        linkRecord1.setLength(new BigDecimal("450.06420696267253"));
+        linkRecord1.setMinlevel(15);
+        linkRecord1.setLastmodified(Date.valueOf(LocalDate.now()));
+        linkRecord1.setLat1(new BigDecimal("43.5641113988393016143163549713790416717529296875"));
+        linkRecord1.setLong1(new BigDecimal("-96.7609277210263343249607714824378490447998046875"));
+        linkRecord1.setLat2(new BigDecimal("43.56006060145680436335169360972940921783447265625"));
+        linkRecord1.setLong2(new BigDecimal("-96.760902433791017074327100999653339385986328125"));
+        linkRecords[0] = linkRecord1;
+
+        LinkRecord linkRecord2 = context.newRecord(Tables.LINK);
+        linkRecord2.setId("10_2");
+        linkRecord2.setFrom("4_101");
+        linkRecord2.setTo("4_102");
+        linkRecord2.setQuadkey("02133213201102");
+        linkRecord2.setOneway(true);
+        linkRecord2.setNetworkid(1);
+        linkRecord2.setFreespeed(new BigDecimal("13.9"));
+        linkRecord2.setCapacity(new BigDecimal("1964.0"));
+        linkRecord2.setPermlanes(new BigDecimal("2.0"));
+        linkRecord2.setModes("car");
+        linkRecord2.setLength(new BigDecimal("450.06420696267253"));
+        linkRecord2.setMinlevel(15);
+        linkRecord2.setLastmodified(Date.valueOf(LocalDate.now()));
+        linkRecord2.setLat1(new BigDecimal("43.56006060145680436335169360972940921783447265625"));
+        linkRecord2.setLong1(new BigDecimal("-96.760902433791017074327100999653339385986328125"));
+        linkRecord2.setLat2(new BigDecimal("43.55600980148104639511075220070779323577880859375"));
+        linkRecord2.setLong2(new BigDecimal("-96.7608771387973547462024725973606109619140625"));
+        linkRecords[1] = linkRecord2;
+
+        return linkRecords;
+    }
+
+    public static LinkRecord[] linkStreamEq(LinkRecord[] expectedRecords){
+        EasyMock.reportMatcher(new StreamLinkEquals(expectedRecords));
+        return null;
+    }
+
+    public static boolean matchStreamLinkToLinks(LinkRecord[] expected, LinkRecord[] result){
+        boolean output = true;
+        if(expected.length == result.length){
+            for(int i = 0; i < result.length; i++){
+                LinkRecord expectedRecord = expected[i];
+                LinkRecord resultRecord = result[i];
+                if(expectedRecord != null) {
+                    for (Field<?> field : expectedRecord.fields()) {
+                        if (field.getName() != "LastModified") {
+                            if (!expectedRecord.getValue(field).equals(resultRecord.getValue(field))) {
+                                output = false;
+                            }
+                        }
+                    }
+                }
+                else{
+                    if(!(resultRecord == null)){
+                        output = false;
+                    }
+                }
+            }
+        }
+        else{
+            output = false;
+        }
+
+        return output;
     }
 
     public static Result<ChangesetRecord> getChangesetRecordsResult() {
