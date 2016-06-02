@@ -148,9 +148,11 @@ public class SimmapDataAccessFacade {
             return query.fetch();
 
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessLayerException(e);
         }
-        return null;
+        catch (DataAccessException e){
+            throw new DataAccessLayerException(e);
+        }
     }
 
     public Date getLastModifiedQuadKey(String quadKey, int networkId, int zoomLevel) throws DataAccessLayerException {

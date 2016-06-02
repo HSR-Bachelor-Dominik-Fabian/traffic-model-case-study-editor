@@ -4,15 +4,15 @@ import common.DataAccessLayerException;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.records.*;
 import dataaccess.utils.DataAccessUtil;
-import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.SQLDialect;
+import org.geotools.filter.visitor.Recode;
+import org.jooq.*;
 import org.jooq.impl.DSL;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import testenvironment.AssertionUtils;
 import testenvironment.ConnectionMode;
 import testenvironment.TestConnection;
 import testenvironment.TestDataUtil;
@@ -481,5 +481,40 @@ public class SimmapDataAccessFacadeTests {
         SimmapDataAccessFacade facade = new SimmapDataAccessFacade(props, connection);
         int result = facade.deleteChangeset(record);
         assertEquals(1, result);
+    }
+
+    @Test
+    public void testGetNodesFromIdsPositive() throws DataAccessLayerException {
+        SimmapDataAccessFacade facade = new SimmapDataAccessFacade(new Properties(), new TestConnection(ConnectionMode.MULTIPLE));
+        List<String> nodeIds = new ArrayList<>();
+        nodeIds.add("N1");
+        nodeIds.add("N2");
+        Result result = facade.getNodesFromIds(nodeIds, 1);
+        for (int i = 0; i < result.size(); i++) {
+            Record nodeRecord = (Record)result.get(i);
+            NodeRecord expectedRecord = TestDataUtil.getMultipleSelectNodeTestRecords().get(i);
+            for (Field<?> field : nodeRecord.fields()) {
+                assertEquals(expectedRecord.getValue(field), nodeRecord.getValue(field));
+            }
+
+        }
+
+    }
+    @Test(expected = DataAccessLayerException.class)
+    public void testGetNodesFromIdsNegative() throws DataAccessLayerException {
+        SimmapDataAccessFacade facade = new SimmapDataAccessFacade(new Properties(), new TestConnection(ConnectionMode.ERROR));
+        List<String> nodeIds = new ArrayList<>();
+        nodeIds.add("N1");
+        nodeIds.add("N2");
+        facade.getNodesFromIds(nodeIds, 1);
+    }
+
+    @Test(expected = DataAccessLayerException.class)
+    public void testGetNodesFromIdsNoConnection() throws DataAccessLayerException {
+        SimmapDataAccessFacade facade = new SimmapDataAccessFacade(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
+        List<String> nodeIds = new ArrayList<>();
+        nodeIds.add("N1");
+        nodeIds.add("N2");
+        facade.getNodesFromIds(nodeIds, 1);
     }
 }

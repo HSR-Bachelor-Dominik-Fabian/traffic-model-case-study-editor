@@ -161,6 +161,12 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
                 record.setValue(DSL.field("count(*)", Integer.class), 1);
                 mockResult = new MockResult(record);
                 break;
+            case "select \"n\".\"Id\", \"n\".\"NetworkId\", \"n\".\"QuadKey\", \"n\".\"Lat\", \"n\".\"Long\" from \"public\".\"Node\" as \"n\" where (\"n\".\"Id\" in ('N1', 'N2') and \"n\".\"NetworkId\" = 1)":
+                result = dslContext.newResult(Tables.NODE);
+                List<NodeRecord> nodeRecords1 = TestDataUtil.getMultipleSelectNodeTestRecords();
+                result.addAll(nodeRecords1);
+                mockResult = new MockResult(result.size(), result);
+                break;
             default:
                 mockResult = new MockResult(0, null);
                 break;
