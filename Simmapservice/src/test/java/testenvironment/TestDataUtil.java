@@ -21,9 +21,6 @@ import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created by dohee on 11.05.2016.
- */
 public class TestDataUtil {
     public static LinkRecord getSingleSelectLinkTestRecord() {
         LinkRecord record = Tables.LINK.newRecord();
