@@ -7,9 +7,6 @@ import dataaccess.database.tables.records.LinkRecord;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-/**
- * Created by dohee on 13.04.2016.
- */
 @JsonIgnoreProperties({"zoomlevel"})
 public class Link_ChangeModel {
     //region Private Variables

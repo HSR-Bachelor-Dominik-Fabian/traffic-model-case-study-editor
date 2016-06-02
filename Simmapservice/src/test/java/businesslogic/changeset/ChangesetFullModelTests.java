@@ -13,9 +13,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static testenvironment.AssertionUtils.*;
 
-/**
- * Created by dohee on 31.05.2016.
- */
 public class ChangesetFullModelTests {
     @Test
     public void testConstructor() {

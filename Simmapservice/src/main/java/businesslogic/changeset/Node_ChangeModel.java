@@ -5,9 +5,6 @@ import dataaccess.database.tables.records.NodeRecord;
 
 import java.math.BigDecimal;
 
-/**
- * Created by dohee on 13.04.2016.
- */
 public class Node_ChangeModel {
     //region Private Variables
     private NodeModel defaultValues = null;

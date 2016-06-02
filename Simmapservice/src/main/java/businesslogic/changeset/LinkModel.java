@@ -5,9 +5,6 @@ import dataaccess.database.tables.records.LinkRecord;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-/**
- * Created by dohee on 13.04.2016.
- */
 public class LinkModel {
     public LinkModel(){}
     public LinkModel(LinkRecord record){
