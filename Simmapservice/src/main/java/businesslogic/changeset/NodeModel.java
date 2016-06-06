@@ -4,9 +4,6 @@ import dataaccess.database.tables.records.NodeRecord;
 
 import java.math.BigDecimal;
 
-/**
- * Created by dohee on 13.04.2016.
- */
 public class NodeModel {
     public NodeModel(){}
     public NodeModel(NodeRecord record){

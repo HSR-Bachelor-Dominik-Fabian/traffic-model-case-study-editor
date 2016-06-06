@@ -10,10 +10,10 @@
     </script>
 }
 <div id="mapContainer" class="container-fluid" ng-app="mainModule">
-    <div class="row">
+    <div class="row" ng-app="menuModel">
         <div simmap id="map" class="col-xs-12">
         </div>
-        <nav id="navmenuLeft" class="navbar navbar-fixed-left navbar-minimal animate" role="navigation" ng-controller="StreetMenuController" ng-app="menuModule">
+        <nav id="navmenuLeft" class="navbar navbar-fixed-left navbar-minimal animate"  role="navigation" ng-controller="StreetMenuController">
             <div class="navbar-toggler animate">
                 <span class="menu-icon"></span>
             </div>
@@ -40,37 +40,46 @@
                         <span class="glyphicon glyphicon-arrow-right"></span>
                     </a>
                 </li>
+                <li>
+                    <a id="editButton" ng-click="onEditClicked()" data-toggle="tooltip" data-placement="right" title="Edit">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </li>
             </ul>
         </nav>
-        <div id="hiddenMenu" class="col-xs-3 nopadding navmenu-fixed-left offcanvas offcanvas-container" ng-controller="StreetMenuController" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft" ng-app="menuModule">
-            <rootMenu ng-show="menuState=='rootMenu'"></rootMenu>
-            <loadChangesetMenu ng-show="menuState=='loadChangeset'"></loadChangesetMenu>
-        </div>
-        <div id="importMenu" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#importMenu, .leaflet-right">
-            <div class="panel panel-default">
-                <div class="panel-heading">XML Import</div>
-                <div class="panel-body">
-                    <form action="@props.getProperty("rootURL")/api/xml" method="post" enctype="multipart/form-data">
-                        <p>
-                            Network name : <input type="text" name="name">
-                        </p>
-                        <p>
-                            Choose a file : <input type="file" name="file" />
-                        </p>
-                        <p>
-                            Choose a format :
-                            <select name="format">
-                                <option value="WGS84">WGS84</option>
-                                <option value="EPSG:3857">EPSG:3857</option>
-                                <option value="EPSG:21781">EPSG:21781</option>
-                                <option value="EPSG:26914">EPSG:26914</option>
-                                <option value="EPSG:32719">EPSG:32719</option>
-                            </select>
-                        </p>
-                        <input type="submit" value="Upload" />
-                    </form>
+        <div ng-show="getEditMode()==true"  ng-controller="StreetMenuController">
+            <div id="editMenu"  class="navbar-minimal-top animate-slide">
+                <ul>
+                    <li>
+                        <a data-toggle="tooltip" ng-click="onAddStreetClicked()" data-placement="right" title="Strasse Zeichnen">
+                            <span class="glyphicon glyphicon-road"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="addStreetDialog" class="editStreetDialog" ng-show="getStreetToEdit() != null">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h3 class="col-sm-12">Strasse zeichnen</h3>
+                    </div>
+                    <div class="row">
+                        <form class="col-sm-12" ng-submit="onSaveNewStreetClicked()">
+                            <div class="input-group">
+                                <span class="input-group-addon">Von:</span><input class="form-control" name="street-from" type="text" ng-model="getStreetToEdit().from.properties.id" readonly="readonly" /><button ng-click="setFromStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Bis:</span><input class="form-control" name="street-to" type="text" ng-model="getStreetToEdit().to.properties.id" readonly="readonly" /><button ng-click="setToStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
+                            </div>
+                            <input type="submit" class="btn" value="Speichern" /><input type="button" ng-click="setStreetToEdit(null)" class="btn" value="Abbrechen" />
+                        </form>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div id="hiddenMenu" class="col-xs-3 nopadding navmenu-fixed-left offcanvas offcanvas-container" ng-controller="StreetMenuController" data-autohide="false" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft" ng-app="menuModule">
+            <rootMenu ng-show="menuState=='rootMenu'"></rootMenu>
+            <loadChangesetMenu ng-show="menuState=='loadChangeset'"></loadChangesetMenu>
+            <importMenu ng-show="menuState=='importMenu'"></importMenu>
         </div>
         <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#streetDetails, .leaflet-right" ng-controller="StreetDetailController" ng-app="changeLinkModule">
             <div class="from-header">

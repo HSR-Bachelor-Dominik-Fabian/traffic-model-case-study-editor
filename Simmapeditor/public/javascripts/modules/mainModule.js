@@ -1,56 +1,53 @@
-(function(){
-    var mainModule = angular.module('mainModule', ['changeLinkModule', 'menuModule']);
-    mainModule.value("layerInstance", {instance: null, mapInstance: null});
-    mainModule.directive("simmap", ["$rootScope","layerInstance", function($rootScope, layerInstance){
-       return {
+(function () {
+    var mainModule = angular.module('mainModule', ['changeLinkModule', 'menuModule', 'ngMaterial']);
+    mainModule.value("layerInstance", {instance: null, mapInstance: null, editInstance: null});
+    mainModule.directive("simmap", ["$rootScope", "layerInstance", "$mdToast", "dataService", function ($rootScope, layerInstance, $mdToast, dataService) {
+        return {
             scope: true,
-            link: function($scope, element, attrs){
+            link: function ($scope, element, attrs) {
 
-                var baseMap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    noWrap:true
-                });
-                var baseMap_de = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
-                    noWrap:true
-                })
-                var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-                    noWrap:true
-                });
-                var MapBox = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                    subdomains: 'abcd',
-                    id: 'mapbox.streets-basic',
-                    accessToken: 'pk.eyJ1IjoiZjNrZWxsZXIiLCJhIjoiY2lsa3VyNjB3MDA3am5ja3FxNHFld3E2NiJ9.A99UzeLIycU2I8jRCPixgg',
-                    noWrap:true
-                });
-                var MapBoxLight = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                    subdomains: 'abcd',
-                    id: 'mapbox.light',
-                    accessToken: 'pk.eyJ1IjoiZjNrZWxsZXIiLCJhIjoiY2lsa3VyNjB3MDA3am5ja3FxNHFld3E2NiJ9.A99UzeLIycU2I8jRCPixgg',
-                    noWrap:true
-                });
                 var SenozonLight = L.tileLayer('http://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                     subdomains: 'abcd',
                     id: 'firehollaender.b2cc84a4',
                     accessToken: 'pk.eyJ1IjoiZmlyZWhvbGxhZW5kZXIiLCJhIjoiY2lsdzlmamExMDA5dXY5bTQ2bWl2MTZoNCJ9.Q8uzzgMdko8ZbcA6Kbwzlw',
-                    noWrap:true
+                    noWrap: true
                 });
 
-                var map = new L.Map("map", {center: [46.83, 8.3], zoom: 8, layers: [SenozonLight],
-                    attributionControl: false,minZoom: 3, maxZoom: 18, noWrap: true , zoomControl: false, maxBounds: [[-180, -180],[180,180]]});
+                var map = new L.Map("map", {
+                    center: [46.83, 8.3],
+                    zoom: 8,
+                    layers: [SenozonLight],
+                    attributionControl: false,
+                    minZoom: 3,
+                    maxZoom: 18,
+                    noWrap: true,
+                    zoomControl: false,
+                    maxBounds: [[-180, -180], [180, 180]]
+                });
                 layerInstance.mapInstance = map;
 
                 $('#streetDetails').on('hide.bs.offcanvas', function (e) {
                     $rootScope.$broadcast('updateFeature', {feature: null, layer: null, latlng: null, map: map});
                     $(".street-active").removeClass("street-active");
                 });
-
+                /*
+                 map.on('zoomend', function(e) {
+                 var currentZoom = map.getZoom();
+                 if (currentZoom > 14) {
+                 $('.point-hidden').removeClass('point-hidden');
+                 } else {
+                 $('.point').addClass('point-hidden');
+                 }
+                 });
+                 */
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                     g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
-                var addGeoJsonTileLayer = function() {
+                var addGeoJsonTileLayer = function () {
                     var geojsonURL = MyProps["rootURL"] + '/api/quadtile/1/{z}/{x}/{y}';
-                    var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL,{
+                    var geojsonTileLayer = new L.TileLayer.GeoJSON(geojsonURL, {
                         clipTiles: false,
-                        identified: function(feature){
+                        identified: function (feature) {
                             return feature.properties.id;
                         },
                         unique: function (feature) {
@@ -62,52 +59,155 @@
                             var geoJson = changeset.geoJson;
                             for (var changedFeature in geoJson.features) {
                                 if (geoJson.features[changedFeature].properties.id === feature.properties.id) {
-                                    return geoJson.features[changedFeature];
+                                    var result = geoJson.features[changedFeature];
+                                    result.isModified = true;
+                                    return result;
+                                }
+                            }
+                            feature.isModified = false;
+                            return feature;
+                        }
+                    }, {
+                        onEachFeature: onEachFeature
+                    });
+                    layerInstance.instance = geojsonTileLayer;
+                    map.addLayer(geojsonTileLayer);
+                };
+
+                var addEditGeoJsonTileLayer = function () {
+                    var geojsonURLEdit = MyProps["rootURL"] + '/api/quadtile/edit/1/{z}/{x}/{y}';
+                    var geojsonTileLayerEdit = new L.TileLayer.GeoJSON(geojsonURLEdit, {
+                        clipTiles: false,
+                        identified: function (feature) {
+                            return feature.properties.id;
+                        },
+                        unique: function (feature) {
+                            return feature.properties.zoomlevel;
+                        },
+                        modified: function (feature) {
+                            var storageHandler = new ChangesetStorageHandler();
+                            var changeset = storageHandler.getLocalChangeset();
+                            var geoJson = changeset.geoJson;
+                            for (var changedFeature in geoJson.features) {
+                                if (geoJson.features[changedFeature].properties.id === feature.properties.id) {
+                                    var result = geoJson.features[changedFeature];
+                                    result.isModified = true;
+                                    return result;
                                 }
                             }
                             return feature;
                         }
-                    },{
-                        onEachFeature: onEachFeature
+                    }, {
+                        onEachFeature: onEachFeatureEdit,
+                        pointToLayer: function (feature, latlng) {
+                            return L.circleMarker(latlng, {className: 'point', radius: 3, fillOpacity: 0});
+                        }
                     });
-                    layerInstance.instance = geojsonTileLayer;
-                    addOverLay(geojsonTileLayer, "Link Layer");
+                    layerInstance.editInstance = geojsonTileLayerEdit;
                 };
 
-                var baseLayers = { "Color": baseMap, "Color_DE": baseMap_de,
-                    "Black and White": OpenStreetMap_BlackAndWhite, "MapBox": MapBox, "MapBoxLight": MapBoxLight, "SenozonLight": SenozonLight};
-
-                //var basicControl = L.control.layers(baseLayers, {}).addTo(map);
                 L.control.attribution(null);
-                map.addControl(new L.Control.Zoomslider( {position: "bottomright"} ));
-                L.control.scale( {position: "bottomleft", imperial: false} ).addTo(map);
+                map.addControl(new L.Control.Zoomslider({position: 'bottomright'}));
+                L.control.scale({position: 'bottomleft', imperial: false}).addTo(map);
 
-
-                function onEachFeature(feature, layer){
-                    if (feature.properties) {
-                        layer.setStyle({color: "#6f98a4",opacity: 0.9 , className: "street street_"+feature.properties.zoomlevel});
-                        layer.on("click", function(e){
-                            $(".street-active").removeClass("street-active");
+                function onEachFeature(feature, layer) {
+                    if (feature.properties && feature.geometry && feature.geometry.type !== 'Point') {
+                        if (feature.isModified) {
+                            layer.setStyle({className: 'street street-edited street_' + feature.properties.zoomlevel});
+                        } else {
+                            layer.setStyle({className: 'street street_' + feature.properties.zoomlevel});
+                        }
+                        layer.on('click', function (e) {
+                            $('.street-active').removeClass('street-active');
                             var path = e.target;
                             var container = path._container;
                             $('> path', container).addClass('street-active');
-                            $rootScope.$broadcast('updateFeature', {feature: feature, layer: layer, latlng: e.latlng, map: map});
+                            $rootScope.$broadcast('updateFeature', {
+                                feature: feature,
+                                layer: layer,
+                                latlng: e.latlng,
+                                map: map
+                            });
                         });
                     }
                 }
 
-                function addOverLay(layer, name) {
-                    map.addLayer(layer);
-                    //basicControl.addOverlay(layer, name);
+                function onEachFeatureEdit(feature, layer) {
+                    if (feature.properties) {
+                        if (feature.geometry.type !== 'Point') {
+                            if (feature.isModified) {
+                                layer.setStyle({
+                                    className: 'link_' + feature.properties.id + ' street-edit street-edited street_' + feature.properties.zoomlevel
+                                });
+                            } else {
+                                layer.setStyle({
+                                    className: 'link_' + feature.properties.id + ' street-edit street_' + feature.properties.zoomlevel
+                                });
+                            }
+
+                            layer.on('click', function (e) {
+                                $('.street-active').removeClass('street-active');
+                                var path = e.target;
+                                var container = path._container;
+                                $('> path', container).addClass('street-active');
+                                var id = path.feature.properties.id;
+                                var fromLayer = null;
+                                var toLayer = null;
+                                layerInstance.editInstance.geojsonLayer.eachLayer(function(sublayer){
+                                    var tempFromLayer = sublayer.getLayer('node_' + feature.properties.from);
+                                    if (tempFromLayer != null) {
+                                        fromLayer = tempFromLayer;
+                                    }
+                                    var tempToLayer = sublayer.getLayer('node_' + feature.properties.to);
+                                    if (tempToLayer != null) {
+                                        toLayer = tempToLayer;
+                                    }
+                                });
+                                $rootScope.$apply(function () {
+                                    dataService.setStreetToEdit({from: fromLayer.feature, to: toLayer.feature, link: path.feature});
+                                });
+                            });
+                        } else {
+                            layer.setStyle({className: 'node_' + feature.properties.id});
+                            layer._leaflet_id = 'node_' + feature.properties.id;
+                            layer.on('click', function (e) {
+                                if (dataService.editMode && dataService.getStreetToEdit() != null) {
+                                    var path = e.target;
+                                    var feature = path.feature;
+                                    if (dataService.getStreetToEdit().from == null) {
+                                        $rootScope.$apply(function () {
+                                            dataService.setFromStreet(feature);
+                                        });
+                                    }
+                                    else {
+                                        $rootScope.$apply(function () {
+                                            dataService.setToStreet(feature);
+                                        });
+                                    }
+
+                                }
+                            });
+                        }
+                    }
                 }
+
+                var showMessageDialog = function (message) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent(message)
+                            .position('top right')
+                            .hideDelay(5000)
+                    );
+                };
 
                 var undoRedoHandler = new UndoRedoHandler();
                 undoRedoHandler.initializeUndoRedoStack();
 
                 var changesetHandler = new ChangesetHandler();
-                changesetHandler.initializeChangeset();
+                changesetHandler.initializeChangeset(showMessageDialog);
                 addGeoJsonTileLayer();
+                addEditGeoJsonTileLayer();
             }
-       };
+        };
     }]);
 })();

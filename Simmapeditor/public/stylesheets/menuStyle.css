@@ -40,10 +40,10 @@
     color: #fff;
 
 }
-.menuBtn-6g:before {
-    background: rgba(0,0,0,0.05);
-}
 
+.menuBtn-6g:before {
+    background: rgba(0, 0, 0, 0.05);
+}
 
 .menuBtn-6:active {
     background: #4a717c;
@@ -63,22 +63,23 @@
     z-index: 40;
 }
 
-.mainmenu-bar > .mainmenu-title{
+.mainmenu-bar > .mainmenu-title {
     color: white;
-    float:left;
+    float: left;
     position: relative;
     height: 60px;
     padding-left: 13px;
     z-index: 40;
 }
+
 .mainmenu-title > p {
-    margin-top:18px;
-    font-size:12pt;
+    margin-top: 18px;
+    font-size: 12pt;
     color: white;
 }
 
 .menuBtn-6:before {
-    font-family:"Glyphicons Halflings";
+    font-family: "Glyphicons Halflings";
     position: absolute;
     height: 100%;
     left: 0;
@@ -90,14 +91,15 @@
 
 .mainmenu-toggler {
     position: relative;
-    float:left;
+    float: left;
     height: 60px;
     width: 60px;
     z-index: 40;
     cursor: pointer;
     background-color: #484546;
 }
-.mainmenu-toggler:hover{
+
+.mainmenu-toggler:hover {
     background-color: #6f99a5;
 }
 
@@ -121,84 +123,130 @@
     transform: rotate(0deg);
 }
 
-.menu-tile > div:before{
-    font-family:"Glyphicons Halflings";
+.menu-tile > div:before {
+    font-family: "Glyphicons Halflings";
     position: relative;
-    display:inline-block;
-    width:100%;
+    display: inline-block;
+    width: 100%;
     text-align: center;
     top: 10px;
-    font-size:30pt;
+    font-size: 30pt;
 }
 
-.menu-tile{
+.menu-tile {
     height: 110px;
     padding: 2px !important;
     -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none;   /* Chrome/Safari/Opera */
-    -khtml-user-select: none;    /* Konqueror */
-    -moz-user-select: none;      /* Firefox */
-    -ms-user-select: none;       /* Internet Explorer/Edge */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none;
 }
-.menu-tile > div{
+
+.menu-tile > div {
     height: 100%;
-    color:white;
+    color: white;
     background-color: rgb(51, 51, 51);
     background-color: rgba(51, 51, 51, 0.8);
-    cursor:pointer;
+    cursor: pointer;
     z-index: 0;
 }
-.menu-tile > .deleteButton{
+
+.menu-tile > .deleteButton {
     right: 2px;
-    font-family:"Glyphicons Halflings";
+    font-family: "Glyphicons Halflings";
     color: white;
     opacity: 0.3;
-    position:absolute;
+    position: absolute;
     display: inline-block;
     padding: 4px;
-    height:28px;
-    width:28px;
-    text-align:center;
+    height: 28px;
+    width: 28px;
+    text-align: center;
     z-index: 1;
-    cursor:pointer;
+    cursor: pointer;
 }
-.menu-tile > .deleteButton:hover{
+
+.menu-tile > .deleteButton:hover {
     background-color: #6f99a5;
     opacity: 1;
 }
-.menu-tile > .deleteButton:active{
+
+.menu-tile > .deleteButton:active {
     opacity: 1;
     background-color: #4a717c;
 }
-.menu-tile >div:hover:after{
+
+.menu-tile > div:hover:after {
     content: '';
     position: absolute;
-    top: 0; bottom: 0;
-    left: 0; right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: #6f99a5;
     opacity: 0.4;
 }
-.menu-tile >div:active:after{
+
+.menu-tile > div:active:after {
     content: '';
     position: absolute;
-    top: 0; bottom: 0;
-    left: 0; right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: #4a717c;
     opacity: 0.4;
 }
-.menu-tile > div > span{
+
+.menu-tile > div > span {
     position: relative;
     display: inline-block;
     width: 100%;
     top: 20px;
     font-size: 11pt;
     background-color: #484546;
-    text-align:center;
+    text-align: center;
     padding-top: 4px;
     padding-bottom: 4px;
 }
 
-.menu-tile > .glyphicon-check:before{
+.menu-tile > .glyphicon-check:before {
     color: #34a461;
+}
+
+#importMenu .input-group .form-control {
+    height: 40px;
+    border-radius: 0px;
+    background-color: rgb(51, 51, 51);
+    border: 1px solid rgb(51, 51, 51);
+    color: white;
+}
+
+#importMenu .input-group .input-group-addon {
+    border-radius: 0px;
+    background-color: #484546;
+    border: 1px solid #484546;
+    color: white;
+}
+
+#importMenu .input-group {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#importMenu .input-group option {
+    color: white;
+}
+
+#importMenu .btn {
+    border-radius: 0px !important;
+    background-color: #484546;
+    border: 1px solid #484546;
+    color: white;
+}
+
+#importMenu .btn:active {
+    color: white;
 }

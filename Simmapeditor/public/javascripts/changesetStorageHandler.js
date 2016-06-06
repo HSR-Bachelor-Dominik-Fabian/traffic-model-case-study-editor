@@ -1,7 +1,3 @@
-/**
- * Created by fke on 19.04.2016.
- */
-
 function ChangesetStorageHandler() {
 
     this._isLocalStorageSupported = function() {
@@ -21,7 +17,7 @@ function ChangesetStorageHandler() {
 
         var properties = { "modes": model["modes"], "zoomlevel": model["minlevel"], "length": model["length"],
             "freespeed": model["freespeed"], "permlanes": model["permlanes"], "id": model["id"],
-            "oneway": model["oneway"], "capacity": model["capacity"]};
+            "oneway": model["oneway"], "capacity": model["capacity"], "from": model["from"], "to": model["to"]};
 
         feature.properties = properties;
         return feature;
@@ -114,11 +110,14 @@ function ChangesetStorageHandler() {
             }
         });
 
+        localChangeset.geoJson.features[geoJsonFeatureIndex].geometry.coordinates = [model.geometry.coordinates[0].coordinates, model.geometry.coordinates[1].coordinates];
+
         this._setUpdatedLocalChangeset(localChangeset);
     };
 
     this._addNewLinkChangeModelToChangeset = function(model, localChangeset) {
         var getLinkURL = MyProps["rootURL"] + "/api/link/" + model.properties.id;
+
         $.getJSON(getLinkURL, function(data){
             var storageHandler = new ChangesetStorageHandler();
 

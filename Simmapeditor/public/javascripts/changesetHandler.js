@@ -1,5 +1,5 @@
 function ChangesetHandler() {
-    this.getAllChangesets = function() {
+    this.getAllChangesets = function(showMessageDialog) {
         var getLinkURL = MyProps["rootURL"] + "/api/changesets/user/1";
         var result = [];
         $.ajax({
@@ -9,15 +9,20 @@ function ChangesetHandler() {
             dataType:'json',
             async:false,
             success:function(data){
-                result = data;
+                if(data !== undefined){
+                    result = data;
+                }
+            },
+            error: function(data){
+                showMessageDialog('Fehler: ' + data.responseJSON.message);
             }
         });
         return result;
     };
-    this.initializeChangeset = function (){
+    this.initializeChangeset = function (showMessageDialog){
         var storageHandler = new ChangesetStorageHandler();
         if (!storageHandler.localChangeSetExists()) {
-            var allChangesets = this.getAllChangesets();
+            var allChangesets = this.getAllChangesets(showMessageDialog);
             if (allChangesets.length !== 0) {
                 this.loadChangesetIntoLocalStorage(allChangesets[0].id);
             } else {
@@ -33,13 +38,13 @@ function ChangesetHandler() {
         storageHandler.setLocalChangeset(fullChangeModel);
     };
 
-    this.loadChangesetIntoLocalStorage = function(changesetNr){
+    this.loadChangesetIntoLocalStorage = function(changesetNr, showMessageDialog){
         var storageHandler = new ChangesetStorageHandler();
-        var changeSet = this._loadChangeSet(MyProps["rootURL"] + "/api/changesets/" + changesetNr);
+        var changeSet = this._loadChangeSet(MyProps["rootURL"] + "/api/changesets/" + changesetNr, showMessageDialog);
         storageHandler.setLocalChangeset(changeSet);
     };
 
-    this._loadChangeSet = function(getLinkURL){
+    this._loadChangeSet = function(getLinkURL, showMessageDialog){
         var result;
         $.ajax({
             type:'GET',
@@ -49,12 +54,15 @@ function ChangesetHandler() {
             cache: false,
             success:function(data){
                 result = data;
+            },
+            error: function(data){
+                showMessageDialog('Fehler: ' + data.responseJSON.message);
             }
         });
         return result;
     };
 
-    this.deleteChangeset = function (id){
+    this.deleteChangeset = function (id, showMessageDialog){
         var storageHandler = new ChangesetStorageHandler();
         var data = storageHandler.getLocalChangeset();
         var getLinkURL = MyProps["rootURL"] + "/api/changesets/" + id;
@@ -76,12 +84,12 @@ function ChangesetHandler() {
 
         if(success && data.id === id){
             storageHandler.clearLocalChangeset();
-            this.initializeChangeset();
+            this.initializeChangeset(showMessageDialog);
         }
         return success;
     };
 
-    this.saveChangeSet = function(){
+    this.saveChangeSet = function(showMessageDialog){
         var storageHandler = new ChangesetStorageHandler();
         var data = storageHandler.getLocalChangeset();
         data.lastModified = Date.now();
@@ -94,13 +102,15 @@ function ChangesetHandler() {
                 data: JSON.stringify(data),
                 dataType: "json",
                 success:function(){
-                    $("#saveSuccess").show();
-                    $("#saveSuccess").fadeOut(5000);
                     storageHandler._setUpdatedLocalChangeset(data);
                     var undoRedoHandler = new UndoRedoHandler();
                     undoRedoHandler.clearUndoRedoStack();
+                    $("#saveSuccess").show();
+                    $("#saveSuccess").fadeOut(5000);
+                    showMessageDialog('Changeset wurde erfolgreich gespeichert.');
                 },
-                error: function(){
+                error: function(data){
+                    showMessageDialog('Fehler: ' + data.responseJSON.message);
                     $("#saveError").show();
                     $("#saveError").fadeOut(5000);
                 }

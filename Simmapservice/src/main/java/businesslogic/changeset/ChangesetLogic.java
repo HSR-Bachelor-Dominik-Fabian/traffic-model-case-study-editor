@@ -1,43 +1,43 @@
 package businesslogic.changeset;
 
+import common.DataAccessLayerException;
 import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.tables.records.*;
+import dataaccess.utils.ProdConnection;
 import org.jooq.Result;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-/**
- * Created by dohee on 13.04.2016.
- */
 public class ChangesetLogic {
     private SimmapDataAccessFacade dataAccess;
-    public ChangesetLogic(Properties properties){
-        this.dataAccess = new SimmapDataAccessFacade(properties);
+
+    public ChangesetLogic(Properties properties) {
+        this.dataAccess = new SimmapDataAccessFacade(properties, new ProdConnection());
     }
 
-    public List<ChangesetModel> getAllChangesets(int userNr){
+    public List<ChangesetModel> getAllChangesets(int userNr) throws DataAccessLayerException {
         final Result<ChangesetRecord> allChangesetsPerUser = dataAccess.getAllChangesetsPerUser(userNr);
-        List<ChangesetModel> output = (allChangesetsPerUser.size() > 0)?new ArrayList():null;
+        List<ChangesetModel> output = (allChangesetsPerUser.size() > 0) ? new ArrayList() : null;
 
-        for (ChangesetRecord record :allChangesetsPerUser) {
+        for (ChangesetRecord record : allChangesetsPerUser) {
             output.add(new ChangesetModel(record));
         }
         return output;
     }
 
-    public ChangesetFullModel getFullChangeset(long changsetNr){
-        ChangesetRecord changesetRecord = dataAccess.getChangsetFromNumber(changsetNr);
-        if(changesetRecord !=null){
+    public ChangesetFullModel getFullChangeset(long changsetNr) throws DataAccessLayerException {
+        ChangesetRecord changesetRecord = dataAccess.getChangesetFromNumber(changsetNr);
+        if (changesetRecord != null) {
             ChangesetFullModel fullModel = new ChangesetFullModel(changesetRecord);
 
             Result<NodeChangeRecord> nodeChange = dataAccess.getNodeChangefromChangeset(changsetNr);
             List<Node_ChangeModel> node_changeModels = new ArrayList();
-            for (NodeChangeRecord record:  nodeChange) {
+            for (NodeChangeRecord record : nodeChange) {
                 Node_ChangeModel temp = new Node_ChangeModel();
                 NodeRecord node = dataAccess.getNodeFromId(record.getId());
-                temp.fillModel(record,node);
+                temp.fillModel(record, node);
                 node_changeModels.add(temp);
             }
 
@@ -45,10 +45,10 @@ public class ChangesetLogic {
 
             Result<LinkChangeRecord> linkChange = dataAccess.getLinkChangesfromChangeset(changsetNr);
             List<Link_ChangeModel> link_changeModels = new ArrayList();
-            for(LinkChangeRecord record : linkChange){
+            for (LinkChangeRecord record : linkChange) {
                 Link_ChangeModel temp = new Link_ChangeModel();
                 LinkRecord link = dataAccess.getLinkFromId(record.getId());
-                temp.fillModel(record,link);
+                temp.fillModel(record, link);
                 link_changeModels.add(temp);
             }
 
@@ -58,12 +58,12 @@ public class ChangesetLogic {
         return null;
     }
 
-    public boolean hasChangeset(long changesetNumber){
+    public boolean hasChangeset(long changesetNumber) throws DataAccessLayerException {
         return dataAccess.hasChangeset(changesetNumber);
     }
 
-    public Long insertChangeset(ChangesetFullModel fullModel) throws IllegalArgumentException{
-        if(fullModel.getId() != null){
+    public Long insertChangeset(ChangesetFullModel fullModel) throws IllegalArgumentException, DataAccessLayerException {
+        if (fullModel.getId() != null) {
             throw new IllegalArgumentException("Changeset has already an id");
         }
 
@@ -77,7 +77,7 @@ public class ChangesetLogic {
         return newID;
     }
 
-    public void updateChangeset(ChangesetFullModel fullModel){
+    public void updateChangeset(ChangesetFullModel fullModel) throws DataAccessLayerException {
         ChangesetRecord changesetRecord = fullModel.getRecord();
         dataAccess.updateChangeset(changesetRecord);
         dataAccess.deleteLink_Changes(fullModel.getLink_changeModelsToDelete());
@@ -86,7 +86,7 @@ public class ChangesetLogic {
         dataAccess.updateNode_Changes(fullModel.getNode_changeModelsToUpdate());
     }
 
-    public void deleteChangeset(ChangesetFullModel fullModel){
+    public void deleteChangeset(ChangesetFullModel fullModel) throws DataAccessLayerException {
         ChangesetRecord changesetRecord = fullModel.getRecord();
         dataAccess.deleteLink_Changes(fullModel.getAllLink_changeModelsAsRecord());
         dataAccess.deleteNode_Changes(fullModel.getAllNode_changeModelsAsRecord());

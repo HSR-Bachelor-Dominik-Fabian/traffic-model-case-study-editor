@@ -12,7 +12,7 @@ services:
   simmapwebsite:
     build: ./simmapeditor/
     ports:
-      - "80:9000"
+      - "40004:9000"
 networks:
   <prefix>-simmapnetwork:
     external: true

@@ -1,17 +1,17 @@
 package businesslogic.xmlImport;
 
-import businesslogic.Utils.EPSGTransformUtil;
-import businesslogic.Utils.QuadTileUtils;
+import businesslogic.utils.EPSGTransformUtil;
+import businesslogic.utils.QuadTileUtils;
 import com.google.common.base.Stopwatch;
 import com.vividsolutions.jts.geom.Coordinate;
+import common.DataAccessLayerException;
 import dataaccess.SimmapDataAccessFacade;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;
 import dataaccess.database.tables.records.NetworkRecord;
 import dataaccess.database.tables.records.NodeRecord;
+import dataaccess.utils.ProdConnection;
 import org.jooq.Result;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
 
@@ -28,17 +28,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by fke on 22.03.2016.
- */
 public class XMLImportLogic {
     private final SimmapDataAccessFacade dataAccess;
 
     public XMLImportLogic(Properties properties) {
-        this.dataAccess = new SimmapDataAccessFacade(properties);
+        this.dataAccess = new SimmapDataAccessFacade(properties, new ProdConnection());
     }
-
-    public void importNetwork2DB(InputStream inputStream, String format, String networkName) {
+    //TODO: Exception Handling Business Layer
+    public void importNetwork2DB(InputStream inputStream, String format, String networkName) throws DataAccessLayerException {
         try {
             XMLInputFactory factory = XMLInputFactory.newInstance();
 
@@ -93,16 +90,16 @@ public class XMLImportLogic {
         }
     }
 
-    private int importNetwork2DB(String networkName) {
+    private int importNetwork2DB(String networkName) throws DataAccessLayerException {
         // TODO: dynamically detect id, after autoincrement
         NetworkRecord network = new NetworkRecord();
         network.setId(1);
         network.setName(networkName);
-        dataAccess.setNetwork(new NetworkRecord[] {network});
+        dataAccess.setNetworks(new NetworkRecord[] {network});
         return 1;
     }
 
-    private void importNodes2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) {
+    private void importNodes2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessLayerException {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         try {
@@ -132,13 +129,13 @@ public class XMLImportLogic {
                 nodeRecords[index%25000] = newNodeRecord;
                 index++;
                 if (index != 0 && index%25000 == 0) {
-                    dataAccess.setNode(nodeRecords);
+                    dataAccess.setNodes(nodeRecords);
                     nodeRecords = new NodeRecord[25000];
                     index = 0;
                 }
                 streamReader.next();
             }
-            dataAccess.setNode(nodeRecords);
+            dataAccess.setNodes(nodeRecords);
         } catch (XMLStreamException e) {
             e.printStackTrace();
         } catch (TransformException e) {
@@ -149,7 +146,7 @@ public class XMLImportLogic {
         System.out.println("Time: " + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
     }
 
-    private void importOptions2DB(XMLStreamReader streamReader, int networkId) {
+    private void importOptions2DB(XMLStreamReader streamReader, int networkId) throws DataAccessLayerException {
         NetworkOptionsRecord[] options = new NetworkOptionsRecord[3];
 
         if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
@@ -179,7 +176,7 @@ public class XMLImportLogic {
         }
     }
 
-    private void importLinks2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) {
+    private void importLinks2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessLayerException {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         Result<NodeRecord> nodes = dataAccess.getAllNodes();
@@ -203,13 +200,13 @@ public class XMLImportLogic {
                 linkRecords[index%25000] = newLink;
                 index++;
                 if (index != 0 && index%25000 == 0) {
-                    dataAccess.setLink(linkRecords);
+                    dataAccess.setLinks(linkRecords);
                     linkRecords = new LinkRecord[25000];
                     index = 0;
                 }
                 streamReader.next();
             }
-            dataAccess.setLink(linkRecords);
+            dataAccess.setLinks(linkRecords);
         } catch (XMLStreamException e) {
             e.printStackTrace();
         } catch (TransformException e) {
@@ -239,7 +236,7 @@ public class XMLImportLogic {
 
         newLink.setQuadkey(QuadTileUtils
                 .getMinCommonQuadTileKeyFromLatLong(fromCoord.y, fromCoord.x, toCoord.y, toCoord.x));
-        newLink.setOneway(Boolean.parseBoolean(streamReader.getAttributeValue(7)));
+        newLink.setOneway("1".equals(streamReader.getAttributeValue(7)));
         newLink.setNetworkid(networkId);
         newLink.setFreespeed(new BigDecimal(streamReader.getAttributeValue(4)));
         newLink.setCapacity(new BigDecimal(streamReader.getAttributeValue(5)));
