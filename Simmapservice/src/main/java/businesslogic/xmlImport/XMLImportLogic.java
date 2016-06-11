@@ -4,8 +4,8 @@ import businesslogic.utils.EPSGTransformUtil;
 import businesslogic.utils.QuadTileUtils;
 import com.google.common.base.Stopwatch;
 import com.vividsolutions.jts.geom.Coordinate;
-import common.DataAccessLayerException;
-import dataaccess.SimmapDataAccessFacade;
+import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;
 import dataaccess.database.tables.records.NetworkRecord;
@@ -29,16 +29,15 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class XMLImportLogic {
-    private final SimmapDataAccessFacade dataAccess;
+    private final DataAccessLogic dataAccess;
 
     public XMLImportLogic(Properties properties) {
-        this.dataAccess = new SimmapDataAccessFacade(properties, new ProdConnection());
+        this.dataAccess = new DataAccessLogic(properties, new ProdConnection());
     }
     //TODO: Exception Handling Business Layer
-    public void importNetwork2DB(InputStream inputStream, String format, String networkName) throws DataAccessLayerException {
+    public void importNetwork2DB(InputStream inputStream, String format, String networkName) throws DataAccessLayerException, FactoryException {
         try {
             XMLInputFactory factory = XMLInputFactory.newInstance();
-
             XMLStreamReader streamReader = factory.createXMLStreamReader(inputStream);
 
             int networkId = importNetwork2DB(networkName);
@@ -47,34 +46,16 @@ public class XMLImportLogic {
             try {
                 transformer = new EPSGTransformUtil(format);
             } catch (FactoryException e) {
-                e.printStackTrace();
+                throw e;
             }
-
             if (transformer == null) {
                 throw new IllegalArgumentException("GeoJSON format is not supported");
             }
 
-            while(streamReader.hasNext()) {
-                if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
-                    if (streamReader.getName().getLocalPart().equals("nodes")) {
-                        streamReader.next();
-                        break;
-                    }
-                }
-                streamReader.next();
-            }
-
+            skipToNodes(streamReader);
             importNodes2DB(streamReader, transformer, networkId);
 
-            while(streamReader.hasNext()) {
-                streamReader.next();
-                if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
-                    if (streamReader.getName().getLocalPart().equals("links")) {
-                        break;
-                    }
-                }
-            }
-
+            skipToLinks(streamReader);
             importOptions2DB(streamReader, networkId);
 
             importLinks2DB(streamReader, transformer, networkId);
@@ -86,6 +67,29 @@ public class XMLImportLogic {
                 inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    private void skipToNodes(XMLStreamReader streamReader) throws XMLStreamException {
+        while(streamReader.hasNext()) {
+            if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
+                if (streamReader.getName().getLocalPart().equals("nodes")) {
+                    streamReader.next();
+                    break;
+                }
+            }
+            streamReader.next();
+        }
+    }
+
+    private void skipToLinks(XMLStreamReader streamReader) throws XMLStreamException {
+        while(streamReader.hasNext()) {
+            streamReader.next();
+            if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
+                if (streamReader.getName().getLocalPart().equals("links")) {
+                    break;
+                }
             }
         }
     }

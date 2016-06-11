@@ -3,8 +3,8 @@ package businesslogic.datafetch;
 import businesslogic.utils.GeoJSONUtil;
 import businesslogic.utils.QuadTileUtils;
 import businesslogic.changeset.LinkModel;
-import common.DataAccessLayerException;
-import dataaccess.SimmapDataAccessFacade;
+import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.utils.ProdConnection;
 import org.jooq.Record;
@@ -28,7 +28,7 @@ public class DataFetchLogic {
         JSONObject output;
 
         String quadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
-        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
+        DataAccessLogic dataAccess = new DataAccessLogic(this.properties, new ProdConnection());
         Result<Record> links = dataAccess.getLinksFromQuadKey(quadKey, networkid, zoom);
 
         output = GeoJSONUtil.getGeoJsonFromLinkRequest(links, zoom);
@@ -41,7 +41,7 @@ public class DataFetchLogic {
 
         if (zoom > 15) {
             String quadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
-            SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
+            DataAccessLogic dataAccess = new DataAccessLogic(this.properties, new ProdConnection());
             Result<Record> links = dataAccess.getLinksFromQuadKey(quadKey, networkid, zoom);
             List<String> nodeIds = new ArrayList<>();
             for(Record link : links) {
@@ -59,7 +59,7 @@ public class DataFetchLogic {
 
     public Date getLastModified(int x, int y, int zoom, int networkid) throws DataAccessLayerException {
         String QuadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
-        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
+        DataAccessLogic dataAccess = new DataAccessLogic(this.properties, new ProdConnection());
 
         return dataAccess.getLastModifiedQuadKey(QuadKey, networkid, zoom);
     }
@@ -67,7 +67,7 @@ public class DataFetchLogic {
     public LinkModel getLinkById(String id) throws DataAccessLayerException {
         JSONObject output;
 
-        SimmapDataAccessFacade dataAccess = new SimmapDataAccessFacade(this.properties, new ProdConnection());
+        DataAccessLogic dataAccess = new DataAccessLogic(this.properties, new ProdConnection());
         LinkRecord link = dataAccess.getLinkFromId(id);
         LinkModel linkModel = new LinkModel(link);
 

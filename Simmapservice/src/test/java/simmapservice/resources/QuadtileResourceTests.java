@@ -1,7 +1,7 @@
 package simmapservice.resources;
 
 import businesslogic.datafetch.DataFetchLogic;
-import common.DataAccessLayerException;
+import dataaccess.expection.DataAccessLayerException;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
@@ -26,7 +26,6 @@ import java.util.Properties;
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import static org.powermock.api.easymock.PowerMock.replayAll;
 import static org.powermock.api.easymock.PowerMock.verifyAll;
 

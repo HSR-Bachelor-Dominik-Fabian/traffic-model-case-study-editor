@@ -3,12 +3,11 @@ package simmapservice.resources;
 import businesslogic.changeset.ChangesetFullModel;
 import businesslogic.changeset.ChangesetLogic;
 import businesslogic.changeset.ChangesetModel;
-import common.DataAccessLayerException;
+import dataaccess.expection.DataAccessLayerException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 

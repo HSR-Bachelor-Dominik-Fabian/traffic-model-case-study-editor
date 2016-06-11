@@ -2,9 +2,8 @@ package simmapservice.resources;
 
 import businesslogic.changeset.ChangesetFullModel;
 import businesslogic.changeset.ChangesetLogic;
-import common.DataAccessLayerException;
+import dataaccess.expection.DataAccessLayerException;
 import io.dropwizard.testing.junit.ResourceTestRule;
-import org.easymock.EasyMock;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
 import org.junit.Before;
@@ -12,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.easymock.PowerMock;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import testenvironment.TestDataUtil;
@@ -27,7 +25,6 @@ import java.util.Properties;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.doNothing;
 import static org.powermock.api.easymock.PowerMock.*;
 
 @RunWith(PowerMockRunner.class)

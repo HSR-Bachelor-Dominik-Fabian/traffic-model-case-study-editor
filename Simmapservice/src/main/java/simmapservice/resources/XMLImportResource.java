@@ -1,7 +1,7 @@
 package simmapservice.resources;
 
 import businesslogic.xmlImport.XMLImportLogic;
-import common.DataAccessLayerException;
+import dataaccess.expection.DataAccessLayerException;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import javax.servlet.http.HttpServletResponse;

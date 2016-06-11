@@ -23,18 +23,14 @@ public class PartialController extends Controller {
         return ok(loadChangesetMenu.render());
     }
 
-    public static Result importMenu(){
+    public static Result importMenu() throws IOException {
         Properties properties = new Properties();
-        BufferedInputStream stream = null;
-        try {
-            String resource = Play.application().classloader().getResource("config.properties").getFile();
-            stream = new BufferedInputStream(new FileInputStream(resource));
+        try (BufferedInputStream stream = new BufferedInputStream(
+                new FileInputStream(Play.application().classloader().getResource("config.properties").getFile()))) {
             properties.load(stream);
             stream.close();
-        } catch (FileNotFoundException e) {
-            return internalServerError(String.valueOf(e));
         } catch (IOException e) {
-            return internalServerError(String.valueOf(e));
+            throw e;
         }
         return ok(importMenu.render(properties));
     }

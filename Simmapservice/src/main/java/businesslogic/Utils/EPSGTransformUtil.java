@@ -14,29 +14,22 @@ import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
 public class EPSGTransformUtil {
-    private CoordinateReferenceSystem sourceCrs;
-    private CoordinateReferenceSystem targetCrs;
+    private static final String WGS84 = "WGS84";
+    private final CoordinateReferenceSystem sourceCrs;
+    private final CoordinateReferenceSystem targetCrs;
 
     public EPSGTransformUtil(String sourceCrs) throws FactoryException {
-        this(sourceCrs, "WGS84"); //"EPSG:3857"
+        this(sourceCrs, WGS84);
     }
 
     public EPSGTransformUtil(String sourceCrs, String targetCrs) throws FactoryException {
         this.sourceCrs = CRS.decode(sourceCrs);
-        if(targetCrs.equals("WGS84")){
-            this.targetCrs = DefaultGeographicCRS.WGS84;
-        }
-        else{
-            this.targetCrs = CRS.decode(targetCrs);
-        }
-
+        this.targetCrs = targetCrs.equals(WGS84) ? DefaultGeographicCRS.WGS84 : CRS.decode(targetCrs);
     }
 
     public Geometry transform(Coordinate coord) throws TransformException, FactoryException {
         MathTransform transform = CRS.findMathTransform(sourceCrs,targetCrs);
-
         GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
-
         Point point = geometryFactory.createPoint(coord);
         Geometry transform1 = JTS.transform(point, transform);
         return  transform1;

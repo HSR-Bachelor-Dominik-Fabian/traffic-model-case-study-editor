@@ -30,16 +30,6 @@
                     $rootScope.$broadcast('updateFeature', {feature: null, layer: null, latlng: null, map: map});
                     $(".street-active").removeClass("street-active");
                 });
-                /*
-                 map.on('zoomend', function(e) {
-                 var currentZoom = map.getZoom();
-                 if (currentZoom > 14) {
-                 $('.point-hidden').removeClass('point-hidden');
-                 } else {
-                 $('.point').addClass('point-hidden');
-                 }
-                 });
-                 */
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                     g = svg.append("g").attr("class", "leaflet-zoom-hide");
 

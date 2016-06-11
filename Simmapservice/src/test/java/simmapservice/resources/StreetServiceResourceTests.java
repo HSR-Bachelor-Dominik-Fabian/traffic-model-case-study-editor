@@ -2,7 +2,7 @@ package simmapservice.resources;
 
 import businesslogic.changeset.LinkModel;
 import businesslogic.datafetch.DataFetchLogic;
-import common.DataAccessLayerException;
+import dataaccess.expection.DataAccessLayerException;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;

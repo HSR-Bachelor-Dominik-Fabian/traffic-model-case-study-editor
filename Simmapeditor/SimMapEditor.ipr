@@ -26,9 +26,6 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
-  <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{jasmine-DefinitelyTyped}" />
-  </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_STRING" value="-encoding utf8 -g" />
   </component>
@@ -183,8 +180,8 @@
         <entry key="sourceDirectory">
           <value>
             <ProjectSettingsEntry>
-              <option name="sourceDir" value="$PROJECT_DIR$\Simmapeditor\app" />
-              <option name="confDir" value="$PROJECT_DIR$\Simmapeditor\app" />
+              <option name="sourceDir" value="$PROJECT_DIR$/../Simmapeditor\Simmapeditor\app" />
+              <option name="confDir" value="$PROJECT_DIR$/../Simmapeditor\Simmapeditor\app" />
             </ProjectSettingsEntry>
           </value>
         </entry>

@@ -1,7 +1,7 @@
 package dataaccess.utils;
 
 import org.jooq.*;
-import common.DataAccessLayerException;
+import dataaccess.expection.DataAccessLayerException;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
@@ -17,9 +17,7 @@ public final class DataAccessUtil {
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return context.select().from(table).fetch();
-        } catch (SQLException e) {
-            throw new DataAccessLayerException(e);
-        } catch (DataAccessException e) {
+        } catch (SQLException | DataAccessException e) {
             throw new DataAccessLayerException(e);
         }
     }
@@ -37,9 +35,7 @@ public final class DataAccessUtil {
             }
             output = context.batch(queries).execute();
 
-        } catch (SQLException e) {
-            throw new DataAccessLayerException(e);
-        } catch (DataAccessException e) {
+        } catch (SQLException | DataAccessException e) {
             throw new DataAccessLayerException(e);
         }
 
@@ -55,9 +51,7 @@ public final class DataAccessUtil {
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.batchDelete(records).execute();
-        } catch (SQLException e) {
-            throw new DataAccessLayerException(e);
-        } catch (DataAccessException e) {
+        } catch (SQLException | DataAccessException e) {
             throw new DataAccessLayerException(e);
         }
 
@@ -69,9 +63,7 @@ public final class DataAccessUtil {
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.batchUpdate(record).execute()[0];
-        } catch (SQLException e) {
-            throw new DataAccessLayerException(e);
-        } catch (DataAccessException e) {
+        } catch (SQLException | DataAccessException e) {
             throw new DataAccessLayerException(e);
         }
 
@@ -84,9 +76,7 @@ public final class DataAccessUtil {
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.insertInto(table).set(record).returning(returningFields).fetchOne();
-        } catch (SQLException e) {
-            throw new DataAccessLayerException(e);
-        } catch (DataAccessException e) {
+        } catch (SQLException | DataAccessException e) {
             throw new DataAccessLayerException(e);
         }
 
@@ -99,9 +89,7 @@ public final class DataAccessUtil {
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.batchDelete(record).execute()[0];
-        } catch (SQLException e) {
-            throw new DataAccessLayerException(e);
-        } catch (DataAccessException e) {
+        } catch (SQLException | DataAccessException e) {
             throw new DataAccessLayerException(e);
         }
 

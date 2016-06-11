@@ -13,18 +13,14 @@ import java.util.Properties;
 
 public class Application extends Controller {
 
-    public static Result map() {
+    public static Result map() throws IOException {
         Properties properties = new Properties();
-        BufferedInputStream stream = null;
-        try {
-            String resource = Play.application().classloader().getResource("config.properties").getFile();
-            stream = new BufferedInputStream(new FileInputStream(resource));
+        try (BufferedInputStream stream = new BufferedInputStream(
+                new FileInputStream(Play.application().classloader().getResource("config.properties").getFile()))) {
             properties.load(stream);
             stream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw e;
         }
         return ok(map.render(properties));
     }
