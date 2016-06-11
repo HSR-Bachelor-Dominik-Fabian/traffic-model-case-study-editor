@@ -5,7 +5,7 @@ import dataaccess.database.tables.records.NodeRecord;
 
 import java.math.BigDecimal;
 
-public class Node_ChangeModel {
+public class NodeChangeModel {
     //region Private Variables
     private NodeModel defaultValues = null;
     private String id = null;

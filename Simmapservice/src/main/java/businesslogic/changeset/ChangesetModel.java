@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class ChangesetModel {
-    ChangesetModel() {
+    public ChangesetModel() {
     }
 
     public ChangesetModel(ChangesetRecord record) {

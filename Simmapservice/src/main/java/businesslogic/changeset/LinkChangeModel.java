@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 @JsonIgnoreProperties({"zoomlevel"})
-public class Link_ChangeModel {
+public class LinkChangeModel {
     //region Private Variables
     private LinkModel defaultValues = null;
     private String id = null;

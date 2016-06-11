@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 public class AssertionUtils {
-    public static void assertLink_ChangeIsEquals(Link_ChangeModel expected, Link_ChangeModel result) {
+    public static void assertLink_ChangeIsEquals(LinkChangeModel expected, LinkChangeModel result) {
         assertEquals(expected.getId(), result.getId());
         assertEquals(expected.getChangesetNr(), result.getChangesetNr());
         assertLinkModelEquals(expected.getDefaultValues(), expected.getDefaultValues());
@@ -30,7 +30,7 @@ public class AssertionUtils {
         assertEquals(expected.getTo(), result.getTo());
     }
 
-    public static void assertLink_ChangeRecordToModelIsEquals(LinkChangeRecord expected, Link_ChangeModel result) {
+    public static void assertLink_ChangeRecordToModelIsEquals(LinkChangeRecord expected, LinkChangeModel result) {
         assertEquals(expected.getId(), result.getId());
         assertEquals(expected.getChangesetnr(), result.getChangesetNr());
         assertEquals(expected.getNetworkid(), result.getNetworkId());
@@ -76,7 +76,7 @@ public class AssertionUtils {
         }
     }
 
-    public static void assertNode_ChangeIsEquals(Node_ChangeModel expected, Node_ChangeModel result) {
+    public static void assertNode_ChangeIsEquals(NodeChangeModel expected, NodeChangeModel result) {
         if (expected != null) {
             assertEquals(expected.getChangesetNr(), result.getChangesetNr());
             assertNodeModelEquals(expected.getDefaultValues(), result.getDefaultValues());
@@ -92,7 +92,7 @@ public class AssertionUtils {
         }
     }
 
-    public static void assertNode_ChangeRecordToModelIsEquals(NodeChangeRecord expected, Node_ChangeModel result) {
+    public static void assertNode_ChangeRecordToModelIsEquals(NodeChangeRecord expected, NodeChangeModel result) {
         if (expected != null) {
             assertEquals(expected.getChangesetnr(), result.getChangesetNr());
             assertEquals(expected.getId(), result.getId());

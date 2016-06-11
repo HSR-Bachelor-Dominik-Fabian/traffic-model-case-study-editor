@@ -10,13 +10,13 @@ import static testenvironment.AssertionUtils.assertNodeModelToRecord;
 import static testenvironment.AssertionUtils.assertNode_ChangeRecordIsEquals;
 import static testenvironment.AssertionUtils.assertNode_ChangeRecordToModelIsEquals;
 
-public class Node_ChangeModelTests {
+public class NodeChangeModelTests {
     @Test
     public void testGetterSetter(){
         NodeChangeRecord nodeChangeRecord = TestDataUtil.getSingleSelectNodeChangeTestRecord();
         NodeModel defaultValues = new NodeModel(TestDataUtil.getSingleSelectNodeTestRecord());
 
-        Node_ChangeModel model = new Node_ChangeModel();
+        NodeChangeModel model = new NodeChangeModel();
         model.setDefaultValues(defaultValues);
         model.setChangesetNr(nodeChangeRecord.getChangesetnr());
         model.setId(nodeChangeRecord.getId());
@@ -37,7 +37,7 @@ public class Node_ChangeModelTests {
     public void testFillModel(){
         NodeChangeRecord nodeChangeRecord = TestDataUtil.getSingleSelectNodeChangeTestRecord();
         NodeRecord nodeRecord = TestDataUtil.getSingleSelectNodeTestRecord();
-        Node_ChangeModel model = new Node_ChangeModel();
+        NodeChangeModel model = new NodeChangeModel();
         model.fillModel(nodeChangeRecord, nodeRecord);
 
         NodeChangeRecord expectedRecord = TestDataUtil.getSingleSelectNodeChangeTestRecord();
@@ -59,7 +59,7 @@ public class Node_ChangeModelTests {
     public void testGetNodeChangeRecord(){
         NodeChangeRecord nodeChangeRecord = TestDataUtil.getSingleSelectNodeChangeTestRecord();
         NodeRecord nodeRecord = TestDataUtil.getSingleSelectNodeTestRecord();
-        Node_ChangeModel model = new Node_ChangeModel();
+        NodeChangeModel model = new NodeChangeModel();
         model.fillModel(nodeChangeRecord, nodeRecord);
 
         NodeChangeRecord result = model.getNodeChangeRecord();

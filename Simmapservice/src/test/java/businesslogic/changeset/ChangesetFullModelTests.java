@@ -37,8 +37,8 @@ public class ChangesetFullModelTests {
 
     @Test
     public void testGetterSetterLinkAndNodeChangeModel() {
-        List<Link_ChangeModel> link_changeModels = TestDataUtil.getListLinkChangeModels();
-        List<Node_ChangeModel> node_changeModels = TestDataUtil.getListNodeChangeModels();
+        List<LinkChangeModel> link_changeModels = TestDataUtil.getListLinkChangeModels();
+        List<NodeChangeModel> node_changeModels = TestDataUtil.getListNodeChangeModels();
 
         ChangesetFullModel model = new ChangesetFullModel();
         model.setLink_changeModels(link_changeModels);
@@ -59,19 +59,19 @@ public class ChangesetFullModelTests {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetFullModel model = new ChangesetFullModel(record);
         assertEquals(record.getId(), model.getId());
-        List<Link_ChangeModel> link_changeModels = TestDataUtil.getListLinkChangeModels();
-        List<Node_ChangeModel> node_changeModels = TestDataUtil.getListNodeChangeModels();
+        List<LinkChangeModel> link_changeModels = TestDataUtil.getListLinkChangeModels();
+        List<NodeChangeModel> node_changeModels = TestDataUtil.getListNodeChangeModels();
         model.setLink_changeModels(link_changeModels);
         model.setNode_changeModels(node_changeModels);
 
         model.updateChangesetNr((long) 45);
 
         assertEquals(45, (long) model.getId());
-        for (Link_ChangeModel link : model.getLink_changeModels()) {
+        for (LinkChangeModel link : model.getLink_changeModels()) {
             assertEquals(45, (long) link.getChangesetNr());
         }
 
-        for (Node_ChangeModel node : model.getNode_changeModels()) {
+        for (NodeChangeModel node : model.getNode_changeModels()) {
             assertEquals(45, (long) node.getChangesetNr());
         }
     }
@@ -80,14 +80,14 @@ public class ChangesetFullModelTests {
     public void testGetAllLink_changeModelsAsRecord() {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetFullModel model = new ChangesetFullModel(record);
-        List<Link_ChangeModel> link_changeModels = new ArrayList<>();
+        List<LinkChangeModel> link_changeModels = new ArrayList<>();
         LinkModel defaultModel = new LinkModel(TestDataUtil.getSingleSelectLinkTestRecord());
         LinkChangeRecord linkRecord = TestDataUtil.getSingleSelectLinkChangeTestRecord();
         linkRecord.setId("L1");
         linkRecord.setFreespeed(new BigDecimal(3.333));
         linkRecord.setChangesetnr((long) 12);
 
-        Link_ChangeModel link_changeModel = new Link_ChangeModel();
+        LinkChangeModel link_changeModel = new LinkChangeModel();
         link_changeModel.fillModel(linkRecord, TestDataUtil.getSingleSelectLinkTestRecord());
         link_changeModel.setDefaultValues(defaultModel);
         link_changeModel.setDeleted(false);
@@ -112,14 +112,14 @@ public class ChangesetFullModelTests {
     public void testGetLink_changeModelsToUpdate() {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetFullModel model = new ChangesetFullModel(record);
-        List<Link_ChangeModel> link_changeModels = new ArrayList<>();
+        List<LinkChangeModel> link_changeModels = new ArrayList<>();
         LinkModel defaultModel = new LinkModel(TestDataUtil.getSingleSelectLinkTestRecord());
         LinkChangeRecord linkRecord = TestDataUtil.getSingleSelectLinkChangeTestRecord();
         linkRecord.setId("L1");
         linkRecord.setFreespeed(new BigDecimal(3.333));
         linkRecord.setChangesetnr((long) 12);
 
-        Link_ChangeModel link_changeModel = new Link_ChangeModel();
+        LinkChangeModel link_changeModel = new LinkChangeModel();
         link_changeModel.fillModel(linkRecord, TestDataUtil.getSingleSelectLinkTestRecord());
         link_changeModel.setDefaultValues(defaultModel);
         link_changeModel.setDeleted(true);
@@ -134,14 +134,14 @@ public class ChangesetFullModelTests {
     public void getLink_changeModelsToDelete() {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetFullModel model = new ChangesetFullModel(record);
-        List<Link_ChangeModel> link_changeModels = new ArrayList<>();
+        List<LinkChangeModel> link_changeModels = new ArrayList<>();
         LinkModel defaultModel = new LinkModel(TestDataUtil.getSingleSelectLinkTestRecord());
         LinkChangeRecord linkRecord = TestDataUtil.getSingleSelectLinkChangeTestRecord();
         linkRecord.setId("L1");
         linkRecord.setFreespeed(new BigDecimal(3.333));
         linkRecord.setChangesetnr((long) 12);
 
-        Link_ChangeModel link_changeModel = new Link_ChangeModel();
+        LinkChangeModel link_changeModel = new LinkChangeModel();
         link_changeModel.fillModel(linkRecord, TestDataUtil.getSingleSelectLinkTestRecord());
         link_changeModel.setDefaultValues(defaultModel);
         link_changeModel.setDeleted(true);
@@ -166,14 +166,14 @@ public class ChangesetFullModelTests {
     public void testGetAllNode_changeModelsAsRecord() {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetFullModel model = new ChangesetFullModel(record);
-        List<Node_ChangeModel> node_changeModels = new ArrayList<>();
+        List<NodeChangeModel> node_changeModels = new ArrayList<>();
         NodeModel defaultModel = new NodeModel(TestDataUtil.getSingleSelectNodeTestRecord());
         NodeChangeRecord nodeRecord = TestDataUtil.getMultipleSelectNodeChangeTestRecords().get(0);
         nodeRecord.setId("L1");
         nodeRecord.setLong(new BigDecimal(10.232));
         nodeRecord.setChangesetnr((long) 12);
 
-        Node_ChangeModel node_changeModel = new Node_ChangeModel();
+        NodeChangeModel node_changeModel = new NodeChangeModel();
         node_changeModel.fillModel(nodeRecord, TestDataUtil.getSingleSelectNodeTestRecord());
         node_changeModel.setDefaultValues(defaultModel);
         node_changeModel.setDeleted(false);
@@ -198,14 +198,14 @@ public class ChangesetFullModelTests {
     public void testGetNode_changeModelsToUpdate() {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetFullModel model = new ChangesetFullModel(record);
-        List<Node_ChangeModel> node_changeModels = new ArrayList<>();
+        List<NodeChangeModel> node_changeModels = new ArrayList<>();
         NodeModel defaultModel = new NodeModel(TestDataUtil.getSingleSelectNodeTestRecord());
         NodeChangeRecord nodeRecord = TestDataUtil.getMultipleSelectNodeChangeTestRecords().get(0);
         nodeRecord.setId("L1");
         nodeRecord.setLong(new BigDecimal(10.232));
         nodeRecord.setChangesetnr((long) 12);
 
-        Node_ChangeModel node_changeModel = new Node_ChangeModel();
+        NodeChangeModel node_changeModel = new NodeChangeModel();
         node_changeModel.fillModel(nodeRecord, TestDataUtil.getSingleSelectNodeTestRecord());
         node_changeModel.setDefaultValues(defaultModel);
         node_changeModel.setDeleted(true);
@@ -220,14 +220,14 @@ public class ChangesetFullModelTests {
     public void testGetNode_changeModelsToDelete() {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetFullModel model = new ChangesetFullModel(record);
-        List<Node_ChangeModel> node_changeModels = new ArrayList<>();
+        List<NodeChangeModel> node_changeModels = new ArrayList<>();
         NodeModel defaultModel = new NodeModel(TestDataUtil.getSingleSelectNodeTestRecord());
         NodeChangeRecord nodeRecord = TestDataUtil.getMultipleSelectNodeChangeTestRecords().get(0);
         nodeRecord.setId("L1");
         nodeRecord.setLong(new BigDecimal(10.232));
         nodeRecord.setChangesetnr((long) 12);
 
-        Node_ChangeModel node_changeModel = new Node_ChangeModel();
+        NodeChangeModel node_changeModel = new NodeChangeModel();
         node_changeModel.fillModel(nodeRecord, TestDataUtil.getSingleSelectNodeTestRecord());
         node_changeModel.setDefaultValues(defaultModel);
         node_changeModel.setDeleted(false);

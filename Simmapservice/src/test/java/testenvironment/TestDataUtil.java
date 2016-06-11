@@ -3,8 +3,6 @@ package testenvironment;
 import businesslogic.changeset.*;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
-import dataaccess.database.tables.LinkChange;
-import dataaccess.database.tables.NetworkOptions;
 import dataaccess.database.tables.records.*;
 import org.easymock.EasyMock;
 import org.jooq.*;
@@ -19,7 +17,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Properties;
 
@@ -394,11 +391,11 @@ public class TestDataUtil {
         return record;
     }
 
-    public static List<Link_ChangeModel> getListLinkChangeModels() {
-        List<Link_ChangeModel> models = new ArrayList<>();
+    public static List<LinkChangeModel> getListLinkChangeModels() {
+        List<LinkChangeModel> models = new ArrayList<>();
         LinkModel defaultModel = new LinkModel(TestDataUtil.getSingleSelectLinkTestRecord());
 
-        Link_ChangeModel model = new Link_ChangeModel();
+        LinkChangeModel model = new LinkChangeModel();
         model.setId("L1");
         model.setDefaultValues(defaultModel);
         model.setDeleted(false);
@@ -408,12 +405,12 @@ public class TestDataUtil {
         return models;
     }
 
-    public static List<Node_ChangeModel> getListNodeChangeModels() {
-        List<Node_ChangeModel> models = new ArrayList<>();
+    public static List<NodeChangeModel> getListNodeChangeModels() {
+        List<NodeChangeModel> models = new ArrayList<>();
         List<NodeRecord> nodeRecords = TestDataUtil.getMultipleSelectNodeTestRecords();
 
 
-        Node_ChangeModel model = new Node_ChangeModel();
+        NodeChangeModel model = new NodeChangeModel();
         model.setId("N1");
         model.setChangesetNr((long) 3);
         model.setDefaultValues(new NodeModel(nodeRecords.get(0)));
@@ -423,7 +420,7 @@ public class TestDataUtil {
         model.setY(new BigDecimal(123));
         models.add(model);
 
-        Node_ChangeModel model1 = new Node_ChangeModel();
+        NodeChangeModel model1 = new NodeChangeModel();
         model1.setId("N2");
         model1.setChangesetNr((long) 3);
         model1.setDefaultValues(new NodeModel(nodeRecords.get(1)));
