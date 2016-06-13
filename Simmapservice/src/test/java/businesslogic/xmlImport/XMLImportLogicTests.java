@@ -1,6 +1,6 @@
 package businesslogic.xmlImport;
 
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.NetworkRecord;
 import dataaccess.utils.IConnection;

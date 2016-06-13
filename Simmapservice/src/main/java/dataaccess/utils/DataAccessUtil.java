@@ -1,7 +1,7 @@
 package dataaccess.utils;
 
 import org.jooq.*;
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 

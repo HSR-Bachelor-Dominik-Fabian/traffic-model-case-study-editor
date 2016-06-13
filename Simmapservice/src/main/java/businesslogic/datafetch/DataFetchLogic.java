@@ -3,7 +3,7 @@ package businesslogic.datafetch;
 import businesslogic.utils.GeoJSONUtil;
 import businesslogic.utils.QuadTileUtils;
 import businesslogic.changeset.LinkModel;
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.utils.ProdConnection;

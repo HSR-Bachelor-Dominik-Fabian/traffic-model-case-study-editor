@@ -1,6 +1,6 @@
 package businesslogic.changeset;
 
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.ChangesetRecord;
 import org.junit.Before;

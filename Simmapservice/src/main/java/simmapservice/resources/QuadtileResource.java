@@ -2,7 +2,7 @@ package simmapservice.resources;
 
 import businesslogic.datafetch.DataFetchLogic;
 import com.google.common.base.Stopwatch;
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 import org.json.JSONObject;
 
 import javax.ws.rs.GET;

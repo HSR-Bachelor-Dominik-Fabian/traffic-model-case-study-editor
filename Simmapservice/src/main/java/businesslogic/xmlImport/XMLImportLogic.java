@@ -4,7 +4,7 @@ import businesslogic.utils.EPSGTransformUtil;
 import businesslogic.utils.QuadTileUtils;
 import com.google.common.base.Stopwatch;
 import com.vividsolutions.jts.geom.Coordinate;
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;

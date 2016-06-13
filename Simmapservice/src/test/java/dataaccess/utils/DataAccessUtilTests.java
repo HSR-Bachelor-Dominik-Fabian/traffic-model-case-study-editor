@@ -4,7 +4,7 @@ import dataaccess.database.Tables;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NodeRecord;
 import org.jooq.*;
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 import org.junit.Test;
 import testenvironment.*;
 

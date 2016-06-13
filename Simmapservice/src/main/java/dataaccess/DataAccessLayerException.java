@@ -1,4 +1,4 @@
-package dataaccess.expection;
+package dataaccess;
 
 import java.sql.SQLException;
 

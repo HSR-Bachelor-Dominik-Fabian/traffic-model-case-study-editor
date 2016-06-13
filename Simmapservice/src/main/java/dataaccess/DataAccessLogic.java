@@ -1,6 +1,5 @@
 package dataaccess;
 
-import dataaccess.expection.DataAccessLayerException;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
 import dataaccess.database.tables.Node;

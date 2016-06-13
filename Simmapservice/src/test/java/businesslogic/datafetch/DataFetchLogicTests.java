@@ -1,7 +1,7 @@
 package businesslogic.datafetch;
 
 import businesslogic.changeset.LinkModel;
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.Tables;
 import dataaccess.utils.IConnection;

@@ -1,6 +1,5 @@
 package dataaccess;
 
-import dataaccess.expection.DataAccessLayerException;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.records.*;
 import dataaccess.utils.DataAccessUtil;

@@ -2,7 +2,7 @@ package simmapservice.resources;
 
 import businesslogic.changeset.LinkModel;
 import businesslogic.datafetch.DataFetchLogic;
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

@@ -1,7 +1,7 @@
 package simmapservice.resources;
 
 import businesslogic.xmlImport.XMLImportLogic;
-import dataaccess.expection.DataAccessLayerException;
+import dataaccess.DataAccessLayerException;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
