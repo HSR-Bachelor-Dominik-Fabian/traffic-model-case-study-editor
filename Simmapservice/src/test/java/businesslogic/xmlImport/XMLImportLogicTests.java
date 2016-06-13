@@ -8,6 +8,7 @@ import dataaccess.utils.ProdConnection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.opengis.referencing.FactoryException;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import testenvironment.TestDataUtil;
@@ -37,7 +38,7 @@ public class XMLImportLogicTests {
     }
 
     @Test
-    public void testImportNetwork2DB() throws DataAccessLayerException, FileNotFoundException {
+    public void testImportNetwork2DB() throws DataAccessLayerException, FileNotFoundException, FactoryException {
         NetworkRecord network = new NetworkRecord();
         network.setId(1);
         network.setName("TestNetwork");

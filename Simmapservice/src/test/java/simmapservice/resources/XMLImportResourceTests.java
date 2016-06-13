@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.opengis.referencing.FactoryException;
 import org.powermock.api.easymock.PowerMock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -52,7 +53,7 @@ public class XMLImportResourceTests {
     }
 
     @Test
-    public void testPostImport() throws FileNotFoundException, DataAccessLayerException {
+    public void testPostImport() throws FileNotFoundException, DataAccessLayerException, FactoryException {
         InputStream inputStream = TestDataUtil.getInputStreamOfData();
         xmlImportLogic.importNetwork2DB(isA(InputStream.class), isA(String.class), isA(String.class));
         replayAll();
@@ -68,7 +69,7 @@ public class XMLImportResourceTests {
     }
 
     @Test
-    public void testPostImportThrowException() throws FileNotFoundException, DataAccessLayerException {
+    public void testPostImportThrowException() throws FileNotFoundException, DataAccessLayerException, FactoryException {
         InputStream inputStream = TestDataUtil.getInputStreamOfData();
         xmlImportLogic.importNetwork2DB(isA(InputStream.class), isA(String.class), isA(String.class));
         expectLastCall().andThrow(new DataAccessLayerException(new SQLException()));
