@@ -5,8 +5,10 @@ import dataaccess.database.tables.records.NodeRecord;
 import java.math.BigDecimal;
 
 public class NodeModel {
-    public NodeModel(){}
-    public NodeModel(NodeRecord record){
+    public NodeModel() {
+    }
+
+    public NodeModel(NodeRecord record) {
         fillModel(record);
     }
 
@@ -82,14 +84,14 @@ public class NodeModel {
     //endregion
 
     //region Methods
-    void fillModel(NodeRecord record){
-        id = (id == null)?record.getId():id;
-        networkId = (networkId == null)?record.getNetworkid():networkId;
-        quadKey = (quadKey == null)?record.getQuadkey():quadKey;
-        x = (x == null)?record.getX():x;
-        y = (y == null)?record.getY():y;
-        latitude = (latitude == null)?record.getLat():latitude;
-        longitude = (longitude == null)?record.getLong():longitude;
+    void fillModel(NodeRecord record) {
+        id = (id == null) ? record.getId() : id;
+        networkId = (networkId == null) ? record.getNetworkid() : networkId;
+        quadKey = (quadKey == null) ? record.getQuadkey() : quadKey;
+        x = (x == null) ? record.getX() : x;
+        y = (y == null) ? record.getY() : y;
+        latitude = (latitude == null) ? record.getLat() : latitude;
+        longitude = (longitude == null) ? record.getLong() : longitude;
     }
 
     //endregion

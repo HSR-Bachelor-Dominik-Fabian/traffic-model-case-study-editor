@@ -4,7 +4,7 @@ import dataaccess.database.tables.records.NodeRecord;
 import org.junit.Test;
 import testenvironment.TestDataUtil;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 import static testenvironment.AssertionUtils.assertNodeModelToRecord;
 
 public class NodeModelTests {

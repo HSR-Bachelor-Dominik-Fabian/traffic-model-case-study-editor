@@ -9,15 +9,14 @@ import simmapservice.resources.QuadtileResource;
 import simmapservice.resources.StreetServiceResource;
 import simmapservice.resources.XMLImportResource;
 
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.util.EnumSet;
 import java.util.Properties;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
-
-public class StreetService extends Application<StreetServiceConfiguration>{
+public class StreetService extends Application<StreetServiceConfiguration> {
     public static void main(String[] args) throws Exception {
         new StreetService().run(args);
     }

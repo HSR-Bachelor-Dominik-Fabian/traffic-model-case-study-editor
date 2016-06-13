@@ -2,7 +2,7 @@ package simmapservice.resources;
 
 import businesslogic.datafetch.DataFetchLogic;
 import com.google.common.base.Stopwatch;
-import dataaccess.DataAccessLayerException;
+import dataaccess.DataAccessException;
 import org.json.JSONObject;
 
 import javax.ws.rs.GET;
@@ -58,7 +58,7 @@ public class QuadtileResource {
             builder = Response.ok(json.toString());
             builder.cacheControl(cc).tag(etag);
             return builder.build();
-        } catch (DataAccessLayerException exc) {
+        } catch (DataAccessException exc) {
             return Response.serverError().entity(exc).type(MediaType.APPLICATION_JSON).build();
         }
     }
@@ -98,7 +98,7 @@ public class QuadtileResource {
             builder = Response.ok(json.toString());
             builder.cacheControl(cc).tag(etag);
             return builder.build();
-        } catch (DataAccessLayerException exc) {
+        } catch (DataAccessException exc) {
             return Response.serverError().entity(exc).type(MediaType.APPLICATION_JSON).build();
         }
     }

@@ -1,6 +1,5 @@
 package testenvironment;
 
-import dataaccess.database.tables.records.LinkRecord;
 import org.jooq.impl.TableImpl;
 
 /**

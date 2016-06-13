@@ -1,11 +1,11 @@
 package businesslogic.changeset;
 
-import businesslogic.changeset.ChangesetModel;
 import dataaccess.database.tables.records.ChangesetRecord;
 import org.junit.Test;
 import testenvironment.TestDataUtil;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class ChangesetModelTests {
     @Test
@@ -30,7 +30,7 @@ public class ChangesetModelTests {
     }
 
     @Test
-    public void testGetterAndSetter(){
+    public void testGetterAndSetter() {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetModel model = new ChangesetModel();
         model.setId(record.getId());
@@ -41,13 +41,13 @@ public class ChangesetModelTests {
 
         assertEquals(record.getId(), model.getId());
         assertEquals(record.getName(), model.getName());
-        assertEquals(record.getUsernr(), (Integer)model.getUserNr());
-        assertEquals(record.getNetworkid(), (Integer)model.getNetworkId());
+        assertEquals(record.getUsernr(), (Integer) model.getUserNr());
+        assertEquals(record.getNetworkid(), (Integer) model.getNetworkId());
         assertEquals(record.getLastmodified(), model.getLastModified());
     }
 
     @Test
-    public void testGetRecord(){
+    public void testGetRecord() {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetModel model = new ChangesetModel();
         model.setId(record.getId());

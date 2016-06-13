@@ -1,6 +1,6 @@
 package businesslogic.xmlImport;
 
-import dataaccess.DataAccessLayerException;
+import dataaccess.DataAccessException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.NetworkRecord;
 import dataaccess.utils.IConnection;
@@ -19,8 +19,8 @@ import java.util.Properties;
 
 import static org.easymock.EasyMock.aryEq;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.anyObject;
 import static org.powermock.api.easymock.PowerMock.*;
+
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DataAccessLogic.class, XMLImportLogic.class})
 public class XMLImportLogicTests {
@@ -38,7 +38,7 @@ public class XMLImportLogicTests {
     }
 
     @Test
-    public void testImportNetwork2DB() throws DataAccessLayerException, FileNotFoundException, FactoryException {
+    public void testImportNetwork2DB() throws DataAccessException, FileNotFoundException, FactoryException {
         NetworkRecord network = new NetworkRecord();
         network.setId(1);
         network.setName("TestNetwork");

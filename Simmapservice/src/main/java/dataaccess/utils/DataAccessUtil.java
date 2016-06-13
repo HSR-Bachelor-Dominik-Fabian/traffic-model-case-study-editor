@@ -1,8 +1,7 @@
 package dataaccess.utils;
 
+import dataaccess.DataAccessException;
 import org.jooq.*;
-import dataaccess.DataAccessLayerException;
-import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
 import java.sql.Connection;
@@ -13,16 +12,16 @@ import java.util.List;
 import java.util.Properties;
 
 public final class DataAccessUtil {
-    public static Result getRecords(Properties properties, Table table, IConnection connectionUtil) throws DataAccessLayerException {
+    public static Result getRecords(Properties properties, Table table, IConnection connectionUtil) throws DataAccessException {
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             return context.select().from(table).fetch();
-        } catch (SQLException | DataAccessException e) {
-            throw new DataAccessLayerException(e);
+        } catch (SQLException | org.jooq.exception.DataAccessException e) {
+            throw new DataAccessException(e);
         }
     }
 
-    public static int[] insertOrUpdate(Properties properties, Record[] records, Table table, IConnection connectionUtil) throws DataAccessLayerException {
+    public static int[] insertOrUpdate(Properties properties, Record[] records, Table table, IConnection connectionUtil) throws DataAccessException {
         int[] output = null;
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
@@ -35,62 +34,62 @@ public final class DataAccessUtil {
             }
             output = context.batch(queries).execute();
 
-        } catch (SQLException | DataAccessException e) {
-            throw new DataAccessLayerException(e);
+        } catch (SQLException | org.jooq.exception.DataAccessException e) {
+            throw new DataAccessException(e);
         }
 
         return output;
     }
 
-    public static int[] insertOrUpdate(Properties properties, List<? extends UpdatableRecord<?>> records, Table table, IConnection connectionUtil) throws DataAccessLayerException {
+    public static int[] insertOrUpdate(Properties properties, List<? extends UpdatableRecord<?>> records, Table table, IConnection connectionUtil) throws DataAccessException {
         return insertOrUpdate(properties, records.toArray(new Record[records.size()]), table, connectionUtil);
     }
 
-    public static int[] deleteRecords(Properties properties, List<? extends UpdatableRecord<?>> records, IConnection connectionUtil) throws DataAccessLayerException {
+    public static int[] deleteRecords(Properties properties, List<? extends UpdatableRecord<?>> records, IConnection connectionUtil) throws DataAccessException {
         int[] output = null;
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.batchDelete(records).execute();
-        } catch (SQLException | DataAccessException e) {
-            throw new DataAccessLayerException(e);
+        } catch (SQLException | org.jooq.exception.DataAccessException e) {
+            throw new DataAccessException(e);
         }
 
         return output;
     }
 
-    public static int updateRecord(Properties properties, UpdatableRecord<?> record, IConnection connectionUtil) throws DataAccessLayerException {
+    public static int updateRecord(Properties properties, UpdatableRecord<?> record, IConnection connectionUtil) throws DataAccessException {
         int output = 0;
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.batchUpdate(record).execute()[0];
-        } catch (SQLException | DataAccessException e) {
-            throw new DataAccessLayerException(e);
+        } catch (SQLException | org.jooq.exception.DataAccessException e) {
+            throw new DataAccessException(e);
         }
 
         return output;
     }
 
-    public static Record insertRecord(Properties properties, Record record, Table table, Collection<? extends Field<?>> returningFields, IConnection connectionUtil) throws DataAccessLayerException {
+    public static Record insertRecord(Properties properties, Record record, Table table, Collection<? extends Field<?>> returningFields, IConnection connectionUtil) throws DataAccessException {
         Record output = null;
 
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.insertInto(table).set(record).returning(returningFields).fetchOne();
-        } catch (SQLException | DataAccessException e) {
-            throw new DataAccessLayerException(e);
+        } catch (SQLException | org.jooq.exception.DataAccessException e) {
+            throw new DataAccessException(e);
         }
 
         return output;
     }
 
-    public static int deleteRecord(Properties properties, UpdatableRecord<?> record, IConnection connectionUtil) throws DataAccessLayerException {
+    public static int deleteRecord(Properties properties, UpdatableRecord<?> record, IConnection connectionUtil) throws DataAccessException {
         int output = 0;
 
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.batchDelete(record).execute()[0];
-        } catch (SQLException | DataAccessException e) {
-            throw new DataAccessLayerException(e);
+        } catch (SQLException | org.jooq.exception.DataAccessException e) {
+            throw new DataAccessException(e);
         }
 
         return output;

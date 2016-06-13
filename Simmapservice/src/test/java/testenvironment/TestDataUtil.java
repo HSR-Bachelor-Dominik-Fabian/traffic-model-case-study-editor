@@ -445,7 +445,7 @@ public class TestDataUtil {
         return models;
     }
 
-    public static InputStream getInputStreamOfData() throws FileNotFoundException {
+    public static InputStream getInputStreamOfData() throws FileNotFoundException, NullPointerException {
         return new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("test.xml").getPath());
     }
 
@@ -454,7 +454,7 @@ public class TestDataUtil {
         Result<NodeRecord> result = context.newResult(Tables.NODE);
 
         for (NodeRecord record : getStreamNodesAsArray()) {
-            if(record != null){
+            if (record != null) {
                 result.add(record);
             }
         }
@@ -499,7 +499,7 @@ public class TestDataUtil {
         return records;
     }
 
-    public static NetworkOptionsRecord[] getStreamOptionsAsArray(){
+    public static NetworkOptionsRecord[] getStreamOptionsAsArray() {
         NetworkOptionsRecord[] options = new NetworkOptionsRecord[3];
         DSLContext context = DSL.using(SQLDialect.POSTGRES);
         NetworkOptionsRecord record1 = context.newRecord(Tables.NETWORK_OPTIONS);
@@ -523,7 +523,7 @@ public class TestDataUtil {
         return options;
     }
 
-    public static LinkRecord[] getStreamLinksAsArray(){
+    public static LinkRecord[] getStreamLinksAsArray() {
         DSLContext context = DSL.using(SQLDialect.POSTGRES);
         LinkRecord[] linkRecords = new LinkRecord[25000];
 
@@ -570,34 +570,32 @@ public class TestDataUtil {
         return linkRecords;
     }
 
-    public static LinkRecord[] linkStreamEq(LinkRecord[] expectedRecords){
+    public static LinkRecord[] linkStreamEq(LinkRecord[] expectedRecords) {
         EasyMock.reportMatcher(new StreamLinkEquals(expectedRecords));
         return null;
     }
 
-    public static boolean matchStreamLinkToLinks(LinkRecord[] expected, LinkRecord[] result){
+    public static boolean matchStreamLinkToLinks(LinkRecord[] expected, LinkRecord[] result) {
         boolean output = true;
-        if(expected.length == result.length){
-            for(int i = 0; i < result.length; i++){
+        if (expected.length == result.length) {
+            for (int i = 0; i < result.length; i++) {
                 LinkRecord expectedRecord = expected[i];
                 LinkRecord resultRecord = result[i];
-                if(expectedRecord != null) {
+                if (expectedRecord != null) {
                     for (Field<?> field : expectedRecord.fields()) {
-                        if (field.getName() != "LastModified") {
+                        if (!field.getName().equals("LastModified")) {
                             if (!expectedRecord.getValue(field).equals(resultRecord.getValue(field))) {
                                 output = false;
                             }
                         }
                     }
-                }
-                else{
-                    if(!(resultRecord == null)){
+                } else {
+                    if (!(resultRecord == null)) {
                         output = false;
                     }
                 }
             }
-        }
-        else{
+        } else {
             output = false;
         }
 

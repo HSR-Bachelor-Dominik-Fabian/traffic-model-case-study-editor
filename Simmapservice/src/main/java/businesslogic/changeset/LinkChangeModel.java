@@ -66,9 +66,13 @@ public class LinkChangeModel {
         this.networkId = networkId;
     }
 
-    public boolean isDeleted() { return deleted; }
+    public boolean isDeleted() {
+        return deleted;
+    }
 
-    public void setDeleted(boolean deleted) { this.deleted = deleted; }
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public String getQuadKey() {
         return quadKey;

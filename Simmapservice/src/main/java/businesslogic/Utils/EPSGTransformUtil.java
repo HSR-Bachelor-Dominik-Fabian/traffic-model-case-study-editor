@@ -28,10 +28,10 @@ public class EPSGTransformUtil {
     }
 
     public Geometry transform(Coordinate coord) throws TransformException, FactoryException {
-        MathTransform transform = CRS.findMathTransform(sourceCrs,targetCrs);
+        MathTransform transform = CRS.findMathTransform(sourceCrs, targetCrs);
         GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
         Point point = geometryFactory.createPoint(coord);
         Geometry transform1 = JTS.transform(point, transform);
-        return  transform1;
+        return transform1;
     }
 }

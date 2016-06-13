@@ -1,7 +1,7 @@
 package businesslogic.datafetch;
 
 import businesslogic.changeset.LinkModel;
-import dataaccess.DataAccessLayerException;
+import dataaccess.DataAccessException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.Tables;
 import dataaccess.utils.IConnection;
@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.powermock.api.easymock.PowerMock.*;
 import static testenvironment.AssertionUtils.assertLinkModelToRecord;
 
@@ -45,7 +46,7 @@ public class DataFetchLogicTests {
     }
 
     @Test
-    public void testGetDataForTile() throws DataAccessLayerException {
+    public void testGetDataForTile() throws DataAccessException {
         Result<Record> result = DSL.using(SQLDialect.POSTGRES).newResult(Tables.LINK.fields());
         result.addAll(TestDataUtil.getMultipleSelectLinkTestRecords());
         expect(dataAccessLogic.getLinksFromQuadKey("000000030313", 1, 12)).andReturn(result);
@@ -57,7 +58,7 @@ public class DataFetchLogicTests {
     }
 
     @Test
-    public void testGetDataForTileWithNodesZoomNegative() throws DataAccessLayerException {
+    public void testGetDataForTileWithNodesZoomNegative() throws DataAccessException {
         replayAll();
         resetAll();
         DataFetchLogic dataFetchLogic = new DataFetchLogic(properties);
@@ -66,7 +67,7 @@ public class DataFetchLogicTests {
     }
 
     @Test
-    public void testGetDataFroTileWithNodes() throws DataAccessLayerException {
+    public void testGetDataFroTileWithNodes() throws DataAccessException {
         Result<Record> result = DSL.using(SQLDialect.POSTGRES).newResult(Tables.LINK.fields());
         result.addAll(TestDataUtil.getMultipleSelectLinkTestRecords());
         Result<Record> nodeResult = DSL.using(SQLDialect.POSTGRES).newResult(Tables.NODE.fields());
@@ -87,7 +88,7 @@ public class DataFetchLogicTests {
     }
 
     @Test
-    public void testGetLastModified() throws DataAccessLayerException {
+    public void testGetLastModified() throws DataAccessException {
         Date testDate = Date.valueOf("2003-12-1");
         expect(dataAccessLogic.getLastModifiedQuadKey("0000000000030313", 1, 16)).andReturn(testDate);
         replayAll();
@@ -97,7 +98,7 @@ public class DataFetchLogicTests {
     }
 
     @Test
-    public void testGetLinkById() throws DataAccessLayerException {
+    public void testGetLinkById() throws DataAccessException {
         expect(dataAccessLogic.getLinkFromId("L1")).andReturn(TestDataUtil.getSingleSelectLinkTestRecord());
         replayAll();
         DataFetchLogic dataFetchLogic = new DataFetchLogic(properties);

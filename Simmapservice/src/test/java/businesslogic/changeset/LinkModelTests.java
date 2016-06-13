@@ -4,7 +4,7 @@ import dataaccess.database.tables.records.LinkRecord;
 import org.junit.Test;
 import testenvironment.TestDataUtil;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 import static testenvironment.AssertionUtils.assertLinkModelToRecord;
 
 

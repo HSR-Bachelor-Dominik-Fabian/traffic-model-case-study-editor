@@ -2,7 +2,9 @@ package testenvironment;
 
 
 import dataaccess.database.Tables;
-import dataaccess.database.tables.records.*;
+import dataaccess.database.tables.records.ChangesetRecord;
+import dataaccess.database.tables.records.NodeChangeRecord;
+import dataaccess.database.tables.records.NodeRecord;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.jooq.tools.jdbc.MockDataProvider;
@@ -11,11 +13,7 @@ import org.jooq.tools.jdbc.MockResult;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * Created by dohee on 11.05.2016.
@@ -31,7 +29,7 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
     public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
         DSLContext dslContext = DSL.using(SQLDialect.POSTGRES);
         MockResult[] mock = new MockResult[1];
-        if(connectionMode != ConnectionMode.ERROR) {
+        if (connectionMode != ConnectionMode.ERROR) {
             if (ctx.batch()) {
                 String[] sqls = ctx.batchSQL();
                 if (ctx.batchMultiple()) {
@@ -67,8 +65,7 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
 
 
             }
-        }
-        else{
+        } else {
             throw TestDataUtil.getSQLException();
         }
         return mock;

@@ -3,9 +3,7 @@ package testenvironment;
 import businesslogic.changeset.*;
 import dataaccess.database.tables.records.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class AssertionUtils {
     public static void assertLink_ChangeIsEquals(LinkChangeModel expected, LinkChangeModel result) {
@@ -184,11 +182,11 @@ public class AssertionUtils {
         assertEquals(expected.getLong(), model.getLongitude());
     }
 
-    public static void assertChangesetRecordEqualsModel(ChangesetRecord expected, ChangesetModel model){
+    public static void assertChangesetRecordEqualsModel(ChangesetRecord expected, ChangesetModel model) {
         assertEquals(expected.getId(), model.getId());
-        assertEquals((long)expected.getNetworkid(), (long)model.getNetworkId());
+        assertEquals((long) expected.getNetworkid(), (long) model.getNetworkId());
         assertEquals(expected.getName(), model.getName());
-        assertEquals((long)expected.getUsernr(), (long)model.getUserNr());
+        assertEquals((long) expected.getUsernr(), (long) model.getUserNr());
         assertEquals(expected.getLastmodified(), model.getLastModified());
     }
 }

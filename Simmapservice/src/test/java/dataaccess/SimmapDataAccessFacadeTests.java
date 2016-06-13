@@ -21,7 +21,8 @@ import java.util.Properties;
 
 import static org.easymock.EasyMock.expect;
 import static org.junit.Assert.*;
-import static org.powermock.api.easymock.PowerMock.*;
+import static org.powermock.api.easymock.PowerMock.mockStatic;
+import static org.powermock.api.easymock.PowerMock.replay;
 
 /**
  * Created by dohee on 18.05.2016.
@@ -31,7 +32,7 @@ import static org.powermock.api.easymock.PowerMock.*;
 public class SimmapDataAccessFacadeTests {
 
     @Test
-    public void setNetworkMultiplePositive() throws DataAccessLayerException {
+    public void setNetworkMultiplePositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.MULTIPLE);
         final Properties props = new Properties();
         final NetworkRecord[] records = TestDataUtil.getTestInsertNetworks();
@@ -50,14 +51,14 @@ public class SimmapDataAccessFacadeTests {
 
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void setNetworkMultipleNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void setNetworkMultipleNegative() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ERROR);
         final Properties props = new Properties();
         final NetworkRecord[] records = TestDataUtil.getTestInsertNetworks();
         mockStatic(DataAccessUtil.class);
         expect(DataAccessUtil.insertOrUpdate(props, records
-                , Tables.NETWORK, connection)).andThrow(new DataAccessLayerException(TestDataUtil.getSQLException()));
+                , Tables.NETWORK, connection)).andThrow(new DataAccessException(TestDataUtil.getSQLException()));
 
         replay(DataAccessUtil.class);
 
@@ -66,7 +67,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void setNodeMultiplePositive() throws DataAccessLayerException {
+    public void setNodeMultiplePositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.MULTIPLE);
         final Properties props = new Properties();
         final NodeRecord[] records = TestDataUtil.getMultipleInsertNodeTestRecords();
@@ -85,14 +86,14 @@ public class SimmapDataAccessFacadeTests {
 
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void setNodeMultipleNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void setNodeMultipleNegative() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ERROR);
         final Properties props = new Properties();
         final NodeRecord[] records = TestDataUtil.getMultipleInsertNodeTestRecords();
         mockStatic(DataAccessUtil.class);
         expect(DataAccessUtil.insertOrUpdate(props, records
-                , Tables.NODE, connection)).andThrow(new DataAccessLayerException(TestDataUtil.getSQLException()));
+                , Tables.NODE, connection)).andThrow(new DataAccessException(TestDataUtil.getSQLException()));
 
         replay(DataAccessUtil.class);
 
@@ -101,7 +102,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void setLinkPositive() throws DataAccessLayerException {
+    public void setLinkPositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.MULTIPLE);
         final Properties props = new Properties();
         final LinkRecord[] records = TestDataUtil.getMultipleInsertLinksTestRecords();
@@ -118,14 +119,14 @@ public class SimmapDataAccessFacadeTests {
         }
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void setLinkNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void setLinkNegative() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ERROR);
         final Properties props = new Properties();
         final LinkRecord[] records = TestDataUtil.getMultipleInsertLinksTestRecords();
         mockStatic(DataAccessUtil.class);
         expect(DataAccessUtil.insertOrUpdate(props, records
-                , Tables.LINK, connection)).andThrow(new DataAccessLayerException(TestDataUtil.getSQLException()));
+                , Tables.LINK, connection)).andThrow(new DataAccessException(TestDataUtil.getSQLException()));
         replay(DataAccessUtil.class);
 
         DataAccessLogic facade = new DataAccessLogic(props, connection);
@@ -133,7 +134,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void setNetworkOptionsPositive() throws DataAccessLayerException {
+    public void setNetworkOptionsPositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.MULTIPLE);
         final Properties props = new Properties();
         final NetworkOptionsRecord[] records = TestDataUtil.getTestInsertNetworkOptions();
@@ -150,14 +151,14 @@ public class SimmapDataAccessFacadeTests {
         }
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void setNetworkOptionsNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void setNetworkOptionsNegative() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ERROR);
         final Properties props = new Properties();
         final NetworkOptionsRecord[] records = TestDataUtil.getTestInsertNetworkOptions();
         mockStatic(DataAccessUtil.class);
         expect(DataAccessUtil.insertOrUpdate(props, records
-                , Tables.NETWORK_OPTIONS, connection)).andThrow(new DataAccessLayerException(TestDataUtil.getSQLException()));
+                , Tables.NETWORK_OPTIONS, connection)).andThrow(new DataAccessException(TestDataUtil.getSQLException()));
         replay(DataAccessUtil.class);
 
         DataAccessLogic facade = new DataAccessLogic(props, connection);
@@ -165,7 +166,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void getAllNodesTest() throws DataAccessLayerException {
+    public void getAllNodesTest() throws DataAccessException {
         DSLContext ctx = DSL.using(SQLDialect.POSTGRES);
         Result<NodeRecord> expectedResult = ctx.newResult(Tables.NODE);
         expectedResult.addAll(TestDataUtil.getMultipleSelectNodeTestRecords());
@@ -182,65 +183,65 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void getAllChangesetsPerUserPositive() throws DataAccessLayerException {
+    public void getAllChangesetsPerUserPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.MULTIPLE));
         Result<ChangesetRecord> records = facade.getAllChangesetsPerUser(1);
         assertEquals(TestDataUtil.getMultipleSelectChangesetTestRecords().size(), records.size());
         assertArrayEquals(TestDataUtil.getMultipleSelectChangesetTestRecords().toArray(), records.toArray());
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getAllChangesetsPerUserNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getAllChangesetsPerUserNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         facade.getAllChangesetsPerUser(1);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getAllChangesetsPerUserNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getAllChangesetsPerUserNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         facade.getAllChangesetsPerUser(1);
     }
 
     @Test
-    public void getChangesetFromNumberPositive() throws DataAccessLayerException {
+    public void getChangesetFromNumberPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ONE));
         ChangesetRecord record = facade.getChangesetFromNumber(1);
         assertEquals(TestDataUtil.getSingleSelectChangesetTestRecord(), record);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getChangesetFromNumberNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getChangesetFromNumberNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         facade.getChangesetFromNumber(1);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getChangesetFromNumberNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getChangesetFromNumberNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         facade.getChangesetFromNumber(1);
     }
 
     @Test
-    public void getNodeFromIdPositive() throws DataAccessLayerException {
+    public void getNodeFromIdPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ONE));
         NodeRecord record = facade.getNodeFromId("1");
         assertEquals(TestDataUtil.getSingleSelectNodeTestRecord(), record);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getNodeFromIdNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getNodeFromIdNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         facade.getNodeFromId("1");
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getNodeFromIdNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getNodeFromIdNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         facade.getNodeFromId("1");
     }
 
     @Test
-    public void getLinkFromIdPositive() throws DataAccessLayerException {
+    public void getLinkFromIdPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ONE));
         LinkRecord record = facade.getLinkFromId("1");
         LinkRecord expected = TestDataUtil.getSingleSelectLinkTestRecord();
@@ -248,40 +249,40 @@ public class SimmapDataAccessFacadeTests {
         assertEquals(expected, record);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getLinkFromIdNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getLinkFromIdNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         facade.getLinkFromId("1");
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getLinkFromIdNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getLinkFromIdNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         facade.getLinkFromId("1");
     }
 
     @Test
-    public void getLinkChangesfromChangesetPositive() throws DataAccessLayerException {
+    public void getLinkChangesfromChangesetPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ONE));
         Result<LinkChangeRecord> record = facade.getLinkChangesfromChangeset(1);
         assertEquals(1, record.size());
         assertEquals(TestDataUtil.getSingleSelectLinkChangeTestRecord(), record.get(0));
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getLinkChangesfromChangesetNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getLinkChangesfromChangesetNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         facade.getLinkChangesfromChangeset(1);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getLinkChangesfromChangesetNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getLinkChangesfromChangesetNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         facade.getLinkChangesfromChangeset(1);
     }
 
     @Test
-    public void getNodeChangefromChangesetPositive() throws DataAccessLayerException {
+    public void getNodeChangefromChangesetPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.MULTIPLE));
         Result<NodeChangeRecord> record = facade.getNodeChangefromChangeset(1);
         assertEquals(TestDataUtil.getMultipleSelectNodeChangeTestRecords().size(), record.size());
@@ -289,20 +290,20 @@ public class SimmapDataAccessFacadeTests {
         assertArrayEquals(expected.toArray(), record.toArray());
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getNodeChangefromChangesetNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getNodeChangefromChangesetNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         facade.getNodeChangefromChangeset(1);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getNodeChangefromChangesetNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getNodeChangefromChangesetNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         facade.getNodeChangefromChangeset(1);
     }
 
     @Test
-    public void getLinkFromQuadKeyPositive() throws DataAccessLayerException {
+    public void getLinkFromQuadKeyPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.MULTIPLE));
         Result<Record> record = facade.getLinksFromQuadKey("123", 1, 12);
         assertEquals(TestDataUtil.getMultipleSelectLinkTestRecords().size(), record.size());
@@ -310,59 +311,59 @@ public class SimmapDataAccessFacadeTests {
         assertEquals(expected, record);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getLinkFromQuadKeyNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getLinkFromQuadKeyNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         facade.getLinksFromQuadKey("123", 1, 12);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getLinkFromQuadKeyNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getLinkFromQuadKeyNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         facade.getLinksFromQuadKey("123", 1, 12);
     }
 
     @Test
-    public void getLastModifiedQuadKeyPositive() throws DataAccessLayerException {
+    public void getLastModifiedQuadKeyPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.MULTIPLE));
         Date record = facade.getLastModifiedQuadKey("123", 1, 12);
         Date expected = TestDataUtil.getDateLastModifiedTestRecord();
         assertEquals(expected, record);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getLastModifiedQuadKeyNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getLastModifiedQuadKeyNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         facade.getLastModifiedQuadKey("123", 1, 12);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void getLastModifiedQuadKeyNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void getLastModifiedQuadKeyNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         facade.getLastModifiedQuadKey("123", 1, 12);
     }
 
     @Test
-    public void hasChangesetPositive() throws DataAccessLayerException {
+    public void hasChangesetPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.MULTIPLE));
         boolean record = facade.hasChangeset(1);
         assertTrue(record);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void hasChangesetNegative() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void hasChangesetNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         facade.hasChangeset(1);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void hasChangesetNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void hasChangesetNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         facade.hasChangeset(1);
     }
 
     @Test
-    public void deleteLink_ChangesPositive() throws DataAccessLayerException {
+    public void deleteLink_ChangesPositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ONE);
         final Properties props = new Properties();
         List<LinkChangeRecord> records = new ArrayList<>();
@@ -383,7 +384,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void deleteNode_ChangesPositive() throws DataAccessLayerException {
+    public void deleteNode_ChangesPositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ONE);
         final Properties props = new Properties();
         final List<NodeChangeRecord> records = TestDataUtil.getMultipleSelectNodeChangeTestRecords();
@@ -400,7 +401,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void updateLink_ChangesPositive() throws DataAccessLayerException {
+    public void updateLink_ChangesPositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ONE);
         final Properties props = new Properties();
         List<LinkChangeRecord> records = new ArrayList<>();
@@ -420,7 +421,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void updateNode_ChangesPositive() throws DataAccessLayerException {
+    public void updateNode_ChangesPositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ONE);
         final Properties props = new Properties();
         final List<NodeChangeRecord> records = TestDataUtil.getMultipleSelectNodeChangeTestRecords();
@@ -437,7 +438,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void updateChangesetPositive() throws DataAccessLayerException {
+    public void updateChangesetPositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ONE);
         final Properties props = new Properties();
         final ChangesetRecord record = TestDataUtil.getSingleSelectChangesetTestRecord();
@@ -451,7 +452,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void insertChangesetPositive() throws DataAccessLayerException {
+    public void insertChangesetPositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ONE);
         final Properties props = new Properties();
         final ChangesetRecord record = TestDataUtil.getSingleSelectChangesetTestRecord();
@@ -466,7 +467,7 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void deleteChangesetPositive() throws DataAccessLayerException {
+    public void deleteChangesetPositive() throws DataAccessException {
         final TestConnection connection = new TestConnection(ConnectionMode.ONE);
         final Properties props = new Properties();
         final ChangesetRecord record = TestDataUtil.getSingleSelectChangesetTestRecord();
@@ -480,14 +481,14 @@ public class SimmapDataAccessFacadeTests {
     }
 
     @Test
-    public void testGetNodesFromIdsPositive() throws DataAccessLayerException {
+    public void testGetNodesFromIdsPositive() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.MULTIPLE));
         List<String> nodeIds = new ArrayList<>();
         nodeIds.add("N1");
         nodeIds.add("N2");
         Result result = facade.getNodesFromIds(nodeIds, 1);
         for (int i = 0; i < result.size(); i++) {
-            Record nodeRecord = (Record)result.get(i);
+            Record nodeRecord = (Record) result.get(i);
             NodeRecord expectedRecord = TestDataUtil.getMultipleSelectNodeTestRecords().get(i);
             for (Field<?> field : nodeRecord.fields()) {
                 assertEquals(expectedRecord.getValue(field), nodeRecord.getValue(field));
@@ -496,8 +497,9 @@ public class SimmapDataAccessFacadeTests {
         }
 
     }
-    @Test(expected = DataAccessLayerException.class)
-    public void testGetNodesFromIdsNegative() throws DataAccessLayerException {
+
+    @Test(expected = DataAccessException.class)
+    public void testGetNodesFromIdsNegative() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.ERROR));
         List<String> nodeIds = new ArrayList<>();
         nodeIds.add("N1");
@@ -505,8 +507,8 @@ public class SimmapDataAccessFacadeTests {
         facade.getNodesFromIds(nodeIds, 1);
     }
 
-    @Test(expected = DataAccessLayerException.class)
-    public void testGetNodesFromIdsNoConnection() throws DataAccessLayerException {
+    @Test(expected = DataAccessException.class)
+    public void testGetNodesFromIdsNoConnection() throws DataAccessException {
         DataAccessLogic facade = new DataAccessLogic(new Properties(), new TestConnection(ConnectionMode.NOCONNECTION));
         List<String> nodeIds = new ArrayList<>();
         nodeIds.add("N1");

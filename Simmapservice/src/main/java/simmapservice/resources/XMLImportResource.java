@@ -1,7 +1,7 @@
 package simmapservice.resources;
 
 import businesslogic.xmlImport.XMLImportLogic;
-import dataaccess.DataAccessLayerException;
+import dataaccess.DataAccessException;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.opengis.referencing.FactoryException;
 
@@ -12,7 +12,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 @Path("/xml")
@@ -34,7 +35,7 @@ public class XMLImportResource {
             importLogic.importNetwork2DB(inputStream, format, networkName);
 
             return Response.ok().build();
-        } catch (DataAccessLayerException | FactoryException exc) {
+        } catch (DataAccessException | FactoryException exc) {
             return Response.serverError().entity(exc).type(MediaType.APPLICATION_JSON).build();
         }
     }

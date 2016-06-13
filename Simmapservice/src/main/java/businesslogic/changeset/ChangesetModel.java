@@ -1,6 +1,5 @@
 package businesslogic.changeset;
 
-import dataaccess.database.tables.Changeset;
 import dataaccess.database.tables.records.ChangesetRecord;
 
 import java.sql.Timestamp;

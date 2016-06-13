@@ -1,7 +1,6 @@
 package businesslogic.utils;
 
 import org.jooq.Record;
-import org.jooq.Result;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,20 +17,20 @@ public class GeoJSONUtil {
         return getGeoJson(links, null, zoom);
     }
 
-    private static JSONObject getGeoJson(List<Record> links, List<Record> nodes, int zoom){
+    private static JSONObject getGeoJson(List<Record> links, List<Record> nodes, int zoom) {
         JSONObject baseJSON = new JSONObject();
 
         baseJSON.put("type", "FeatureCollection");
         baseJSON.put("features", new JSONArray());
 
-        for (Record link : links){
+        for (Record link : links) {
             JSONObject newFeature = new JSONObject();
             JSONObject geometry = new JSONObject();
 
-            geometry.put("coordinates", new JSONArray(new Object[]{new BigDecimal[]{(BigDecimal)link.getValue("Long1"), (BigDecimal)link.getValue("Lat1")}
-                    , new BigDecimal[]{(BigDecimal)link.getValue("Long2"), (BigDecimal) link.getValue("Lat2")}}));
+            geometry.put("coordinates", new JSONArray(new Object[]{new BigDecimal[]{(BigDecimal) link.getValue("Long1"), (BigDecimal) link.getValue("Lat1")}
+                    , new BigDecimal[]{(BigDecimal) link.getValue("Long2"), (BigDecimal) link.getValue("Lat2")}}));
             geometry.put("type", "LineString");
-            newFeature.put("geometry",geometry);
+            newFeature.put("geometry", geometry);
 
             newFeature.put("type", "Feature");
             JSONObject props = new JSONObject();
@@ -67,7 +66,7 @@ public class GeoJSONUtil {
                 baseJSON.append("features", newFeature);
             }
         }
-        
+
         return baseJSON;
     }
 }

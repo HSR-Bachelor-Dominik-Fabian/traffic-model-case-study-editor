@@ -2,12 +2,12 @@ package dataaccess;
 
 import java.sql.SQLException;
 
-public class DataAccessLayerException extends Exception {
+public class DataAccessException extends Exception {
     private final String message;
     private final Throwable cause;
     private final String sqlState;
 
-    public DataAccessLayerException(Exception exception) {
+    public DataAccessException(Exception exception) {
         super(exception);
         cause = exception.getCause();
         message = exception.getMessage();

@@ -4,7 +4,7 @@ import businesslogic.utils.EPSGTransformUtil;
 import businesslogic.utils.QuadTileUtils;
 import com.google.common.base.Stopwatch;
 import com.vividsolutions.jts.geom.Coordinate;
-import dataaccess.DataAccessLayerException;
+import dataaccess.DataAccessException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;
@@ -34,8 +34,9 @@ public class XMLImportLogic {
     public XMLImportLogic(Properties properties) {
         this.dataAccess = new DataAccessLogic(properties, new ProdConnection());
     }
+
     //TODO: Exception Handling Business Layer
-    public void importNetwork2DB(InputStream inputStream, String format, String networkName) throws DataAccessLayerException, FactoryException {
+    public void importNetwork2DB(InputStream inputStream, String format, String networkName) throws DataAccessException, FactoryException {
         try {
             XMLInputFactory factory = XMLInputFactory.newInstance();
             XMLStreamReader streamReader = factory.createXMLStreamReader(inputStream);
@@ -72,7 +73,7 @@ public class XMLImportLogic {
     }
 
     private void skipToNodes(XMLStreamReader streamReader) throws XMLStreamException {
-        while(streamReader.hasNext()) {
+        while (streamReader.hasNext()) {
             if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
                 if (streamReader.getName().getLocalPart().equals("nodes")) {
                     streamReader.next();
@@ -84,7 +85,7 @@ public class XMLImportLogic {
     }
 
     private void skipToLinks(XMLStreamReader streamReader) throws XMLStreamException {
-        while(streamReader.hasNext()) {
+        while (streamReader.hasNext()) {
             streamReader.next();
             if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
                 if (streamReader.getName().getLocalPart().equals("links")) {
@@ -94,22 +95,22 @@ public class XMLImportLogic {
         }
     }
 
-    private int importNetwork2DB(String networkName) throws DataAccessLayerException {
+    private int importNetwork2DB(String networkName) throws DataAccessException {
         // TODO: dynamically detect id, after autoincrement
         NetworkRecord network = new NetworkRecord();
         network.setId(1);
         network.setName(networkName);
-        dataAccess.setNetworks(new NetworkRecord[] {network});
+        dataAccess.setNetworks(new NetworkRecord[]{network});
         return 1;
     }
 
-    private void importNodes2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessLayerException {
+    private void importNodes2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessException {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         try {
             NodeRecord[] nodeRecords = new NodeRecord[25000];
             int index = 0;
-            while(streamReader.hasNext()) {
+            while (streamReader.hasNext()) {
                 if (streamReader.getEventType() == XMLStreamReader.SPACE
                         || streamReader.getEventType() == XMLStreamReader.END_ELEMENT) {
                     streamReader.next();
@@ -130,9 +131,9 @@ public class XMLImportLogic {
                 newNodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(nodeCoord.y, nodeCoord.x));
                 newNodeRecord.setLat(new BigDecimal(nodeCoord.y));
                 newNodeRecord.setLong(new BigDecimal(nodeCoord.x));
-                nodeRecords[index%25000] = newNodeRecord;
+                nodeRecords[index % 25000] = newNodeRecord;
                 index++;
-                if (index != 0 && index%25000 == 0) {
+                if (index != 0 && index % 25000 == 0) {
                     dataAccess.setNodes(nodeRecords);
                     nodeRecords = new NodeRecord[25000];
                     index = 0;
@@ -150,7 +151,7 @@ public class XMLImportLogic {
         System.out.println("Time: " + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
     }
 
-    private void importOptions2DB(XMLStreamReader streamReader, int networkId) throws DataAccessLayerException {
+    private void importOptions2DB(XMLStreamReader streamReader, int networkId) throws DataAccessException {
         NetworkOptionsRecord[] options = new NetworkOptionsRecord[3];
 
         if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
@@ -180,7 +181,7 @@ public class XMLImportLogic {
         }
     }
 
-    private void importLinks2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessLayerException {
+    private void importLinks2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessException {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         Result<NodeRecord> nodes = dataAccess.getAllNodes();
@@ -192,7 +193,7 @@ public class XMLImportLogic {
         try {
             LinkRecord[] linkRecords = new LinkRecord[25000];
             int index = 0;
-            while(streamReader.hasNext()) {
+            while (streamReader.hasNext()) {
                 if (streamReader.getEventType() == XMLStreamReader.SPACE
                         || streamReader.getEventType() == XMLStreamReader.END_ELEMENT) {
                     streamReader.next();
@@ -201,9 +202,9 @@ public class XMLImportLogic {
                     break;
                 }
                 LinkRecord newLink = fillLinkRecord(streamReader, transformer, networkId, nodesMap);
-                linkRecords[index%25000] = newLink;
+                linkRecords[index % 25000] = newLink;
                 index++;
-                if (index != 0 && index%25000 == 0) {
+                if (index != 0 && index % 25000 == 0) {
                     dataAccess.setLinks(linkRecords);
                     linkRecords = new LinkRecord[25000];
                     index = 0;

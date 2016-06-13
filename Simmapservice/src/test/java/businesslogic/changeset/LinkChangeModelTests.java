@@ -5,7 +5,7 @@ import dataaccess.database.tables.records.LinkRecord;
 import org.junit.Test;
 import testenvironment.TestDataUtil;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static testenvironment.AssertionUtils.*;
 
 public class LinkChangeModelTests {
@@ -126,7 +126,7 @@ public class LinkChangeModelTests {
     }
 
     @Test
-    public void testGetLinkChangeRecord(){
+    public void testGetLinkChangeRecord() {
         LinkChangeRecord linkChangeRecord = TestDataUtil.getSingleSelectLinkChangeTestRecord();
         LinkRecord linkRecord = TestDataUtil.getSingleSelectLinkTestRecord();
         LinkChangeModel model = new LinkChangeModel();

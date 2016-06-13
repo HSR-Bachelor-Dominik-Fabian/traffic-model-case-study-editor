@@ -1,6 +1,6 @@
 package businesslogic.changeset;
 
-import dataaccess.DataAccessLayerException;
+import dataaccess.DataAccessException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.*;
 import dataaccess.utils.ProdConnection;
@@ -17,7 +17,7 @@ public class ChangesetLogic {
         this.dataAccess = new DataAccessLogic(properties, new ProdConnection());
     }
 
-    public List<ChangesetModel> getAllChangesets(int userNr) throws DataAccessLayerException {
+    public List<ChangesetModel> getAllChangesets(int userNr) throws DataAccessException {
         Result<ChangesetRecord> allChangesetsPerUser = dataAccess.getAllChangesetsPerUser(userNr);
         List<ChangesetModel> output = (allChangesetsPerUser.size() > 0) ? new ArrayList() : null;
         for (ChangesetRecord record : allChangesetsPerUser) {
@@ -26,7 +26,7 @@ public class ChangesetLogic {
         return output;
     }
 
-    public ChangesetFullModel getFullChangeset(long changesetNr) throws DataAccessLayerException {
+    public ChangesetFullModel getFullChangeset(long changesetNr) throws DataAccessException {
         ChangesetRecord changesetRecord = dataAccess.getChangesetFromNumber(changesetNr);
         if (changesetRecord != null) {
             ChangesetFullModel fullModel = new ChangesetFullModel(changesetRecord);
@@ -37,7 +37,7 @@ public class ChangesetLogic {
         return null;
     }
 
-    private List<NodeChangeModel> fillNodeChangeModels(long changsetNr) throws DataAccessLayerException {
+    private List<NodeChangeModel> fillNodeChangeModels(long changsetNr) throws DataAccessException {
         Result<NodeChangeRecord> nodeChange = dataAccess.getNodeChangefromChangeset(changsetNr);
         List<NodeChangeModel> node_changeModels = new ArrayList();
         for (NodeChangeRecord record : nodeChange) {
@@ -49,7 +49,7 @@ public class ChangesetLogic {
         return node_changeModels;
     }
 
-    private List<LinkChangeModel> fillLinkChangeModels(long changesetNr) throws DataAccessLayerException {
+    private List<LinkChangeModel> fillLinkChangeModels(long changesetNr) throws DataAccessException {
         Result<LinkChangeRecord> linkChange = dataAccess.getLinkChangesfromChangeset(changesetNr);
         List<LinkChangeModel> link_changeModels = new ArrayList();
         for (LinkChangeRecord record : linkChange) {
@@ -61,11 +61,11 @@ public class ChangesetLogic {
         return link_changeModels;
     }
 
-    public boolean hasChangeset(long changesetNumber) throws DataAccessLayerException {
+    public boolean hasChangeset(long changesetNumber) throws DataAccessException {
         return dataAccess.hasChangeset(changesetNumber);
     }
 
-    public Long insertChangeset(ChangesetFullModel fullModel) throws IllegalArgumentException, DataAccessLayerException {
+    public Long insertChangeset(ChangesetFullModel fullModel) throws IllegalArgumentException, DataAccessException {
         if (fullModel.getId() != null) {
             throw new IllegalArgumentException("Changeset has already an id");
         }
@@ -79,7 +79,7 @@ public class ChangesetLogic {
         return newID;
     }
 
-    public void updateChangeset(ChangesetFullModel fullModel) throws DataAccessLayerException {
+    public void updateChangeset(ChangesetFullModel fullModel) throws DataAccessException {
         ChangesetRecord changesetRecord = fullModel.getRecord();
         dataAccess.updateChangeset(changesetRecord);
         dataAccess.deleteLink_Changes(fullModel.getLink_changeModelsToDelete());
@@ -88,7 +88,7 @@ public class ChangesetLogic {
         dataAccess.updateNode_Changes(fullModel.getNode_changeModelsToUpdate());
     }
 
-    public void deleteChangeset(ChangesetFullModel fullModel) throws DataAccessLayerException {
+    public void deleteChangeset(ChangesetFullModel fullModel) throws DataAccessException {
         ChangesetRecord changesetRecord = fullModel.getRecord();
         dataAccess.deleteLink_Changes(fullModel.getAllLink_changeModelsAsRecord());
         dataAccess.deleteNode_Changes(fullModel.getAllNode_changeModelsAsRecord());

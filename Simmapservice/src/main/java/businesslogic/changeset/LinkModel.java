@@ -6,8 +6,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class LinkModel {
-    public LinkModel(){}
-    public LinkModel(LinkRecord record){
+    public LinkModel() {
+    }
+
+    public LinkModel(LinkRecord record) {
         fillModel(record);
     }
 
@@ -174,24 +176,24 @@ public class LinkModel {
 
     //region Methods
 
-    private void fillModel(LinkRecord record){
-        id = (id == null)?record.getId():id;
-        networkId = (networkId == null)?record.getNetworkid():networkId;
-        quadKey = (quadKey == null)?record.getQuadkey():quadKey;
-        length = (length == null)?record.getLength():length;
-        freespeed = (freespeed == null)?record.getFreespeed():freespeed;
-        capacity = (capacity == null)? record.getCapacity():capacity;
-        permlanes = (permlanes == null)? record.getPermlanes():permlanes;
-        oneway = (oneway == null)?record.getOneway():oneway;
-        modes = (modes == null)? record.getModes():modes;
-        from = (from == null)?record.getFrom():from;
-        to = (to == null)? record.getTo():to;
-        minlevel = (minlevel == null)?record.getMinlevel():minlevel;
-        lastModified = (lastModified == null)?record.getLastmodified():lastModified;
-        long1 = (long1 == null)?record.getLong1():long1;
-        lat1 = (lat1 == null)?record.getLat1():lat1;
-        long2 = (long2 == null)?record.getLong2():long2;
-        lat2 = (lat2 == null)?record.getLat2():lat2;
+    private void fillModel(LinkRecord record) {
+        id = (id == null) ? record.getId() : id;
+        networkId = (networkId == null) ? record.getNetworkid() : networkId;
+        quadKey = (quadKey == null) ? record.getQuadkey() : quadKey;
+        length = (length == null) ? record.getLength() : length;
+        freespeed = (freespeed == null) ? record.getFreespeed() : freespeed;
+        capacity = (capacity == null) ? record.getCapacity() : capacity;
+        permlanes = (permlanes == null) ? record.getPermlanes() : permlanes;
+        oneway = (oneway == null) ? record.getOneway() : oneway;
+        modes = (modes == null) ? record.getModes() : modes;
+        from = (from == null) ? record.getFrom() : from;
+        to = (to == null) ? record.getTo() : to;
+        minlevel = (minlevel == null) ? record.getMinlevel() : minlevel;
+        lastModified = (lastModified == null) ? record.getLastmodified() : lastModified;
+        long1 = (long1 == null) ? record.getLong1() : long1;
+        lat1 = (lat1 == null) ? record.getLat1() : lat1;
+        long2 = (long2 == null) ? record.getLong2() : long2;
+        lat2 = (lat2 == null) ? record.getLat2() : lat2;
     }
 
     //endregion

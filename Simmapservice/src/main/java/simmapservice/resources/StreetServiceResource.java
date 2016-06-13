@@ -2,9 +2,12 @@ package simmapservice.resources;
 
 import businesslogic.changeset.LinkModel;
 import businesslogic.datafetch.DataFetchLogic;
-import dataaccess.DataAccessLayerException;
+import dataaccess.DataAccessException;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Properties;
@@ -27,7 +30,7 @@ public class StreetServiceResource {
             LinkModel link = dataFetch.getLinkById(id);
 
             return Response.ok(link, MediaType.APPLICATION_JSON).build();
-        } catch (DataAccessLayerException exc) {
+        } catch (DataAccessException exc) {
             return Response.serverError().entity(exc).type(MediaType.APPLICATION_JSON).build();
         }
     }

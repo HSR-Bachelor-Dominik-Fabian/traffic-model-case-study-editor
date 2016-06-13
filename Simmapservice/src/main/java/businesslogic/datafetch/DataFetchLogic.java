@@ -1,9 +1,9 @@
 package businesslogic.datafetch;
 
+import businesslogic.changeset.LinkModel;
 import businesslogic.utils.GeoJSONUtil;
 import businesslogic.utils.QuadTileUtils;
-import businesslogic.changeset.LinkModel;
-import dataaccess.DataAccessLayerException;
+import dataaccess.DataAccessException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.utils.ProdConnection;
@@ -24,7 +24,7 @@ public class DataFetchLogic {
         this.properties = properties;
     }
 
-    public JSONObject getDataForTile(int x, int y, int zoom, int networkid) throws DataAccessLayerException {
+    public JSONObject getDataForTile(int x, int y, int zoom, int networkid) throws DataAccessException {
         JSONObject output;
 
         String quadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
@@ -36,7 +36,7 @@ public class DataFetchLogic {
         return output;
     }
 
-    public JSONObject getDataForTileWithNodes(int x, int y, int zoom, int networkid) throws DataAccessLayerException {
+    public JSONObject getDataForTileWithNodes(int x, int y, int zoom, int networkid) throws DataAccessException {
         JSONObject output = null;
 
         if (zoom > 15) {
@@ -44,7 +44,7 @@ public class DataFetchLogic {
             DataAccessLogic dataAccess = new DataAccessLogic(this.properties, new ProdConnection());
             Result<Record> links = dataAccess.getLinksFromQuadKey(quadKey, networkid, zoom);
             List<String> nodeIds = new ArrayList<>();
-            for(Record link : links) {
+            for (Record link : links) {
                 nodeIds.add((String) link.getValue("From"));
                 nodeIds.add((String) link.getValue("To"));
             }
@@ -57,14 +57,14 @@ public class DataFetchLogic {
         return output;
     }
 
-    public Date getLastModified(int x, int y, int zoom, int networkid) throws DataAccessLayerException {
+    public Date getLastModified(int x, int y, int zoom, int networkid) throws DataAccessException {
         String QuadKey = QuadTileUtils.getQuadTileKey(x, y, zoom);
         DataAccessLogic dataAccess = new DataAccessLogic(this.properties, new ProdConnection());
 
         return dataAccess.getLastModifiedQuadKey(QuadKey, networkid, zoom);
     }
 
-    public LinkModel getLinkById(String id) throws DataAccessLayerException {
+    public LinkModel getLinkById(String id) throws DataAccessException {
         JSONObject output;
 
         DataAccessLogic dataAccess = new DataAccessLogic(this.properties, new ProdConnection());

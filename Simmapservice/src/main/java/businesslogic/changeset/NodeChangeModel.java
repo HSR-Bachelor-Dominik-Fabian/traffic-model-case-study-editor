@@ -9,7 +9,7 @@ public class NodeChangeModel {
     //region Private Variables
     private NodeModel defaultValues = null;
     private String id = null;
-    private Long changesetNr= null;
+    private Long changesetNr = null;
     private Integer networkId = null;
     private boolean deleted = false;
     private String quadKey = null;
@@ -54,9 +54,13 @@ public class NodeChangeModel {
         this.networkId = networkId;
     }
 
-    public boolean isDeleted() { return deleted; }
+    public boolean isDeleted() {
+        return deleted;
+    }
 
-    public void setDeleted(boolean deleted) { this.deleted = deleted; }
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public String getQuadKey() {
         return quadKey;
@@ -99,43 +103,43 @@ public class NodeChangeModel {
     }
     //endregion
 
-    NodeChangeRecord getNodeChangeRecord(){
+    NodeChangeRecord getNodeChangeRecord() {
         NodeChangeRecord record = new NodeChangeRecord();
 
         record.setId(id);
         record.setChangesetnr(changesetNr);
         record.setNetworkid(networkId);
-        record.setQuadkey((!quadKey.equals(defaultValues.getQuadKey()))?quadKey:null);
-        record.setX((!x.equals(defaultValues.getX()))?x:null);
-        record.setY((!y.equals(defaultValues.getY()))?y:null);
-        record.setLat((!latitude.equals(defaultValues.getLatitude()))?latitude:null);
-        record.setLong((!longitude.equals(defaultValues.getLongitude()))?longitude:null);
+        record.setQuadkey((!quadKey.equals(defaultValues.getQuadKey())) ? quadKey : null);
+        record.setX((!x.equals(defaultValues.getX())) ? x : null);
+        record.setY((!y.equals(defaultValues.getY())) ? y : null);
+        record.setLat((!latitude.equals(defaultValues.getLatitude())) ? latitude : null);
+        record.setLong((!longitude.equals(defaultValues.getLongitude())) ? longitude : null);
 
         return record;
     }
 
     //region Methods
-    void fillModel(NodeChangeRecord record, NodeRecord nodeRecord){
-        id = (id == null)?record.getId():id;
-        changesetNr = (changesetNr == null)?record.getChangesetnr():changesetNr;
-        networkId = (networkId == null)?record.getNetworkid():networkId;
-        quadKey = (quadKey == null)?record.getQuadkey():quadKey;
-        x = (x == null)?record.getX():x;
-        y = (y == null)?record.getY():y;
-        latitude = (latitude == null)?record.getLat():latitude;
-        longitude = (longitude == null)?record.getLong():longitude;
+    void fillModel(NodeChangeRecord record, NodeRecord nodeRecord) {
+        id = (id == null) ? record.getId() : id;
+        changesetNr = (changesetNr == null) ? record.getChangesetnr() : changesetNr;
+        networkId = (networkId == null) ? record.getNetworkid() : networkId;
+        quadKey = (quadKey == null) ? record.getQuadkey() : quadKey;
+        x = (x == null) ? record.getX() : x;
+        y = (y == null) ? record.getY() : y;
+        latitude = (latitude == null) ? record.getLat() : latitude;
+        longitude = (longitude == null) ? record.getLong() : longitude;
         defaultValues = new NodeModel(nodeRecord);
         fillModel();
     }
 
-    private void fillModel(){
-        id = (id == null)?defaultValues.getId():id;
-        networkId = (networkId == null)?defaultValues.getNetworkId():networkId;
-        quadKey = (quadKey == null)?defaultValues.getQuadKey():quadKey;
-        x = (x == null)?defaultValues.getX():x;
-        y = (y == null)?defaultValues.getY():y;
-        latitude = (latitude == null)?defaultValues.getLatitude():latitude;
-        longitude = (longitude == null)?defaultValues.getLongitude():longitude;
+    private void fillModel() {
+        id = (id == null) ? defaultValues.getId() : id;
+        networkId = (networkId == null) ? defaultValues.getNetworkId() : networkId;
+        quadKey = (quadKey == null) ? defaultValues.getQuadKey() : quadKey;
+        x = (x == null) ? defaultValues.getX() : x;
+        y = (y == null) ? defaultValues.getY() : y;
+        latitude = (latitude == null) ? defaultValues.getLatitude() : latitude;
+        longitude = (longitude == null) ? defaultValues.getLongitude() : longitude;
     }
     //endregion
 }

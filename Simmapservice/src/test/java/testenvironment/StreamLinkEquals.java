@@ -5,12 +5,14 @@ import org.easymock.IArgumentMatcher;
 
 public class StreamLinkEquals implements IArgumentMatcher {
     LinkRecord[] expected;
-    public StreamLinkEquals(LinkRecord[] expected){
+
+    public StreamLinkEquals(LinkRecord[] expected) {
         this.expected = expected;
     }
+
     @Override
     public boolean matches(Object o) {
-        return o instanceof LinkRecord[] && TestDataUtil.matchStreamLinkToLinks(expected, (LinkRecord[])o);
+        return o instanceof LinkRecord[] && TestDataUtil.matchStreamLinkToLinks(expected, (LinkRecord[]) o);
     }
 
     @Override

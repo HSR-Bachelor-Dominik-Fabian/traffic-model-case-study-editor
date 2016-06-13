@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static testenvironment.AssertionUtils.*;
 
 public class ChangesetFullModelTests {
@@ -102,8 +103,7 @@ public class ChangesetFullModelTests {
         expectedRecord.setNetworkid(TestDataUtil.getSingleSelectLinkTestRecord().getNetworkid());
 
         List<LinkChangeRecord> allLink_changeModelsAsRecord = model.getAllLink_changeModelsAsRecord();
-        for (int i = 0; i < allLink_changeModelsAsRecord.size(); i++) {
-            LinkChangeRecord newRecord = allLink_changeModelsAsRecord.get(i);
+        for (LinkChangeRecord newRecord : allLink_changeModelsAsRecord) {
             assertLink_ChangeRecordEquals(expectedRecord, newRecord);
         }
     }
@@ -156,8 +156,7 @@ public class ChangesetFullModelTests {
         expectedRecord.setNetworkid(TestDataUtil.getSingleSelectLinkTestRecord().getNetworkid());
 
         List<LinkChangeRecord> allLink_changeModelsAsRecord = model.getLink_changeModelsToDelete();
-        for (int i = 0; i < allLink_changeModelsAsRecord.size(); i++) {
-            LinkChangeRecord newRecord = allLink_changeModelsAsRecord.get(i);
+        for (LinkChangeRecord newRecord : allLink_changeModelsAsRecord) {
             assertLink_ChangeRecordEquals(expectedRecord, newRecord);
         }
     }
@@ -188,8 +187,7 @@ public class ChangesetFullModelTests {
         expectedRecord.setNetworkid(TestDataUtil.getSingleSelectNodeTestRecord().getNetworkid());
 
         List<NodeChangeRecord> allNode_changeModelsAsRecord = model.getAllNode_changeModelsAsRecord();
-        for (int i = 0; i < allNode_changeModelsAsRecord.size(); i++) {
-            NodeChangeRecord newRecord = allNode_changeModelsAsRecord.get(i);
+        for (NodeChangeRecord newRecord : allNode_changeModelsAsRecord) {
             assertNode_ChangeRecordIsEquals(expectedRecord, newRecord);
         }
     }
@@ -242,8 +240,7 @@ public class ChangesetFullModelTests {
         expectedRecord.setNetworkid(TestDataUtil.getSingleSelectNodeTestRecord().getNetworkid());
 
         List<NodeChangeRecord> allNode_changeModelsAsRecord = model.getNode_changeModelsToDelete();
-        for (int i = 0; i < allNode_changeModelsAsRecord.size(); i++) {
-            NodeChangeRecord newRecord = allNode_changeModelsAsRecord.get(i);
+        for (NodeChangeRecord newRecord : allNode_changeModelsAsRecord) {
             assertNode_ChangeRecordIsEquals(expectedRecord, newRecord);
         }
     }
