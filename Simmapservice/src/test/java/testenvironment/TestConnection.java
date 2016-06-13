@@ -1,6 +1,6 @@
 package testenvironment;
 
-import dataaccess.utils.IConnection;
+import dataaccess.connectionutils.IConnection;
 import org.jooq.tools.jdbc.MockConnection;
 
 import java.sql.Connection;

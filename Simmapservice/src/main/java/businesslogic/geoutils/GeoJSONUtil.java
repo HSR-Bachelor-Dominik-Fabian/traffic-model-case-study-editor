@@ -1,4 +1,4 @@
-package businesslogic.utils;
+package businesslogic.geoutils;
 
 import org.jooq.Record;
 import org.json.JSONArray;

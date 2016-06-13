@@ -1,4 +1,4 @@
-package dataaccess.utils;
+package dataaccess.connectionutils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package dataaccess.utils;
+package dataaccess.connectionutils;
 
 import java.sql.Connection;
 import java.sql.SQLException;

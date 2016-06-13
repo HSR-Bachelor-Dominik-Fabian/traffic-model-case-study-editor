@@ -2,7 +2,7 @@ package dataaccess;
 
 import dataaccess.database.Tables;
 import dataaccess.database.tables.records.*;
-import dataaccess.utils.DataAccessUtil;
+import dataaccess.connectionutils.DataAccessUtil;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.junit.Test;

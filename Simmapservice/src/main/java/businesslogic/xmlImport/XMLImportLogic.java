@@ -1,7 +1,7 @@
 package businesslogic.xmlImport;
 
-import businesslogic.utils.EPSGTransformUtil;
-import businesslogic.utils.QuadTileUtils;
+import businesslogic.geoutils.EPSGTransformUtil;
+import businesslogic.geoutils.QuadTileUtils;
 import com.google.common.base.Stopwatch;
 import com.vividsolutions.jts.geom.Coordinate;
 import dataaccess.DataAccessException;
@@ -10,7 +10,7 @@ import dataaccess.database.tables.records.LinkRecord;
 import dataaccess.database.tables.records.NetworkOptionsRecord;
 import dataaccess.database.tables.records.NetworkRecord;
 import dataaccess.database.tables.records.NodeRecord;
-import dataaccess.utils.ProdConnection;
+import dataaccess.connectionutils.ProdConnection;
 import org.jooq.Result;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;

@@ -1,4 +1,4 @@
-package businesslogic.utils;
+package businesslogic.geoutils;
 
 public class QuadTileUtils {
 

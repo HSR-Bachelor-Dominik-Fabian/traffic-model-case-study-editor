@@ -3,7 +3,7 @@ package businesslogic.changeset;
 import dataaccess.DataAccessException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.*;
-import dataaccess.utils.ProdConnection;
+import dataaccess.connectionutils.ProdConnection;
 import org.jooq.Result;
 
 import java.util.ArrayList;

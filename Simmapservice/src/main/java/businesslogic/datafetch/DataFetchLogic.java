@@ -1,12 +1,12 @@
 package businesslogic.datafetch;
 
 import businesslogic.changeset.LinkModel;
-import businesslogic.utils.GeoJSONUtil;
-import businesslogic.utils.QuadTileUtils;
+import businesslogic.geoutils.GeoJSONUtil;
+import businesslogic.geoutils.QuadTileUtils;
 import dataaccess.DataAccessException;
 import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.LinkRecord;
-import dataaccess.utils.ProdConnection;
+import dataaccess.connectionutils.ProdConnection;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.json.JSONObject;

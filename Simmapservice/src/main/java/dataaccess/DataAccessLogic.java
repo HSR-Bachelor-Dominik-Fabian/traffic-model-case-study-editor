@@ -4,15 +4,14 @@ import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
 import dataaccess.database.tables.Node;
 import dataaccess.database.tables.records.*;
-import dataaccess.utils.DataAccessUtil;
-import dataaccess.utils.IConnection;
+import dataaccess.connectionutils.DataAccessUtil;
+import dataaccess.connectionutils.IConnection;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;

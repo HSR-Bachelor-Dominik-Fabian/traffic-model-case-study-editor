@@ -1,4 +1,4 @@
-package dataaccess.utils;
+package dataaccess.connectionutils;
 
 import dataaccess.DataAccessException;
 import org.jooq.*;
