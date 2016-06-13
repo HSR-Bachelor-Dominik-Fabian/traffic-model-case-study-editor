@@ -26,7 +26,7 @@ import static org.powermock.api.easymock.PowerMock.replay;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DataAccessUtil.class})
-public class SimmapDataAccessFacadeTests {
+public class DataAccessLogicTests {
 
     @Test
     public void setNetworkMultiplePositive() throws DataAccessException {
