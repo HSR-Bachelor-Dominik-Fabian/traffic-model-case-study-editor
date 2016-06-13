@@ -49,7 +49,7 @@ public class ChangesetFullModel extends ChangesetModel {
 
     @JsonIgnore
     public List<LinkChangeRecord> getLink_changeModelsToDelete() {
-        return link_changeModels.parallelStream().filter(model -> model.isDeleted())
+        return link_changeModels.parallelStream().filter(LinkChangeModel::isDeleted)
                 .map(LinkChangeModel::getLinkChangeRecord).collect(Collectors.toList());
     }
 
@@ -74,7 +74,7 @@ public class ChangesetFullModel extends ChangesetModel {
 
     @JsonIgnore
     public List<NodeChangeRecord> getNode_changeModelsToDelete() {
-        return node_changeModels.parallelStream().filter(model -> model.isDeleted())
+        return node_changeModels.parallelStream().filter(NodeChangeModel::isDeleted)
                 .map(NodeChangeModel::getNodeChangeRecord).collect(Collectors.toList());
     }
 }

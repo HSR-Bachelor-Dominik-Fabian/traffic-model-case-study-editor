@@ -13,7 +13,7 @@ public class TestConnection implements IConnection {
         this.connectionMode = connectionMode;
     }
 
-    private ConnectionMode connectionMode;
+    private final ConnectionMode connectionMode;
 
     @Override
     public Connection getConnectionFromProps(Properties properties) throws SQLException {

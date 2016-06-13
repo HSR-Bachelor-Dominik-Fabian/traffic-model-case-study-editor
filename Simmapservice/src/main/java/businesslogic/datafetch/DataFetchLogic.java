@@ -18,7 +18,7 @@ import java.util.Properties;
 
 public class DataFetchLogic {
 
-    private Properties properties;
+    private final Properties properties;
 
     public DataFetchLogic(Properties properties) {
         this.properties = properties;
@@ -65,12 +65,10 @@ public class DataFetchLogic {
     }
 
     public LinkModel getLinkById(String id) throws DataAccessException {
-        JSONObject output;
 
         DataAccessLogic dataAccess = new DataAccessLogic(this.properties, new ProdConnection());
         LinkRecord link = dataAccess.getLinkFromId(id);
-        LinkModel linkModel = new LinkModel(link);
 
-        return linkModel;
+        return new LinkModel(link);
     }
 }

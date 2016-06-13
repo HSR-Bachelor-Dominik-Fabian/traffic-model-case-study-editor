@@ -18,7 +18,6 @@ import org.opengis.referencing.operation.TransformException;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -36,40 +35,22 @@ public class XMLImportLogic {
     }
 
     //TODO: Exception Handling Business Layer
-    public void importNetwork2DB(InputStream inputStream, String format, String networkName) throws DataAccessException, FactoryException {
-        try {
-            XMLInputFactory factory = XMLInputFactory.newInstance();
-            XMLStreamReader streamReader = factory.createXMLStreamReader(inputStream);
+    public void importNetwork2DB(InputStream inputStream, String format, String networkName) throws DataAccessException, FactoryException, XMLStreamException, TransformException {
+        XMLInputFactory factory = XMLInputFactory.newInstance();
+        XMLStreamReader streamReader = factory.createXMLStreamReader(inputStream);
 
-            int networkId = importNetwork2DB(networkName);
+        int networkId = importNetwork2DB(networkName);
 
-            EPSGTransformUtil transformer = null;
-            try {
-                transformer = new EPSGTransformUtil(format);
-            } catch (FactoryException e) {
-                throw e;
-            }
-            if (transformer == null) {
-                throw new IllegalArgumentException("GeoJSON format is not supported");
-            }
+        EPSGTransformUtil transformer = new EPSGTransformUtil(format);
 
-            skipToNodes(streamReader);
-            importNodes2DB(streamReader, transformer, networkId);
+        skipToNodes(streamReader);
+        importNodes2DB(streamReader, transformer, networkId);
 
-            skipToLinks(streamReader);
-            importOptions2DB(streamReader, networkId);
+        skipToLinks(streamReader);
+        importOptions2DB(streamReader, networkId);
 
-            importLinks2DB(streamReader, transformer, networkId);
+        importLinks2DB(streamReader, transformer, networkId);
 
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void skipToNodes(XMLStreamReader streamReader) throws XMLStreamException {
@@ -104,54 +85,46 @@ public class XMLImportLogic {
         return 1;
     }
 
-    private void importNodes2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessException {
+    private void importNodes2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessException, XMLStreamException, TransformException, FactoryException {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
-        try {
-            NodeRecord[] nodeRecords = new NodeRecord[25000];
-            int index = 0;
-            while (streamReader.hasNext()) {
-                if (streamReader.getEventType() == XMLStreamReader.SPACE
-                        || streamReader.getEventType() == XMLStreamReader.END_ELEMENT) {
-                    streamReader.next();
-                    continue;
-                } else if (streamReader.getEventType() != XMLStreamReader.START_ELEMENT) {
-                    break;
-                }
-                NodeRecord newNodeRecord = new NodeRecord();
-                newNodeRecord.setNetworkid(networkId);
-                String id = streamReader.getAttributeValue(0);
-                newNodeRecord.setId(id);
-                String x = streamReader.getAttributeValue(1);
-                newNodeRecord.setX(new BigDecimal(x));
-                String y = streamReader.getAttributeValue(2);
-                newNodeRecord.setY(new BigDecimal(y));
-                Coordinate nodeCoord = new Coordinate(Double.parseDouble(x), Double.parseDouble(y));
-                nodeCoord = transformer.transform(nodeCoord).getCoordinate();
-                newNodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(nodeCoord.y, nodeCoord.x));
-                newNodeRecord.setLat(new BigDecimal(nodeCoord.y));
-                newNodeRecord.setLong(new BigDecimal(nodeCoord.x));
-                nodeRecords[index % 25000] = newNodeRecord;
-                index++;
-                if (index != 0 && index % 25000 == 0) {
-                    dataAccess.setNodes(nodeRecords);
-                    nodeRecords = new NodeRecord[25000];
-                    index = 0;
-                }
+        NodeRecord[] nodeRecords = new NodeRecord[25000];
+        int index = 0;
+        while (streamReader.hasNext()) {
+            if (streamReader.getEventType() == XMLStreamReader.SPACE
+                    || streamReader.getEventType() == XMLStreamReader.END_ELEMENT) {
                 streamReader.next();
+                continue;
+            } else if (streamReader.getEventType() != XMLStreamReader.START_ELEMENT) {
+                break;
             }
-            dataAccess.setNodes(nodeRecords);
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        } catch (TransformException e) {
-            e.printStackTrace();
-        } catch (FactoryException e) {
-            e.printStackTrace();
+            NodeRecord newNodeRecord = new NodeRecord();
+            newNodeRecord.setNetworkid(networkId);
+            String id = streamReader.getAttributeValue(0);
+            newNodeRecord.setId(id);
+            String x = streamReader.getAttributeValue(1);
+            newNodeRecord.setX(new BigDecimal(x));
+            String y = streamReader.getAttributeValue(2);
+            newNodeRecord.setY(new BigDecimal(y));
+            Coordinate nodeCoord = new Coordinate(Double.parseDouble(x), Double.parseDouble(y));
+            nodeCoord = transformer.transform(nodeCoord).getCoordinate();
+            newNodeRecord.setQuadkey(QuadTileUtils.getQuadTileKeyFromLatLong(nodeCoord.y, nodeCoord.x));
+            newNodeRecord.setLat(new BigDecimal(nodeCoord.y));
+            newNodeRecord.setLong(new BigDecimal(nodeCoord.x));
+            nodeRecords[index % 25000] = newNodeRecord;
+            index++;
+            if (index != 0 && index % 25000 == 0) {
+                dataAccess.setNodes(nodeRecords);
+                nodeRecords = new NodeRecord[25000];
+                index = 0;
+            }
+            streamReader.next();
         }
+        dataAccess.setNodes(nodeRecords);
         System.out.println("Time: " + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
     }
 
-    private void importOptions2DB(XMLStreamReader streamReader, int networkId) throws DataAccessException {
+    private void importOptions2DB(XMLStreamReader streamReader, int networkId) throws DataAccessException, XMLStreamException {
         NetworkOptionsRecord[] options = new NetworkOptionsRecord[3];
 
         if (streamReader.getEventType() == XMLStreamReader.START_ELEMENT) {
@@ -174,14 +147,10 @@ public class XMLImportLogic {
             options[2] = effectivelanewidth;
         }
         dataAccess.setNetworkOptions(options);
-        try {
-            streamReader.next();
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        }
+        streamReader.next();
     }
 
-    private void importLinks2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessException {
+    private void importLinks2DB(XMLStreamReader streamReader, EPSGTransformUtil transformer, int networkId) throws DataAccessException, FactoryException, TransformException, XMLStreamException {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         Result<NodeRecord> nodes = dataAccess.getAllNodes();
@@ -190,35 +159,27 @@ public class XMLImportLogic {
             nodesMap.put(node.getId(), node);
         }
 
-        try {
-            LinkRecord[] linkRecords = new LinkRecord[25000];
-            int index = 0;
-            while (streamReader.hasNext()) {
-                if (streamReader.getEventType() == XMLStreamReader.SPACE
-                        || streamReader.getEventType() == XMLStreamReader.END_ELEMENT) {
-                    streamReader.next();
-                    continue;
-                } else if (streamReader.getEventType() != XMLStreamReader.START_ELEMENT) {
-                    break;
-                }
-                LinkRecord newLink = fillLinkRecord(streamReader, transformer, networkId, nodesMap);
-                linkRecords[index % 25000] = newLink;
-                index++;
-                if (index != 0 && index % 25000 == 0) {
-                    dataAccess.setLinks(linkRecords);
-                    linkRecords = new LinkRecord[25000];
-                    index = 0;
-                }
+        LinkRecord[] linkRecords = new LinkRecord[25000];
+        int index = 0;
+        while (streamReader.hasNext()) {
+            if (streamReader.getEventType() == XMLStreamReader.SPACE
+                    || streamReader.getEventType() == XMLStreamReader.END_ELEMENT) {
                 streamReader.next();
+                continue;
+            } else if (streamReader.getEventType() != XMLStreamReader.START_ELEMENT) {
+                break;
             }
-            dataAccess.setLinks(linkRecords);
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        } catch (TransformException e) {
-            e.printStackTrace();
-        } catch (FactoryException e) {
-            e.printStackTrace();
+            LinkRecord newLink = fillLinkRecord(streamReader, transformer, networkId, nodesMap);
+            linkRecords[index % 25000] = newLink;
+            index++;
+            if (index != 0 && index % 25000 == 0) {
+                dataAccess.setLinks(linkRecords);
+                linkRecords = new LinkRecord[25000];
+                index = 0;
+            }
+            streamReader.next();
         }
+        dataAccess.setLinks(linkRecords);
         System.out.println("Time: " + stopwatch.stop().elapsed(TimeUnit.MILLISECONDS));
     }
 

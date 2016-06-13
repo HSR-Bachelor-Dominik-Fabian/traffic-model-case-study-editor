@@ -16,10 +16,6 @@ import static org.mockito.Mockito.verify;
 import static org.powermock.api.easymock.PowerMock.mockStatic;
 import static org.powermock.api.easymock.PowerMock.replay;
 
-
-/**
- * Created by dohee on 12.05.2016.
- */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DriverManager.class, ProdConnection.class})
 public class ProdConnectionTests {

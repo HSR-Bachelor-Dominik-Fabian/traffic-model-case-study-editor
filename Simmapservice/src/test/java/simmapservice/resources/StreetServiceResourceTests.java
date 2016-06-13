@@ -34,7 +34,7 @@ public class StreetServiceResourceTests {
     private DataFetchLogic dataFetchLogic;
 
     @Rule
-    public ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+    public final ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
             .addResource(new StreetServiceResource(TestDataUtil.getTestProperties())).build();
 
     @Before

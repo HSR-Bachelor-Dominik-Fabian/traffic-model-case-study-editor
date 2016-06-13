@@ -9,6 +9,7 @@ import org.jooq.Result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class ChangesetLogic {
     private final DataAccessLogic dataAccess;
@@ -17,12 +18,10 @@ public class ChangesetLogic {
         this.dataAccess = new DataAccessLogic(properties, new ProdConnection());
     }
 
-    public List<ChangesetModel> getAllChangesets(int userNr) throws DataAccessException {
+    public List<ChangesetModel> getAllChangesets(int userNr) throws DataAccessException, NullPointerException {
         Result<ChangesetRecord> allChangesetsPerUser = dataAccess.getAllChangesetsPerUser(userNr);
         List<ChangesetModel> output = (allChangesetsPerUser.size() > 0) ? new ArrayList() : null;
-        for (ChangesetRecord record : allChangesetsPerUser) {
-            output.add(new ChangesetModel(record));
-        }
+        output.addAll(allChangesetsPerUser.stream().map(ChangesetModel::new).collect(Collectors.toList()));
         return output;
     }
 

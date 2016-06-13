@@ -19,9 +19,6 @@ import java.util.Properties;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by dohee on 11.05.2016.
- */
 public class DataAccessUtilTests {
 
     //region GetRecord Tests

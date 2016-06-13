@@ -3,7 +3,7 @@ package testenvironment;
 import org.jooq.*;
 import org.jooq.impl.UpdatableRecordImpl;
 
-public class NotExistingRecord extends UpdatableRecordImpl<NotExistingRecord> implements Record1<Integer> {
+class NotExistingRecord extends UpdatableRecordImpl<NotExistingRecord> implements Record1<Integer> {
 
     public NotExistingRecord(Table<NotExistingRecord> table) {
         super(table);

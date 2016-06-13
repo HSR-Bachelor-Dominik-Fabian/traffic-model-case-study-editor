@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class TestDataUtil {
     public static LinkRecord getSingleSelectLinkTestRecord() {
@@ -438,9 +439,7 @@ public class TestDataUtil {
 
         List<ChangesetRecord> changesetRecords = TestDataUtil.getMultipleSelectChangesetTestRecords();
 
-        for (ChangesetRecord model : changesetRecords) {
-            models.add(new ChangesetModel(model));
-        }
+        models.addAll(changesetRecords.stream().map(ChangesetModel::new).collect(Collectors.toList()));
 
         return models;
     }

@@ -59,7 +59,7 @@ public class ChangesetModel {
         this.lastModified = lastModified;
     }
 
-    void fillModel(ChangesetRecord record) {
+    private void fillModel(ChangesetRecord record) {
         id = record.getId();
         name = record.getName();
         networkId = record.getNetworkid();

@@ -84,7 +84,7 @@ public class NodeModel {
     //endregion
 
     //region Methods
-    void fillModel(NodeRecord record) {
+    private void fillModel(NodeRecord record) {
         id = (id == null) ? record.getId() : id;
         networkId = (networkId == null) ? record.getNetworkid() : networkId;
         quadKey = (quadKey == null) ? record.getQuadkey() : quadKey;

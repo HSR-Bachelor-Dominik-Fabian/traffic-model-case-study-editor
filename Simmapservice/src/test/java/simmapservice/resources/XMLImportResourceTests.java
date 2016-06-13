@@ -13,6 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.operation.TransformException;
 import org.powermock.api.easymock.PowerMock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -21,6 +22,7 @@ import testenvironment.TestDataUtil;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -40,7 +42,7 @@ public class XMLImportResourceTests {
     private XMLImportLogic xmlImportLogic;
 
     @Rule
-    public ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+    public final ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
             .addProvider(MultiPartFeature.class)
             .addResource(new XMLImportResource(TestDataUtil.getTestProperties()))
             .build();
@@ -53,7 +55,7 @@ public class XMLImportResourceTests {
     }
 
     @Test
-    public void testPostImport() throws FileNotFoundException, DataAccessException, FactoryException {
+    public void testPostImport() throws FileNotFoundException, DataAccessException, FactoryException, TransformException, XMLStreamException {
         InputStream inputStream = TestDataUtil.getInputStreamOfData();
         xmlImportLogic.importNetwork2DB(isA(InputStream.class), isA(String.class), isA(String.class));
         replayAll();
@@ -69,7 +71,7 @@ public class XMLImportResourceTests {
     }
 
     @Test
-    public void testPostImportThrowException() throws FileNotFoundException, DataAccessException, FactoryException {
+    public void testPostImportThrowException() throws FileNotFoundException, DataAccessException, FactoryException, TransformException, XMLStreamException {
         InputStream inputStream = TestDataUtil.getInputStreamOfData();
         xmlImportLogic.importNetwork2DB(isA(InputStream.class), isA(String.class), isA(String.class));
         expectLastCall().andThrow(new DataAccessException(new SQLException()));

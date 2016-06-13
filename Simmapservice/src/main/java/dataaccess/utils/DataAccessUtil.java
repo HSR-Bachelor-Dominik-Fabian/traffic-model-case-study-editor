@@ -22,7 +22,7 @@ public final class DataAccessUtil {
     }
 
     public static int[] insertOrUpdate(Properties properties, Record[] records, Table table, IConnection connectionUtil) throws DataAccessException {
-        int[] output = null;
+        int[] output;
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             ArrayList<Query> queries = new ArrayList<>();
@@ -46,7 +46,7 @@ public final class DataAccessUtil {
     }
 
     public static int[] deleteRecords(Properties properties, List<? extends UpdatableRecord<?>> records, IConnection connectionUtil) throws DataAccessException {
-        int[] output = null;
+        int[] output;
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.batchDelete(records).execute();
@@ -58,7 +58,7 @@ public final class DataAccessUtil {
     }
 
     public static int updateRecord(Properties properties, UpdatableRecord<?> record, IConnection connectionUtil) throws DataAccessException {
-        int output = 0;
+        int output;
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
             output = context.batchUpdate(record).execute()[0];
@@ -70,7 +70,7 @@ public final class DataAccessUtil {
     }
 
     public static Record insertRecord(Properties properties, Record record, Table table, Collection<? extends Field<?>> returningFields, IConnection connectionUtil) throws DataAccessException {
-        Record output = null;
+        Record output;
 
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);
@@ -83,7 +83,7 @@ public final class DataAccessUtil {
     }
 
     public static int deleteRecord(Properties properties, UpdatableRecord<?> record, IConnection connectionUtil) throws DataAccessException {
-        int output = 0;
+        int output;
 
         try (Connection conn = connectionUtil.getConnectionFromProps(properties)) {
             DSLContext context = DSL.using(conn, SQLDialect.POSTGRES);

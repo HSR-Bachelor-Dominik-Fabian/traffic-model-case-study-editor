@@ -40,7 +40,7 @@ public class QuadtileResourceTests {
     private static final JSONObject dataForTile = new JSONObject();
 
     @Rule
-    public ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+    public final ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
             .addResource(new QuadtileResource(TestDataUtil.getTestProperties())).build();
 
     @Before

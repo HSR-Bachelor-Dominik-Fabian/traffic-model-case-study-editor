@@ -31,7 +31,6 @@ public class EPSGTransformUtil {
         MathTransform transform = CRS.findMathTransform(sourceCrs, targetCrs);
         GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
         Point point = geometryFactory.createPoint(coord);
-        Geometry transform1 = JTS.transform(point, transform);
-        return transform1;
+        return JTS.transform(point, transform);
     }
 }

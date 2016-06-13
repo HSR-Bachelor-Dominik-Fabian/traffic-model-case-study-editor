@@ -9,10 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.operation.TransformException;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import testenvironment.TestDataUtil;
 
+import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -24,9 +26,9 @@ import static org.powermock.api.easymock.PowerMock.*;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DataAccessLogic.class, XMLImportLogic.class})
 public class XMLImportLogicTests {
-    Properties properties = TestDataUtil.getTestProperties();
-    ProdConnection prodConnection = new ProdConnection();
-    DataAccessLogic dataAccessLogic;
+    private final Properties properties = TestDataUtil.getTestProperties();
+    private final ProdConnection prodConnection = new ProdConnection();
+    private DataAccessLogic dataAccessLogic;
 
     @Before
     public void setup() throws Exception {
@@ -38,7 +40,7 @@ public class XMLImportLogicTests {
     }
 
     @Test
-    public void testImportNetwork2DB() throws DataAccessException, FileNotFoundException, FactoryException {
+    public void testImportNetwork2DB() throws DataAccessException, FileNotFoundException, FactoryException, TransformException, XMLStreamException {
         NetworkRecord network = new NetworkRecord();
         network.setId(1);
         network.setName("TestNetwork");

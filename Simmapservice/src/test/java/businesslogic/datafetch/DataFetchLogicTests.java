@@ -32,9 +32,9 @@ import static testenvironment.AssertionUtils.assertLinkModelToRecord;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DataAccessLogic.class, DataFetchLogic.class})
 public class DataFetchLogicTests {
-    DataAccessLogic dataAccessLogic;
-    Properties properties = TestDataUtil.getTestProperties();
-    ProdConnection prodConnection = new ProdConnection();
+    private DataAccessLogic dataAccessLogic;
+    private final Properties properties = TestDataUtil.getTestProperties();
+    private final ProdConnection prodConnection = new ProdConnection();
 
     @Before
     public void setup() throws Exception {

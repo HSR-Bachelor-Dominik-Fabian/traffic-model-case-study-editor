@@ -34,7 +34,7 @@ public class ChangesetResourceTests {
     private ChangesetLogic changesetLogic;
 
     @Rule
-    public ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+    public final ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
             .addResource(new ChangesetResource(TestDataUtil.getTestProperties())).build();
 
     @Before

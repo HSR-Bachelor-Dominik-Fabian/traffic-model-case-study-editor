@@ -16,7 +16,7 @@ import java.io.FileInputStream;
 import java.util.EnumSet;
 import java.util.Properties;
 
-public class StreetService extends Application<StreetServiceConfiguration> {
+class StreetService extends Application<StreetServiceConfiguration> {
     public static void main(String[] args) throws Exception {
         new StreetService().run(args);
     }

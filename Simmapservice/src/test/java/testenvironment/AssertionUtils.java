@@ -49,7 +49,7 @@ public class AssertionUtils {
         assertEquals(expected.getTo(), result.getTo());
     }
 
-    public static void assertLinkModelEquals(LinkModel expected, LinkModel result) {
+    private static void assertLinkModelEquals(LinkModel expected, LinkModel result) {
         if (expected != null) {
             assertNotNull(result);
             assertEquals(expected.getId(), result.getId());
@@ -105,7 +105,7 @@ public class AssertionUtils {
         }
     }
 
-    public static void assertNodeModelEquals(NodeModel expected, NodeModel result) {
+    private static void assertNodeModelEquals(NodeModel expected, NodeModel result) {
         if (expected != null) {
             assertEquals(expected.getId(), result.getId());
             assertEquals(expected.getLatitude(), result.getLatitude());

@@ -24,9 +24,6 @@ import static org.junit.Assert.*;
 import static org.powermock.api.easymock.PowerMock.mockStatic;
 import static org.powermock.api.easymock.PowerMock.replay;
 
-/**
- * Created by dohee on 18.05.2016.
- */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DataAccessUtil.class})
 public class SimmapDataAccessFacadeTests {

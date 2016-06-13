@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -184,7 +185,7 @@ public class DataAccessLogic {
     }
 
     public Long insertChangeset(ChangesetRecord record) throws DataAccessException {
-        return (Long) DataAccessUtil.insertRecord(this.properties, record, Tables.CHANGESET, Arrays.asList(Tables.CHANGESET.ID), this.connectionUtil).getValue(0);
+        return (Long) DataAccessUtil.insertRecord(this.properties, record, Tables.CHANGESET, Collections.singletonList(Tables.CHANGESET.ID), this.connectionUtil).getValue(0);
     }
 
     public int deleteChangeset(ChangesetRecord record) throws DataAccessException {
