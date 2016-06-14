@@ -1,123 +1,123 @@
 @import java.util.Properties
 @(props: Properties)
-@main(props) {
-    <script type="application/javascript">
-            $(document).ready( function() {
-                $(".navbar-toggler").on("click", function(){
-                    $("#hiddenMenu").offcanvas("toggle");
+    @main(props) {
+        <script type="application/javascript">
+                $(document).ready( function() {
+                    $(".navbar-toggler").on("click", function(){
+                        $("#hiddenMenu").offcanvas("toggle");
+                    });
                 });
-            });
-    </script>
-}
-<div id="mapContainer" class="container-fluid" ng-app="mainModule">
-    <div class="row" ng-app="menuModel">
-        <div simmap id="map" class="col-xs-12">
+        </script>
+    }
+    <div id="mapContainer" class="container-fluid" ng-app="mainModule">
+        <div class="row" ng-app="menuModel">
+            <div simmap id="map" class="col-xs-12">
         </div>
-        <nav id="navmenuLeft" class="navbar navbar-fixed-left navbar-minimal animate"  role="navigation" ng-controller="StreetMenuController">
-            <div class="navbar-toggler animate">
-                <span class="menu-icon"></span>
-            </div>
-            <ul class="navbar-menu animate">
-                <li>
-                    <a id="saveButton" ng-click="isSaveDisabled || onChangesetSaveClicked()">
-                        <span class="glyphicon glyphicon-floppy-disk" data-toggle="tooltip" data-placement="right" title="Save"></span>
-                        <span class="badge badge-count" ng-bind="changeCount"></span>
-                    </a>
-                </li>
-                <li id="saveSuccess" class="save-message success-message" style="display:none;">
-                    <span class="glyphicon glyphicon-ok"></span>
-                </li>
-                <li id="saveError" class="save-message error-message" style="display:none;">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </li>
-                <li>
-                    <a id="undoButton" ng-click="isUndoDisabled || onUndoClicked()" data-toggle="tooltip" data-placement="right" title="Undo">
-                        <span class="glyphicon glyphicon-arrow-left"></span>
-                    </a>
-                </li>
-                <li>
-                    <a id="redoButton" ng-click="isRedoDisabled || onRedoClicked()" data-toggle="tooltip" data-placement="right" title="Redo">
-                        <span class="glyphicon glyphicon-arrow-right"></span>
-                    </a>
-                </li>
-                <li>
-                    <a id="editButton" ng-click="onEditClicked()" data-toggle="tooltip" data-placement="right" title="Edit">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div ng-show="getEditMode()==true"  ng-controller="StreetMenuController">
-            <div id="editMenu"  class="navbar-minimal-top animate-slide">
-                <ul>
+            <nav id="navmenuLeft" class="navbar navbar-fixed-left navbar-minimal animate" role="navigation" ng-controller="StreetMenuController">
+                <div class="navbar-toggler animate">
+                    <span class="menu-icon"></span>
+                </div>
+                <ul class="navbar-menu animate">
                     <li>
-                        <a data-toggle="tooltip" ng-click="onAddStreetClicked()" data-placement="right" title="Strasse Zeichnen">
-                            <span class="glyphicon glyphicon-road"></span>
+                        <a id="saveButton" ng-click="isSaveDisabled || onChangesetSaveClicked()">
+                            <span class="glyphicon glyphicon-floppy-disk" data-toggle="tooltip" data-placement="right" title="Save"></span>
+                            <span class="badge badge-count" ng-bind="changeCount"></span>
+                        </a>
+                    </li>
+                    <li id="saveSuccess" class="save-message success-message" style="display:none ;">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </li>
+                    <li id="saveError" class="save-message error-message" style="display:none ;">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </li>
+                    <li>
+                        <a id="undoButton" ng-click="isUndoDisabled || onUndoClicked()" data-toggle="tooltip" data-placement="right" title="Undo">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="redoButton" ng-click="isRedoDisabled || onRedoClicked()" data-toggle="tooltip" data-placement="right" title="Redo">
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="editButton" ng-click="onEditClicked()" data-toggle="tooltip" data-placement="right" title="Edit">
+                            <span class="glyphicon glyphicon-pencil"></span>
                         </a>
                     </li>
                 </ul>
-            </div>
-            <div id="addStreetDialog" class="editStreetDialog" ng-show="getStreetToEdit() != null">
-                <div class="container-fluid">
-                    <div class="row">
-                        <h3 class="col-sm-12">Strasse zeichnen</h3>
-                    </div>
-                    <div class="row">
-                        <form class="col-sm-12" ng-submit="onSaveNewStreetClicked()">
-                            <div class="input-group">
-                                <span class="input-group-addon">Von:</span><input class="form-control" name="street-from" type="text" ng-model="getStreetToEdit().from.properties.id" readonly="readonly" /><button ng-click="setFromStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">Bis:</span><input class="form-control" name="street-to" type="text" ng-model="getStreetToEdit().to.properties.id" readonly="readonly" /><button ng-click="setToStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
-                            </div>
-                            <input type="submit" class="btn" value="Speichern" /><input type="button" ng-click="setStreetToEdit(null)" class="btn" value="Abbrechen" />
-                        </form>
+            </nav>
+            <div ng-show="getEditMode()==true" ng-controller="StreetMenuController">
+                <div id="editMenu" class="navbar-minimal-top animate-slide">
+                    <ul>
+                        <li>
+                            <a data-toggle="tooltip" ng-click="onAddStreetClicked()" data-placement="right" title="Strasse Zeichnen">
+                                <span class="glyphicon glyphicon-road"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="addStreetDialog" class="editStreetDialog" ng-show="getStreetToEdit() != null">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h3 class="col-sm-12">Strasse zeichnen</h3>
+                        </div>
+                        <div class="row">
+                            <form class="col-sm-12" ng-submit="onSaveNewStreetClicked()">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Von:</span> <input class="form-control" name="street-from" type="text" ng-model="getStreetToEdit().from.properties.id" readonly="readonly" /> <button ng-click="setFromStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Bis:</span> <input class="form-control" name="street-to" type="text" ng-model="getStreetToEdit().to.properties.id" readonly="readonly" /> <button ng-click="setToStreetToEdit(null)" type="button" class="glyphicon glyphicon-remove input-group-addon" />
+                                </div>
+                                <input type="submit" class="btn" value="Speichern" /> <input type="button" ng-click="setStreetToEdit(null)" class="btn" value="Abbrechen" />
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="hiddenMenu" class="col-xs-3 nopadding navmenu-fixed-left offcanvas offcanvas-container" ng-controller="StreetMenuController" data-autohide="false" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft" ng-app="menuModule">
-            <rootMenu ng-show="menuState=='rootMenu'"></rootMenu>
-            <loadChangesetMenu ng-show="menuState=='loadChangeset'"></loadChangesetMenu>
-            <importMenu ng-show="menuState=='importMenu'"></importMenu>
-        </div>
-        <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#streetDetails, .leaflet-right" ng-controller="StreetDetailController" ng-app="changeLinkModule">
-            <div class="from-header">
+            <div id="hiddenMenu" class="col-xs-3 nopadding navmenu-fixed-left offcanvas offcanvas-container" ng-controller="StreetMenuController" data-autohide="false" data-canvas="#hiddenMenu,.leaflet-left, #navmenuLeft" ng-app="menuModule">
+                <rootMenu ng-show="menuState=='rootMenu'"></rootMenu>
+                <loadChangesetMenu ng-show="menuState=='loadChangeset'"></loadChangesetMenu>
+                <importMenu ng-show="menuState=='importMenu'"></importMenu>
+            </div>
+            <div id="streetDetails" class="col-xs-3 navmenu-fixed-right offcanvas offcanvas-container" data-canvas="#streetDetails, .leaflet-right" ng-controller="StreetDetailController" ng-app="changeLinkModule">
+                <div class="from-header">
                 Strasse bearbeiten
-            </div>
-            <div class="form-border">
-                <div class="form-field-group">
-                    <label class="form-label">ID</label>
-                    <p class="form-text-uneditable">{{streetModel.properties.id}}</p>
                 </div>
-                <div class="form-field-group">
-                    <label class="form-label">Oneway</label>
-                    <select class="form-control form-select-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.oneway">
-                        <option ng-value="true" ng-selected="streetModel.properties.oneway===true">true</option>
-                        <option ng-value="false" ng-selected="streetModel.properties.oneway ===false">false</option>
-                    </select>
-                </div>
-                <div class="form-field-group">
-                    <label class="form-label">Modes</label>
-                    <input type="text" step="any" id="input-oneway" class="form-text-editable" ng-model-onblur ng-change="changeModel()" ng-model="streetModel.properties.modes">
-                </div>
-                <div class="form-field-group">
-                    <label class="form-label">Length (meter)</label>
-                    <input type="number" step="any" id="input-oneway" class="form-text-editable" ng-model-onblur ng-change="changeModel()" ng-model="streetModel.properties.length">
-                </div>
-                <div class="form-field-group">
-                    <label class="form-label">Freespeed (km/h)</label>
-                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.freespeedCalculated">
-                </div>
-                <div class="form-field-group">
-                    <label class="form-label">Permlanes</label>
-                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.permlanes">
-                </div>
-                <div class="form-field-group">
-                    <label class="form-label">Capacity</label>
-                    <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.capacity">
+                <div class="form-border">
+                    <div class="form-field-group">
+                        <label class="form-label">ID</label>
+                        <p class="form-text-uneditable">{{streetModel.properties.id}}</p>
+                    </div>
+                    <div class="form-field-group">
+                        <label class="form-label">Oneway</label>
+                        <select class="form-control form-select-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.oneway">
+                            <option ng-value="true" ng-selected="streetModel.properties.oneway===true">true</option>
+                            <option ng-value="false" ng-selected="streetModel.properties.oneway ===false">false</option>
+                        </select>
+                    </div>
+                    <div class="form-field-group">
+                        <label class="form-label">Modes</label>
+                        <input type="text" step="any" id="input-oneway" class="form-text-editable" ng-model-onblur ng-change="changeModel()" ng-model="streetModel.properties.modes">
+                    </div>
+                    <div class="form-field-group">
+                        <label class="form-label">Length (meter)</label>
+                        <input type="number" step="any" id="input-oneway" class="form-text-editable" ng-model-onblur ng-change="changeModel()" ng-model="streetModel.properties.length">
+                    </div>
+                    <div class="form-field-group">
+                        <label class="form-label">Freespeed (km/h)</label>
+                        <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.freespeedCalculated">
+                    </div>
+                    <div class="form-field-group">
+                        <label class="form-label">Permlanes</label>
+                        <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.permlanes">
+                    </div>
+                    <div class="form-field-group">
+                        <label class="form-label">Capacity</label>
+                        <input type="number" id="input-oneway" class="form-text-editable" ng-change="changeModel()" ng-model-onblur ng-model="streetModel.properties.capacity">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

@@ -30,16 +30,6 @@
                     $rootScope.$broadcast('updateFeature', {feature: null, layer: null, latlng: null, map: map});
                     $(".street-active").removeClass("street-active");
                 });
-                /*
-                 map.on('zoomend', function(e) {
-                 var currentZoom = map.getZoom();
-                 if (currentZoom > 14) {
-                 $('.point-hidden').removeClass('point-hidden');
-                 } else {
-                 $('.point').addClass('point-hidden');
-                 }
-                 });
-                 */
                 var svg = d3.select(map.getPanes().overlayPane).append("svg"),
                     g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
@@ -153,7 +143,7 @@
                                 var id = path.feature.properties.id;
                                 var fromLayer = null;
                                 var toLayer = null;
-                                layerInstance.editInstance.geojsonLayer.eachLayer(function(sublayer){
+                                layerInstance.editInstance.geojsonLayer.eachLayer(function (sublayer) {
                                     var tempFromLayer = sublayer.getLayer('node_' + feature.properties.from);
                                     if (tempFromLayer != null) {
                                         fromLayer = tempFromLayer;
@@ -164,7 +154,11 @@
                                     }
                                 });
                                 $rootScope.$apply(function () {
-                                    dataService.setStreetToEdit({from: fromLayer.feature, to: toLayer.feature, link: path.feature});
+                                    dataService.setStreetToEdit({
+                                        from: fromLayer.feature,
+                                        to: toLayer.feature,
+                                        link: path.feature
+                                    });
                                 });
                             });
                         } else {

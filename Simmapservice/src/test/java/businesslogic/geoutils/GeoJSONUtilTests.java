@@ -1,7 +1,6 @@
-package businesslogic.utils;
+package businesslogic.geoutils;
 
 import org.jooq.Record;
-import org.jooq.Result;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -9,7 +8,7 @@ import testenvironment.TestDataUtil;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class GeoJSONUtilTests {
 

@@ -1,4 +1,4 @@
-package businesslogic.utils;
+package businesslogic.geoutils;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.operation.TransformException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class EPSGTransformUtilTests {
 

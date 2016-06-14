@@ -5,16 +5,16 @@ import dataaccess.database.tables.records.LinkRecord;
 import org.junit.Test;
 import testenvironment.TestDataUtil;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static testenvironment.AssertionUtils.*;
 
-public class Link_ChangeModelTests {
+public class LinkChangeModelTests {
     @Test
     public void testGetterSetter() {
         LinkChangeRecord record = TestDataUtil.getSingleSelectLinkChangeTestRecord();
         LinkModel defaultValues = new LinkModel(TestDataUtil.getSingleSelectLinkTestRecord());
 
-        Link_ChangeModel model = new Link_ChangeModel();
+        LinkChangeModel model = new LinkChangeModel();
         model.setDefaultValues(defaultValues);
         model.setId(record.getId());
         model.setChangesetNr(record.getChangesetnr());
@@ -43,19 +43,19 @@ public class Link_ChangeModelTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void testFillModelNegative() {
-        Link_ChangeModel model = new Link_ChangeModel();
+        LinkChangeModel model = new LinkChangeModel();
         model.fillModel(null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFillModelNegative1() {
-        Link_ChangeModel model = new Link_ChangeModel();
+        LinkChangeModel model = new LinkChangeModel();
         model.fillModel(new LinkChangeRecord(), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFillModelNegative2() {
-        Link_ChangeModel model = new Link_ChangeModel();
+        LinkChangeModel model = new LinkChangeModel();
         model.fillModel(null, new LinkRecord());
     }
 
@@ -63,7 +63,7 @@ public class Link_ChangeModelTests {
     public void testFillModel() {
         LinkChangeRecord linkChangeRecord = TestDataUtil.getSingleSelectLinkChangeTestRecord();
         LinkRecord linkRecord = TestDataUtil.getSingleSelectLinkTestRecord();
-        Link_ChangeModel model = new Link_ChangeModel();
+        LinkChangeModel model = new LinkChangeModel();
         model.fillModel(linkChangeRecord, linkRecord);
 
         LinkChangeRecord expectedRecord = TestDataUtil.getSingleSelectLinkChangeTestRecord();
@@ -126,10 +126,10 @@ public class Link_ChangeModelTests {
     }
 
     @Test
-    public void testGetLinkChangeRecord(){
+    public void testGetLinkChangeRecord() {
         LinkChangeRecord linkChangeRecord = TestDataUtil.getSingleSelectLinkChangeTestRecord();
         LinkRecord linkRecord = TestDataUtil.getSingleSelectLinkTestRecord();
-        Link_ChangeModel model = new Link_ChangeModel();
+        LinkChangeModel model = new LinkChangeModel();
         model.fillModel(linkChangeRecord, linkRecord);
 
         LinkChangeRecord result = model.getLinkChangeRecord();

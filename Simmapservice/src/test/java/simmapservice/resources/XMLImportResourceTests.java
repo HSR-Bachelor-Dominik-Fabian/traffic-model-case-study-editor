@@ -1,40 +1,37 @@
 package simmapservice.resources;
 
 import businesslogic.xmlImport.XMLImportLogic;
-import common.DataAccessLayerException;
-import io.dropwizard.testing.junit.DropwizardClientRule;
+import dataaccess.DataAccessException;
 import io.dropwizard.testing.junit.ResourceTestRule;
-import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.opengis.referencing.FactoryException;
+import org.opengis.referencing.operation.TransformException;
 import org.powermock.api.easymock.PowerMock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import testenvironment.TestDataUtil;
 
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.isA;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.doThrow;
 import static org.powermock.api.easymock.PowerMock.replayAll;
 import static org.powermock.api.easymock.PowerMock.verifyAll;
 
@@ -45,7 +42,7 @@ public class XMLImportResourceTests {
     private XMLImportLogic xmlImportLogic;
 
     @Rule
-    public ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+    public final ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
             .addProvider(MultiPartFeature.class)
             .addResource(new XMLImportResource(TestDataUtil.getTestProperties()))
             .build();
@@ -53,12 +50,12 @@ public class XMLImportResourceTests {
     @Before
     public void setup() throws Exception {
         xmlImportLogic = PowerMock.createMock(XMLImportLogic.class);
-        PowerMock.expectNew(XMLImportLogic.class, new Class[] {Properties.class},
+        PowerMock.expectNew(XMLImportLogic.class, new Class[]{Properties.class},
                 TestDataUtil.getTestProperties()).andReturn(xmlImportLogic);
     }
 
     @Test
-    public void testPostImport() throws FileNotFoundException, DataAccessLayerException {
+    public void testPostImport() throws FileNotFoundException, DataAccessException, FactoryException, TransformException, XMLStreamException {
         InputStream inputStream = TestDataUtil.getInputStreamOfData();
         xmlImportLogic.importNetwork2DB(isA(InputStream.class), isA(String.class), isA(String.class));
         replayAll();
@@ -74,10 +71,10 @@ public class XMLImportResourceTests {
     }
 
     @Test
-    public void testPostImportThrowException() throws FileNotFoundException, DataAccessLayerException {
+    public void testPostImportThrowException() throws FileNotFoundException, DataAccessException, FactoryException, TransformException, XMLStreamException {
         InputStream inputStream = TestDataUtil.getInputStreamOfData();
         xmlImportLogic.importNetwork2DB(isA(InputStream.class), isA(String.class), isA(String.class));
-        expectLastCall().andThrow(new DataAccessLayerException(new SQLException()));
+        expectLastCall().andThrow(new DataAccessException(new SQLException()));
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);

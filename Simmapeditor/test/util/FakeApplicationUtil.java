@@ -1,11 +1,6 @@
 package util;
 
-import play.Application;
-import play.GlobalSettings;
 import play.test.FakeApplication;
-import play.test.TestServer;
-
-import java.io.File;
 
 import static play.test.Helpers.*;
 

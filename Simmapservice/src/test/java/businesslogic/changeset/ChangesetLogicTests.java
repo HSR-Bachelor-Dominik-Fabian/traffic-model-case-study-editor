@@ -1,16 +1,11 @@
 package businesslogic.changeset;
 
-import common.DataAccessLayerException;
-import dataaccess.SimmapDataAccessFacade;
+import dataaccess.DataAccessException;
+import dataaccess.DataAccessLogic;
 import dataaccess.database.tables.records.ChangesetRecord;
-import org.easymock.EasyMock;
-import org.easymock.IExpectationSetters;
-import org.jooq.Result;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
-import org.powermock.api.easymock.PowerMock;
 import org.powermock.api.support.membermodification.MemberModifier;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -26,20 +21,20 @@ import static org.powermock.api.easymock.PowerMock.*;
 import static testenvironment.AssertionUtils.*;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(SimmapDataAccessFacade.class)
+@PrepareForTest(DataAccessLogic.class)
 public class ChangesetLogicTests {
-    private SimmapDataAccessFacade facadeMock;
+    private DataAccessLogic facadeMock;
     private ChangesetLogic changesetLogic;
 
     @Before
-    public void setupFacade() throws IllegalAccessException, DataAccessLayerException {
+    public void setupFacade() throws IllegalAccessException, DataAccessException {
         changesetLogic = new ChangesetLogic(TestDataUtil.getTestProperties());
-        facadeMock = createMock(SimmapDataAccessFacade.class);
+        facadeMock = createMock(DataAccessLogic.class);
         MemberModifier.field(ChangesetLogic.class, "dataAccess").set(changesetLogic, facadeMock);
     }
 
     @Test
-    public void testGetAllChangesets() throws DataAccessLayerException {
+    public void testGetAllChangesets() throws DataAccessException {
         expect(facadeMock.getAllChangesetsPerUser(1)).andReturn(TestDataUtil.getChangesetRecordsResult());
         replayAll();
         List<ChangesetModel> models = this.changesetLogic.getAllChangesets(1);
@@ -53,7 +48,7 @@ public class ChangesetLogicTests {
     }
 
     @Test
-    public void testGetFullChangeset() throws DataAccessLayerException {
+    public void testGetFullChangeset() throws DataAccessException {
         expect(facadeMock.getChangesetFromNumber(1)).andReturn(TestDataUtil.getSingleSelectChangesetTestRecord());
         expect(facadeMock.getNodeChangefromChangeset(1)).andReturn(TestDataUtil.getNodeChangeRecordResult());
         expect(facadeMock.getLinkChangesfromChangeset(1)).andReturn(TestDataUtil.getLinkChangeRecordResult());
@@ -65,20 +60,20 @@ public class ChangesetLogicTests {
 
         ChangesetFullModel model = this.changesetLogic.getFullChangeset(1);
         assertChangesetRecordEqualsModel(TestDataUtil.getSingleSelectChangesetTestRecord(), model);
-        List<Node_ChangeModel> expected = new ArrayList<>();
-        Node_ChangeModel node_changeModel1 = new Node_ChangeModel();
+        List<NodeChangeModel> expected = new ArrayList<>();
+        NodeChangeModel node_changeModel1 = new NodeChangeModel();
         node_changeModel1.fillModel(TestDataUtil.getNodeChangeRecordResult().get(0), TestDataUtil.getMultipleSelectNodeTestRecords().get(0));
         expected.add(node_changeModel1);
-        Node_ChangeModel node_changeModel2 = new Node_ChangeModel();
+        NodeChangeModel node_changeModel2 = new NodeChangeModel();
         node_changeModel2.fillModel(TestDataUtil.getNodeChangeRecordResult().get(1), TestDataUtil.getMultipleSelectNodeTestRecords().get(1));
         expected.add(node_changeModel2);
-        List<Node_ChangeModel> node_changeModels = model.getNode_changeModels();
+        List<NodeChangeModel> node_changeModels = model.getNode_changeModels();
         for (int i = 0; i < node_changeModels.size(); i++) {
-            Node_ChangeModel nodeChangeModel = node_changeModels.get(i);
+            NodeChangeModel nodeChangeModel = node_changeModels.get(i);
             assertNode_ChangeIsEquals(expected.get(i), nodeChangeModel);
         }
         assertEquals(1, model.getLink_changeModels().size());
-        Link_ChangeModel linkexpected = new Link_ChangeModel();
+        LinkChangeModel linkexpected = new LinkChangeModel();
         linkexpected.fillModel(TestDataUtil.getSingleSelectLinkChangeTestRecord(), TestDataUtil.getSingleSelectLinkTestRecord());
 
         assertLink_ChangeIsEquals(linkexpected, model.getLink_changeModels().get(0));
@@ -86,7 +81,7 @@ public class ChangesetLogicTests {
     }
 
     @Test
-    public void testGetFullChangesetNegative() throws DataAccessLayerException {
+    public void testGetFullChangesetNegative() throws DataAccessException {
         expect(facadeMock.getChangesetFromNumber(2)).andReturn(null);
         replayAll();
         assertNull(this.changesetLogic.getFullChangeset(2));
@@ -94,7 +89,7 @@ public class ChangesetLogicTests {
     }
 
     @Test
-    public void testHasChangeset() throws DataAccessLayerException {
+    public void testHasChangeset() throws DataAccessException {
         expect(facadeMock.hasChangeset(1)).andReturn(true);
         replayAll();
         assertTrue(this.changesetLogic.hasChangeset(1));
@@ -102,7 +97,7 @@ public class ChangesetLogicTests {
     }
 
     @Test
-    public void testHasChangesetNegative() throws DataAccessLayerException {
+    public void testHasChangesetNegative() throws DataAccessException {
         expect(facadeMock.hasChangeset(2)).andReturn(false);
         replayAll();
         assertFalse(this.changesetLogic.hasChangeset(2));
@@ -110,20 +105,19 @@ public class ChangesetLogicTests {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testInsertChangesetNegative() throws DataAccessLayerException {
+    public void testInsertChangesetNegative() throws DataAccessException {
         ChangesetFullModel fullModel = new ChangesetFullModel(TestDataUtil.getChangesetRecord());
         this.changesetLogic.insertChangeset(fullModel);
     }
 
     @Test
-    public void testInsertChangeset() throws DataAccessLayerException {
+    public void testInsertChangeset() throws DataAccessException {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         record.setId(null);
         ChangesetFullModel fullModel = new ChangesetFullModel(record);
         fullModel.setLink_changeModels(new ArrayList<>());
         fullModel.setNode_changeModels(new ArrayList<>());
-        //facadeMock =
-        expect(facadeMock.insertChangeset(anyObject())).andReturn(new Long(1));
+        expect(facadeMock.insertChangeset(anyObject())).andReturn(1L);
         expect(facadeMock.deleteLink_Changes(new ArrayList<>())).andReturn(new int[]{});
         expect(facadeMock.deleteNode_Changes(new ArrayList<>())).andReturn(new int[]{});
         expect(facadeMock.updateLink_Changes(new ArrayList<>())).andReturn(new int[]{});
@@ -135,7 +129,7 @@ public class ChangesetLogicTests {
     }
 
     @Test
-    public void testUpdateChangeset() throws DataAccessLayerException {
+    public void testUpdateChangeset() throws DataAccessException {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetFullModel fullModel = new ChangesetFullModel(record);
         fullModel.setLink_changeModels(new ArrayList<>());
@@ -154,7 +148,7 @@ public class ChangesetLogicTests {
     }
 
     @Test
-    public void testDeleteChangeset() throws DataAccessLayerException {
+    public void testDeleteChangeset() throws DataAccessException {
         ChangesetRecord record = TestDataUtil.getChangesetRecord();
         ChangesetFullModel fullModel = new ChangesetFullModel(record);
         fullModel.setLink_changeModels(new ArrayList<>());

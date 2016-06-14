@@ -1,7 +1,7 @@
 var MyProps = {};
 MyProps["rootURL"] = 'http://localhost:9001';
-(function() {
-    describe("Test MenuModule", function() {
+(function () {
+    describe("Test MenuModule", function () {
         beforeEach(module('menuModule'));
 
         var $controller = null;
@@ -10,16 +10,16 @@ MyProps["rootURL"] = 'http://localhost:9001';
         var changesetHandler = null;
         var undoRedoHandler = null;
 
-        beforeEach(angular.mock.inject(function($rootScope, _$controller_) {
+        beforeEach(angular.mock.inject(function ($rootScope, _$controller_) {
             $scope = $rootScope.$new();
-            $controller = _$controller_('StreetMenuController', { $scope: $scope });
+            $controller = _$controller_('StreetMenuController', {$scope: $scope});
             changesetStorageHandler = new ChangesetStorageHandler();
             changesetStorageHandler.clearLocalChangeset();
             changesetHandler = new ChangesetHandler();
             undoRedoHandler = new UndoRedoHandler();
         }));
 
-        it('test $scope default state', function() {
+        it('test $scope default state', function () {
             expect($scope.menuState).toEqual('rootMenu');
             expect($scope.changeCount).toEqual(0);
             expect($scope.isUndoDisabled).toEqual(false);
@@ -28,13 +28,13 @@ MyProps["rootURL"] = 'http://localhost:9001';
             expect($scope.changesetsToLoad).toEqual(null);
         });
 
-        it('test isActiveChangeset false', function() {
+        it('test isActiveChangeset false', function () {
             changesetHandler._loadEmptyChangesetIntoLocalStorage();
 
             expect($scope.isActiveChangeset(1)).toEqual(false);
         });
 
-        it('test isActiveChangeset true', function() {
+        it('test isActiveChangeset true', function () {
             changesetHandler._loadEmptyChangesetIntoLocalStorage();
 
             var localChangeset = changesetStorageHandler.getLocalChangeset();
@@ -44,10 +44,10 @@ MyProps["rootURL"] = 'http://localhost:9001';
             expect($scope.isActiveChangeset(1)).toEqual(true);
         });
 
-        it('test $scope.$watch of undoStack', function() {
+        it('test $scope.$watch of undoStack', function () {
             changesetHandler._loadEmptyChangesetIntoLocalStorage();
 
-            var changeModel = {"id":"1","key":"permlanes","value":4};
+            var changeModel = {"id": "1", "key": "permlanes", "value": 4};
 
             undoRedoHandler.initializeUndoRedoStack();
             $scope.$digest();
@@ -66,10 +66,10 @@ MyProps["rootURL"] = 'http://localhost:9001';
             expect($scope.isSaveDisabled).toEqual(false);
         });
 
-        it('test $scope.$watch of redoStack', function() {
+        it('test $scope.$watch of redoStack', function () {
             changesetHandler._loadEmptyChangesetIntoLocalStorage();
 
-            var changeModel = {"id":"1","key":"permlanes","value":4};
+            var changeModel = {"id": "1", "key": "permlanes", "value": 4};
 
             undoRedoHandler.initializeUndoRedoStack();
             $scope.$digest();
@@ -96,7 +96,7 @@ MyProps["rootURL"] = 'http://localhost:9001';
             expect($scope.isSaveDisabled).toEqual(true);
         });
 
-        it('test $scope.$watch of menustate', function() {
+        it('test $scope.$watch of menustate', function () {
             expect($scope.menuState).toEqual('rootMenu');
             expect($scope.changesetsToLoad).toEqual(null);
 

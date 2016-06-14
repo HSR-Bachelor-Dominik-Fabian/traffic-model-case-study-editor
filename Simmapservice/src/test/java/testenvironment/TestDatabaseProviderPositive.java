@@ -2,7 +2,9 @@ package testenvironment;
 
 
 import dataaccess.database.Tables;
-import dataaccess.database.tables.records.*;
+import dataaccess.database.tables.records.ChangesetRecord;
+import dataaccess.database.tables.records.NodeChangeRecord;
+import dataaccess.database.tables.records.NodeRecord;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.jooq.tools.jdbc.MockDataProvider;
@@ -11,16 +13,9 @@ import org.jooq.tools.jdbc.MockResult;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-/**
- * Created by dohee on 11.05.2016.
- */
-public class TestDatabaseProviderPositive implements MockDataProvider {
+class TestDatabaseProviderPositive implements MockDataProvider {
     private ConnectionMode connectionMode = ConnectionMode.ONE;
 
     public void setConnectionMode(ConnectionMode mode) {
@@ -31,7 +26,7 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
     public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
         DSLContext dslContext = DSL.using(SQLDialect.POSTGRES);
         MockResult[] mock = new MockResult[1];
-        if(connectionMode != ConnectionMode.ERROR) {
+        if (connectionMode != ConnectionMode.ERROR) {
             if (ctx.batch()) {
                 String[] sqls = ctx.batchSQL();
                 if (ctx.batchMultiple()) {
@@ -48,7 +43,7 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
                     mock = new MockResult[bindings.length];
                     for (int i = 0; i < bindings.length; i++) {
                         if (sql.toLowerCase().startsWith("delete")) {
-                            mock[i] = calculateNonBatchDeleteStatement(dslContext, sql, ctx.batchBindings()[i]);
+                            mock[i] = calculateNonBatchDeleteStatement(sql, ctx.batchBindings()[i]);
                         }
                     }
                 }
@@ -60,15 +55,14 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
                 } else if (sql.toLowerCase().startsWith("insert")) {
                     mock[0] = calculateNonBatchInsertStatement(dslContext, ctx.sql(), ctx.bindings());
                 } else if (sql.toLowerCase().startsWith("delete")) {
-                    mock[0] = calculateNonBatchDeleteStatement(dslContext, ctx.sql(), ctx.bindings());
+                    mock[0] = calculateNonBatchDeleteStatement(ctx.sql(), ctx.bindings());
                 } else if (sql.toLowerCase().startsWith("update")) {
-                    mock[0] = calculateNonBatchUpdateStatement(dslContext, ctx.sql(), ctx.bindings());
+                    mock[0] = calculateNonBatchUpdateStatement(ctx.sql(), ctx.bindings());
                 }
 
 
             }
-        }
-        else{
+        } else {
             throw TestDataUtil.getSQLException();
         }
         return mock;
@@ -202,7 +196,7 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
         return mockResult;
     }
 
-    private MockResult calculateNonBatchDeleteStatement(DSLContext dslContext, String sql, Object[] bindings) {
+    private MockResult calculateNonBatchDeleteStatement(String sql, Object[] bindings) {
         Query query = DSL.query(sql, bindings);
         MockResult mockResult;
         System.out.println(query.toString());
@@ -216,14 +210,13 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
                 break;
             default:
                 mockResult = new MockResult(0, null);
-                ;
                 break;
         }
 
         return mockResult;
     }
 
-    private MockResult calculateNonBatchUpdateStatement(DSLContext dslContext, String sql, Object[] bindings) {
+    private MockResult calculateNonBatchUpdateStatement(String sql, Object[] bindings) {
         Query query = DSL.query(sql, bindings);
         MockResult mockResult;
         System.out.println(query.toString());
@@ -233,7 +226,6 @@ public class TestDatabaseProviderPositive implements MockDataProvider {
                 break;
             default:
                 mockResult = new MockResult(0, null);
-                ;
                 break;
         }
 

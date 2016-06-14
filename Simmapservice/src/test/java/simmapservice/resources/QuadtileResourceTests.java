@@ -1,7 +1,7 @@
 package simmapservice.resources;
 
 import businesslogic.datafetch.DataFetchLogic;
-import common.DataAccessLayerException;
+import dataaccess.DataAccessException;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
@@ -25,8 +25,8 @@ import java.util.Properties;
 
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.powermock.api.easymock.PowerMock.replayAll;
 import static org.powermock.api.easymock.PowerMock.verifyAll;
 
@@ -40,13 +40,13 @@ public class QuadtileResourceTests {
     private static final JSONObject dataForTile = new JSONObject();
 
     @Rule
-    public ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+    public final ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
             .addResource(new QuadtileResource(TestDataUtil.getTestProperties())).build();
 
     @Before
     public void setup() throws Exception {
         dataFetchLogic = PowerMock.createMock(DataFetchLogic.class);
-        PowerMock.expectNew(DataFetchLogic.class, new Class[] {Properties.class},
+        PowerMock.expectNew(DataFetchLogic.class, new Class[]{Properties.class},
                 TestDataUtil.getTestProperties()).andReturn(dataFetchLogic);
         dataForTile.put("type", "FeatureCollection");
         dataForTile.put("features", new JSONArray());
@@ -59,7 +59,7 @@ public class QuadtileResourceTests {
     }
 
     @Test
-    public void testGetQuadTileValidTarget() throws DataAccessLayerException {
+    public void testGetQuadTileValidTarget() throws DataAccessException {
         expect(dataFetchLogic.getLastModified(eq(10), eq(10), eq(10), eq(1))).andReturn(lastModifiedDate);
         expect(dataFetchLogic.getDataForTile(eq(10), eq(10), eq(10), eq(1))).andReturn(dataForTile);
         replayAll();
@@ -90,7 +90,7 @@ public class QuadtileResourceTests {
     }
 
     @Test
-    public void testGetQuadTileNoContentWithLastModifiedNull() throws DataAccessLayerException {
+    public void testGetQuadTileNoContentWithLastModifiedNull() throws DataAccessException {
         expect(dataFetchLogic.getLastModified(eq(10), eq(10), eq(10), eq(1))).andReturn(null);
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
@@ -102,9 +102,9 @@ public class QuadtileResourceTests {
     }
 
     @Test
-    public void testGetQuadTileThrowException() throws DataAccessLayerException {
+    public void testGetQuadTileThrowException() throws DataAccessException {
         expect(dataFetchLogic.getLastModified(eq(10), eq(10), eq(10), eq(1))).andReturn(lastModifiedDate);
-        expect(dataFetchLogic.getDataForTile(eq(10), eq(10), eq(10), eq(1))).andThrow(new DataAccessLayerException(new SQLException()));
+        expect(dataFetchLogic.getDataForTile(eq(10), eq(10), eq(10), eq(1))).andThrow(new DataAccessException(new SQLException()));
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);
@@ -115,7 +115,7 @@ public class QuadtileResourceTests {
     }
 
     @Test
-    public void testGetQuadTileWithNodesValidTarget() throws DataAccessLayerException {
+    public void testGetQuadTileWithNodesValidTarget() throws DataAccessException {
         expect(dataFetchLogic.getLastModified(eq(10), eq(10), eq(10), eq(1))).andReturn(lastModifiedDate);
         expect(dataFetchLogic.getDataForTileWithNodes(eq(10), eq(10), eq(10), eq(1))).andReturn(dataForTile);
         replayAll();
@@ -128,7 +128,7 @@ public class QuadtileResourceTests {
     }
 
     @Test
-    public void testGetQuadTileWithNodesInvalidTarget() throws DataAccessLayerException {
+    public void testGetQuadTileWithNodesInvalidTarget() throws DataAccessException {
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);
         Response response = jerseyTest.target("/api/quadtile/edit/1/10/10/10").request()
@@ -146,7 +146,7 @@ public class QuadtileResourceTests {
     }
 
     @Test
-    public void testGetQuadTileWithNodesWithLastModifiedNull() throws DataAccessLayerException {
+    public void testGetQuadTileWithNodesWithLastModifiedNull() throws DataAccessException {
         expect(dataFetchLogic.getLastModified(eq(10), eq(10), eq(10), eq(1))).andReturn(null);
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
@@ -158,7 +158,7 @@ public class QuadtileResourceTests {
     }
 
     @Test
-    public void testGetQuadTileWithNodesWithNodesNull() throws DataAccessLayerException {
+    public void testGetQuadTileWithNodesWithNodesNull() throws DataAccessException {
         expect(dataFetchLogic.getLastModified(eq(10), eq(10), eq(10), eq(1))).andReturn(lastModifiedDate);
         expect(dataFetchLogic.getDataForTileWithNodes(eq(10), eq(10), eq(10), eq(1))).andReturn(null);
         replayAll();
@@ -171,9 +171,9 @@ public class QuadtileResourceTests {
     }
 
     @Test
-    public void testGetQuadTileWithNodesThrowException() throws DataAccessLayerException {
+    public void testGetQuadTileWithNodesThrowException() throws DataAccessException {
         expect(dataFetchLogic.getLastModified(eq(10), eq(10), eq(10), eq(1))).andReturn(lastModifiedDate);
-        expect(dataFetchLogic.getDataForTileWithNodes(eq(10), eq(10), eq(10), eq(1))).andThrow(new DataAccessLayerException(new SQLException()));
+        expect(dataFetchLogic.getDataForTileWithNodes(eq(10), eq(10), eq(10), eq(1))).andThrow(new DataAccessException(new SQLException()));
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);

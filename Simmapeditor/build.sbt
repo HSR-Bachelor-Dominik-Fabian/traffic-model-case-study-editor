@@ -6,7 +6,7 @@ lazy val `simmapeditor` = (project in file(".")).enablePlugins(PlayJava)
 
 scalaVersion := "2.11.7"
 
-libraryDependencies ++= Seq( javaJdbc ,  cache , javaWs , specs2 % Test)
+libraryDependencies ++= Seq(javaJdbc, cache, javaWs, specs2 % Test)
 
 resolvers += "osgeo" at "http://download.osgeo.org/webdav/geotools/"
 
@@ -24,4 +24,4 @@ libraryDependencies += "org.geotools" % "gt-epsg-hsql" % "14.2"
 
 libraryDependencies += "javax.media" % "jai_core" % "1.1.3" from "http://download.osgeo.org/webdav/geotools/javax/media/jai_core/1.1.3/jai_core-1.1.3.jar" force()
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
+unmanagedResourceDirectories in Test <+= baseDirectory(_ / "target/web/public/test")

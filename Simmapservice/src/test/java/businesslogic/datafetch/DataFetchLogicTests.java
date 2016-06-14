@@ -1,12 +1,11 @@
 package businesslogic.datafetch;
 
 import businesslogic.changeset.LinkModel;
-import common.DataAccessLayerException;
-import dataaccess.SimmapDataAccessFacade;
+import dataaccess.DataAccessException;
+import dataaccess.DataAccessLogic;
 import dataaccess.database.Tables;
-import dataaccess.database.tables.records.LinkRecord;
-import dataaccess.utils.IConnection;
-import dataaccess.utils.ProdConnection;
+import dataaccess.connectionutils.IConnection;
+import dataaccess.connectionutils.ProdConnection;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -25,31 +24,32 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.easymock.EasyMock.expect;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.powermock.api.easymock.PowerMock.*;
 import static testenvironment.AssertionUtils.assertLinkModelToRecord;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({SimmapDataAccessFacade.class, DataFetchLogic.class})
+@PrepareForTest({DataAccessLogic.class, DataFetchLogic.class})
 public class DataFetchLogicTests {
-    SimmapDataAccessFacade simmapDataAccessFacade;
-    Properties properties = TestDataUtil.getTestProperties();
-    ProdConnection prodConnection = new ProdConnection();
+    private DataAccessLogic dataAccessLogic;
+    private final Properties properties = TestDataUtil.getTestProperties();
+    private final ProdConnection prodConnection = new ProdConnection();
 
     @Before
     public void setup() throws Exception {
-        simmapDataAccessFacade = createMock(SimmapDataAccessFacade.class);
+        dataAccessLogic = createMock(DataAccessLogic.class);
         expectNew(ProdConnection.class).andReturn(prodConnection);
-        expectNew(SimmapDataAccessFacade.class, new Class[]{Properties.class, IConnection.class},
+        expectNew(DataAccessLogic.class, new Class[]{Properties.class, IConnection.class},
                 properties, prodConnection)
-                .andReturn(simmapDataAccessFacade);
+                .andReturn(dataAccessLogic);
     }
 
     @Test
-    public void testGetDataForTile() throws DataAccessLayerException {
+    public void testGetDataForTile() throws DataAccessException {
         Result<Record> result = DSL.using(SQLDialect.POSTGRES).newResult(Tables.LINK.fields());
         result.addAll(TestDataUtil.getMultipleSelectLinkTestRecords());
-        expect(simmapDataAccessFacade.getLinksFromQuadKey("000000030313", 1, 12)).andReturn(result);
+        expect(dataAccessLogic.getLinksFromQuadKey("000000030313", 1, 12)).andReturn(result);
         replayAll();
         DataFetchLogic dataFetchLogic = new DataFetchLogic(properties);
         JSONObject jsonObject = dataFetchLogic.getDataForTile(23, 21, 12, 1);
@@ -58,7 +58,7 @@ public class DataFetchLogicTests {
     }
 
     @Test
-    public void testGetDataForTileWithNodesZoomNegative() throws DataAccessLayerException {
+    public void testGetDataForTileWithNodesZoomNegative() throws DataAccessException {
         replayAll();
         resetAll();
         DataFetchLogic dataFetchLogic = new DataFetchLogic(properties);
@@ -67,7 +67,7 @@ public class DataFetchLogicTests {
     }
 
     @Test
-    public void testGetDataFroTileWithNodes() throws DataAccessLayerException {
+    public void testGetDataFroTileWithNodes() throws DataAccessException {
         Result<Record> result = DSL.using(SQLDialect.POSTGRES).newResult(Tables.LINK.fields());
         result.addAll(TestDataUtil.getMultipleSelectLinkTestRecords());
         Result<Record> nodeResult = DSL.using(SQLDialect.POSTGRES).newResult(Tables.NODE.fields());
@@ -77,8 +77,8 @@ public class DataFetchLogicTests {
             nodeIds.add((String) link.getValue("From"));
             nodeIds.add((String) link.getValue("To"));
         }
-        expect(simmapDataAccessFacade.getLinksFromQuadKey("0000000000030313", 1, 16)).andReturn(result);
-        expect(simmapDataAccessFacade.getNodesFromIds(nodeIds, 1)).andReturn(nodeResult);
+        expect(dataAccessLogic.getLinksFromQuadKey("0000000000030313", 1, 16)).andReturn(result);
+        expect(dataAccessLogic.getNodesFromIds(nodeIds, 1)).andReturn(nodeResult);
 
         replayAll();
         DataFetchLogic dataFetchLogic = new DataFetchLogic(properties);
@@ -88,9 +88,9 @@ public class DataFetchLogicTests {
     }
 
     @Test
-    public void testGetLastModified() throws DataAccessLayerException {
+    public void testGetLastModified() throws DataAccessException {
         Date testDate = Date.valueOf("2003-12-1");
-        expect(simmapDataAccessFacade.getLastModifiedQuadKey("0000000000030313", 1, 16)).andReturn(testDate);
+        expect(dataAccessLogic.getLastModifiedQuadKey("0000000000030313", 1, 16)).andReturn(testDate);
         replayAll();
         DataFetchLogic dataFetchLogic = new DataFetchLogic(properties);
         assertEquals(testDate, dataFetchLogic.getLastModified(23, 21, 16, 1));
@@ -98,8 +98,8 @@ public class DataFetchLogicTests {
     }
 
     @Test
-    public void testGetLinkById() throws DataAccessLayerException {
-        expect(simmapDataAccessFacade.getLinkFromId("L1")).andReturn(TestDataUtil.getSingleSelectLinkTestRecord());
+    public void testGetLinkById() throws DataAccessException {
+        expect(dataAccessLogic.getLinkFromId("L1")).andReturn(TestDataUtil.getSingleSelectLinkTestRecord());
         replayAll();
         DataFetchLogic dataFetchLogic = new DataFetchLogic(properties);
         LinkModel model = dataFetchLogic.getLinkById("L1");

@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 @JsonIgnoreProperties({"zoomlevel"})
-public class Link_ChangeModel {
+public class LinkChangeModel {
     //region Private Variables
     private LinkModel defaultValues = null;
     private String id = null;
@@ -66,9 +66,13 @@ public class Link_ChangeModel {
         this.networkId = networkId;
     }
 
-    public boolean isDeleted() { return deleted; }
+    public boolean isDeleted() {
+        return deleted;
+    }
 
-    public void setDeleted(boolean deleted) { this.deleted = deleted; }
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public String getQuadKey() {
         return quadKey;

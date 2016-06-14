@@ -8,9 +8,8 @@ import play.mvc.Result;
 import play.test.FakeApplication;
 import util.FakeApplicationUtil;
 
+import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.*;
-
-import static org.fest.assertions.Assertions.*;
 
 public class RouteTest {
 
@@ -43,6 +42,13 @@ public class RouteTest {
     @Test
     public void testPartialChangeSetMenuRoute() {
         Http.RequestBuilder request = new Http.RequestBuilder().method(GET).uri("/partials/loadchangesetmenu");
+        Result result = route(request);
+        assertThat(result.status()).isEqualTo(OK);
+    }
+
+    @Test
+    public void testPartialImportMenuRoute() {
+        Http.RequestBuilder request = new Http.RequestBuilder().method(GET).uri("/partials/importmenu");
         Result result = route(request);
         assertThat(result.status()).isEqualTo(OK);
     }

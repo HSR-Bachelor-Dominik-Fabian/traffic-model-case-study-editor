@@ -1,13 +1,12 @@
 package businesslogic.changeset;
 
-import dataaccess.database.tables.Changeset;
 import dataaccess.database.tables.records.ChangesetRecord;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
 public class ChangesetModel {
-    ChangesetModel() {
+    public ChangesetModel() {
     }
 
     public ChangesetModel(ChangesetRecord record) {
@@ -60,7 +59,7 @@ public class ChangesetModel {
         this.lastModified = lastModified;
     }
 
-    void fillModel(ChangesetRecord record) {
+    private void fillModel(ChangesetRecord record) {
         id = record.getId();
         name = record.getName();
         networkId = record.getNetworkid();

@@ -1,7 +1,7 @@
-(function(){
+(function () {
     var changeLinkModule = angular.module('changeLinkModule', []);
 
-    changeLinkModule.directive('ngModelOnblur', function() {
+    changeLinkModule.directive('ngModelOnblur', function () {
         return {
             restrict: 'A',
             require: 'ngModel',
@@ -19,7 +19,7 @@
         };
     });
 
-    changeLinkModule.controller("StreetDetailController", function($scope) {
+    changeLinkModule.controller("StreetDetailController", function ($scope) {
         $scope.streetModel = null;
         $scope.streetModelDefault = null;
         $scope.layer = null;
@@ -27,7 +27,7 @@
         var changesetStorageHandler = new ChangesetStorageHandler();
         var undoRedoHandler = new UndoRedoHandler();
 
-        $scope.changeModel = function() {
+        $scope.changeModel = function () {
             $scope.streetModel.properties.freespeed = $scope.streetModel.properties.freespeedCalculated / 3.6;
             changesetStorageHandler.addNewChange($scope.streetModel);
             undoRedoHandler.addChange($scope._getChangeModelForUndoRedoStack());
@@ -36,7 +36,7 @@
             $(path).addClass('street-edited');
         };
 
-        $scope._getChangeModelForUndoRedoStack = function() {
+        $scope._getChangeModelForUndoRedoStack = function () {
             var changeModel = {};
             changeModel.id = $scope.streetModel.properties.id;
             for (var key in $scope.streetModel.properties) {
@@ -96,7 +96,7 @@
             }
         };
 
-        $scope.$on('updateFeature', function(event, args) {
+        $scope.$on('updateFeature', function (event, args) {
             $scope.updateFeature(args.feature, args.layer, args.latlng, args.map);
         });
     });

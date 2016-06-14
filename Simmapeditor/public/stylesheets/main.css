@@ -13,7 +13,7 @@ svg {
     position: relative;
 }
 
-.offcanvas-container{
+.offcanvas-container {
     background-color: white;
     height: 100%;
 }
@@ -74,14 +74,14 @@ svg {
 }
 
 .street {
-    stroke-opacity: 0.9!important;
+    stroke-opacity: 0.9 !important;
     weight: 3;
     stroke: #3FC977;
     stroke-width: 2.4px;
 }
 
 .street-edit {
-    stroke-opacity: 0.9!important;
+    stroke-opacity: 0.9 !important;
     weight: 3;
     stroke: #3FC977;
     stroke-width: 2.4px;
@@ -184,8 +184,8 @@ svg {
 }
 
 .navbar-minimal > .navbar-menu > li > a {
-    width: 60px!important;
-    height: 54px!important;
+    width: 60px !important;
+    height: 54px !important;
     position: relative;
     display: inline-block;
     color: rgb(255, 255, 255);
@@ -211,17 +211,20 @@ svg {
     float: right;
 }
 
-.navbar-minimal > .navbar-menu > .success-message{
+.navbar-minimal > .navbar-menu > .success-message {
     background-color: #5cb85c;
-    border-bottom: 1px solid  #5cb85c;
+    border-bottom: 1px solid #5cb85c;
 }
-.navbar-minimal > .navbar-menu > .success-message:hover{
-    background-color: #5cb85c;
-}
-.navbar-minimal > .navbar-menu > .success-message:active{
+
+.navbar-minimal > .navbar-menu > .success-message:hover {
     background-color: #5cb85c;
 }
-.navbar-minimal > .navbar-menu > .save-message{
+
+.navbar-minimal > .navbar-menu > .success-message:active {
+    background-color: #5cb85c;
+}
+
+.navbar-minimal > .navbar-menu > .save-message {
     top: 0px;
     left: 60px;
     position: absolute;
@@ -234,14 +237,17 @@ svg {
     text-decoration: none;
     margin: 0px;
 }
-.navbar-minimal > .navbar-menu > .error-message{
+
+.navbar-minimal > .navbar-menu > .error-message {
     background-color: #ff1f03;
-    border-bottom: 1px solid  #ff1f03;
+    border-bottom: 1px solid #ff1f03;
 }
-.navbar-minimal > .navbar-menu > .error-message:hover{
+
+.navbar-minimal > .navbar-menu > .error-message:hover {
     background-color: #ff1f03;
 }
-.navbar-minimal > .navbar-menu > .error-message:active{
+
+.navbar-minimal > .navbar-menu > .error-message:active {
     background-color: #ff1f03;
 }
 
@@ -337,15 +343,15 @@ select option {
 
 .deactivatedButton {
     opacity: 0.4;
-    cursor: default!important;
+    cursor: default !important;
 }
 
-.leaflet-top, .leaflet-bottom{
-    z-index: 40!important;
+.leaflet-top, .leaflet-bottom {
+    z-index: 40 !important;
 }
 
-.navmenu-fixed-left, .navmenu-fixed-right, .navbar-offcanvas{
-    z-index: 50!important;
+.navmenu-fixed-left, .navmenu-fixed-right, .navbar-offcanvas {
+    z-index: 50 !important;
 }
 
 .glyphicon-plus:before, .glyphicon-folder-open:before {
@@ -375,9 +381,9 @@ select option {
 }
 
 .glyphicon-pencil {
-    font-size: 20px!important;
+    font-size: 20px !important;
 }
 
 .editModeActive {
-    background-color: #6f99a5!important;
+    background-color: #6f99a5 !important;
 }

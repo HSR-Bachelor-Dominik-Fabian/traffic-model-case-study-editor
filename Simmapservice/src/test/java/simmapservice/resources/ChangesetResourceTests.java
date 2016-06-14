@@ -2,9 +2,8 @@ package simmapservice.resources;
 
 import businesslogic.changeset.ChangesetFullModel;
 import businesslogic.changeset.ChangesetLogic;
-import common.DataAccessLayerException;
+import dataaccess.DataAccessException;
 import io.dropwizard.testing.junit.ResourceTestRule;
-import org.easymock.EasyMock;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.grizzly.GrizzlyWebTestContainerFactory;
 import org.junit.Before;
@@ -12,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.easymock.PowerMock;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import testenvironment.TestDataUtil;
@@ -20,15 +18,14 @@ import testenvironment.TestDataUtil;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.sql.SQLException;
 import java.util.Properties;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.doNothing;
-import static org.powermock.api.easymock.PowerMock.*;
+import static org.powermock.api.easymock.PowerMock.replayAll;
+import static org.powermock.api.easymock.PowerMock.verifyAll;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ChangesetResource.class)
@@ -37,18 +34,18 @@ public class ChangesetResourceTests {
     private ChangesetLogic changesetLogic;
 
     @Rule
-    public ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
+    public final ResourceTestRule resource = ResourceTestRule.builder().setTestContainerFactory(new GrizzlyWebTestContainerFactory())
             .addResource(new ChangesetResource(TestDataUtil.getTestProperties())).build();
 
     @Before
     public void setup() throws Exception {
         changesetLogic = PowerMock.createMock(ChangesetLogic.class);
-        PowerMock.expectNew(ChangesetLogic.class, new Class[] {Properties.class},
+        PowerMock.expectNew(ChangesetLogic.class, new Class[]{Properties.class},
                 TestDataUtil.getTestProperties()).andReturn(changesetLogic);
     }
 
     @Test
-    public void testGetAllChangesets() throws DataAccessLayerException {
+    public void testGetAllChangesets() throws DataAccessException {
         expect(changesetLogic.getAllChangesets(eq(1))).andReturn(TestDataUtil.getListChangesetModels());
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
@@ -60,7 +57,7 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testGetAllChangesetsWithoutChangesets() throws DataAccessLayerException {
+    public void testGetAllChangesetsWithoutChangesets() throws DataAccessException {
         expect(changesetLogic.getAllChangesets(eq(1))).andReturn(null);
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
@@ -72,8 +69,8 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testGetAllChangesetsThrowException() throws DataAccessLayerException {
-        expect(changesetLogic.getAllChangesets(eq(1))).andThrow(new DataAccessLayerException(new SQLException()));
+    public void testGetAllChangesetsThrowException() throws DataAccessException {
+        expect(changesetLogic.getAllChangesets(eq(1))).andThrow(new DataAccessException(new SQLException()));
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);
@@ -84,7 +81,7 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testPostChangesetThatAlreadyExists() throws DataAccessLayerException {
+    public void testPostChangesetThatAlreadyExists() throws DataAccessException {
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);
@@ -96,7 +93,7 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testPostNewChangeset() throws DataAccessLayerException {
+    public void testPostNewChangeset() throws DataAccessException {
         ChangesetFullModel fullModel = new ChangesetFullModel(TestDataUtil.getSingleSelectChangesetTestRecord());
         fullModel.setId(null);
         expect(changesetLogic.insertChangeset(anyObject())).andReturn((long) 1);
@@ -110,10 +107,10 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testPostNewChangesetThrowException() throws DataAccessLayerException {
+    public void testPostNewChangesetThrowException() throws DataAccessException {
         ChangesetFullModel fullModel = new ChangesetFullModel(TestDataUtil.getSingleSelectChangesetTestRecord());
         fullModel.setId(null);
-        expect(changesetLogic.insertChangeset(anyObject())).andThrow(new DataAccessLayerException(new SQLException()));
+        expect(changesetLogic.insertChangeset(anyObject())).andThrow(new DataAccessException(new SQLException()));
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);
@@ -124,8 +121,8 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testGetOneChangeset() throws DataAccessLayerException {
-        expect(changesetLogic.getFullChangeset(eq((long)1))).andReturn(new ChangesetFullModel(TestDataUtil.getChangesetRecord()));
+    public void testGetOneChangeset() throws DataAccessException {
+        expect(changesetLogic.getFullChangeset(eq((long) 1))).andReturn(new ChangesetFullModel(TestDataUtil.getChangesetRecord()));
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);
@@ -136,8 +133,8 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testGetOneChangesetThrowsException() throws DataAccessLayerException {
-        expect(changesetLogic.getFullChangeset(eq((long)1))).andThrow(new DataAccessLayerException(new SQLException()));
+    public void testGetOneChangesetThrowsException() throws DataAccessException {
+        expect(changesetLogic.getFullChangeset(eq((long) 1))).andThrow(new DataAccessException(new SQLException()));
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);
@@ -175,7 +172,7 @@ public class ChangesetResourceTests {
 
     @Test
     public void testDeleteChangesetThrowException() throws Exception {
-        expect(changesetLogic.getFullChangeset(eq((long) 1))).andThrow(new DataAccessLayerException(new SQLException()));
+        expect(changesetLogic.getFullChangeset(eq((long) 1))).andThrow(new DataAccessException(new SQLException()));
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);
@@ -185,7 +182,7 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testPutUpdateNotExistingChangeset() throws DataAccessLayerException {
+    public void testPutUpdateNotExistingChangeset() throws DataAccessException {
         ChangesetFullModel fullModel = new ChangesetFullModel(TestDataUtil.getChangesetRecord());
         expect(changesetLogic.hasChangeset(eq((long) 1))).andReturn(false);
         replayAll();
@@ -198,7 +195,7 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testPutUpdateChangeset() throws DataAccessLayerException {
+    public void testPutUpdateChangeset() throws DataAccessException {
         ChangesetFullModel fullModel = new ChangesetFullModel(TestDataUtil.getChangesetRecord());
         expect(changesetLogic.hasChangeset(eq((long) 1))).andReturn(true);
         changesetLogic.updateChangeset(isA(ChangesetFullModel.class));
@@ -212,9 +209,9 @@ public class ChangesetResourceTests {
     }
 
     @Test
-    public void testPutUpdateChangesetThrowException() throws DataAccessLayerException {
+    public void testPutUpdateChangesetThrowException() throws DataAccessException {
         ChangesetFullModel fullModel = new ChangesetFullModel(TestDataUtil.getChangesetRecord());
-        expect(changesetLogic.hasChangeset(eq((long) 1))).andThrow(new DataAccessLayerException(new SQLException()));
+        expect(changesetLogic.hasChangeset(eq((long) 1))).andThrow(new DataAccessException(new SQLException()));
         replayAll();
         JerseyTest jerseyTest = resource.getJerseyTest();
         assertNotNull(jerseyTest);

@@ -3,8 +3,6 @@ package testenvironment;
 import businesslogic.changeset.*;
 import dataaccess.database.Tables;
 import dataaccess.database.tables.Link;
-import dataaccess.database.tables.LinkChange;
-import dataaccess.database.tables.NetworkOptions;
 import dataaccess.database.tables.records.*;
 import org.easymock.EasyMock;
 import org.jooq.*;
@@ -19,9 +17,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 public class TestDataUtil {
     public static LinkRecord getSingleSelectLinkTestRecord() {
@@ -394,11 +392,11 @@ public class TestDataUtil {
         return record;
     }
 
-    public static List<Link_ChangeModel> getListLinkChangeModels() {
-        List<Link_ChangeModel> models = new ArrayList<>();
+    public static List<LinkChangeModel> getListLinkChangeModels() {
+        List<LinkChangeModel> models = new ArrayList<>();
         LinkModel defaultModel = new LinkModel(TestDataUtil.getSingleSelectLinkTestRecord());
 
-        Link_ChangeModel model = new Link_ChangeModel();
+        LinkChangeModel model = new LinkChangeModel();
         model.setId("L1");
         model.setDefaultValues(defaultModel);
         model.setDeleted(false);
@@ -408,12 +406,12 @@ public class TestDataUtil {
         return models;
     }
 
-    public static List<Node_ChangeModel> getListNodeChangeModels() {
-        List<Node_ChangeModel> models = new ArrayList<>();
+    public static List<NodeChangeModel> getListNodeChangeModels() {
+        List<NodeChangeModel> models = new ArrayList<>();
         List<NodeRecord> nodeRecords = TestDataUtil.getMultipleSelectNodeTestRecords();
 
 
-        Node_ChangeModel model = new Node_ChangeModel();
+        NodeChangeModel model = new NodeChangeModel();
         model.setId("N1");
         model.setChangesetNr((long) 3);
         model.setDefaultValues(new NodeModel(nodeRecords.get(0)));
@@ -423,7 +421,7 @@ public class TestDataUtil {
         model.setY(new BigDecimal(123));
         models.add(model);
 
-        Node_ChangeModel model1 = new Node_ChangeModel();
+        NodeChangeModel model1 = new NodeChangeModel();
         model1.setId("N2");
         model1.setChangesetNr((long) 3);
         model1.setDefaultValues(new NodeModel(nodeRecords.get(1)));
@@ -441,14 +439,12 @@ public class TestDataUtil {
 
         List<ChangesetRecord> changesetRecords = TestDataUtil.getMultipleSelectChangesetTestRecords();
 
-        for (ChangesetRecord model : changesetRecords) {
-            models.add(new ChangesetModel(model));
-        }
+        models.addAll(changesetRecords.stream().map(ChangesetModel::new).collect(Collectors.toList()));
 
         return models;
     }
 
-    public static InputStream getInputStreamOfData() throws FileNotFoundException {
+    public static InputStream getInputStreamOfData() throws FileNotFoundException, NullPointerException {
         return new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("test.xml").getPath());
     }
 
@@ -457,7 +453,7 @@ public class TestDataUtil {
         Result<NodeRecord> result = context.newResult(Tables.NODE);
 
         for (NodeRecord record : getStreamNodesAsArray()) {
-            if(record != null){
+            if (record != null) {
                 result.add(record);
             }
         }
@@ -502,7 +498,7 @@ public class TestDataUtil {
         return records;
     }
 
-    public static NetworkOptionsRecord[] getStreamOptionsAsArray(){
+    public static NetworkOptionsRecord[] getStreamOptionsAsArray() {
         NetworkOptionsRecord[] options = new NetworkOptionsRecord[3];
         DSLContext context = DSL.using(SQLDialect.POSTGRES);
         NetworkOptionsRecord record1 = context.newRecord(Tables.NETWORK_OPTIONS);
@@ -526,7 +522,7 @@ public class TestDataUtil {
         return options;
     }
 
-    public static LinkRecord[] getStreamLinksAsArray(){
+    public static LinkRecord[] getStreamLinksAsArray() {
         DSLContext context = DSL.using(SQLDialect.POSTGRES);
         LinkRecord[] linkRecords = new LinkRecord[25000];
 
@@ -573,34 +569,32 @@ public class TestDataUtil {
         return linkRecords;
     }
 
-    public static LinkRecord[] linkStreamEq(LinkRecord[] expectedRecords){
+    public static LinkRecord[] linkStreamEq(LinkRecord[] expectedRecords) {
         EasyMock.reportMatcher(new StreamLinkEquals(expectedRecords));
         return null;
     }
 
-    public static boolean matchStreamLinkToLinks(LinkRecord[] expected, LinkRecord[] result){
+    public static boolean matchStreamLinkToLinks(LinkRecord[] expected, LinkRecord[] result) {
         boolean output = true;
-        if(expected.length == result.length){
-            for(int i = 0; i < result.length; i++){
+        if (expected.length == result.length) {
+            for (int i = 0; i < result.length; i++) {
                 LinkRecord expectedRecord = expected[i];
                 LinkRecord resultRecord = result[i];
-                if(expectedRecord != null) {
+                if (expectedRecord != null) {
                     for (Field<?> field : expectedRecord.fields()) {
-                        if (field.getName() != "LastModified") {
+                        if (!field.getName().equals("LastModified")) {
                             if (!expectedRecord.getValue(field).equals(resultRecord.getValue(field))) {
                                 output = false;
                             }
                         }
                     }
-                }
-                else{
-                    if(!(resultRecord == null)){
+                } else {
+                    if (!(resultRecord == null)) {
                         output = false;
                     }
                 }
             }
-        }
-        else{
+        } else {
             output = false;
         }
 

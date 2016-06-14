@@ -1,18 +1,9 @@
 package testenvironment;
 
 import org.jooq.*;
-import org.jooq.exception.DataTypeException;
-import org.jooq.exception.MappingException;
 import org.jooq.impl.UpdatableRecordImpl;
 
-import java.sql.ResultSet;
-import java.util.List;
-import java.util.Map;
-
-/**
- * Created by dohee on 11.05.2016.
- */
-public class NotExistingRecord extends UpdatableRecordImpl<NotExistingRecord>  implements Record1<Integer> {
+class NotExistingRecord extends UpdatableRecordImpl<NotExistingRecord> implements Record1<Integer> {
 
     public NotExistingRecord(Table<NotExistingRecord> table) {
         super(table);
