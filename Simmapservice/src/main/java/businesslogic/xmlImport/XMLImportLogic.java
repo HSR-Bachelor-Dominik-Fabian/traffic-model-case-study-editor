@@ -34,7 +34,6 @@ public class XMLImportLogic {
         this.dataAccess = new DataAccessLogic(properties, new ProdConnection());
     }
 
-    //TODO: Exception Handling Business Layer
     public void importNetwork2DB(InputStream inputStream, String format, String networkName) throws DataAccessException, FactoryException, XMLStreamException, TransformException {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader streamReader = factory.createXMLStreamReader(inputStream);
