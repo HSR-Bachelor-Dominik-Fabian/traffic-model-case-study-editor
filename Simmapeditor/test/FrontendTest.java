@@ -1,11 +1,9 @@
-import org.junit.*;
-import play.test.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import play.test.FakeApplication;
+import play.test.WithBrowser;
 import util.FakeApplicationUtil;
-
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static play.test.Helpers.*;
 
 public class FrontendTest extends WithBrowser {
 

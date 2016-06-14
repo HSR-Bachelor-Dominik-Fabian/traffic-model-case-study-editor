@@ -25,7 +25,7 @@ function UndoRedoHandler() {
         this._setUndoStack(undoStack);
     };
 
-    this.cleanUpChangeset = function(changeset) {
+    this.cleanUpChangeset = function (changeset) {
         var undoStack = this._getUndoStack();
         for (var index in changeset.link_changeModels) {
             var linkChangeModel = changeset.link_changeModels[index];
@@ -96,7 +96,7 @@ function UndoRedoHandler() {
             for (var index in changeset.geoJson.features) {
                 var geoJsonFeature = changeset.geoJson.features[index];
                 if (geoJsonFeature.properties.id === undoEntry.id) {
-                    if(undoEntry.key === "link_changed" && undoEntry.value.coordinates !== undefined){
+                    if (undoEntry.key === "link_changed" && undoEntry.value.coordinates !== undefined) {
                         redoEntry.value.coordinates = geoJsonFeature.geometry.coordinates;
                         geoJsonFeature.geometry.coordinates = undoEntry.value.coordinates;
                         if (undoEntry.value.from !== undefined) {
@@ -105,7 +105,7 @@ function UndoRedoHandler() {
                         if (undoEntry.value.to !== undefined) {
                             geoJsonFeature.properties.to = undoEntry.value.to;
                         }
-                    }else {
+                    } else {
                         geoJsonFeature.properties[undoEntry.key] = undoEntry.value;
                     }
                 }
@@ -133,22 +133,23 @@ function UndoRedoHandler() {
                     dataType: "json",
                     async: false,
                     url: getLinkURL,
-                    success: function(data) {
-                    var storageHandler = new ChangesetStorageHandler();
+                    success: function (data) {
+                        var storageHandler = new ChangesetStorageHandler();
 
-                    var link_changeModel = {"changesetNr":changeset.id};
-                    link_changeModel.defaultValues = data;
+                        var link_changeModel = {"changesetNr": changeset.id};
+                        link_changeModel.defaultValues = data;
 
-                    $.each(data, function(key, value) {
-                        link_changeModel[key] = value;
-                    });
+                        $.each(data, function (key, value) {
+                            link_changeModel[key] = value;
+                        });
 
-                    changeset.link_changeModels.push(link_changeModel);
-                    changeset.geoJson.features.push(storageHandler._convertModelToGeoJsonFeature(link_changeModel));
+                        changeset.link_changeModels.push(link_changeModel);
+                        changeset.geoJson.features.push(storageHandler._convertModelToGeoJsonFeature(link_changeModel));
 
-                    var undoRedoHandler = new UndoRedoHandler();
-                    undoRedoHandler.updateChangesetAfterRedo(changeset, redoEntry, undoStack);
-                }});
+                        var undoRedoHandler = new UndoRedoHandler();
+                        undoRedoHandler.updateChangesetAfterRedo(changeset, redoEntry, undoStack);
+                    }
+                });
             } else {
                 this.updateChangesetAfterRedo(changeset, redoEntry, undoStack);
             }
@@ -156,7 +157,7 @@ function UndoRedoHandler() {
         this._setRedoStack(redoStack);
     };
 
-    this.updateChangesetAfterRedo = function(changeset, redoEntry, undoStack) {
+    this.updateChangesetAfterRedo = function (changeset, redoEntry, undoStack) {
         var undoEntry = {value: {}};
 
         undoEntry.id = redoEntry.id;
@@ -197,7 +198,7 @@ function UndoRedoHandler() {
         for (var index in changeset.geoJson.features) {
             var geoJsonFeature = changeset.geoJson.features[index];
             if (geoJsonFeature.properties.id === redoEntry.id) {
-                if(redoEntry.key === "link_changed" && redoEntry.value.coordinates !== undefined){
+                if (redoEntry.key === "link_changed" && redoEntry.value.coordinates !== undefined) {
                     undoEntry.value.coordinates = geoJsonFeature.geometry.coordinates;
                     geoJsonFeature.geometry.coordinates = redoEntry.value.coordinates;
                     if (redoEntry.value.from !== undefined) {
@@ -206,7 +207,7 @@ function UndoRedoHandler() {
                     if (redoEntry.value.to !== undefined) {
                         geoJsonFeature.properties.to = redoEntry.value.to;
                     }
-                }else {
+                } else {
                     geoJsonFeature.properties[redoEntry.key] = redoEntry.value;
                 }
             }
@@ -253,7 +254,7 @@ function UndoRedoHandler() {
         return this._getUndoStack() !== null && this._getRedoStack() !== null;
     };
 
-    this.linkIdExistsInChangeModels = function(id) {
+    this.linkIdExistsInChangeModels = function (id) {
         var changesetStorageHandler = new ChangesetStorageHandler();
         var changeset = changesetStorageHandler.getLocalChangeset();
 

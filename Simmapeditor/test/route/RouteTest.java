@@ -8,9 +8,8 @@ import play.mvc.Result;
 import play.test.FakeApplication;
 import util.FakeApplicationUtil;
 
+import static org.fest.assertions.Assertions.assertThat;
 import static play.test.Helpers.*;
-
-import static org.fest.assertions.Assertions.*;
 
 public class RouteTest {
 

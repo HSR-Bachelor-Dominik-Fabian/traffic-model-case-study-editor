@@ -143,7 +143,7 @@
                                 var id = path.feature.properties.id;
                                 var fromLayer = null;
                                 var toLayer = null;
-                                layerInstance.editInstance.geojsonLayer.eachLayer(function(sublayer){
+                                layerInstance.editInstance.geojsonLayer.eachLayer(function (sublayer) {
                                     var tempFromLayer = sublayer.getLayer('node_' + feature.properties.from);
                                     if (tempFromLayer != null) {
                                         fromLayer = tempFromLayer;
@@ -154,7 +154,11 @@
                                     }
                                 });
                                 $rootScope.$apply(function () {
-                                    dataService.setStreetToEdit({from: fromLayer.feature, to: toLayer.feature, link: path.feature});
+                                    dataService.setStreetToEdit({
+                                        from: fromLayer.feature,
+                                        to: toLayer.feature,
+                                        link: path.feature
+                                    });
                                 });
                             });
                         } else {

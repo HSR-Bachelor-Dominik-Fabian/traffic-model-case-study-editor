@@ -198,7 +198,7 @@
                 var to = change.to;
                 var changed = false;
                 var changeModel = {id: link.properties.id, key: "link_changed", value: {}};
-                if(link.properties.from !== from.properties.id){
+                if (link.properties.from !== from.properties.id) {
                     changeModel.value.from = link.properties.from;
                     changeModel.value.long1 = link.geometry.coordinates[0][0];
                     changeModel.value.lat1 = link.geometry.coordinates[0][1];
@@ -207,7 +207,7 @@
                     link.properties.long1 = from.geometry.coordinates[0];
                     changed = true;
                 }
-                if(link.properties.to !== to.properties.id){
+                if (link.properties.to !== to.properties.id) {
                     changeModel.value.to = link.properties.to;
                     changeModel.value.long2 = link.geometry.coordinates[1][0];
                     changeModel.value.lat2 = link.geometry.coordinates[1][1];
@@ -216,7 +216,7 @@
                     link.properties.long2 = to.geometry.coordinates[0];
                     changed = true;
                 }
-                if(changed){
+                if (changed) {
                     changeModel.value.coordinates = link.geometry.coordinates;
                     link.geometry.coordinates = [from.geometry, to.geometry];
                     changesetStorageHandler.addNewChange(link);

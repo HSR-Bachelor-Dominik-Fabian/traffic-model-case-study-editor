@@ -8,14 +8,14 @@ import play.test.FakeApplication;
 import play.twirl.api.Content;
 import play.twirl.api.Html;
 import util.FakeApplicationUtil;
+import views.html.partials.loadChangesetMenu;
+import views.html.partials.rootMenu;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
-import views.html.partials.rootMenu;
-import views.html.partials.loadChangesetMenu;
 
 import static org.fest.assertions.Assertions.assertThat;
 
