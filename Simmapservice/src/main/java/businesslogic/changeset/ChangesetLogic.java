@@ -21,7 +21,9 @@ public class ChangesetLogic {
     public List<ChangesetModel> getAllChangesets(int userNr) throws DataAccessException, NullPointerException {
         Result<ChangesetRecord> allChangesetsPerUser = dataAccess.getAllChangesetsPerUser(userNr);
         List<ChangesetModel> output = (allChangesetsPerUser.size() > 0) ? new ArrayList() : null;
-        output.addAll(allChangesetsPerUser.stream().map(ChangesetModel::new).collect(Collectors.toList()));
+        if (output != null) {
+            output.addAll(allChangesetsPerUser.stream().map(ChangesetModel::new).collect(Collectors.toList()));
+        }
         return output;
     }
 
