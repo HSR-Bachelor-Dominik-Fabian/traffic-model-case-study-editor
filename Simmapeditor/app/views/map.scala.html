@@ -48,15 +48,15 @@
                 </ul>
             </nav>
             <div ng-show="getEditMode()==true" ng-controller="StreetMenuController">
-                <div id="editMenu" class="navbar-minimal-top animate-slide">
+                @*<div id="editMenu" class="navbar-minimal-top animate-slide"> //Verwendung für Hinzufügen von Strassen
                     <ul>
                         <li>
-                            <a data-toggle="tooltip" ng-click="onAddStreetClicked()" data-placement="right" title="Strasse Zeichnen">
+                            <a data-toggle="tooltip" ng-click="" data-placement="right" title="Strasse Zeichnen">
                                 <span class="glyphicon glyphicon-road"></span>
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div>*@
                 <div id="addStreetDialog" class="editStreetDialog" ng-show="getStreetToEdit() != null">
                     <div class="container-fluid">
                         <div class="row">

@@ -278,10 +278,6 @@
                 );
             };
 
-            $scope.onAddStreetClicked = function () {
-                dataService.setStreetToEdit({from: null, to: null, link: null});
-            };
-
             $scope.onUndoClicked = function () {
                 var undoRedoHandler = new UndoRedoHandler();
                 undoRedoHandler.undo();
