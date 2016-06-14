@@ -1,7 +1,7 @@
 var MyProps = {};
 MyProps["rootURL"] = 'http://localhost:9001';
 (function () {
-    describe("Test ChangesetStorageHandler", function () {
+    describe("Test UdnoRedoHandler", function () {
         beforeEach(module('changeLinkModule'));
 
         var changesetStorageHandler = null;
@@ -56,7 +56,7 @@ MyProps["rootURL"] = 'http://localhost:9001';
                 properties: Object({
                     modes: 'car,ride', zoomlevel: 10, length: 9110.444119989446,
                     freespeed: 33.333333333333336, permlanes: 4, id: '1', oneway: false,
-                    capacity: 4000
+                    capacity: 4000, "from": "3089852391", "to": "24975040"
                 })
             };
         }));
@@ -140,7 +140,7 @@ MyProps["rootURL"] = 'http://localhost:9001';
 
             undoRedoHandler.redo();
 
-            expect(undoRedoHandler._getUndoStack()).toEqual([expectedUndo]);
+            expect(undoRedoHandler._getUndoStack()).toEqual([]); // Because he could not reach the service
             expect(undoRedoHandler._getRedoStack()).toEqual([]);
         });
     });

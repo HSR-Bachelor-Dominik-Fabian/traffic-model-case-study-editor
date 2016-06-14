@@ -14,7 +14,11 @@ function ChangesetHandler() {
                 }
             },
             error: function (data) {
-                showMessageDialog('Fehler: ' + data.responseJSON.message);
+                if (data.responseJSON !== undefined) {
+                    showMessageDialog('Fehler: ' + data.responseJSON.message);
+                } else {
+                    showMessageDialog('Fehler: Laden von Changesets nicht erfolgreich.');
+                }
             }
         });
         return result;

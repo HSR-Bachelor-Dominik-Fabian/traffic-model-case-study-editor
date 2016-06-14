@@ -10,6 +10,7 @@ import play.twirl.api.Html;
 import util.FakeApplicationUtil;
 import views.html.partials.loadChangesetMenu;
 import views.html.partials.rootMenu;
+import views.html.partials.importMenu;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -42,6 +43,13 @@ public class ViewTest {
     @Test
     public void renderPartialViewLoadChangesetMenu() {
         Content html = loadChangesetMenu.render();
+        assertThat(html.contentType()).isEqualTo("text/html");
+    }
+
+    @Test
+    public void renderPartialViewImportMenu() {
+        Properties properties = getProperties();
+        Content html = importMenu.render(properties);
         assertThat(html.contentType()).isEqualTo("text/html");
     }
 

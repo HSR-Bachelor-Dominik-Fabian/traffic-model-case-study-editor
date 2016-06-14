@@ -45,4 +45,11 @@ public class RouteTest {
         Result result = route(request);
         assertThat(result.status()).isEqualTo(OK);
     }
+
+    @Test
+    public void testPartialImportMenuRoute() {
+        Http.RequestBuilder request = new Http.RequestBuilder().method(GET).uri("/partials/importmenu");
+        Result result = route(request);
+        assertThat(result.status()).isEqualTo(OK);
+    }
 }

@@ -56,7 +56,7 @@ MyProps["rootURL"] = 'http://localhost:9001';
                 properties: Object({
                     modes: 'car,ride', zoomlevel: 13, length: 285.35880418880106,
                     freespeed: 16.666666666666668, permlanes: 1, id: '1', oneway: false,
-                    capacity: 1000
+                    capacity: 1000, from: '21493748', to: '21225847'
                 })
             };
 
@@ -100,7 +100,7 @@ MyProps["rootURL"] = 'http://localhost:9001';
                     properties: Object({
                         modes: 'car,ride', zoomlevel: 10, length: 9110.444119989446,
                         freespeed: 33.333333333333336, permlanes: 4, id: '31078720', oneway: false,
-                        capacity: 4000
+                        capacity: 4000, from: '3089852391', to: '24975040'
                     })
                 })], type: 'FeatureCollection'
             };

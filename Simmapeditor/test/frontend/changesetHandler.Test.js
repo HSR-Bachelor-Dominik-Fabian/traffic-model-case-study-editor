@@ -1,7 +1,7 @@
 var MyProps = {};
 MyProps["rootURL"] = 'http://localhost:9001';
 (function () {
-    describe("Test ChangesetStorageHandler", function () {
+    describe("Test ChangesetHandler", function () {
 
         var changesetStorageHandler = null;
         var changesetHandler = null;
